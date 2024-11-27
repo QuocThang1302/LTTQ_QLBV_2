@@ -342,3 +342,4 @@ D:\LTTQ\DCMMMMMMMMMMMMM\LTTQ_QLBV_2\obj\Debug\net8.0-windows\QuanLyBenhVien.dll
 D:\LTTQ\DCMMMMMMMMMMMMM\LTTQ_QLBV_2\obj\Debug\net8.0-windows\refint\QuanLyBenhVien.dll
 D:\LTTQ\DCMMMMMMMMMMMMM\LTTQ_QLBV_2\obj\Debug\net8.0-windows\QuanLyBenhVien.pdb
 D:\LTTQ\DCMMMMMMMMMMMMM\LTTQ_QLBV_2\obj\Debug\net8.0-windows\View\ThongTinNhanVien.g.cs
+D:\LTTQ\DCMMMMMMMMMMMMM\LTTQ_QLBV_2\obj\Debug\net8.0-windows\View\Khoa.g.cs

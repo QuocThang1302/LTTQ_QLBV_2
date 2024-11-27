@@ -22,6 +22,9 @@
     <Compile Update="View\DonThuoc_CTHD.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="View\Khoa.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="View\LoginView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -32,9 +35,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\ThongTinBenhNhan.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="View\ThongTinKhoa.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="View\ThongTinNhanVien.xaml.cs">
@@ -60,6 +60,9 @@
     <Page Update="View\DonThuoc_CTHD.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="View\Khoa.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="View\LoginView.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -73,9 +76,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\ThongTinBenhNhan.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="View\ThongTinKhoa.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\ThongTinNhanVien.xaml">

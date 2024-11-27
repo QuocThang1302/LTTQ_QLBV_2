@@ -23,5 +23,35 @@ namespace QuanLyBenhVien.View
         {
             InitializeComponent();
         }
+
+        private void btnThem_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Button Clicked!");
+        }
+
+        private void btnXoa_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Button Clicked!");
+        }
+
+        private void btnThem2_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Button Clicked!");
+        }
+
+        private void btnXoa2_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Button Clicked!");
+        }
+
+        private void btnThanhToan_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Button Clicked!");
+        }
+
+        private void btnDong_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Button Clicked!");
+        }
     }
 }
