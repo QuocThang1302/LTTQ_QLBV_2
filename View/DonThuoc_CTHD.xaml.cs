@@ -17,9 +17,9 @@ namespace QuanLyBenhVien.View
     /// <summary>
     /// Interaction logic for DonThuoc_CTHD.xaml
     /// </summary>
-    public partial class DonThuoc_CTHD : Window
+    public partial class DonThuoc_CTDT : Window
     {
-        public DonThuoc_CTHD()
+        public DonThuoc_CTDT()
         {
             InitializeComponent();
         }
