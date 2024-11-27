@@ -3,90 +3,179 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:customControls="clr-namespace:QuanLyBenhVien.CustomControls"
              xmlns:local="clr-namespace:QuanLyBenhVien.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+            
+             d:DesignHeight="628" d:DesignWidth="978">
+
     <Grid>
-        <Border
-   CornerRadius="10,10,10,10"
-   Grid.Row="2"
-   BorderThickness="1"
-   BorderBrush="Black"
-   Margin="10"
->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="1.9*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <customControls:Search Margin="70,10,70,10"/>
+
+        <Border Grid.Row="1"
+         Margin="25,10,25,5"
+         BorderThickness="2"
+         BorderBrush="Black"
+         Background="Transparent"
+         CornerRadius="10">
             <Grid>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="190"></RowDefinition>
+                    <RowDefinition/>
 
-                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="70"/>
                 </Grid.RowDefinitions>
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="30, 0, 0, 5">
-                        <TextBlock Text="Mã bệnh nhân:" Width="160" VerticalAlignment="Center" FontSize="24"/>
-                        <TextBox Style="{StaticResource TextBoxStyles}"></TextBox>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="30, 0, 0, 5">
-                        <TextBlock Text="Tên:" Width="160" VerticalAlignment="Center" FontSize="24"/>
-                        <TextBox  Style="{StaticResource TextBoxStyles}"></TextBox>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="30, 0, 0, 5">
-                        <TextBlock Text="Giới tính:" Width="160" VerticalAlignment="Center" FontSize="24"/>
-                        <TextBox  Style="{StaticResource TextBoxStyles}"></TextBox>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="30, 0, 0, 5">
-                        <TextBlock Text="CCCD:" Width="160" VerticalAlignment="Center" FontSize="24"/>
-                        <TextBox  Style="{StaticResource TextBoxStyles}"></TextBox>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="30, 0, 0, 5">
-                        <TextBlock Text="Email:" Width="160" VerticalAlignment="Center" FontSize="24"/>
-                        <TextBox  Style="{StaticResource TextBoxStyles}"></TextBox>
-                    </StackPanel>
-                </StackPanel>
-                <StackPanel  Grid.Column="1" >
-                    <StackPanel Orientation="Horizontal" Margin="30, 0, 0, 5">
-                        <TextBlock Text="Họ, tên đệm:" Width="160" VerticalAlignment="Center" FontSize="24"/>
-                        <TextBox  Style="{StaticResource TextBoxStyles}"></TextBox>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="30, 0, 0, 5">
-                        <TextBlock Text="Ngày sinh:" Width="160" VerticalAlignment="Center" FontSize="24"/>
-                        <TextBox  Style="{StaticResource TextBoxStyles}"></TextBox>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="30, 0, 0, 5">
-                        <TextBlock Text="Nghề nghiệp:" Width="160" VerticalAlignment="Center" FontSize="24"/>
-                        <TextBox  Style="{StaticResource TextBoxStyles}"></TextBox>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="30, 0, 0, 5">
-                        <TextBlock Text="Số điện thoại:" Width="160" VerticalAlignment="Center" FontSize="24"/>
-                        <TextBox  Style="{StaticResource TextBoxStyles}"></TextBox>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="30, 0, 0, 5">
-                        <TextBlock Text="Khoa:" Width="160" VerticalAlignment="Center" FontSize="24"/>
-                        <TextBox  Style="{StaticResource TextBoxStyles}"></TextBox>
-                    </StackPanel>
-                </StackPanel>
-                <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
-                    <StackPanel Orientation="Horizontal" Margin="30, 0, 0, 20">
-                        <TextBlock Text="Địa chỉ:" Width="160" VerticalAlignment="Center" FontSize="24"/>
-                        <TextBox Width="577  " Style="{StaticResource TextBoxStyles}"></TextBox>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal"
-                               FlowDirection="RightToLeft">
-                        <Button Margin="30, 0, 10, 0" Content ="Thêm" Style="{StaticResource childviewButton}"></Button>
 
-                        <Button Margin="30, 0, 10, 0" Content ="Xóa" Style="{StaticResource childviewButton}"></Button>
-                        <Button Margin="30, 0, 10, 0" Content ="Cập nhật" Style="{StaticResource childviewButton}"></Button>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition Height="200"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.ColumnSpan="2">
+                        <TextBlock 
+                            Text="Thông tin bệnh nhân"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            FontSize="28"
+                            FontWeight="Bold"
+                            FontFamily="Inter"/>
+                    </Grid>
+                    <StackPanel Grid.Row="1">
+                        <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
+                            <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Mã bệnh nhân:" Width="160" VerticalAlignment="Center" FontSize="20"/>
+                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
+                            <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Tên:" Width="160" VerticalAlignment="Center" FontSize="20"/>
+                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
+                            <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Giới tính:" Width="160" VerticalAlignment="Center" FontSize="20"/>
+                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
+                            <TextBlock FontWeight="Bold" FontFamily="Inter" Text="CCCD:" Width="160" VerticalAlignment="Center" FontSize="20"/>
+                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="30,05, 0, 5">
+                            <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Email:" Width="160" VerticalAlignment="Center" FontSize="20"/>
+                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
+                        </StackPanel>
                     </StackPanel>
-                    <TextBlock Text="Danh sách nhân viên" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" ></TextBlock>
-                    <DataGrid Height="112" Margin="0,5,0,0"></DataGrid >
+                    <StackPanel Grid.Column="1" Grid.Row="1">
+                        <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
+                            <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Họ, tên đệm:" Width="160" VerticalAlignment="Center" FontSize="20"/>
+                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
+                            <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Ngày sinh:" Width="160" VerticalAlignment="Center" FontSize="20"/>
+                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
+                            <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Nghề nghiệp:" Width="160" VerticalAlignment="Center" FontSize="20"/>
+                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
+                            <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Số điện thoại:" Width="160" VerticalAlignment="Center" FontSize="20"/>
+                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
+                            <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Khoa:" Width="160" VerticalAlignment="Center" FontSize="20"/>
+                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
+                        <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
+                            <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Địa chỉ:" Width="160" VerticalAlignment="Center" FontSize="20"/>
+                            <TextBox Height="40" Width="707" Style="{StaticResource TextBoxStyles}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
 
+                <StackPanel Grid.Row="1" Orientation="Horizontal" FlowDirection="RightToLeft">
+                    <Button Style="{StaticResource childviewButton}" 
+                     Margin="52,0,0,0"
+                     Content="Xóa"/>
 
+                    <Button Style="{StaticResource childviewButton}" 
+                     Margin="52,0,0,0"
+                     Content="Cập nhật"/>
+
+                    <Button Style="{StaticResource childviewButton}" 
+                     Margin="52,0,0,0"
+                     Content="Thêm"/>
                 </StackPanel>
             </Grid>
         </Border>
+
+        <Grid Grid.Row="2">
+            <StackPanel Margin="25,10,25,10">
+                <TextBlock Text="Danh sách bệnh nhân"
+                    FontSize="18"
+                    FontWeight="Bold"
+                    FontFamily="Inter"
+                    HorizontalAlignment="Center"/>
+
+                <DataGrid AutoGenerateColumns="False" 
+                   CanUserAddRows="False"
+                   CanUserDeleteRows="False"
+                   Margin="0,5,0,0"
+                   Height="170">
+                    <!-- Style cho header -->
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="LightBlue"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            <Setter Property="FontFamily" Value="Inter"/>
+                            <Setter Property="FontSize" Value="14" />
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="Padding" Value="10"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
+
+                    <!-- Style cho row -->
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="Gray"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+
+                    <!-- Style cho cell -->
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="Padding" Value="5"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="Gray"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.CellStyle>
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="" Width="*"/>
+                        <DataGridTextColumn Header="" Width="*"/>
+                        <DataGridTextColumn Header="" Width="*"/>
+                        <DataGridTextColumn Header="" Width="*"/>
+                        <DataGridTextColumn Header="" Width="*"/>
+                        <DataGridTextColumn Header="" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

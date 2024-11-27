@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="QuanLyBenhVien.View.LichTruc"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QuanLyBenhVien.View"
+              xmlns:customControls="clr-namespace:QuanLyBenhVien.CustomControls"
+             mc:Ignorable="d" 
+             
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"></RowDefinition>
+            
+            <RowDefinition></RowDefinition>
+
+        </Grid.RowDefinitions>
+        <customControls:Search Margin="70,10,70,10"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock Text="Danh sách công việc"
+                           FontWeight="Bold"
+                           FontFamily="Inter"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="24"
+                           Margin="10"
+                           ></TextBlock >
+                <DataGrid Margin="30,0,30,0"
+                          Height="275"
+                          ></DataGrid>
+                
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <TextBlock Text="Danh sách phân công"
+           FontWeight="Bold"
+           FontFamily="Inter"
+           HorizontalAlignment="Center"
+           VerticalAlignment="Center"
+           FontSize="24"
+           Margin="10"
+           ></TextBlock >
+                <DataGrid Margin="30,0,30,0"
+          Height="275"
+          ></DataGrid>
+                <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+                    <Button Style="{StaticResource childviewButton}" 
+                            Margin="30,15,0,0"
+                            Content="Xóa"/>
+
+                    <Button Style="{StaticResource childviewButton}" 
+                            Margin="30,15,0,0"
+                            Content="Cập nhật"/>
+
+                    <Button Style="{StaticResource childviewButton}" 
+                            Margin="30,15,0,0"
+                            Content="Thêm"/>        
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+    
+</UserControl>
+ 
