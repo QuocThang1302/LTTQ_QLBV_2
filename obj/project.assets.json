@@ -1884,11 +1884,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\LTTQ\\DoAnLTTQ\\QuanLyBenhVien.csproj",
+      "projectUniqueName": "D:\\LTTQ\\DCMMMMMMMMMMMMM\\LTTQ_QLBV_2\\QuanLyBenhVien.csproj",
       "projectName": "QuanLyBenhVien",
-      "projectPath": "D:\\LTTQ\\DoAnLTTQ\\QuanLyBenhVien.csproj",
+      "projectPath": "D:\\LTTQ\\DCMMMMMMMMMMMMM\\LTTQ_QLBV_2\\QuanLyBenhVien.csproj",
       "packagesPath": "C:\\Users\\QuocThang\\.nuget\\packages\\",
-      "outputPath": "D:\\LTTQ\\DoAnLTTQ\\obj\\",
+      "outputPath": "D:\\LTTQ\\DCMMMMMMMMMMMMM\\LTTQ_QLBV_2\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

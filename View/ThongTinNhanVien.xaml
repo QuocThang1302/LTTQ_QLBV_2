@@ -52,7 +52,7 @@
                     <StackPanel Grid.Row="1">
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock Text="Mã nhân viên:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Width="250" Style="{StaticResource TextBoxStyles} "/>
+                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock Text="Họ, tên đệm" Width="160" VerticalAlignment="Center" FontSize="20"/>
@@ -74,29 +74,29 @@
                     <StackPanel Grid.Column="1" Grid.Row="1">
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock Text="Chức vụ:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Width="250" Style="{StaticResource TextBoxStyles} "/>
+                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock Text="Tên:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Width="250" Style="{StaticResource TextBoxStyles} "/>
+                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock Text="Giới tính:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Width="250" Style="{StaticResource TextBoxStyles} "/>
+                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock Text="CCCD:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Width="250" Style="{StaticResource TextBoxStyles} "/>
+                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock Text="Số điện thoại:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Width="250" Style="{StaticResource TextBoxStyles} "/>
+                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock Text="Địa chỉ:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Height="40" Width="707" Style="{StaticResource TextBoxStyles} "/>
+                            <TextBox Height="40" Width="707" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>

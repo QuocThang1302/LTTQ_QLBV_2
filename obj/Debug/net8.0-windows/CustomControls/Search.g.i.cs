@@ -86,7 +86,7 @@ namespace QuanLyBenhVien.CustomControls {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/QuanLyBenhVien;V1.0.0.0;component/customcontrols/search.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/QuanLyBenhVien;component/customcontrols/search.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\CustomControls\Search.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
