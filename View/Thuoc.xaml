@@ -7,7 +7,7 @@
              xmlns:customControls="clr-namespace:QuanLyBenhVien.CustomControls"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
-             d:DesignHeight="630" d:DesignWidth="800">
+             d:DesignHeight="628" d:DesignWidth="978">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -18,11 +18,11 @@
         <customControls:Search Margin="70,10,70,10"/>
 
         <Border Grid.Row="1"
-                Margin="25,10,25,5"
-                BorderThickness="2"
-                BorderBrush="Black"
-                Background="Transparent"
-                CornerRadius="10">
+            Margin="25,10,25,5"
+            BorderThickness="2"
+            BorderBrush="Black"
+            Background="Transparent"
+            CornerRadius="10">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -33,178 +33,93 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0"
-                           Text="Thông tin thuốc"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Center"
-                           FontSize="28"
-                           FontWeight="Bold"
-                           FontFamily="Inter"/>
+                       Style="{StaticResource TextBlockStyle}"
+                       Text="Thông tin thuốc"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       FontSize="28"/>
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="50,0,50,0">
                     <TextBlock Text="Mã thuốc:"
-                                   VerticalAlignment="Center"
-                                   FontSize="20"
-                                   FontWeight="Bold"
-                                   FontFamily="Inter"/>
+                           VerticalAlignment="Center"
+                           Style="{StaticResource TextBlockStyle}"/>
 
                     <TextBox  x:Name="tbMaThuoc"
-                              Margin="20"
-                              Width="160">
-                        <TextBox.Style>
-                            <Style TargetType="TextBox">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="TextBox">
-                                            <Border Background="LightGray"
-                                                    CornerRadius="5">
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </TextBox.Style>
+                          Margin="35,0,20,0"
+                          Width="220"
+                          Style="{StaticResource TextBoxStyles}">
                     </TextBox>
 
                     <TextBlock Text="Tên thuốc:"
-                               VerticalAlignment="Center"
-                               Margin="20,0,0,0"
-                               FontSize="20"
-                               FontWeight="Bold"
-                               FontFamily="Inter"/>
+                           VerticalAlignment="Center"
+                           Margin="35,0,0,0"
+                           Style="{StaticResource TextBlockStyle}"/>
 
                     <TextBox  x:Name="tbThuoc"
-                              Margin="20"
-                              Width="210">
-                        <TextBox.Style>
-                            <Style TargetType="TextBox">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="TextBox">
-                                            <Border Background="LightGray"
-                                                    CornerRadius="5">
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </TextBox.Style>
+                          Margin="20,0,0,0"
+                          Width="300"
+                          Style="{StaticResource TextBoxStyles}">
                     </TextBox>
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="50,0,50,0">
                     <TextBlock Text="Công dụng:"
-                               VerticalAlignment="Center"
-                               FontSize="20"
-                               FontWeight="Bold"
-                               FontFamily="Inter"/>
+                           VerticalAlignment="Center"
+                           Style="{StaticResource TextBlockStyle}"/>
 
                     <TextBox  x:Name="tbCongDung"
-                              Margin="20"
-                              Width="514">
-                        <TextBox.Style>
-                            <Style TargetType="TextBox">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="TextBox">
-                                            <Border Background="LightGray"
-                                                    CornerRadius="5">
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </TextBox.Style>
+                          Margin="21,0,0,0"
+                          Width="692"
+                          Style="{StaticResource TextBoxStyles}">
                     </TextBox>
                 </StackPanel>
 
                 <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="50,0,50,0">
                     <TextBlock Text="Số lượng:"
-                               VerticalAlignment="Center"
-                               FontSize="20"
-                               FontWeight="Bold"
-                               FontFamily="Inter"/>
+                           VerticalAlignment="Center"
+                           Style="{StaticResource TextBlockStyle}"/>
 
                     <TextBox  x:Name="tbSoLuong"
-                              Margin="20"
-                              Width="70">
-                        <TextBox.Style>
-                            <Style TargetType="TextBox">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="TextBox">
-                                            <Border Background="LightGray"
-                                                    CornerRadius="5">
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </TextBox.Style>
+                          Margin="40,0,20,0"
+                          Width="155"
+                          Style="{StaticResource TextBoxStyles}">
                     </TextBox>
 
                     <TextBlock Text="Giá tiền:"
-                               VerticalAlignment="Center"
-                               Margin="10,0,0,0"
-                               FontSize="20"
-                               FontWeight="Bold"
-                               FontFamily="Inter"/>
+                           VerticalAlignment="Center"
+                           Margin="10,0,0,0"
+                           Style="{StaticResource TextBlockStyle}"/>
 
                     <TextBox  x:Name="tbGiaTien"
-                              Margin="20"
-                              Width="90">
-                        <TextBox.Style>
-                            <Style TargetType="TextBox">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="TextBox">
-                                            <Border Background="LightGray"
-                                                    CornerRadius="5">
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </TextBox.Style>
+                          Margin="20,0,0,0"
+                          Width="158"
+                          Style="{StaticResource TextBoxStyles}">
                     </TextBox>
 
                     <TextBlock Text="HSD:"
-                               VerticalAlignment="Center"
-                               Margin="30,0,0,0"
-                               FontSize="20"
-                               FontWeight="Bold"
-                               FontFamily="Inter"/>
+                           VerticalAlignment="Center"
+                           Margin="30,0,0,0"
+                           Style="{StaticResource TextBlockStyle}"/>
 
                     <TextBox  x:Name="tbHSD"
-                              Margin="20"
-                              Width="127">
-                        <TextBox.Style>
-                            <Style TargetType="TextBox">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="TextBox">
-                                            <Border Background="LightGray"
-                                                    CornerRadius="5">
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </TextBox.Style>
+                          Margin="20,0,0,0"
+                          Width="155"
+                          Style="{StaticResource TextBoxStyles}">
                     </TextBox>
                 </StackPanel>
 
                 <StackPanel Grid.Row="4" Orientation="Horizontal" FlowDirection="RightToLeft">
                     <Button Style="{StaticResource childviewButton}" 
-                            Margin="52,0,0,0"
-                            Content="Xóa"/>
+                        Margin="52,0,0,0"
+                        Content="Xóa"/>
 
                     <Button Style="{StaticResource childviewButton}" 
-                            Margin="52,0,0,0"
-                            Content="Cập nhật"/>
-                    
+                        Margin="52,0,0,0"
+                        Content="Cập nhật"/>
+
                     <Button Style="{StaticResource childviewButton}" 
-                            Margin="52,0,0,0"
-                            Content="Thêm"/>
+                        Margin="52,0,0,0"
+                        Content="Thêm"/>
                 </StackPanel>
             </Grid>
         </Border>
@@ -212,17 +127,17 @@
         <Grid Grid.Row="2">
             <StackPanel Margin="25,10,25,10">
                 <TextBlock Text="Danh sách thuốc"
-                           FontSize="18"
-                           FontWeight="Bold"
-                           FontFamily="Inter"
-                           VerticalAlignment="Center"
-                           HorizontalAlignment="Center"/>
+                       FontSize="18"
+                       FontWeight="Bold"
+                       FontFamily="Inter"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"/>
 
                 <DataGrid AutoGenerateColumns="False" 
-                          CanUserAddRows="False"
-                          CanUserDeleteRows="False"
-                          Margin="0,5,0,0"
-                          Height="170">
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      Margin="0,5,0,0"
+                      Height="170">
                     <!-- Style cho header -->
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
