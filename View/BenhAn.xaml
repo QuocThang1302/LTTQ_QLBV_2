@@ -63,11 +63,11 @@
                     </StackPanel>
                     <StackPanel Grid.Column="1" Grid.Row="1">
                         <StackPanel Orientation="Horizontal" Margin="30, 5, 0, 5">
-                            <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Họ, tên đệm:" Width="160" VerticalAlignment="Center" FontSize="20"/>
+                            <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Mã bệnh nhân:" Width="160" VerticalAlignment="Center" FontSize="20"/>
                             <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
-                            <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Ngày sinh:" Width="160" VerticalAlignment="Center" FontSize="20"/>
+                            <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Ngày tạo lập:" Width="160" VerticalAlignment="Center" FontSize="20"/>
                             <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         
@@ -154,12 +154,13 @@
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
+                        <DataGridTextColumn Header="Mã bệnh án" Width="*"/>
+                        <DataGridTextColumn Header="Mã bệnh nhân" Width="*"/>
+                        <DataGridTextColumn Header="Bệnh nhân" Width="*"/>
+                        <DataGridTextColumn Header="Ngày tạo lập" Width="*"/>
+                        <DataGridTextColumn Header="Tình trạng" Width="*"/>
+                        <DataGridTextColumn Header="Bệnh" Width="*"/>
+                        <DataGridTextColumn Header="Hướng điều trị" Width="1.5*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

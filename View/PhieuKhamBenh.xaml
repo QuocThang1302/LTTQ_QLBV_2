@@ -166,12 +166,17 @@
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
+                        <DataGridTextColumn Header="Mã phiếu" Width="*"/>
+                        <DataGridTextColumn Header="Mã bệnh nhân" Width="1.4*"/>
+                        <DataGridTextColumn Header="Bệnh nhân" Width="1.2*"/>
+                        <DataGridTextColumn Header="Ngày khám" Width="1.2*"/>
+                        <DataGridTextColumn Header="Lý do" Width="0.7*"/>
+                        <DataGridTextColumn Header="Chẩn đoán" Width="1.2*"/>
+                        <DataGridTextColumn Header="Khám" Width="0.7*"/>
+                        <DataGridTextColumn Header="Kết quả" Width="*"/>
+                        <DataGridTextColumn Header="Mã bác sĩ" Width="*"/>
+                        <DataGridTextColumn Header="Bác sĩ" Width="*"/>
+                        <DataGridTextColumn Header="Điều trị" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
