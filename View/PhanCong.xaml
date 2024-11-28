@@ -1,0 +1,265 @@
+﻿<Window x:Class="QuanLyBenhVien.View.PhanCong"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLyBenhVien.View"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        Background="Transparent"
+        Height="900" Width="820">
+    <Grid>
+        <Border Grid.Row="0"
+                BorderBrush="#0077B6"
+                BorderThickness="10"
+                CornerRadius="10"
+                Background="#CAF0F8"
+                Padding="0"
+                Margin="0">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <!-- Tiêu đề -->
+                    <RowDefinition Height="2*"/>
+                    <!-- Form chính -->
+                    <RowDefinition Height="20"/>
+                </Grid.RowDefinitions>
+
+                <!-- Tiêu đề -->
+                <TextBlock Text="PHÂN CÔNG"
+                       FontSize="40"
+                       FontWeight="Bold"
+                       FontFamily="Inter"
+                       Foreground="DarkBlue"
+                       HorizontalAlignment="Center"
+                       Margin="0,50,0,10"
+                       Grid.Row="0" />
+
+                <!-- Form chính -->
+                <Grid Grid.Row="1" Margin="0,10,0,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.4*"/>
+                            <ColumnDefinition Width="0.6*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Column="0" Grid.Row="0"
+                                   Style="{StaticResource TextBlockStyle}"
+                                   Text="Mã lịch trực:"
+                                   VerticalAlignment="Center"
+                                   FontSize="24"
+                                   Margin="130,0,0,0"/>
+
+                        <TextBlock Grid.Column="0" Grid.Row="1"
+                                   Style="{StaticResource TextBlockStyle}"
+                                   Text="Mã bác sĩ:"
+                                   VerticalAlignment="Center"
+                                   FontSize="24"
+                                   Margin="130,0,0,0"/>
+
+                        <TextBlock Grid.Column="0" Grid.Row="2"
+                                   Style="{StaticResource TextBlockStyle}"
+                                   Text="Ngày trực:"
+                                   VerticalAlignment="Center"
+                                   FontSize="24"
+                                   Margin="130,0,0,0"/>
+
+                        <TextBlock Grid.Column="0" Grid.Row="3"
+                                   Style="{StaticResource TextBlockStyle}"
+                                   Text="Phân công:"
+                                   VerticalAlignment="Center"
+                                   FontSize="24"
+                                   Margin="130,0,0,0"/>
+
+                        <TextBox Grid.Column="1" Grid.Row="0"
+                                 Style="{StaticResource TextBoxStyles}"
+                                 VerticalAlignment="Center"
+                                 HorizontalAlignment="Left"
+                                 Margin="10,0,30,0"
+                                 Width="340"/>
+
+                        <TextBox Grid.Column="1" Grid.Row="1"
+                                 Style="{StaticResource TextBoxStyles}"
+                                 VerticalAlignment="Center"
+                                 HorizontalAlignment="Left"
+                                 Margin="10,0,30,0"
+                                 Width="340"/>
+
+                        <TextBox Grid.Column="1" Grid.Row="2"
+                                 Style="{StaticResource TextBoxStyles}"
+                                 VerticalAlignment="Center"
+                                 HorizontalAlignment="Left"
+                                 Margin="10,0,30,0"
+                                 Width="340"/>
+
+                        <TextBox Grid.Column="1" Grid.Row="3"
+                                 Style="{StaticResource TextBoxStyles}"
+                                 VerticalAlignment="Center"
+                                 HorizontalAlignment="Left"
+                                 Margin="10,0,30,0"
+                                 Width="340"/>
+
+                        <StackPanel Grid.Column="1" Grid.Row="4"
+                                    Orientation="Horizontal"
+                                    FlowDirection="RightToLeft">
+                            <Button Style="{StaticResource childviewButton}" 
+                                    Margin="100,0,0,0"
+                                    Content="Thoát"/>
+
+                            <Button Style="{StaticResource childviewButton}" 
+                                    Margin="52,0,0,0"
+                                    Content="Đồng ý"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0.1*"/>
+                            <RowDefinition Height="0.9*"/>
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Grid.Column="0"
+                                       Style="{StaticResource TextBlockStyle}"
+                                       Text="Danh sách nhân viên"
+                                       FontSize="22"
+                                       Margin="15,0,70,0"
+                                       HorizontalAlignment="Right"
+                                       VerticalAlignment="Center"/>
+
+                            <TextBlock Grid.Column="1"
+                                       Style="{StaticResource TextBlockStyle}"
+                                       Text="Danh sách đã phân công"
+                                       FontSize="22"
+                                       Margin="53,0,15,0"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"/>
+                        </Grid>
+
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <DataGrid Grid.Column="0"
+                                      AutoGenerateColumns="False" 
+                                      CanUserAddRows="False"
+                                      CanUserDeleteRows="False"
+                                      Margin="30,5,10,0"
+                                      Height="Auto">
+                                <!-- Style cho header -->
+                                <DataGrid.ColumnHeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="Background" Value="LightBlue"/>
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontFamily" Value="Inter"/>
+                                        <Setter Property="FontSize" Value="14" />
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="Padding" Value="10"/>
+                                    </Style>
+                                </DataGrid.ColumnHeaderStyle>
+
+                                <!-- Style cho row -->
+                                <DataGrid.RowStyle>
+                                    <Style TargetType="DataGridRow">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="Gray"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.RowStyle>
+
+                                <!-- Style cho cell -->
+                                <DataGrid.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Setter Property="Padding" Value="5"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="Gray"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.CellStyle>
+
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Mã nhân viên" Width="*"/>
+                                    <DataGridTextColumn Header="Họ tên" Width="*"/>
+                                    <DataGridTextColumn Header="Chuyên ngành" Width="1.1*"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                            <DataGrid Grid.Column="1"
+                                      AutoGenerateColumns="False" 
+                                      CanUserAddRows="False"
+                                      CanUserDeleteRows="False"
+                                      Margin="10,5,30,0"
+                                      Height="Auto">
+                                <!-- Style cho header -->
+                                <DataGrid.ColumnHeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="Background" Value="LightBlue"/>
+                                        <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                        <Setter Property="FontFamily" Value="Inter"/>
+                                        <Setter Property="FontSize" Value="14" />
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                        <Setter Property="Padding" Value="10"/>
+                                    </Style>
+                                </DataGrid.ColumnHeaderStyle>
+
+                                <!-- Style cho row -->
+                                <DataGrid.RowStyle>
+                                    <Style TargetType="DataGridRow">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="Gray"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.RowStyle>
+
+                                <!-- Style cho cell -->
+                                <DataGrid.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Setter Property="Padding" Value="5"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="Background" Value="Gray"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.CellStyle>
+
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Mã lịch" Width="*"/>
+                                    <DataGridTextColumn Header="Tên bác sĩ" Width="1.1*"/>
+                                    <DataGridTextColumn Header="Ngày trực" Width="1.1*"/>
+                                    <DataGridTextColumn Header="Phân công" Width="1.1*"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

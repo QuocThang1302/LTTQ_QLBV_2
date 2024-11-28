@@ -30,15 +30,12 @@
                        Margin="10"
                        ></TextBlock >
                 <DataGrid Margin="30,0,30,0"
-                      Height="275"
-                          
-                      ></DataGrid>
+                          Height="275" />
                 <StackPanel Orientation="Horizontal" >
-
-
                     <Button Style="{StaticResource childviewButton}" 
-                Margin="30,15,0,0"
-                Content="Xuất hóa đơn"/>
+                            Margin="30,15,0,0"
+                            Width="130"
+                            Content="Xuất hóa đơn"/>
                 </StackPanel>
 
             </StackPanel>

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="QuanLyBenhVien.View.ThongTinBenh"
+﻿<UserControl x:Class="QuanLyBenhVien.View.LichHenKham"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -10,111 +10,109 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
-            <RowDefinition Height="1.6*"/>
+            <RowDefinition Height="1.3*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <customControls:Search Margin="70,10,70,10"/>
 
         <Border Grid.Row="1"
-        Margin="25,10,25,5"
-        BorderThickness="2"
-        BorderBrush="Black"
-        Background="Transparent"
-        CornerRadius="10">
+            Margin="25,10,25,5"
+            BorderThickness="2"
+            BorderBrush="Black"
+            Background="Transparent"
+            CornerRadius="10">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
                     <RowDefinition/>
-                    <RowDefinition Height="1.1*"/>
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0"
-                   Style="{StaticResource TextBlockStyle}"
-                   Text="Thông tin bệnh"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"
-                   FontSize="28"/>
+                       Style="{StaticResource TextBlockStyle}"
+                       Text="Thông tin lịch hẹn"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       FontSize="28"/>
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="50,0,50,0">
-                    <TextBlock Text="Mã bệnh:"
-                       VerticalAlignment="Center"
-                       Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Text="Mã lịch hẹn:"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource TextBlockStyle}"/>
 
-                    <TextBox  x:Name="tbMaBenh"
-                      Margin="45,0,20,0"
-                      Width="220"
-                      Style="{StaticResource TextBoxStyles}">
+                    <TextBox  x:Name="tbMaLichHen"
+                          Margin="48.5,0,20,0"
+                          Width="220"
+                          Style="{StaticResource TextBoxStyles}">
                     </TextBox>
 
-                    <TextBlock Text="Tên bệnh:"
-                       VerticalAlignment="Center"
-                       Margin="35,0,0,0"
-                       Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Text="Ngày hẹn khám:"
+                           VerticalAlignment="Center"
+                           Margin="35,0,0,0"
+                           Style="{StaticResource TextBlockStyle}"/>
 
-                    <TextBox  x:Name="tbBenh"
-                      Margin="20,0,0,0"
-                      Width="303"
-                      Style="{StaticResource TextBoxStyles}">
+                    <TextBox  x:Name="tbNgayHenKham"
+                          Margin="20,0,0,0"
+                          Width="211.5"
+                          Style="{StaticResource TextBoxStyles}">
                     </TextBox>
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="50,0,50,0">
-                    <TextBlock Text="Mô tả:"
-                       VerticalAlignment="Center"
-                       Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Text="Mã bệnh nhân:"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource TextBlockStyle}"/>
 
-                    <TextBox  x:Name="tbMoTa"
-                      Margin="72,0,0,0"
-                      Width="690"
-                      Style="{StaticResource TextBoxStyles}">
+                    <TextBox  x:Name="tbMaBenhNhan"
+                          Margin="22,0,20,0"
+                          Width="220"
+                          Style="{StaticResource TextBoxStyles}">
+                    </TextBox>
+
+                    <TextBlock Text="MaBacSi:"
+                           VerticalAlignment="Center"
+                           Margin="35,0,0,0"
+                           Style="{StaticResource TextBlockStyle}"/>
+
+                    <TextBox  x:Name="tbMaBacSi"
+                          Margin="88.5,0,20,0"
+                          Width="211.5"
+                          Style="{StaticResource TextBoxStyles}">
                     </TextBox>
                 </StackPanel>
 
-                <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="50,0,50,0">
-                    <TextBlock Text="Triệu chứng:"
-                       VerticalAlignment="Center"
-                       Style="{StaticResource TextBlockStyle}"/>
-
-                    <TextBox  x:Name="tbTrieuChung"
-                      Margin="15,0,20,0"
-                      Width="690"
-                      Style="{StaticResource TextBoxStyles}">
-                    </TextBox>
-                </StackPanel>
-
-                <StackPanel Grid.Row="4" Orientation="Horizontal" FlowDirection="RightToLeft">
+                <StackPanel Grid.Row="3" Orientation="Horizontal" FlowDirection="RightToLeft">
                     <Button Style="{StaticResource childviewButton}" 
-                    Margin="52,0,0,0"
-                    Content="Xóa"/>
+                Margin="52,0,0,0"
+                Content="Xóa"/>
 
                     <Button Style="{StaticResource childviewButton}" 
-                    Margin="52,0,0,0"
-                    Content="Cập nhật"/>
+                Margin="52,0,0,0"
+                Content="Cập nhật"/>
 
                     <Button Style="{StaticResource childviewButton}" 
-                    Margin="52,0,0,0"
-                    Content="Thêm"/>
+                Margin="52,0,0,0"
+                Content="Đăng kí"/>
                 </StackPanel>
             </Grid>
         </Border>
 
         <Grid Grid.Row="2">
             <StackPanel Margin="25,10,25,10">
-                <TextBlock Text="Danh sách bệnh"
-                   FontSize="18"
-                   FontWeight="Bold"
-                   FontFamily="Inter"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>
+                <TextBlock Text="Danh sách lịch hẹn"
+               FontSize="18"
+               FontWeight="Bold"
+               FontFamily="Inter"
+               VerticalAlignment="Center"
+               HorizontalAlignment="Center"/>
 
                 <DataGrid AutoGenerateColumns="False" 
-                  CanUserAddRows="False"
-                  CanUserDeleteRows="False"
-                  Margin="0,5,0,0"
-                  Height="170">
+              CanUserAddRows="False"
+              CanUserDeleteRows="False"
+              Margin="0,5,0,0"
+              Height="190">
                     <!-- Style cho header -->
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
@@ -151,10 +149,10 @@
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Mã bệnh" Width="*"/>
-                        <DataGridTextColumn Header="Tên bệnh" Width="*"/>
-                        <DataGridTextColumn Header="Mô tả" Width="*"/>
-                        <DataGridTextColumn Header="Triệu chứng" Width="*"/>
+                        <DataGridTextColumn Header="Mã lịch hẹn" Width="*"/>
+                        <DataGridTextColumn Header="Mã bệnh nhân" Width="*"/>
+                        <DataGridTextColumn Header="Mã bác sĩ" Width="*"/>
+                        <DataGridTextColumn Header="Ngày hẹn khám" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

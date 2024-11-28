@@ -5,16 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLyBenhVien.View"
         mc:Ignorable="d"
-        Background="#CAF0F8"
+        WindowStyle="None"
+        Background="Transparent"
         Title="CTHD" Height="700" Width="1240">
     
     <Grid>
         <Border Grid.Column="0"
-BorderBrush="#0077B6"
-BorderThickness="10"
-CornerRadius="10"
-Padding="0"
-Margin="10">
+                Background="#CAF0F8"
+                BorderBrush="#0077B6"
+                BorderThickness="10"
+                CornerRadius="10"
+                Padding="0">
             <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="80"/>
@@ -22,12 +23,11 @@ Margin="10">
                     <RowDefinition Height="150"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" 
-            HorizontalAlignment="Center" 
-            VerticalAlignment="Center"
-            FontSize="48"
-            FontWeight="Bold"
-            FontStyle="Italic"
-            Foreground="Blue">
+                           HorizontalAlignment="Center" 
+                           VerticalAlignment="Center"
+                           FontSize="48"
+                           FontWeight="Bold"
+                           Foreground="Blue">
    HÓA ĐƠN
                 </TextBlock>
                 <Grid Grid.Row="1">
@@ -38,11 +38,11 @@ Margin="10">
                     </Grid.ColumnDefinitions>
 
                     <Border Grid.Column="0"
-         BorderBrush="Black"
-         BorderThickness="2"
-         CornerRadius="10"
-         Padding="5"
-         Margin="10,8,10,8">
+                            BorderBrush="Black"
+                            BorderThickness="2"
+                            CornerRadius="10"
+                            Padding="5"
+                            Margin="10,8,10,8">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
@@ -77,11 +77,11 @@ Margin="10">
                     </Border>
 
                     <Border Grid.Column="1"
-         BorderBrush="Black"
-         BorderThickness="2"
-         CornerRadius="10"
-         Padding="5"
-         Margin="10,8,10,8">
+                            BorderBrush="Black"
+                            BorderThickness="2"
+                            CornerRadius="10"
+                            Padding="5"
+                            Margin="10,8,10,8">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -122,11 +122,11 @@ Margin="10">
                     </Border>
 
                     <Border Grid.Column="2"
-         BorderBrush="Black"
-         BorderThickness="2"
-         CornerRadius="10"
-         Padding="5"
-         Margin="10,8,10,8">
+                            BorderBrush="Black"
+                            BorderThickness="2"
+                            CornerRadius="10"
+                            Padding="5"
+                            Margin="10,8,10,8">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -179,11 +179,11 @@ Margin="10">
 
                         </Grid.RowDefinitions>
                         <Border Grid.Column="1"
-             BorderBrush="Black"
-             BorderThickness="2"
-             CornerRadius="10"
-             Padding="5"
-             Margin="30">
+                                BorderBrush="Black"
+                                BorderThickness="2"
+                                CornerRadius="10"
+                                Padding="5"
+                                Margin="30">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
@@ -195,10 +195,10 @@ Margin="10">
                                 </Grid.ColumnDefinitions>
                                 <!-- Nhãn và TextBox cho Tổng tiền -->
                                 <TextBlock Style="{StaticResource TextBlockStyle}"  Grid.Row="0" Grid.Column="0" Text="Tổng tiền:" VerticalAlignment="Center" Margin="5"/>
-                                <TextBox FontWeight="Bold" Grid.Row="0" Grid.Column="1" Name="txtTongTien" Height="25" Width="180" Style= "{StaticResource TextBoxStyles}" Margin="5" IsReadOnly="True"/>
+                                <TextBox FontWeight="Bold" Grid.Row="0" Grid.Column="1" Name="txtTongTien" Height="25" Width="160" Style= "{StaticResource TextBoxStyles}" Margin="5" IsReadOnly="True"/>
                                 <!-- Nhãn và TextBox cho Trạng thái -->
                                 <TextBlock Style="{StaticResource TextBlockStyle}" Grid.Row="1" Grid.Column="0" Text="Trạng thái:" VerticalAlignment="Center" Margin="5"/>
-                                <TextBox Grid.Row="1" Grid.Column="1" Name="txtTrangThai" Width="180" Height="25" Style= "{StaticResource TextBoxStyles}" Margin="5" IsReadOnly="True"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" Name="txtTrangThai" Width="160" Height="25" Style= "{StaticResource TextBoxStyles}" Margin="5" IsReadOnly="True"/>
                             </Grid>
                         </Border>
                         <Grid Grid.Column="2">
@@ -206,8 +206,8 @@ Margin="10">
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <Button Grid.Row="0" Content="Thanh toán" Margin="5" Style= "{StaticResource childviewButton}"  Click="btnThanhToan_Click"/>
-                            <Button Grid.Row="1" Content="Đóng" Margin="5" Style= "{StaticResource childviewButton}"  Click="btnDong_Click"/>
+                            <Button Grid.Row="0" Content="Thanh toán" Margin="5,15,5,0" Style= "{StaticResource childviewButton}"  Click="btnThanhToan_Click"/>
+                            <Button Grid.Row="1" Content="Đóng" Margin="5,0,5,15" Style= "{StaticResource childviewButton}"  Click="btnDong_Click"/>
                         </Grid>
                     </Grid>
 

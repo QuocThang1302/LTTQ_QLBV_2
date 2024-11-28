@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLyBenhVien.View"
         mc:Ignorable="d"
-        Title="DonThuoc_CTDT" Height="900" Width="800"
-        Background="#CAF8F0">
+        WindowStyle="None"
+        Height="900" Width="800"
+        Background="Transparent">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -14,11 +15,12 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Border Grid.Row="0"
-    BorderBrush="#0077B6"
-    BorderThickness="10"
-    CornerRadius="10"
-    Padding="0"
-    Margin="0">
+                BorderBrush="#0077B6"
+                BorderThickness="10"
+                CornerRadius="10"
+                Background="#CAF0F8"
+                Padding="0"
+                Margin="0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"/>
@@ -31,13 +33,13 @@
 
                 <!-- Tiêu đề -->
                 <TextBlock Text="ĐƠN THUỐC"
-               FontSize="30"
-               FontWeight="Bold"
-               FontStyle="Italic"
-               Foreground="DarkBlue"
-               HorizontalAlignment="Center"
-               Margin="0,50,0,10"
-               Grid.Row="0" />
+                           FontSize="40"
+                           FontWeight="Bold"
+                           FontFamily="Inter"
+                           Foreground="DarkBlue"
+                           HorizontalAlignment="Center"
+                           Margin="0,50,0,10"
+                           Grid.Row="0" />
 
                 <!-- Form chính -->
                 <Grid Grid.Row="1" Margin="0,10,0,10">
@@ -74,11 +76,12 @@
             </Grid>
         </Border>
         <Border Grid.Row="2"
-            BorderBrush="#0077B6"
-            BorderThickness="10"
-            CornerRadius="10"
-            Padding="0"
-            Margin="0">
+                BorderBrush="#0077B6"
+                BorderThickness="10"
+                Background="#CAF0F8"
+                CornerRadius="10"
+                Padding="0"
+                Margin="0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
@@ -91,13 +94,12 @@
 
                 <!-- Tiêu đề -->
                 <TextBlock Text="CHI TIẾT ĐƠN THUỐC"
-        FontSize="30"
-        FontWeight="Bold"
-        FontStyle="Italic"
-        Foreground="DarkBlue"
-        HorizontalAlignment="Center"
-        Margin="0,50,0,10"
-        Grid.Row="0" />
+                           FontSize="40"
+                           FontWeight="Bold"
+                           Foreground="DarkBlue"
+                           HorizontalAlignment="Center"
+                           Margin="0,40,0,10"
+                           Grid.Row="0" />
 
                 <!-- Form chính -->
                 <Grid Grid.Row="1" Margin="0,10,0,10">
@@ -146,21 +148,21 @@
                     </Grid.ColumnDefinitions>
 
                     <Button Content="Xóa"
-         Style= "{StaticResource childviewButton}"
-         Grid.Column="1" 
-         Margin="0,0,0,40"/>
+                            Style= "{StaticResource childviewButton}"
+                            Grid.Column="1" 
+                            Margin="0,0,0,40"/>
                     <Button Content="Thêm"
-         Style= "{StaticResource childviewButton}"
-         Grid.Column="3"
-         Margin="0,0,0,40"/>
+                            Style= "{StaticResource childviewButton}"
+                            Grid.Column="3"
+                            Margin="0,0,0,40"/>
                     <Button Content="Đồng ý"
-Style= "{StaticResource childviewButton}"
-Grid.Column="5" 
-Margin="0,0,0,40"/>
+                            Style= "{StaticResource childviewButton}"
+                            Grid.Column="5" 
+                            Margin="0,0,0,40"/>
                     <Button Content="Thoát"
-Style= "{StaticResource childviewButton}"
-Grid.Column="7"
-Margin="0,0,0,40"/>
+                            Style= "{StaticResource childviewButton}"
+                            Grid.Column="7"
+                            Margin="0,0,0,40"/>
                 </Grid>
             </Grid>
 

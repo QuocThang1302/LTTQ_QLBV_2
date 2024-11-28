@@ -7,22 +7,22 @@
              xmlns:customControls="clr-namespace:QuanLyBenhVien.CustomControls"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
-             d:DesignHeight="630" d:DesignWidth="800">
+             d:DesignHeight="628" d:DesignWidth="978">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"></RowDefinition>
-            <RowDefinition Height="0.8*"></RowDefinition>
-            <RowDefinition Height="0.2*"></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="0.82*"></RowDefinition>
+            <RowDefinition Height="0.18*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <customControls:Search Margin="70,10,70,10"/>
+        <customControls:Search Margin="70,15,70,15"/>
 
         <DataGrid Grid.Row="1"
-                  AutoGenerateColumns="False" 
-                  CanUserAddRows="False"
-                  CanUserDeleteRows="False"
-                  Margin="15,5,15,0"
-                  Height="Auto">
+              AutoGenerateColumns="False" 
+              CanUserAddRows="False"
+              CanUserDeleteRows="False"
+              Margin="15,5,15,0"
+              Height="Auto">
             <!-- Style cho header -->
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
@@ -71,16 +71,16 @@
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" FlowDirection="RightToLeft">
             <Button Style="{StaticResource childviewButton}" 
-            Margin="52,0,0,0"
-            Content="Xóa"/>
+                    Margin="52,0,0,0"
+                    Content="Xóa"/>
 
             <Button Style="{StaticResource childviewButton}" 
-            Margin="52,0,0,0"
-            Content="Cập nhật"/>
+                    Margin="52,0,0,0"
+                    Content="Cập nhật"/>
 
             <Button Style="{StaticResource childviewButton}" 
-            Margin="52,0,0,0"
-            Content="Thêm"/>
+                    Margin="52,0,0,0"
+                    Content="Thêm"/>
         </StackPanel>
     </Grid>
 </UserControl>
