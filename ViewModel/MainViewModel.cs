@@ -57,12 +57,107 @@ namespace QuanLyBenhVien.ViewModel
             CurrentUserAccount = new UserAccountModel();
 
             //Initialize commands
+            ShowTrangChuViewCommand = new ViewModelCommand(ExecuteShowTrangChuViewCommand);
             ShowBenhNhanViewCommand = new ViewModelCommand(ExecuteShowBenhNhanViewCommand);
-
+            ShowNhanVienViewCommand = new ViewModelCommand(ExecuteShowNhanVienViewCommand);
+            ShowLichTrucViewCommand = new ViewModelCommand(ExecuteShowLichTrucViewCommand);
+            ShowLichHenKhamViewCommand = new ViewModelCommand(ExecuteShowLichHenKhamViewCommand);
+            ShowKhoaViewCommand = new ViewModelCommand(ExecuteShowKhoaViewCommand);
+            ShowBenhAnViewCommand = new ViewModelCommand(ExecuteShowBenhAnViewCommand);
+            ShowPhieuKhamBenhViewCommand = new ViewModelCommand(ExecuteShowPhieuKhamBenhViewCommand);
+            ShowDonThuocViewCommand = new ViewModelCommand(ExecuteShowDonThuocViewCommand);
+            ShowBenhViewCommand = new ViewModelCommand(ExecuteShowBenhViewCommand);
+            ShowThuocViewCommand = new ViewModelCommand(ExecuteShowThuocViewCommand);
+            ShowVatDungViewCommand = new ViewModelCommand(ExecuteShowVatDungViewCommand);
+            ShowHoaDonViewCommand = new ViewModelCommand(ExecuteShowHoaDonViewCommand);
             //Default view
-            ExecuteShowBenhNhanViewCommand(null);
+            ExecuteShowTrangChuViewCommand(null);
 
             LoadCurrentUserData();
+        }
+
+        private void ExecuteShowHoaDonViewCommand(object obj)
+        {
+            CurrentChildView = new HoaDonViewModel();
+            Caption = "Hóa đơn";
+            Icon = IconChar.FileInvoiceDollar;
+        }
+
+        private void ExecuteShowVatDungViewCommand(object obj)
+        {
+            CurrentChildView = new VatDungViewModel();
+            Caption = "Vật dụng";
+            Icon = IconChar.Microscope;
+        }
+
+        private void ExecuteShowThuocViewCommand(object obj)
+        {
+            CurrentChildView = new ThuocViewModel();
+            Caption = "Thuốc";
+            Icon = IconChar.Capsules;
+        }
+
+        private void ExecuteShowBenhViewCommand(object obj)
+        {
+            CurrentChildView = new BenhViewModel();
+            Caption = "Bệnh";
+            Icon = IconChar.VirusCovid;
+        }
+
+        private void ExecuteShowDonThuocViewCommand(object obj)
+        {
+            CurrentChildView = new BenhAnViewModel();
+            Caption = "Bệnh án";
+            Icon = IconChar.FileMedical;
+        }
+
+        private void ExecuteShowPhieuKhamBenhViewCommand(object obj)
+        {
+            CurrentChildView = new PhieuKhamBenhViewModel();
+            Caption = "Phiếu khám bệnh";
+            Icon = IconChar.FilePrescription;
+        }
+
+        private void ExecuteShowBenhAnViewCommand(object obj)
+        {
+            CurrentChildView = new DonThuocViewModel();
+            Caption = "Đơn thuốc";
+            Icon = IconChar.HouseMedical;
+        }
+
+        private void ExecuteShowKhoaViewCommand(object obj)
+        {
+            CurrentChildView = new KhoaViewModel();
+            Caption = "Khoa";
+            Icon = IconChar.Users;
+        }
+
+        private void ExecuteShowLichHenKhamViewCommand(object obj)
+        {
+            CurrentChildView = new LichHenKhamViewModel();
+            Caption = "Lịch hẹn khám";
+            Icon = IconChar.CalendarCheck;
+        }
+
+        private void ExecuteShowLichTrucViewCommand(object obj)
+        {
+            CurrentChildView = new LichTrucViewModel();
+            Caption = "Lịch trực";
+            Icon = IconChar.CalendarDays;
+        }
+
+        private void ExecuteShowNhanVienViewCommand(object obj)
+        {
+            CurrentChildView = new NhanVienViewModel();
+            Caption = "Nhân viên";
+            Icon = IconChar.IdCard;
+        }
+
+        private void ExecuteShowTrangChuViewCommand(object obj)
+        {
+            CurrentChildView = new TrangChuViewModel();
+            Caption = "Trang chủ";
+            Icon = IconChar.Home;
         }
 
         private void ExecuteShowBenhNhanViewCommand(object obj)
@@ -74,6 +169,18 @@ namespace QuanLyBenhVien.ViewModel
 
         // commands
         public ICommand ShowBenhNhanViewCommand { get; }
+        public ICommand ShowTrangChuViewCommand { get; }
+        public ICommand ShowNhanVienViewCommand { get; }
+        public ICommand ShowLichTrucViewCommand { get; }
+        public ICommand ShowLichHenKhamViewCommand { get; }
+        public ICommand ShowKhoaViewCommand { get; }
+        public ICommand ShowBenhAnViewCommand { get; }
+        public ICommand ShowPhieuKhamBenhViewCommand { get; }
+        public ICommand ShowDonThuocViewCommand { get; }
+        public ICommand ShowBenhViewCommand { get; }
+        public ICommand ShowThuocViewCommand { get; }
+        public ICommand ShowVatDungViewCommand { get; }
+        public ICommand ShowHoaDonViewCommand { get; }
 
         private void LoadCurrentUserData()
         {

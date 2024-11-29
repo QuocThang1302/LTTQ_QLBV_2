@@ -204,7 +204,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
                     <Border Background="LightGray"
-             CornerRadius="5">
+                            CornerRadius="5">
                     </Border>
                 </ControlTemplate>
             </Setter.Value>

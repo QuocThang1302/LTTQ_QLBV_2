@@ -82,6 +82,54 @@
         <DataTemplate DataType="{x:Type viewModel:BenhNhanViewModel}">
             <local:ThongTinBenhNhan></local:ThongTinBenhNhan>
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:TrangChuViewModel}">
+            <local:TrangChu></local:TrangChu>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:NhanVienViewModel}">
+            <local:ThongTinNhanVien></local:ThongTinNhanVien>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:LichTrucViewModel}">
+            <local:LichTruc></local:LichTruc>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:LichHenKhamViewModel}">
+            <local:LichHenKham></local:LichHenKham>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:KhoaViewModel}">
+            <local:Khoa_ChuyenNganh></local:Khoa_ChuyenNganh>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:BenhAnViewModel}">
+            <local:BenhAn></local:BenhAn>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:PhieuKhamBenhViewModel}">
+            <local:PhieuKhamBenh></local:PhieuKhamBenh>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:DonThuocViewModel}">
+            <local:DonThuoc></local:DonThuoc>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:BenhViewModel}">
+            <local:ThongTinBenh></local:ThongTinBenh>
+        </DataTemplate>
+        
+        <DataTemplate DataType="{x:Type viewModel:ThuocViewModel}">
+            <local:Thuoc></local:Thuoc>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:VatDungViewModel}">
+            <local:VatDung></local:VatDung>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:HoaDonViewModel}">
+            <local:HoaDon></local:HoaDon>
+        </DataTemplate>
     </Window.Resources>
 
     <Border CornerRadius="10"
@@ -120,7 +168,9 @@
                                   HorizontalScrollBarVisibility="Disabled"
                                   Height="465">
                             <StackPanel>
-                                <RadioButton Style="{StaticResource MenuButton}">
+                                <RadioButton Style="{StaticResource MenuButton}"
+                                             Command="{Binding ShowTrangChuViewCommand}"
+                                             IsChecked="True">
                                     <StackPanel Orientation="Horizontal">
                                         <fa:IconImage Icon="Home" Style="{StaticResource MenuIcon}" />
                                         <TextBlock Text="Trang chủ" Style="{StaticResource MenuText}" />
@@ -136,25 +186,29 @@
                                     </Expander.Header>
 
                                     <StackPanel Background="Transparent">
-                                        <RadioButton Style="{StaticResource SubMenuButton}">
+                                        <RadioButton Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowNhanVienViewCommand}">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="IdCard" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Thông tin" Style="{StaticResource SubMenuText}" />
                                             </StackPanel>
                                         </RadioButton>
-                                        <RadioButton Style="{StaticResource SubMenuButton}">
+                                        <RadioButton Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowLichTrucViewCommand}">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="CalendarDays" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Lịch trực" Style="{StaticResource SubMenuText}" />
                                             </StackPanel>
                                         </RadioButton>
-                                        <RadioButton Style="{StaticResource SubMenuButton}">
+                                        <RadioButton Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowLichHenKhamViewCommand}">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="CalendarCheck" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Lịch hẹn khám" Style="{StaticResource SubMenuText}" />
                                             </StackPanel>
                                         </RadioButton>
-                                        <RadioButton Style="{StaticResource SubMenuButton}">
+                                        <RadioButton Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowKhoaViewCommand}">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="Users" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Khoa" Style="{StaticResource SubMenuText}" />
@@ -172,19 +226,22 @@
                                     </Expander.Header>
 
                                     <StackPanel Background="Transparent">
-                                        <RadioButton Style="{StaticResource SubMenuButton}">
+                                        <RadioButton Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowBenhAnViewCommand}">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="FileMedical" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Bệnh án" Style="{StaticResource SubMenuText}" />
                                             </StackPanel>
                                         </RadioButton>
-                                        <RadioButton Style="{StaticResource SubMenuButton}">
+                                        <RadioButton Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowPhieuKhamBenhViewCommand}">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="FilePrescription" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Khám bệnh" Style="{StaticResource SubMenuText}" />
                                             </StackPanel>
                                         </RadioButton>
-                                        <RadioButton Style="{StaticResource SubMenuButton}">
+                                        <RadioButton Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowDonThuocViewCommand}">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="HouseMedical" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Đơn thuốc" Style="{StaticResource SubMenuText}" />
@@ -193,7 +250,8 @@
                                     </StackPanel>
                                 </Expander>
 
-                                <RadioButton Style="{StaticResource MenuButton}">
+                                <RadioButton Style="{StaticResource MenuButton}"
+                                             Command="{Binding ShowBenhNhanViewCommand}">
                                     <StackPanel Orientation="Horizontal">
                                         <fa:IconImage Icon="BedPulse" Style="{StaticResource MenuIcon}" />
                                         <TextBlock Text="Bệnh nhân" Style="{StaticResource MenuText}" />
@@ -209,25 +267,29 @@
                                     </Expander.Header>
 
                                     <StackPanel Background="Transparent">
-                                        <RadioButton Style="{StaticResource SubMenuButton}">
+                                        <RadioButton Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowBenhViewCommand}">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="VirusCovid" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Bệnh" Style="{StaticResource SubMenuText}" />
                                             </StackPanel>
                                         </RadioButton>
-                                        <RadioButton Style="{StaticResource SubMenuButton}">
+                                        <RadioButton Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowThuocViewCommand}">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="Capsules" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Thuốc" Style="{StaticResource SubMenuText}" />
                                             </StackPanel>
                                         </RadioButton>
-                                        <RadioButton Style="{StaticResource SubMenuButton}">
+                                        <RadioButton Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowVatDungViewCommand}">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="Microscope" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Vật dụng" Style="{StaticResource SubMenuText}" />
                                             </StackPanel>
                                         </RadioButton>
-                                        <RadioButton Style="{StaticResource SubMenuButton}">
+                                        <RadioButton Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowHoaDonViewCommand}">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="FileInvoiceDollar" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Hóa đơn" Style="{StaticResource SubMenuText}" />
