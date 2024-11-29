@@ -28,22 +28,22 @@
                     <ControlTemplate TargetType="Expander">
                         <DockPanel>
                             <RadioButton x:Name="HeaderButton"
-                                    DockPanel.Dock="Top"
-                                    Height="40"
-                                    Margin="-5,0,0,5"
-                                    Background="#6CABEA"
-                                    Foreground="Black"
-                                    BorderBrush="Transparent"
-                                    Click="HeaderButton_Click">
+                                DockPanel.Dock="Top"
+                                Height="40"
+                                Margin="-5,0,0,5"
+                                Background="#6CABEA"
+                                Foreground="Black"
+                                BorderBrush="Transparent"
+                                Click="HeaderButton_Click">
                                 <ContentPresenter ContentSource="Header" 
-                                              HorizontalAlignment="Left" 
-                                              Margin="20,0,0,0"/>
+                                          HorizontalAlignment="Left" 
+                                          Margin="20,0,0,0"/>
                                 <RadioButton.Template>
                                     <ControlTemplate TargetType="RadioButton">
                                         <Border Background="{TemplateBinding Background}"
-                                                BorderBrush="{TemplateBinding BorderBrush}"
-                                                BorderThickness="4,0,0,0"
-                                                CornerRadius="0,20,20,0">
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="4,0,0,0"
+                                            CornerRadius="0,20,20,0">
                                             <ContentPresenter VerticalAlignment="Center"/>
                                         </Border>
                                         <ControlTemplate.Triggers>
@@ -65,9 +65,9 @@
                                 </RadioButton.Template>
                             </RadioButton>
                             <ContentPresenter x:Name="ExpanderContent"
-                                            DockPanel.Dock="Bottom"
-                                            Content="{TemplateBinding Content}"
-                                            Visibility="Collapsed"/>
+                                        DockPanel.Dock="Bottom"
+                                        Content="{TemplateBinding Content}"
+                                        Visibility="Collapsed"/>
                         </DockPanel>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsExpanded" Value="True">
@@ -79,10 +79,13 @@
             </Setter>
         </Style>
 
+        <DataTemplate DataType="{x:Type viewModel:BenhNhanViewModel}">
+            <local:ThongTinBenhNhan></local:ThongTinBenhNhan>
+        </DataTemplate>
     </Window.Resources>
 
     <Border CornerRadius="10"
-            BorderThickness="1">
+        BorderThickness="1">
         <Border.BorderBrush>
             <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 1">
                 <GradientStop Color="#03045E" Offset="0" />
@@ -98,33 +101,31 @@
             </Grid.ColumnDefinitions>
 
             <Border CornerRadius="10,0,0,10"
-                    Grid.Column="0"
-                    Background="#C0E0FD">
+                Grid.Column="0"
+                Background="#C0E0FD">
                 <StackPanel>
                     <Image Source="/Images/hospital_logo.png"
-                           Width="140" Height="140" Stretch="Fill"
-                           Margin="0,20,0,0"/>
+                       Width="140" Height="140" Stretch="Fill"
+                       Margin="0,20,0,0"/>
 
                     <TextBlock Text="Tên bệnh viện"
-                               FontSize="23"
-                               Foreground="Black"
-                               FontFamily="Montserrat"
-                               TextAlignment="Center"
-                               Margin="0,5,0,30"/>
+                           FontSize="23"
+                           Foreground="Black"
+                           FontFamily="Montserrat"
+                           TextAlignment="Center"
+                           Margin="0,5,0,30"/>
 
                     <Grid Height="Auto">
                         <ScrollViewer VerticalScrollBarVisibility="Hidden"
-                                      HorizontalScrollBarVisibility="Disabled"
-                                      Height="465">
+                                  HorizontalScrollBarVisibility="Disabled"
+                                  Height="465">
                             <StackPanel>
-                                <Expander Style="{StaticResource CustomExpander}">
-                                    <Expander.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:IconImage Icon="Home" Style="{StaticResource MenuIcon}" />
-                                            <TextBlock Text="Trang chủ" Style="{StaticResource MenuText}" />
-                                        </StackPanel>
-                                    </Expander.Header>
-                                </Expander>
+                                <RadioButton Style="{StaticResource MenuButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <fa:IconImage Icon="Home" Style="{StaticResource MenuIcon}" />
+                                        <TextBlock Text="Trang chủ" Style="{StaticResource MenuText}" />
+                                    </StackPanel>
+                                </RadioButton>
 
                                 <Expander Style="{StaticResource CustomExpander}">
                                     <Expander.Header>
@@ -192,14 +193,12 @@
                                     </StackPanel>
                                 </Expander>
 
-                                <Expander Style="{StaticResource CustomExpander}">
-                                    <Expander.Header>
-                                        <StackPanel Orientation="Horizontal">
-                                            <fa:IconImage Icon="BedPulse" Style="{StaticResource MenuIcon}" />
-                                            <TextBlock Text="Bệnh nhân" Style="{StaticResource MenuText}" />
-                                        </StackPanel>
-                                    </Expander.Header>
-                                </Expander>
+                                <RadioButton Style="{StaticResource MenuButton}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <fa:IconImage Icon="BedPulse" Style="{StaticResource MenuIcon}" />
+                                        <TextBlock Text="Bệnh nhân" Style="{StaticResource MenuText}" />
+                                    </StackPanel>
+                                </RadioButton>
 
                                 <Expander Style="{StaticResource CustomExpander}">
                                     <Expander.Header>
@@ -243,7 +242,7 @@
             </Border>
 
             <Border CornerRadius="0,10,10,0"
-                    Grid.Column="1">
+                Grid.Column="1">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5, 1">
                         <GradientStop Color="#54CAE3" Offset="0" />
@@ -259,32 +258,32 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0"
-                                x:Name="panelControlBar"
-                                Orientation="Horizontal"
-                                FlowDirection="RightToLeft"
-                                Background="Transparent"
-                                Margin="0,0,5,0"
-                                MouseLeftButtonDown="panelControlBar_MouseLeftButtonDown"
-                                MouseEnter="panelControlBar_MouseEnter">
+                            x:Name="panelControlBar"
+                            Orientation="Horizontal"
+                            FlowDirection="RightToLeft"
+                            Background="Transparent"
+                            Margin="0,0,5,0"
+                            MouseLeftButtonDown="panelControlBar_MouseLeftButtonDown"
+                            MouseEnter="panelControlBar_MouseEnter">
                         <Button x:Name="btnClose"
-                                Style ="{StaticResource controlbarButton}"
-                                Tag="#f72585"
-                                Click="btnClose_Click">
+                            Style ="{StaticResource controlbarButton}"
+                            Tag="#f72585"
+                            Click="btnClose_Click">
                             <fa:IconImage Icon="Xmark" Style="{StaticResource controlbarIcon}"/>
                         </Button>
 
                         <Button x:Name="btnMaximize"
-                                Style ="{StaticResource controlbarButton}"
-                                Tag="#3a0ca3"
-                                Click="btnMaximize_Click">
+                            Style ="{StaticResource controlbarButton}"
+                            Tag="#3a0ca3"
+                            Click="btnMaximize_Click">
                             <fa:IconImage Icon="Square" Style="{StaticResource controlbarIcon}"/>
                         </Button>
 
                         <Button x:Name="btnMinimize"
-                                Width="30"
-                                Style ="{StaticResource controlbarButton}"
-                                Tag="#7209b7"
-                                Click="btnMinimize_Click">
+                            Width="30"
+                            Style ="{StaticResource controlbarButton}"
+                            Tag="#7209b7"
+                            Click="btnMinimize_Click">
                             <fa:IconImage Icon="WindowMinimize" Style="{StaticResource controlbarIcon}"/>
                         </Button>
                     </StackPanel>
@@ -296,43 +295,43 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Grid.Column="0"
-                                    Orientation="Horizontal"
-                                    VerticalAlignment="Center">
-                            <fa:IconImage Icon="Home"
-                                          Height="30"
-                                          Width="30"
-                                          Foreground="Black"
-                                          Margin="35,0,10,0" />
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center">
+                            <fa:IconImage Icon="{Binding Icon}"
+                                      Height="30"
+                                      Width="30"
+                                      Foreground="Black"
+                                      Margin="35,0,10,0" />
 
-                            <TextBlock Text="Trang chủ"
-                                       Foreground="Black"
-                                       FontSize="16"
-                                       FontFamily="Montserrat"
-                                       FontWeight="Medium"
-                                       VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding Caption}"
+                                   Foreground="Black"
+                                   FontSize="16"
+                                   FontFamily="Montserrat"
+                                   FontWeight="Medium"
+                                   VerticalAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel Grid.Column="1"
-                                    Orientation="Horizontal"
-                                    VerticalAlignment="Center"
-                                    FlowDirection="RightToLeft"
-                                    Margin="0,0,10,0">
+                                Orientation="Horizontal"
+                                VerticalAlignment="Center"
+                                FlowDirection="RightToLeft"
+                                Margin="0,0,10,0">
                             <Button Style="{StaticResource userIconButton}"
-                                    Tag="Gray">
+                                Tag="Gray">
                                 <fa:IconImage Icon="AngleDown" Style="{StaticResource userIcon}" />
                             </Button>
 
                             <TextBlock
-                                       Text="Phan Ngoc Son"
-                                       Foreground="Black"
-                                       FontFamily="Montserrat"
-                                       FontSize="16"
-                                       VerticalAlignment="Center" />
+                                   Text="Phan Ngoc Son"
+                                   Foreground="Black"
+                                   FontFamily="Montserrat"
+                                   FontSize="16"
+                                   VerticalAlignment="Center" />
 
                             <Ellipse Height="35" Width="35"
-                                     Stroke="Black"
-                                     StrokeThickness="1.5"
-                                     Margin="10,0,10,0">
+                                 Stroke="Black"
+                                 StrokeThickness="1.5"
+                                 Margin="10,0,10,0">
                                 <Ellipse.Fill>
                                     <ImageBrush ImageSource="/Images/hospital_logo.png"></ImageBrush>
                                 </Ellipse.Fill>
@@ -341,7 +340,8 @@
                     </Grid>
 
                     <ContentControl Grid.Row="2"
-                                    Margin="10">
+                                Content="{Binding CurrentChildView}"
+                                Margin="10">
 
                     </ContentControl>
                 </Grid>
