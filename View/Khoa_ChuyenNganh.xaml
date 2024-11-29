@@ -160,7 +160,7 @@
 
             <Button Style="{StaticResource childviewButton}" 
                     Margin="52,0,0,0"
-                    Content="Thêm"/>
+                    Content="Thêm" Click="Button_Click"/>
 
             <Button Style="{StaticResource childviewButton}" 
                     Margin="64,0,0,0"
@@ -172,7 +172,7 @@
 
             <Button Style="{StaticResource childviewButton}" 
                     Margin="52,0,0,0"
-                    Content="Thêm"/>
+                    Content="Thêm" Click="Button_Click_1"/>
         </StackPanel>
     </Grid>
 </UserControl>

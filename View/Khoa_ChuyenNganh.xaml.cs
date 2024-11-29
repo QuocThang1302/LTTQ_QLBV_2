@@ -24,5 +24,17 @@ namespace QuanLyBenhVien.View
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {   
+            ChuyenNganh chuyenNganh = new ChuyenNganh();
+            chuyenNganh.Show();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Khoa khoa = new Khoa();
+            khoa.Show();
+        }
     }
 }

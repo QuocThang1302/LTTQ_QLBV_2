@@ -51,7 +51,15 @@ namespace QuanLyBenhVien.View
 
         private void btnDong_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Button Clicked!");
+            Close();
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                DragMove();
+            }
         }
     }
 }

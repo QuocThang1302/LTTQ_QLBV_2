@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:QuanLyBenhVien.View"
         mc:Ignorable="d"
         WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        MouseDown="Window_MouseDown"
         Height="900" Width="800"
         Background="Transparent">
     <Grid>
@@ -162,7 +165,8 @@
                     <Button Content="Thoát"
                             Style= "{StaticResource childviewButton}"
                             Grid.Column="7"
-                            Margin="0,0,0,40"/>
+                            Margin="0,6,0,0" HorizontalAlignment="Right" VerticalAlignment="Top"
+                            Click="Button_Click"/>
                 </Grid>
             </Grid>
 

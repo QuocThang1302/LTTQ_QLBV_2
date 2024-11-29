@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLyBenhVien.View"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         WindowStyle="None"
+        MouseDown="Window_MouseDown"
         Background="Transparent"
+        AllowsTransparency="True"
         Height="900" Width="820">
     <Grid>
         <Border Grid.Row="0"
@@ -119,7 +122,9 @@
                                     FlowDirection="RightToLeft">
                             <Button Style="{StaticResource childviewButton}" 
                                     Margin="100,0,0,0"
-                                    Content="Thoát"/>
+                                    Content="Thoát"
+                                    x:Name="btnThoat"
+                                    Click="btnThoat_Click"/>
 
                             <Button Style="{StaticResource childviewButton}" 
                                     Margin="52,0,0,0"
