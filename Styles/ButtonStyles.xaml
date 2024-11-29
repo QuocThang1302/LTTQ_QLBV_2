@@ -208,11 +208,12 @@
     <!-- Child view textbox-->
     <Style x:Key="TextBoxStyles" TargetType="TextBox">
         <Setter Property="Width" Value="190" />
-        <Setter Property="Height" Value="30"/>
+        <Setter Property="Height" Value="30" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
                     <Border Background="LightGray"
+
                             CornerRadius="5">
                         <TextBox Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}"
                                  Background="Transparent"
@@ -223,6 +224,9 @@
                                  FontSize="14"
                                  FontFamily="Inter"
                                  FontWeight="SemiBold"/>
+
+                 
+
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
