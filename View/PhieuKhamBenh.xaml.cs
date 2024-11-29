@@ -24,5 +24,7 @@ namespace QuanLyBenhVien.View
         {
             InitializeComponent();
         }
+
+        
     }
 }

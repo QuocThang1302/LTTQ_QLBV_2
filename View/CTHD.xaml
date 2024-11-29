@@ -58,21 +58,21 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <!-- Labels -->
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Mã hóa đơn:" Margin="5" Style="{StaticResource TextBlockStyle}"/>
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Tên hóa đơn:" Margin="5" Style="{StaticResource TextBlockStyle}"/>
-                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Mã bệnh nhân:" Margin="5" Style="{StaticResource TextBlockStyle}"/>
-                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Bệnh nhân:" Margin="5" Style="{StaticResource TextBlockStyle}"/>
-                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Mã nhân viên:" Margin="5" Style="{StaticResource TextBlockStyle}"/>
-                            <TextBlock Grid.Row="5" Grid.Column="0" Text="Nhân viên:" Margin="5" Style="{StaticResource TextBlockStyle}"/>
-                            <TextBlock Grid.Row="6" Grid.Column="0" Text="Ngày lập:" Margin="5" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock  VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Text="Mã hóa đơn:" Margin="5" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock  VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Text="Tên hóa đơn:" Margin="5" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock  VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Text="Mã bệnh nhân:" Margin="5" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock  VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" Text="Bệnh nhân:" Margin="5" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock  VerticalAlignment="Center" Grid.Row="4" Grid.Column="0" Text="Mã nhân viên:" Margin="5" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock  VerticalAlignment="Center" Grid.Row="5" Grid.Column="0" Text="Nhân viên:" Margin="5" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock  VerticalAlignment="Center" Grid.Row="6" Grid.Column="0" Text="Ngày lập:" Margin="5" Style="{StaticResource TextBlockStyle}"/>
                             <!-- TextBoxes -->
-                            <TextBox Grid.Row="0" Grid.Column="1" Height="25" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
-                            <TextBox Grid.Row="1" Grid.Column="1" Height="25" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
-                            <TextBox Grid.Row="2" Grid.Column="1" Height="25" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
-                            <TextBox Grid.Row="3" Grid.Column="1" Height="25" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
-                            <TextBox Grid.Row="4" Grid.Column="1" Height="25" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
-                            <TextBox Grid.Row="5" Grid.Column="1" Height="25" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
-                            <TextBox Grid.Row="6" Grid.Column="1" Height="25" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" Height="30" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
+                            <TextBox Grid.Row="1" Grid.Column="1" Height="30" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
+                            <TextBox Grid.Row="2" Grid.Column="1" Height="30" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
+                            <TextBox Grid.Row="3" Grid.Column="1" Height="30" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
+                            <TextBox Grid.Row="4" Grid.Column="1" Height="30" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
+                            <TextBox Grid.Row="5" Grid.Column="1" Height="30" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
+                            <TextBox Grid.Row="6" Grid.Column="1" Height="30" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
                         </Grid>
                     </Border>
 

@@ -52,11 +52,11 @@
                     <StackPanel Grid.Row="1">
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Mã bệnh án:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Name="TxB_MaBenhAn" Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Bệnh nhân:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Name="TxB_BenhNhan" Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                       
                         
@@ -64,11 +64,11 @@
                     <StackPanel Grid.Column="1" Grid.Row="1">
                         <StackPanel Orientation="Horizontal" Margin="30, 5, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Mã bệnh nhân:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Name="TxB_MaBenhNhan" Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Ngày tạo lập:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Width="250" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Name="TxB_NgayTaoLap" Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         
                        
@@ -76,15 +76,15 @@
                     <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Tình trạng:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Height="40" Width="712" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Name="TxB_TinhTrang" Height="40" Width="712" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Bệnh:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Height="40" Width="712" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Name="TxB_Benh" Height="40" Width="712" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Hướng điều trị:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Height="40" Width="712" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Name="TxB_HuongDieuTri" Height="40" Width="712" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
