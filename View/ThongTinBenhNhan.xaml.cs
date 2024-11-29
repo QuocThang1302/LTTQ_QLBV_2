@@ -27,7 +27,7 @@ namespace QuanLyBenhVien.View
             InitializeComponent();
         }
 
-        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+        string strCon = @"Data Source=DESKTOP-U5DJ7HG\SQLEXPRESS01;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
