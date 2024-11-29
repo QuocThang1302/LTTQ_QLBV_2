@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:QuanLyBenhVien.View"
         mc:Ignorable="d"
         WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        MouseDown="Window_MouseDown"
         Background="Transparent"
         Title="CTHD" Height="700" Width="1240">
     

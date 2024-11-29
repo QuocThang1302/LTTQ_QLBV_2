@@ -6,58 +6,60 @@
              xmlns:local="clr-namespace:QuanLyBenhVien.CustomControls"
              mc:Ignorable="d" 
              d:DesignHeight="40" d:DesignWidth="550">
+
     <Grid>
         <TextBlock x:Name="txtSearch"
-               Text="Tìm kiếm:"
-               HorizontalAlignment="Left"
-               VerticalAlignment="Center"
-               FontSize="18"
-               Foreground="Black"
-               FontWeight="Bold"
-               FontFamily="Inter"/>
+                   Text="Tìm kiếm:"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Center"
+                   FontSize="18"
+                   Foreground="Black"
+                   FontWeight="Bold"
+                   FontFamily="Inter"/>
 
         <Border HorizontalAlignment="Right"
-            Width="100"
-            Height="33"
-            BorderThickness="0"
-            Background="Gray"
-            CornerRadius="5">
+                Width="100"
+                Height="33"
+                BorderThickness="0"
+                Background="Gray"
+                CornerRadius="5">
             <Button x:Name="btnSearch"
-                Content="Tìm kiếm"
-                Background="Transparent"
-                Foreground="Black"
-                FontFamily="Inter"
-                FontWeight="Bold"
-                FontSize="16"
-                BorderThickness="0"/>
+                    Content="Tìm kiếm"
+                    Background="Transparent"
+                    Foreground="Black"
+                    FontFamily="Inter"
+                    FontWeight="Bold"
+                    FontSize="16"
+                    BorderThickness="0">
+            </Button>
         </Border>
 
         <Border Margin="100,0,150,0"
-            BorderThickness="0"
-            Background="White"
-            CornerRadius="10">
+                BorderThickness="0"
+                Background="White"
+                CornerRadius="10">
             <Grid>
                 <TextBlock x:Name="txtTmp"
-                       Text="{Binding Tmp}"
-                       VerticalAlignment="Center"
-                       FontSize="16"
-                       Foreground="Gray"
-                       FontWeight="Light"
-                       FontFamily="Inter"
-                       Background="Transparent"
-                       Padding="15,0,0,0"
-                       Panel.ZIndex="-1"/>
+                           Text="{Binding Tmp}"
+                           VerticalAlignment="Center"
+                           FontSize="16"
+                           Foreground="Gray"
+                           FontWeight="Light"
+                           FontFamily="Inter"
+                           Background="Transparent"
+                           Padding="15,0,0,0"
+                           Panel.ZIndex="-1"/>
 
                 <TextBox x:Name="tbInput" 
-                     VerticalAlignment="Center"
-                     FontSize="16"
-                     Foreground="Black"
-                     FontWeight="Medium"
-                     FontFamily="Inter"
-                     Background="Transparent"
-                     Padding="15,0,0,0"
-                     BorderThickness="0"
-                     TextChanged="tbInput_TextChanged"/>
+                         VerticalAlignment="Center"
+                         FontSize="16"
+                         Foreground="Black"
+                         FontWeight="Medium"
+                         FontFamily="Inter"
+                         Background="Transparent"
+                         Padding="15,0,0,0"
+                         BorderThickness="0"
+                         TextChanged="tbInput_TextChanged"/>
             </Grid>
         </Border>
     </Grid>

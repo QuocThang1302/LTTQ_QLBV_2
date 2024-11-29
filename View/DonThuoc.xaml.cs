@@ -24,5 +24,17 @@ namespace QuanLyBenhVien.View
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            DonThuoc_CTDT ctdt = new DonThuoc_CTDT();
+            ctdt.Show();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            CTHD hd = new CTHD();
+            hd.Show();
+        }
     }
 }

@@ -83,7 +83,7 @@ Height="269">
                     <Button Style="{StaticResource childviewButton}" 
                             Margin="30,15,0,0"
                             Width="130"
-                            Content="Xuất hóa đơn"/>
+                            Content="Xuất hóa đơn" Click="Button_Click_1"/>
                 </StackPanel>
 
             </StackPanel>
@@ -157,7 +157,7 @@ Height="269">
 
                     <Button Style="{StaticResource childviewButton}" 
                         Margin="30,15,0,0"
-                        Content="Thêm"/>
+                        Content="Thêm" Click="Button_Click"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

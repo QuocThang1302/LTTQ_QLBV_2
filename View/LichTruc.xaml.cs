@@ -24,5 +24,11 @@ namespace QuanLyBenhVien.View
         {
             InitializeComponent();
         }
+
+        private void btnThem_Click(object sender, RoutedEventArgs e)
+        {
+            PhanCong phanCong = new PhanCong();
+            phanCong.Show();
+        }
     }
 }

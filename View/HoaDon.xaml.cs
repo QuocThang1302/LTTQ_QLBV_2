@@ -24,5 +24,11 @@ namespace QuanLyBenhVien.View
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            CTHD cTHD = new CTHD();
+            cTHD.Show();
+        }
     }
 }

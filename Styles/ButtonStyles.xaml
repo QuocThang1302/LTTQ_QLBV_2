@@ -184,11 +184,12 @@
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Height" Value="40" />
+        <Setter Property="Background" Value="LightGray" />
         <Setter Property="Width" Value="100" />
         <Setter Property="Template" >
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Background="LightGray"
+                    <Border Background="{TemplateBinding Background}"
                             CornerRadius="10">
                         <ContentPresenter HorizontalAlignment="Center"
                                           VerticalAlignment="Center"/>
@@ -196,7 +197,15 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="Aqua" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
+    
+    <!-- Child view textbox-->
     <Style x:Key="TextBoxStyles" TargetType="TextBox">
         <Setter Property="Width" Value="190" />
         <Setter Property="Height" Value="30"/>
@@ -205,11 +214,22 @@
                 <ControlTemplate TargetType="TextBox">
                     <Border Background="LightGray"
                             CornerRadius="5">
+                        <TextBox Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 VerticalContentAlignment="Center"
+                                 HorizontalContentAlignment="Left"
+                                 Padding="5,0,0,0"
+                                 FontSize="14"
+                                 FontFamily="Inter"
+                                 FontWeight="SemiBold"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+    
+    <!-- Child view textblock-->
     <Style x:Key="TextBlockStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="FontWeight" Value="Bold"/>
