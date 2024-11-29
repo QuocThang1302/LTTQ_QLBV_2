@@ -106,9 +106,9 @@ namespace QuanLyBenhVien.ViewModel
 
         private void ExecuteShowDonThuocViewCommand(object obj)
         {
-            CurrentChildView = new BenhAnViewModel();
-            Caption = "Bệnh án";
-            Icon = IconChar.FileMedical;
+            CurrentChildView = new DonThuocViewModel();
+            Caption = "Đơn thuốc";
+            Icon = IconChar.HouseMedical;
         }
 
         private void ExecuteShowPhieuKhamBenhViewCommand(object obj)
@@ -120,9 +120,9 @@ namespace QuanLyBenhVien.ViewModel
 
         private void ExecuteShowBenhAnViewCommand(object obj)
         {
-            CurrentChildView = new DonThuocViewModel();
-            Caption = "Đơn thuốc";
-            Icon = IconChar.HouseMedical;
+            CurrentChildView = new BenhAnViewModel();
+            Caption = "Bệnh án";
+            Icon = IconChar.FileMedical;
         }
 
         private void ExecuteShowKhoaViewCommand(object obj)
