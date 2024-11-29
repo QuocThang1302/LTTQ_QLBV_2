@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Data.SqlClient;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace QuanLyBenhVien.View
 {
@@ -59,7 +60,14 @@ namespace QuanLyBenhVien.View
         }
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            HienThiDanhSach();
+            try
+            {
+                HienThiDanhSach();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error: {ex.Message}");
+            }
         }
 
         private void HienThiDanhSach()
@@ -81,6 +89,11 @@ namespace QuanLyBenhVien.View
             sqlCon.Close();
 
             dgDanhSachBenhNhan.ItemsSource = ds.Tables["tblBenhNhan"].DefaultView;
+        }
+
+        private void btnXoa_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

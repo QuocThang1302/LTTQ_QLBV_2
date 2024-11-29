@@ -103,9 +103,9 @@
                 </Grid>
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal" FlowDirection="RightToLeft">
-                    <Button Style="{StaticResource childviewButton}" 
+                    <Button x:Name="btnXoa" Style="{StaticResource childviewButton}" 
                  Margin="52,0,0,0"
-                 Content="Xóa"/>
+                 Content="Xóa" Click="btnXoa_Click"/>
 
                     <Button Style="{StaticResource childviewButton}" 
                  Margin="52,0,0,0"
@@ -167,17 +167,17 @@
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn x:Name="MaBenhNhan" Header="Mã bệnh nhân" Width="1.5*"/>
-                        <DataGridTextColumn x:Name="Ho" Header="Họ, tên đệm" Width="1.2*"/>
-                        <DataGridTextColumn x:Name="Ten" Header="Tên" Width="0.5*"/>
-                        <DataGridTextColumn x:Name="NgaySinh" Header="Ngày sinh" Width="*"/>
-                        <DataGridTextColumn x:Name="GioiTinh" Header="Giới tính" Width="*"/>
-                        <DataGridTextColumn x:Name="NgheNghiep" Header="Nghề" Width="*"/>
-                        <DataGridTextColumn x:Name="CCCD" Header="CCCD" Width="*"/>
-                        <DataGridTextColumn x:Name="SDT" Header="SDT" Width="0.6*"/>
-                        <DataGridTextColumn x:Name="MaKhoa" Header="Khoa" Width="*"/>
-                        <DataGridTextColumn x:Name="Email" Header="Email" Width="*"/>
-                        <DataGridTextColumn x:Name="DiaChi" Header="Địa chỉ" Width="*"/>
+                       <DataGridTextColumn Header="Mã bệnh nhân" Width="1.5*" Binding="{Binding MaBenhNhan}"/>
+<DataGridTextColumn Header="Họ, tên đệm" Width="1.2*" Binding="{Binding Ho}"/>
+<DataGridTextColumn Header="Tên" Width="0.5*" Binding="{Binding Ten}"/>
+<DataGridTextColumn Header="Ngày sinh" Width="*" Binding="{Binding NgaySinh}"/>
+<DataGridTextColumn Header="Giới tính" Width="*" Binding="{Binding GioiTinh}"/>
+<DataGridTextColumn Header="Nghề" Width="*" Binding="{Binding NgheNghiep}"/>
+<DataGridTextColumn Header="CCCD" Width="*" Binding="{Binding CCCD}"/>
+<DataGridTextColumn Header="SDT" Width="0.6*" Binding="{Binding SDT}"/>
+<DataGridTextColumn Header="Khoa" Width="*" Binding="{Binding MaKhoa}"/>
+<DataGridTextColumn Header="Email" Width="*" Binding="{Binding Email}"/>
+<DataGridTextColumn Header="Địa chỉ" Width="*" Binding="{Binding DiaChi}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
