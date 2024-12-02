@@ -18,10 +18,10 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Border Grid.Row="0"
-                BorderBrush="#0077B6"
+                BorderBrush="#00416a"
                 BorderThickness="10"
                 CornerRadius="10"
-                Background="#CAF0F8"
+                Background="#d4ebf8"
                 Padding="0"
                 Margin="0">
             <Grid>
@@ -39,7 +39,7 @@
                            FontSize="40"
                            FontWeight="Bold"
                            FontFamily="Inter"
-                           Foreground="DarkBlue"
+                           Foreground="#00416a"
                            HorizontalAlignment="Center"
                            Margin="0,50,0,10"
                            Grid.Row="0" />
@@ -79,9 +79,9 @@
             </Grid>
         </Border>
         <Border Grid.Row="2"
-                BorderBrush="#0077B6"
+                BorderBrush="#00416a"
                 BorderThickness="10"
-                Background="#CAF0F8"
+                Background="#d4ebf8"
                 CornerRadius="10"
                 Padding="0"
                 Margin="0">
@@ -99,7 +99,7 @@
                 <TextBlock Text="CHI TIẾT ĐƠN THUỐC"
                            FontSize="40"
                            FontWeight="Bold"
-                           Foreground="DarkBlue"
+                           Foreground="#00416a"
                            HorizontalAlignment="Center"
                            Margin="0,40,0,10"
                            Grid.Row="0" />

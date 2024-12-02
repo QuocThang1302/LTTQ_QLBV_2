@@ -37,34 +37,34 @@
         <Setter Property="Height" Value="30"/>
         <Setter Property="Width" Value="200" />
         <Setter Property="Margin" Value="-5,0,0,5" />
-        <Setter Property="Background" Value="#6CABEA"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="#FFA7D4EE"/>
+        <Setter Property="Foreground" Value="#00416a"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">
                     <Border Background="{TemplateBinding Background}"
-                    BorderBrush="{TemplateBinding BorderBrush}"
-                    CornerRadius="0,20,20,0"
-                    BorderThickness="4,0,0,0">
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="0,5,5,0"
+                            BorderThickness="5,0,0,0">
                         <ContentPresenter HorizontalAlignment="Left" 
-                                    VerticalAlignment="Center"
-                                    Margin="30,0,0,0"/>
+                                        VerticalAlignment="Center"
+                                        Margin="30,0,0,0"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Margin" Value="0,0,0,5"/>
-                            <Setter Property="Background" Value="#1E8CFB"/>
-                            <Setter Property="Foreground" Value="Black"/>
-                            <Setter Property="BorderBrush" Value="#03045e"/>
+                            <Setter Property="Background" Value="#FF16AAD2"/>
+                            <Setter Property="Foreground" Value="#d4ebf8"/>
+                            <Setter Property="BorderBrush" Value="#052342"/>
                         </Trigger>
 
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="Margin" Value="0,0,0,5"/>
-                            <Setter Property="Background" Value="#1E8CFB"/>
-                            <Setter Property="Foreground" Value="Black"/>
-                            <Setter Property="BorderBrush" Value="#03045e"/>
+                            <Setter Property="Background" Value="#FF16AAD2"/>
+                            <Setter Property="Foreground" Value="#d4ebf8"/>
+                            <Setter Property="BorderBrush" Value="#052342"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -77,8 +77,8 @@
         <Setter Property="Height" Value="40"/>
         <Setter Property="Width" Value="265" />
         <Setter Property="Margin" Value="-5,0,0,5" />
-        <Setter Property="Background" Value="#6CABEA"/>
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Background" Value="#FFA7D4EE"/>
+        <Setter Property="Foreground" Value="#00416a"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="Template">
@@ -86,8 +86,8 @@
                 <ControlTemplate TargetType="RadioButton">
                     <Border Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
-                            CornerRadius="0,20,20,0"
-                            BorderThickness="4,0,0,0">
+                            CornerRadius="0,5,5,0"
+                            BorderThickness="5,0,0,0">
                         <ContentPresenter HorizontalAlignment="Left" 
                                 VerticalAlignment="Center"
                                 Margin="20,0,0,0"/>
@@ -95,16 +95,16 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="Margin" Value="0,0,0,5"/>
-                            <Setter Property="Background" Value="#1E8CFB"/>
-                            <Setter Property="Foreground" Value="Black"/>
-                            <Setter Property="BorderBrush" Value="#03045e"/>
+                            <Setter Property="Background" Value="#FF16AAD2"/>
+                            <Setter Property="Foreground" Value="#d4ebf8"/>
+                            <Setter Property="BorderBrush" Value="#052342"/>
                         </Trigger>
 
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="Margin" Value="0,0,0,5"/>
-                            <Setter Property="Background" Value="#1E8CFB"/>
-                            <Setter Property="Foreground" Value="Black"/>
-                            <Setter Property="BorderBrush" Value="#03045e"/>
+                            <Setter Property="Background" Value="#FF16AAD2"/>
+                            <Setter Property="Foreground" Value="#d4ebf8"/>
+                            <Setter Property="BorderBrush" Value="#052342"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -181,10 +181,11 @@
         <Setter Property="FontFamily" Value="Inter" />
         <Setter Property="FontSize" Value="16" />
         <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="#FF03273E"/>
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Height" Value="40" />
-        <Setter Property="Background" Value="LightGray" />
+        <Setter Property="Background" Value="#a5d1e7" />
         <Setter Property="Width" Value="100" />
         <Setter Property="Template" >
             <Setter.Value>
@@ -200,7 +201,7 @@
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="Aqua" />
+                <Setter Property="Background" Value="#73a9c6" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -212,8 +213,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
-                    <Border Background="LightGray"
-
+                    <Border Background="#cfd8ef"
                             CornerRadius="5">
                         <TextBox Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}"
                                  Background="Transparent"
@@ -224,9 +224,6 @@
                                  FontSize="14"
                                  FontFamily="Inter"
                                  FontWeight="SemiBold"/>
-
-                 
-
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -236,6 +233,8 @@
     <!-- Child view textblock-->
     <Style x:Key="TextBlockStyle" TargetType="TextBlock">
         <Setter Property="FontSize" Value="20"/>
+        <!--<Setter Property="Foreground" Value="#FF03273E"/>-->
+        <Setter Property="Foreground" Value="Black" />
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="FontFamily" Value="Inter"/>
     </Style>

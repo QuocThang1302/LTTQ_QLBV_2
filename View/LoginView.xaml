@@ -42,9 +42,9 @@
             </Border.BorderBrush>
 
             <Border.Background>
-                <LinearGradientBrush Opacity="0.6">
-                    <GradientStop Color="#0077B6" Offset="0" />
-                    <GradientStop Color="#CAF0F8" Offset="0.6" />
+                <LinearGradientBrush Opacity="0.7">
+                    <GradientStop Color="#12c2e9" Offset="0" />
+                    <GradientStop Color="#bbadff" Offset="0.8" />
                 </LinearGradientBrush>
             </Border.Background>
 
@@ -151,10 +151,10 @@
                            Margin="0,5,0,0"/>
 
                     <TextBlock Text="   Mã nhân viên"
-                               Foreground="#000000"
+                               Foreground="#00416a"
                                FontSize="16"
                                FontWeight="Medium"
-                               FontFamily="Montserrat"
+                               FontFamily="Inter"
                                Margin="0, 35, 0, 0" />
 
                     <TextBox x:Name="txtID"
@@ -180,10 +180,10 @@
                     </TextBox>
 
                     <TextBlock Text="   Mật Khẩu"
-                               Foreground="#000000"
+                               Foreground="#00416a"
                                FontSize="16"
                                FontWeight="Medium"
-                               FontFamily="Montserrat"
+                               FontFamily="Inter"
                                Margin="0, 15, 0, 0" />
 
                     <customcontrols:BindablePasswordBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"

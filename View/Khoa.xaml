@@ -14,8 +14,8 @@
    
     <Grid>
         <Border Grid.Column="0"
-                Background="#CAF0F8"
-                BorderBrush="#0077B6"
+                Background="#d4ebf8"
+                BorderBrush="#00416a"
                 BorderThickness="10"
                 CornerRadius="10"
                 Padding="0"
@@ -34,7 +34,7 @@
                 <TextBlock Text="KHOA"
                            FontSize="50"
                            FontWeight="Bold"
-                           Foreground="DarkBlue"
+                           Foreground="#00416a"
                            HorizontalAlignment="Center"
                            Margin="0,30,0,10"
                            Grid.Row="0" />

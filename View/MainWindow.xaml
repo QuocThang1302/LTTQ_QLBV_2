@@ -31,8 +31,8 @@
                                 DockPanel.Dock="Top"
                                 Height="40"
                                 Margin="-5,0,0,5"
-                                Background="#6CABEA"
-                                Foreground="Black"
+                                Background="#FFA7D4EE"
+                                Foreground="#00416a"
                                 BorderBrush="Transparent"
                                 Click="HeaderButton_Click">
                                 <ContentPresenter ContentSource="Header" 
@@ -43,22 +43,22 @@
                                         <Border Background="{TemplateBinding Background}"
                                             BorderBrush="{TemplateBinding BorderBrush}"
                                             BorderThickness="4,0,0,0"
-                                            CornerRadius="0,20,20,0">
+                                            CornerRadius="0,5,5,0">
                                             <ContentPresenter VerticalAlignment="Center"/>
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter Property="Margin" Value="0,0,0,5"/>
-                                                <Setter Property="Background" Value="#1E8CFB"/>
-                                                <Setter Property="Foreground" Value="Black"/>
-                                                <Setter Property="BorderBrush" Value="#03045e"/>
+                                                <Setter Property="Background" Value="#FF16AAD2"/>
+                                                <Setter Property="Foreground" Value="#d4ebf8"/>
+                                                <Setter Property="BorderBrush" Value="#052342"/>
                                             </Trigger>
 
                                             <Trigger Property="IsChecked" Value="True">
                                                 <Setter Property="Margin" Value="0,0,0,5"/>
-                                                <Setter Property="Background" Value="#1E8CFB"/>
-                                                <Setter Property="Foreground" Value="Black"/>
-                                                <Setter Property="Background" Value="#03045e"/>
+                                                <Setter Property="Background" Value="#FF16AAD2"/>
+                                                <Setter Property="Foreground" Value="#d4ebf8"/>
+                                                <Setter Property="Background" Value="#052342"/>
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -150,30 +150,40 @@
 
             <Border CornerRadius="10,0,0,10"
                 Grid.Column="0"
-                Background="#C0E0FD">
+                Background="#00416a">
                 <StackPanel>
-                    <Image Source="/Images/hospital_logo.png"
-                       Width="140" Height="140" Stretch="Fill"
-                       Margin="0,20,0,0"/>
+                    <Border Width="140" Height="140"
+                            Background="Transparent"
+                            BorderThickness="1"
+                            BorderBrush="#d4ebf8"
+                            Margin="0,30,0,15"
+                            CornerRadius="90">
+                        <Image Source="/Images/hospital_logo.png"
+                               Stretch="Fill"
+                               Margin="0"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Width="180" Height="180"/>
+                    </Border>
 
                     <TextBlock Text="Tên bệnh viện"
                            FontSize="23"
-                           Foreground="Black"
-                           FontFamily="Montserrat"
+                           Foreground="#d4ebf8"
+                           FontFamily="Inter"
                            TextAlignment="Center"
                            Margin="0,5,0,30"/>
 
                     <Grid Height="Auto">
                         <ScrollViewer VerticalScrollBarVisibility="Hidden"
                                   HorizontalScrollBarVisibility="Disabled"
-                                  Height="465">
+                                  Height="440">
                             <StackPanel>
                                 <RadioButton Style="{StaticResource MenuButton}"
                                              Command="{Binding ShowTrangChuViewCommand}"
                                              IsChecked="True">
                                     <StackPanel Orientation="Horizontal">
-                                        <fa:IconImage Icon="Home" Style="{StaticResource MenuIcon}" />
-                                        <TextBlock Text="Trang chủ" Style="{StaticResource MenuText}" />
+                                        <fa:IconImage Icon="Home" Style="{StaticResource MenuIcon}"/>
+                                        <TextBlock Text="Trang chủ" Style="{StaticResource MenuText}"/>
                                     </StackPanel>
                                 </RadioButton>
 
@@ -304,13 +314,14 @@
             </Border>
 
             <Border CornerRadius="0,10,10,0"
-                Grid.Column="1">
-                <Border.Background>
+                    Grid.Column="1"
+                    Background="#d4ebf8">
+                <!--<Border.Background>
                     <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5, 1">
                         <GradientStop Color="#54CAE3" Offset="0" />
                         <GradientStop Color="White" Offset="1" />
                     </LinearGradientBrush>
-                </Border.Background>
+                </Border.Background>-->
 
                 <Grid>
                     <Grid.RowDefinitions>
@@ -362,13 +373,13 @@
                             <fa:IconImage Icon="{Binding Icon}"
                                       Height="30"
                                       Width="30"
-                                      Foreground="Black"
+                                      Foreground="#00416a"
                                       Margin="35,0,10,0" />
 
                             <TextBlock Text="{Binding Caption}"
-                                   Foreground="Black"
+                                   Foreground="#00416a"
                                    FontSize="16"
-                                   FontFamily="Montserrat"
+                                   FontFamily="Inter"
                                    FontWeight="Medium"
                                    VerticalAlignment="Center"/>
                         </StackPanel>
@@ -385,13 +396,13 @@
 
                             <TextBlock
                                    Text="Phan Ngoc Son"
-                                   Foreground="Black"
-                                   FontFamily="Montserrat"
+                                   Foreground="#00416a"
+                                   FontFamily="Inter"
                                    FontSize="16"
                                    VerticalAlignment="Center" />
 
                             <Ellipse Height="35" Width="35"
-                                 Stroke="Black"
+                                 Stroke="#00416a"
                                  StrokeThickness="1.5"
                                  Margin="10,0,10,0">
                                 <Ellipse.Fill>

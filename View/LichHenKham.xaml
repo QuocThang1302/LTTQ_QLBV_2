@@ -17,11 +17,11 @@
         <customControls:Search Margin="70,10,70,10"/>
 
         <Border Grid.Row="1"
-            Margin="25,10,25,5"
-            BorderThickness="2"
-            BorderBrush="Black"
-            Background="Transparent"
-            CornerRadius="10">
+                Margin="25,10,25,5"
+                BorderThickness="2"
+                BorderBrush="Black"
+                Background="Transparent"
+                CornerRadius="10">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -31,70 +31,70 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0"
-                       Style="{StaticResource TextBlockStyle}"
-                       Text="Thông tin lịch hẹn"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
-                       FontSize="28"/>
+                           Style="{StaticResource TextBlockStyle}"
+                           Text="Thông tin lịch hẹn"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           FontSize="28"/>
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="50,0,50,0">
                     <TextBlock Text="Mã lịch hẹn:"
-                           VerticalAlignment="Center"
-                           Style="{StaticResource TextBlockStyle}"/>
+                               VerticalAlignment="Center"
+                               Style="{StaticResource TextBlockStyle}"/>
 
                     <TextBox  x:Name="tbMaLichHen"
-                          Margin="48.5,0,20,0"
-                          Width="220"
-                          Style="{StaticResource TextBoxStyles}">
+                              Margin="48.5,0,20,0"
+                              Width="220"
+                              Style="{StaticResource TextBoxStyles}">
                     </TextBox>
 
                     <TextBlock Text="Ngày hẹn khám:"
-                           VerticalAlignment="Center"
-                           Margin="35,0,0,0"
-                           Style="{StaticResource TextBlockStyle}"/>
+                               VerticalAlignment="Center"
+                               Margin="35,0,0,0"
+                               Style="{StaticResource TextBlockStyle}"/>
 
                     <TextBox  x:Name="tbNgayHenKham"
-                          Margin="20,0,0,0"
-                          Width="211.5"
-                          Style="{StaticResource TextBoxStyles}">
+                              Margin="20,0,0,0"
+                              Width="211.5"
+                              Style="{StaticResource TextBoxStyles}">
                     </TextBox>
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="50,0,50,0">
                     <TextBlock Text="Mã bệnh nhân:"
-                           VerticalAlignment="Center"
-                           Style="{StaticResource TextBlockStyle}"/>
+                               VerticalAlignment="Center"
+                               Style="{StaticResource TextBlockStyle}"/>
 
                     <TextBox  x:Name="tbMaBenhNhan"
-                          Margin="22,0,20,0"
-                          Width="220"
-                          Style="{StaticResource TextBoxStyles}">
+                              Margin="22,0,20,0"
+                              Width="220"
+                              Style="{StaticResource TextBoxStyles}">
                     </TextBox>
 
                     <TextBlock Text="Mã bác sĩ:"
-                           VerticalAlignment="Center"
-                           Margin="35,0,0,0"
-                           Style="{StaticResource TextBlockStyle}"/>
+                               VerticalAlignment="Center"
+                               Margin="35,0,0,0"
+                               Style="{StaticResource TextBlockStyle}"/>
 
                     <TextBox  x:Name="tbMaBacSi"
-                          Margin="88.5,0,20,0"
-                          Width="211.5"
-                          Style="{StaticResource TextBoxStyles}">
+                              Margin="80,0,20,0"
+                              Width="211.5"
+                              Style="{StaticResource TextBoxStyles}">
                     </TextBox>
                 </StackPanel>
 
                 <StackPanel Grid.Row="3" Orientation="Horizontal" FlowDirection="RightToLeft">
                     <Button Style="{StaticResource childviewButton}" 
-                Margin="52,0,0,0"
-                Content="Xóa"/>
+                            Margin="52,0,0,0"
+                            Content="Xóa"/>
 
                     <Button Style="{StaticResource childviewButton}" 
-                Margin="52,0,0,0"
-                Content="Cập nhật"/>
+                            Margin="52,0,0,0"
+                            Content="Cập nhật"/>
 
                     <Button Style="{StaticResource childviewButton}" 
-                Margin="52,0,0,0"
-                Content="Đăng kí"/>
+                            Margin="52,0,0,0"
+                            Content="Đăng kí"/>
                 </StackPanel>
             </Grid>
         </Border>
@@ -102,17 +102,17 @@
         <Grid Grid.Row="2">
             <StackPanel Margin="25,10,25,10">
                 <TextBlock Text="Danh sách lịch hẹn"
-               FontSize="18"
-               FontWeight="Bold"
-               FontFamily="Inter"
-               VerticalAlignment="Center"
-               HorizontalAlignment="Center"/>
+                           FontSize="18"
+                           FontWeight="Bold"
+                           FontFamily="Inter"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"/>
 
                 <DataGrid AutoGenerateColumns="False" 
-              CanUserAddRows="False"
-              CanUserDeleteRows="False"
-              Margin="0,5,0,0"
-              Height="190">
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          Margin="0,5,0,0"
+                          Height="190">
                     <!-- Style cho header -->
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
@@ -120,7 +120,7 @@
                             <Setter Property="HorizontalContentAlignment" Value="Center" />
                             <Setter Property="FontFamily" Value="Inter"/>
                             <Setter Property="FontSize" Value="14" />
-                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="FontWeight" Value="Medium"/>
                             <Setter Property="Padding" Value="10"/>
                         </Style>
                     </DataGrid.ColumnHeaderStyle>
@@ -128,9 +128,14 @@
                     <!-- Style cho row -->
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
+                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                            <Setter Property="FontFamily" Value="Inter"/>
+                            <Setter Property="FontSize" Value="14" />
+                            <Setter Property="FontWeight" Value="Medium"/>
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="Gray"/>
+                                    <Setter Property="Background" Value="#d4ebf8"/>
+                                    <Setter Property="Foreground" Value ="#00416a"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -139,10 +144,14 @@
                     <!-- Style cho cell -->
                     <DataGrid.CellStyle>
                         <Style TargetType="DataGridCell">
+                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                            <Setter Property="FontFamily" Value="Inter"/>
+                            <Setter Property="FontSize" Value="14" />
                             <Setter Property="Padding" Value="5"/>
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="Gray"/>
+                                    <Setter Property="Background" Value="#d4ebf8"/>
+                                    <Setter Property="Foreground" Value ="#00416a"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
