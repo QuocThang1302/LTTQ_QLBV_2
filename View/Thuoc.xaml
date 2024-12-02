@@ -7,7 +7,7 @@
              xmlns:customControls="clr-namespace:QuanLyBenhVien.CustomControls"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
-             d:DesignHeight="628" d:DesignWidth="978">
+             d:DesignHeight="628" d:DesignWidth="978" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -109,15 +109,15 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="4" Orientation="Horizontal" FlowDirection="RightToLeft">
-                    <Button Style="{StaticResource childviewButton}" 
+                    <Button x:Name="btnXoa" Style="{StaticResource childviewButton}" 
                         Margin="52,0,0,0"
                         Content="Xóa"/>
 
-                    <Button Style="{StaticResource childviewButton}" 
+                    <Button x:Name="btnCapNhat" Style="{StaticResource childviewButton}" 
                         Margin="52,0,0,0"
                         Content="Cập nhật"/>
 
-                    <Button Style="{StaticResource childviewButton}" 
+                    <Button x:Name="btnThem" Style="{StaticResource childviewButton}" 
                         Margin="52,0,0,0"
                         Content="Thêm"/>
                 </StackPanel>
@@ -133,7 +133,7 @@
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center"/>
 
-                <DataGrid AutoGenerateColumns="False" 
+                <DataGrid x:Name="dgDanhSachThuoc" AutoGenerateColumns="False" 
                       CanUserAddRows="False"
                       CanUserDeleteRows="False"
                       Margin="0,5,0,0"
@@ -174,12 +174,12 @@
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Mã thuốc" Width="*"/>
-                        <DataGridTextColumn Header="Tên thuốc" Width="*"/>
-                        <DataGridTextColumn Header="Công dụng" Width="*"/>
-                        <DataGridTextColumn Header="Số lượng" Width="*"/>
-                        <DataGridTextColumn Header="Giá tiền" Width="*"/>
-                        <DataGridTextColumn Header="Hạn sử dụng" Width="*"/>
+                        <DataGridTextColumn Header="Mã thuốc" Width="*" Binding ="{Binding MaThuoc}"/>
+                        <DataGridTextColumn Header="Tên thuốc" Width="*" Binding ="{Binding TenThuoc}"/>
+                        <DataGridTextColumn Header="Công dụng" Width="*" Binding="{Binding CongDung}"/>
+                        <DataGridTextColumn Header="Số lượng" Width="*" Binding ="{Binding SoLuong}"/>
+                        <DataGridTextColumn Header="Giá tiền" Width="*"  Binding ="{Binding GiaTien}"/>
+                        <DataGridTextColumn Header="Hạn sử dụng" Width="*" Binding ="{Binding HanSuDung}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
