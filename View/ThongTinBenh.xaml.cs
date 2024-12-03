@@ -26,9 +26,70 @@ namespace QuanLyBenhVien.View
         public ThongTinBenh()
         {
             InitializeComponent();
+            searchControl.Tmp = "Nhập mã bệnh hoặc tên bệnh";
+            // Đăng ký sự kiện SearchButtonClicked
+            searchControl.SearchButtonClicked += SearchControl_SearchButtonClicked;
         }
+        private void SearchControl_SearchButtonClicked(object sender, string searchText)
+        {
+            string maBenh = searchText.Trim();
 
-        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+            if (string.IsNullOrEmpty(maBenh))
+            {
+                MessageBox.Show("Vui lòng nhập dữ liệu!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                dgDanhSachBenh.ItemsSource = null; // Xóa dữ liệu trong DataGrid
+                return;
+            }
+
+            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+
+            // Câu lệnh SQL để tìm kiếm thông tin bệnh
+            string query = "SELECT * FROM Benh WHERE MaBenh=@MaBenh OR TenBenh=@MaBenh";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@MaBenh", maBenh);
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataTable dataTable = new DataTable();
+                    adapter.Fill(dataTable);
+
+                    if (dataTable.Rows.Count == 0)
+                    {
+                        MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ClearTextBoxes(); // Xóa TextBox
+                        dgDanhSachBenh.ItemsSource = null; // Xóa dữ liệu trong DataGrid
+                    }
+                    else if (dataTable.Rows.Count == 1)
+                    {
+                        // Hiển thị thông tin lên TextBox
+                        DataRow row = dataTable.Rows[0];
+                        tbMaBenh.Text = row["MaBenh"].ToString();
+                        tbBenh.Text = row["TenBenh"].ToString();
+                        tbMoTa.Text = row["MoTa"].ToString();
+                        tbTrieuChung.Text = row["TrieuChung"].ToString();
+
+                        // Hiển thị dữ liệu vào DataGrid
+                        dgDanhSachBenh.ItemsSource = dataTable.DefaultView;
+                    }
+                    else
+                    {
+                        // Nếu có nhiều kết quả, chỉ hiển thị vào DataGrid
+                        ClearTextBoxes(); // Xóa TextBox
+                        dgDanhSachBenh.ItemsSource = dataTable.DefaultView;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;

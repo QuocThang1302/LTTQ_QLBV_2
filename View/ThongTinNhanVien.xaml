@@ -15,7 +15,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <customControls:Search Margin="70,10,70,10"/>
+        <customControls:Search x:Name="searchControl" Margin="70,10,70,10"/>
 
         <Border Grid.Row="1"
                 Margin="25,10,25,5"
@@ -124,7 +124,7 @@
                            FontFamily="Inter"
                            HorizontalAlignment="Center"/>
 
-                <DataGrid AutoGenerateColumns="False" 
+                <DataGrid x:Name="dgvNhanVien" AutoGenerateColumns="False" 
                           CanUserAddRows="False"
                           CanUserDeleteRows="False"
                           Margin="0,5,0,0"
@@ -174,17 +174,17 @@
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Mã nhân viên" Width="1.3*"/>
-                        <DataGridTextColumn Header="Họ, tên đệm" Width="1.2*"/>
-                        <DataGridTextColumn Header="Tên" Width="0.5*"/>
-                        <DataGridTextColumn Header="Chức vụ" Width="*"/>
-                        <DataGridTextColumn Header="Chuyên ngành" Width="1.4*"/>
-                        <DataGridTextColumn Header="Giới tính" Width="*"/>
-                        <DataGridTextColumn Header="CCCD" Width="*"/>
-                        <DataGridTextColumn Header="SDT" Width="0.6*"/>
-                        <DataGridTextColumn Header="Ngày sinh" Width="*"/>
-                        <DataGridTextColumn Header="Email" Width="*"/>
-                        <DataGridTextColumn Header="Địa chỉ" Width="*"/>
+                        <DataGridTextColumn Header="Mã nhân viên" Binding="{Binding MaNhanVien}" Width="1.3*"/>
+                        <DataGridTextColumn Header="Họ, tên đệm" Binding="{Binding HoTenDem}" Width="1.2*"/>
+                        <DataGridTextColumn Header="Tên" Binding="{Binding Ten}" Width="0.5*"/>
+                        <DataGridTextColumn Header="Chức vụ" Binding="{Binding ChucVu}" Width="*"/>
+                        <DataGridTextColumn Header="Chuyên ngành" Binding="{Binding ChuyenNganh}" Width="1.4*"/>
+                        <DataGridTextColumn Header="Giới tính" Binding="{Binding GioiTinh}" Width="*"/>
+                        <DataGridTextColumn Header="CCCD" Binding="{Binding CCCD}" Width="*"/>
+                        <DataGridTextColumn Header="SDT" Binding="{Binding SDT}" Width="0.6*"/>
+                        <DataGridTextColumn Header="Ngày sinh" Binding="{Binding NgaySinh}" Width="*"/>
+                        <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"/>
+                        <DataGridTextColumn Header="Địa chỉ" Binding="{Binding DiaChi}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

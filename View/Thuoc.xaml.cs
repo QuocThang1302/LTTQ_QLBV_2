@@ -26,8 +26,84 @@ namespace QuanLyBenhVien.View
         public Thuoc()
         {
             InitializeComponent();
+            searchControl.Tmp = "Nhập mã thuốc hoặc tên thuốc";
+            // Đăng ký sự kiện SearchButtonClicked
+            searchControl.SearchButtonClicked += SearchControl_SearchButtonClicked;
         }
-        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+        private void SearchControl_SearchButtonClicked(object sender, string searchText)
+        {
+            string maThuoc = searchText.Trim();
+
+            if (string.IsNullOrEmpty(maThuoc))
+            {
+                MessageBox.Show("Vui lòng nhập dữ liệu!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                dgDanhSachThuoc.ItemsSource = null; // Xóa dữ liệu trong DataGrid
+                ClearFields();
+                return;
+            }
+
+            // Chuỗi kết nối tới cơ sở dữ liệu
+            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+
+            // Câu lệnh SQL để tìm kiếm thông tin thuốc
+            string query = "SELECT * FROM Thuoc WHERE MaThuoc = @MaThuoc OR TenThuoc=@MaThuoc";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@MaThuoc", maThuoc);
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataTable dataTable = new DataTable();
+                    adapter.Fill(dataTable);
+
+                    if (dataTable.Rows.Count == 0)
+                    {
+                        MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ClearFields(); // Xóa các TextBox
+                        dgDanhSachThuoc.ItemsSource = null; // Xóa dữ liệu trong DataGrid
+                    }
+                    else if (dataTable.Rows.Count == 1)
+                    {
+                        // Hiển thị thông tin lên các TextBox
+                        DataRow row = dataTable.Rows[0];
+                        tbMaThuoc.Text = row["MaThuoc"].ToString();
+                        tbThuoc.Text = row["TenThuoc"].ToString();
+                        tbCongDung.Text = row["CongDung"].ToString();
+                        tbSoLuong.Text = row["SoLuong"].ToString();
+                        tbGiaTien.Text = row["GiaTien"].ToString();
+                        tbHSD.Text = Convert.ToDateTime(row["HanSuDung"]).ToString("yyyy-MM-dd");
+
+                        // Xóa dữ liệu trong DataGrid nếu chỉ có một kết quả
+                        dgDanhSachThuoc.ItemsSource = dataTable.DefaultView;
+                    }
+                    else
+                    {
+                        // Nếu có nhiều kết quả, chỉ hiển thị vào DataGrid
+                        ClearFields(); // Xóa các TextBox
+                        dgDanhSachThuoc.ItemsSource = dataTable.DefaultView;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void ClearFields()
+        {
+            tbMaThuoc.Text = "";
+            tbThuoc.Text = "";
+            tbCongDung.Text = "";
+            tbSoLuong.Text = "";
+            tbGiaTien.Text = "";
+            tbHSD.Text = "";
+        }
+        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;

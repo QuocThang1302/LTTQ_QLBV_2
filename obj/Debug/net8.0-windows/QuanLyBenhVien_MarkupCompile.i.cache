@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\LTTQ\DCMMMMMMMMMMMMM\LTTQ_QLBV_2\obj\Debug\net8.0-windows\
+D:\Dowload\LTTQ3\LTTQ_QLBV_2\obj\Debug\net8.0-windows\
 QuanLyBenhVien
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
-D:\LTTQ\DCMMMMMMMMMMMMM\LTTQ_QLBV_2\App.xaml
-17-1074267588
+D:\Dowload\LTTQ3\LTTQ_QLBV_2\App.xaml
+231626788371
 
-302102467960
-225-1913974820
-CustomControls\BindablePasswordBox.xaml;CustomControls\Search.xaml;Styles\ButtonStyles.xaml;View\BenhAn.xaml;View\ChuyenNganh.xaml;View\CTHD.xaml;View\DonThuoc_CTHD.xaml;View\HoaDon.xaml;View\Khoa.xaml;View\LoginView.xaml;View\MainWindow.xaml;View\PhieuKhamBenh.xaml;View\ThongTinBenh.xaml;View\ThongTinBenhNhan.xaml;View\ThongTinNhanVien.xaml;View\Thuoc.xaml;View\VatDung.xaml;
+49-1683041566
+2251997028307
+CustomControls\BindablePasswordBox.xaml;CustomControls\Search.xaml;Styles\ButtonStyles.xaml;View\BenhAn.xaml;View\ChuyenNganh.xaml;View\CTHD.xaml;View\DonThuoc.xaml;View\DonThuoc_CTHD.xaml;View\HoaDon.xaml;View\Khoa.xaml;View\Khoa_ChuyenNganh.xaml;View\LichHenKham.xaml;View\LichTruc.xaml;View\LoginView.xaml;View\MainWindow.xaml;View\PhanCong.xaml;View\PhieuKhamBenh.xaml;View\ThongTinBenh.xaml;View\ThongTinBenhNhan.xaml;View\ThongTinNhanVien.xaml;View\Thuoc.xaml;View\TrangChu.xaml;View\VatDung.xaml;
 
 True
 

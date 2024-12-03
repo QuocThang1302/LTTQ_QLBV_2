@@ -14,7 +14,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <customControls:Search Margin="70,10,70,10"/>
+        <customControls:Search x:Name="searchControl" Margin="70,10,70,10"/>
 
         <Border Grid.Row="1"
                 Margin="25,10,25,5"
@@ -108,7 +108,7 @@
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"/>
 
-                <DataGrid AutoGenerateColumns="False" 
+                <DataGrid x:Name="dgvLichHen" AutoGenerateColumns="False" 
                           CanUserAddRows="False"
                           CanUserDeleteRows="False"
                           Margin="0,5,0,0"
@@ -158,10 +158,10 @@
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Mã lịch hẹn" Width="*"/>
-                        <DataGridTextColumn Header="Mã bệnh nhân" Width="*"/>
-                        <DataGridTextColumn Header="Mã bác sĩ" Width="*"/>
-                        <DataGridTextColumn Header="Ngày hẹn khám" Width="*"/>
+                        <DataGridTextColumn Header="Mã lịch hẹn" Binding="{Binding MaLichHen}" Width="*"/>
+                        <DataGridTextColumn Header="Mã bệnh nhân" Binding="{Binding MaBenhNhan}" Width="*"/>
+                        <DataGridTextColumn Header="Mã bác sĩ" Binding="{Binding MaBacSi}" Width="*"/>
+                        <DataGridTextColumn Header="Ngày hẹn khám" Binding="{Binding NgayHenKham}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

@@ -15,7 +15,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <customControls:Search Margin="70,10,70,10"/>
+        <customControls:Search x:Name ="searchControl" Margin="70,10,70,10"/>
 
         <Border Grid.Row="1"
               Margin="25,10,25,5"
@@ -112,7 +112,7 @@
                              FontFamily="Inter"
                              HorizontalAlignment="Center"/>
 
-                <DataGrid AutoGenerateColumns="False" 
+                <DataGrid x:Name="dgvBenhAn" AutoGenerateColumns="False" 
                         CanUserAddRows="False"
                         CanUserDeleteRows="False"
                         Margin="0,5,0,0"
@@ -162,13 +162,13 @@
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Mã bệnh án" Width="*"/>
-                        <DataGridTextColumn Header="Mã bệnh nhân" Width="*"/>
-                        <DataGridTextColumn Header="Bệnh nhân" Width="*"/>
-                        <DataGridTextColumn Header="Ngày tạo lập" Width="*"/>
-                        <DataGridTextColumn Header="Tình trạng" Width="*"/>
-                        <DataGridTextColumn Header="Bệnh" Width="*"/>
-                        <DataGridTextColumn Header="Hướng điều trị" Width="1.5*"/>
+                        <DataGridTextColumn Header="Mã bệnh án" Binding="{Binding MaBenhAn}" Width="*"/>
+                        <DataGridTextColumn Header="Mã bệnh nhân" Binding="{Binding MaBenhNhan}" Width="*"/>
+                        <DataGridTextColumn Header="Bệnh nhân" Binding="{Binding Ten}" Width="*"/>
+                        <DataGridTextColumn Header="Ngày tạo lập" Binding="{Binding NgayTaoLap, StringFormat='dd/MM/yyyy'}" Width="*"/>
+                        <DataGridTextColumn Header="Tình trạng" Binding="{Binding TinhTrang}" Width="*"/>
+                        <DataGridTextColumn Header="Bệnh" Binding="{Binding Benh}" Width="*"/>
+                        <DataGridTextColumn Header="Hướng điều trị" Binding="{Binding HuongDieuTri}" Width="1.5*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

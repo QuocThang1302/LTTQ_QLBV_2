@@ -26,6 +26,76 @@ namespace QuanLyBenhVien.View
         public ThongTinBenhNhan()
         {
             InitializeComponent();
+            searchControl.Tmp = "Nhập mã bệnh nhân hoặc tên bệnh nhân";
+            // Đăng ký sự kiện SearchButtonClicked
+            searchControl.SearchButtonClicked += SearchControl_SearchButtonClicked;
+        }
+        private void SearchControl_SearchButtonClicked(object sender, string searchText)
+        {
+            string maBenhNhan = searchText.Trim();
+
+            if (string.IsNullOrEmpty(maBenhNhan))
+            {
+                MessageBox.Show("Vui lòng nhập dữ liệu!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                dgDanhSachBenhNhan.ItemsSource = null; // Xóa dữ liệu trong DataGrid
+                return;
+            }
+
+            // Chuỗi kết nối tới cơ sở dữ liệu
+            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+
+            // Câu lệnh SQL để tìm kiếm thông tin bệnh nhân
+            string query = "SELECT * FROM BenhNhan WHERE MaBenhNhan=@MaBenhNhan OR Ten=@MaBenhNhan";
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@MaBenhNhan", maBenhNhan);
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    DataTable dataTable = new DataTable();
+                    adapter.Fill(dataTable);
+
+                    if (dataTable.Rows.Count == 0)
+                    {
+                        MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                        CLearTextBoxes(); // Xóa các TextBox
+                        dgDanhSachBenhNhan.ItemsSource = null; // Xóa dữ liệu trong DataGrid
+                    }
+                    else if (dataTable.Rows.Count == 1)
+                    {
+                        // Hiển thị thông tin lên TextBox
+                        DataRow row = dataTable.Rows[0];
+                        txtMaBenhNhan.Text = row["MaBenhNhan"].ToString();
+                        txtHo.Text = row["Ho"].ToString();
+                        txtTen.Text = row["Ten"].ToString();
+                        txtNgaySinh.Text = Convert.ToDateTime(row["NgaySinh"]).ToString("yyyy-MM-dd");
+                        txtGioiTinh.Text = row["GioiTinh"].ToString();
+                        txtCCCD.Text = row["CCCD"].ToString();
+                        txtNgheNghiep.Text = row["NgheNghiep"].ToString();
+                        txtDiaChi.Text = row["DiaChi"].ToString();
+                        txtSDT.Text = row["SDT"].ToString();
+                        txtEmail.Text = row["Email"].ToString();
+                        txtKhoa.Text = row["MaKhoa"].ToString();
+
+                        // Hiển thị dữ liệu vào DataGrid
+                        dgDanhSachBenhNhan.ItemsSource = dataTable.DefaultView;
+                    }
+                    else
+                    {
+                        // Nếu có nhiều kết quả, chỉ hiển thị vào DataGrid
+                        CLearTextBoxes(); // Xóa các TextBox
+                        dgDanhSachBenhNhan.ItemsSource = dataTable.DefaultView;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void CLearTextBoxes()
         {
@@ -41,7 +111,7 @@ namespace QuanLyBenhVien.View
             txtTen.Clear();
             txtNgaySinh.Clear();
         }
-        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;

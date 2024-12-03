@@ -15,9 +15,9 @@
             <RowDefinition Height="0.18*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <customControls:Search Margin="70,15,70,15"/>
+        <customControls:Search x:Name="searchControl" Margin="70,15,70,15"/>
 
-        <DataGrid Grid.Row="1"
+        <DataGrid x:Name="dgvHoaDon" Grid.Row="1"
               AutoGenerateColumns="False" 
               CanUserAddRows="False"
               CanUserDeleteRows="False"
@@ -68,13 +68,13 @@
             </DataGrid.CellStyle>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Mã hóa đơn" Width="*"/>
-                <DataGridTextColumn Header="Tên hóa đơn" Width="*"/>
-                <DataGridTextColumn Header="Mã bệnh nhân" Width="1.1*"/>
-                <DataGridTextColumn Header="Mã nhân viên" Width="*"/>
-                <DataGridTextColumn Header="Ngày lập" Width="*"/>
-                <DataGridTextColumn Header="Thành tiền" Width="*"/>
-                <DataGridTextColumn Header="Trạng thái" Width="*"/>
+                <DataGridTextColumn Header="Mã hóa đơn" Binding="{Binding MaHoaDon}" Width="*"/>
+                <DataGridTextColumn Header="Tên hóa đơn" Binding="{Binding TenHoaDon}" Width="*"/>
+                <DataGridTextColumn Header="Mã bệnh nhân" Binding="{Binding MaBenhNhan}" Width="1.1*"/>
+                <DataGridTextColumn Header="Mã nhân viên" Binding="{Binding MaNhanVien}" Width="*"/>
+                <DataGridTextColumn Header="Ngày lập" Binding="{Binding NgayLapHoaDon}" Width="*"/>
+                <DataGridTextColumn Header="Thành tiền" Binding="{Binding GiaTien}" Width="*"/>
+                <DataGridTextColumn Header="Trạng thái" Binding="{Binding TrangThai}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
 
