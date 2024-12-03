@@ -40,7 +40,7 @@ namespace QuanLyBenhVien.View
             if (string.IsNullOrEmpty(maPhieuKham))
             {
                 MessageBox.Show("Vui lòng nhập dữ liệu!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                dgvPhieuKham.ItemsSource = null; // Xóa dữ liệu trong DataGrid
+                dgDanhSach.ItemsSource = null; // Xóa dữ liệu trong DataGrid
                 ClearFields();
                 return;
             }
@@ -86,32 +86,32 @@ namespace QuanLyBenhVien.View
                     {
                         MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                         ClearFields(); // Xóa TextBox
-                        dgvPhieuKham.ItemsSource = null; // Xóa dữ liệu trong DataGrid
+                        dgDanhSach.ItemsSource = null; // Xóa dữ liệu trong DataGrid
                     }
                     else if (dataTable.Rows.Count == 1)
                     {
                         // Hiển thị thông tin lên TextBox
                         DataRow row = dataTable.Rows[0];
-                        TxB_MaPhieu.Text = row["MaPhieuKham"].ToString();
-                        TxB_MaBenhNhan.Text = row["MaBenhNhan"].ToString();
-                        TxB_BenhNhan.Text = row["TEN_BENHNHAN"].ToString();
-                        TxB_BacSi.Text = row["TEN_BACSI"].ToString();
-                        TxB_NgayKham.Text = Convert.ToDateTime(row["NgayKham"]).ToString("yyyy-MM-dd");
-                        TxB_LyDoKham.Text = row["LyDoKhamBenh"].ToString();
-                        TxB_KhamLamSan.Text = row["KhamLamSang"].ToString();
-                        TxB_ChuanDoan.Text = row["ChanDoan"].ToString();
-                        TxB_KetQua.Text = row["KetQuaKham"].ToString();
-                        TxB_DieuTri.Text = row["DieuTri"].ToString();
-                        TxB_MaBacSi.Text = row["MaBacSi"].ToString();
+                        txtMaPhieu.Text = row["MaPhieuKham"].ToString();
+                        txtMaBenhNhan.Text = row["MaBenhNhan"].ToString();
+                        txtBenhNhan.Text = row["TEN_BENHNHAN"].ToString();
+                        txtBacSi.Text = row["TEN_BACSI"].ToString();
+                        txtNgayKham.Text = Convert.ToDateTime(row["NgayKham"]).ToString("yyyy-MM-dd");
+                        txtLyDoKham.Text = row["LyDoKhamBenh"].ToString();
+                        txtKhamLamSan.Text = row["KhamLamSang"].ToString();
+                        txtChuanDoan.Text = row["ChanDoan"].ToString();
+                        txtKetQua.Text = row["KetQuaKham"].ToString();
+                        txtDieuTri.Text = row["DieuTri"].ToString();
+                        txtMaBacSi.Text = row["MaBacSi"].ToString();
 
                         // Hiển thị dữ liệu vào DataGrid
-                        dgvPhieuKham.ItemsSource = dataTable.DefaultView;
+                        dgDanhSach.ItemsSource = dataTable.DefaultView;
                     }
                     else
                     {
                         // Nếu có nhiều kết quả, chỉ hiển thị vào DataGrid
                         ClearFields(); // Xóa TextBox
-                        dgvPhieuKham.ItemsSource = dataTable.DefaultView;
+                        dgDanhSach.ItemsSource = dataTable.DefaultView;
                     }
                 }
             }
@@ -139,17 +139,17 @@ namespace QuanLyBenhVien.View
 
         private void ClearFields()
         {
-            TxB_MaPhieu.Text = "";
-            TxB_MaBenhNhan.Text = "";
-            TxB_NgayKham.Text = "";
-            TxB_LyDoKham.Text = "";
-            TxB_KhamLamSan.Text = "";
-            TxB_ChuanDoan.Text = "";
-            TxB_KetQua.Text = "";
-            TxB_DieuTri.Text = "";
-            TxB_MaBacSi.Text = "";
-            TxB_BenhNhan.Text = "";
-            TxB_BacSi.Text = "";
+            txtMaPhieu.Text = "";
+            txtMaBenhNhan.Text = "";
+            txtNgayKham.Text = "";
+            txtLyDoKham.Text = "";
+            txtKhamLamSan.Text = "";
+            txtChuanDoan.Text = "";
+            txtKetQua.Text = "";
+            txtDieuTri.Text = "";
+            txtMaBacSi.Text = "";
+            txtBenhNhan.Text = "";
+            txtBacSi.Text = "";
         }
 
         private void HienThiDanhSach()

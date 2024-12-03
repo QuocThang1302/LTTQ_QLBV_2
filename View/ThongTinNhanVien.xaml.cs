@@ -223,7 +223,7 @@ namespace QuanLyBenhVien.View
             if (string.IsNullOrEmpty(maNhanVien))
             {
                 MessageBox.Show("Vui lòng nhập dữ liệu!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                dgvNhanVien.ItemsSource = null; // Xóa dữ liệu trong DataGrid
+                dgDanhSachNhanVien.ItemsSource = null; // Xóa dữ liệu trong DataGrid
                 ClearFields();
                 return;
             }
@@ -250,34 +250,34 @@ namespace QuanLyBenhVien.View
                     {
                         MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                         ClearFields(); // Xóa các TextBox
-                        dgvNhanVien.ItemsSource = null; // Xóa dữ liệu trong DataGrid
+                        dgDanhSachNhanVien.ItemsSource = null; // Xóa dữ liệu trong DataGrid
                     }
                     else if (dataTable.Rows.Count == 1)
                     {
                         // Hiển thị thông tin lên các TextBox
                         DataRow row = dataTable.Rows[0];
-                        TxB_MaNhanVien.Text = row["MaNhanVien"].ToString();
+                        txtMaNhanVien.Text = row["MaNhanVien"].ToString();
                         string ho = row["Ho"].ToString();
                         string ten = row["Ten"].ToString();
-                        TxB_HoTen.Text = ho + " " + ten; // Hiển thị họ và tên đầy đủ
-                        TxB_Ten.Text = ten;
-                        TxB_ChuyenNganh.Text = row["MaChuyenNganh"].ToString();
-                        TxB_ChucVu.Text = row["LoaiNhanVien"].ToString();
-                        TxB_NgaySinh.Text = Convert.ToDateTime(row["NgaySinh"]).ToString("yyyy-MM-dd");
-                        TxB_GioiTinh.Text = row["GioiTinh"].ToString();
-                        TxB_CCCD.Text = row["CCCD"].ToString();
-                        TxB_DiaChi.Text = row["DiaChi"].ToString();
-                        TxB_SDT.Text = row["SDT"].ToString();
-                        TxB_Email.Text = row["Email"].ToString();
+                        txtHo.Text = ho + " " + ten; // Hiển thị họ và tên đầy đủ
+                        txtTen.Text = ten;
+                        txtChuyenNganh.Text = row["MaChuyenNganh"].ToString();
+                        txtChucVu.Text = row["LoaiNhanVien"].ToString();
+                        txtNgaySinh.Text = Convert.ToDateTime(row["NgaySinh"]).ToString("yyyy-MM-dd");
+                        txtGioiTinh.Text = row["GioiTinh"].ToString();
+                        txtCCCD.Text = row["CCCD"].ToString();
+                        txtDiaChi.Text = row["DiaChi"].ToString();
+                        txtSDT.Text = row["SDT"].ToString();
+                        txtEmail.Text = row["Email"].ToString();
 
                         // Xóa dữ liệu trong DataGrid nếu chỉ có một kết quả
-                        dgvNhanVien.ItemsSource = dataTable.DefaultView;
+                        dgDanhSachNhanVien.ItemsSource = dataTable.DefaultView;
                     }
                     else
                     {
                         // Nếu có nhiều kết quả, chỉ hiển thị vào DataGrid
                         ClearFields(); // Xóa các TextBox
-                        dgvNhanVien.ItemsSource = dataTable.DefaultView;
+                        dgDanhSachNhanVien.ItemsSource = dataTable.DefaultView;
                     }
                 }
             }
@@ -289,17 +289,17 @@ namespace QuanLyBenhVien.View
 
         private void ClearFields()
         {
-            TxB_MaNhanVien.Text = "";
-            TxB_HoTen.Text = "";
-            TxB_Ten.Text = "";
-            TxB_ChuyenNganh.Text = "";
-            TxB_ChucVu.Text = "";
-            TxB_NgaySinh.Text = "";
-            TxB_GioiTinh.Text = "";
-            TxB_DiaChi.Text = "";
-            TxB_SDT.Text = "";
-            TxB_Email.Text = "";
-            TxB_CCCD.Text = "";
+            txtMaNhanVien.Text = "";
+            txtHo.Text = "";
+            txtTen.Text = "";
+            txtChuyenNganh.Text = "";
+            txtChucVu.Text = "";
+            txtNgaySinh.Text = "";
+            txtGioiTinh.Text = "";
+            txtDiaChi.Text = "";
+            txtSDT.Text = "";
+            txtEmail.Text = "";
+            txtCCCD.Text = "";
         }
     }
 }
