@@ -110,17 +110,17 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="4" Orientation="Horizontal" FlowDirection="RightToLeft">
-                    <Button Style="{StaticResource childviewButton}" 
+                    <Button x:Name="btnXoa" Style="{StaticResource childviewButton}" 
                             Margin="52,0,0,0"
-                            Content="Xóa"/>
+                            Content="Xóa" Click="btnXoa_Click"/>
 
-                    <Button Style="{StaticResource childviewButton}" 
+                    <Button x:Name="btnCapNhat" Style="{StaticResource childviewButton}" 
                             Margin="52,0,0,0"
-                            Content="Cập nhật"/>
+                            Content="Cập nhật" Click="btnCapNhat_Click"/>
 
-                    <Button Style="{StaticResource childviewButton}" 
+                    <Button  Style="{StaticResource childviewButton}" 
                             Margin="52,0,0,0"
-                            Content="Thêm"/>
+                            Content="Thêm" Click="Button_Click"/>
                 </StackPanel>
             </Grid>
         </Border>

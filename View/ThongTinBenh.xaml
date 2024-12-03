@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:QuanLyBenhVien.View"
              xmlns:customControls="clr-namespace:QuanLyBenhVien.CustomControls"
              mc:Ignorable="d" 
-             d:DesignHeight="628" d:DesignWidth="978">
+             d:DesignHeight="628" d:DesignWidth="978" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -86,17 +86,17 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="4" Orientation="Horizontal" FlowDirection="RightToLeft">
-                    <Button Style="{StaticResource childviewButton}" 
+                    <Button x:Name="btnXoa" Style="{StaticResource childviewButton}" 
                             Margin="52,0,0,0"
-                            Content="Xóa"/>
+                            Content="Xóa" Click="btnXoa_Click"/>
 
-                    <Button Style="{StaticResource childviewButton}" 
+                    <Button x:Name="btnCapNhat" Style="{StaticResource childviewButton}" 
                             Margin="52,0,0,0"
-                            Content="Cập nhật"/>
+                            Content="Cập nhật" Click="btnCapNhat_Click"/>
 
-                    <Button Style="{StaticResource childviewButton}" 
+                    <Button x:Name="btnThem" Style="{StaticResource childviewButton}" 
                             Margin="52,0,0,0"
-                            Content="Thêm"/>
+                            Content="Thêm" Click="btnThem_Click"/>
                 </StackPanel>
             </Grid>
         </Border>
@@ -110,11 +110,11 @@
                            VerticalAlignment="Center"
                            HorizontalAlignment="Center"/>
 
-                <DataGrid AutoGenerateColumns="False" 
+                <DataGrid x:Name="dgDanhSachBenh" AutoGenerateColumns="False" 
                           CanUserAddRows="False"
                           CanUserDeleteRows="False"
                           Margin="0,5,0,0"
-                          Height="172">
+                          Height="172" SelectionChanged="dgDanhSachBenh_SelectionChanged">
                     <!-- Style cho header -->
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
@@ -160,10 +160,10 @@
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Mã bệnh" Width="*"/>
-                        <DataGridTextColumn Header="Tên bệnh" Width="*"/>
-                        <DataGridTextColumn Header="Mô tả" Width="*"/>
-                        <DataGridTextColumn Header="Triệu chứng" Width="*"/>
+                        <DataGridTextColumn Header="Mã bệnh" Width="*" Binding="{Binding MaBenh}"/>
+                        <DataGridTextColumn Header="Tên bệnh" Width="*" Binding="{Binding TenBenh}"/>
+                        <DataGridTextColumn Header="Mô tả" Width="*" Binding="{Binding MoTa}"/>
+                        <DataGridTextColumn Header="Triệu chứng" Width="*" Binding="{Binding TrieuChung}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
