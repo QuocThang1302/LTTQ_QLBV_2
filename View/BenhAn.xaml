@@ -18,11 +18,11 @@
         <customControls:Search Margin="70,10,70,10"/>
 
         <Border Grid.Row="1"
-      Margin="25,10,25,5"
-      BorderThickness="2"
-      BorderBrush="Black"
-      Background="Transparent"
-      CornerRadius="10">
+              Margin="25,10,25,5"
+              BorderThickness="2"
+              BorderBrush="Black"
+              Background="Transparent"
+              CornerRadius="10">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -41,13 +41,12 @@
                         <ColumnDefinition></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.ColumnSpan="2">
-                        <TextBlock 
-                         Text="Hồ sơ bệnh án"
-                         VerticalAlignment="Center"
-                         HorizontalAlignment="Center"
-                         FontSize="28"
-                         FontWeight="Bold"
-                         FontFamily="Inter"/>
+                        <TextBlock Text="Hồ sơ bệnh án"
+                                     VerticalAlignment="Center"
+                                     HorizontalAlignment="Center"
+                                     FontSize="28"
+                                     FontWeight="Bold"
+                                     FontFamily="Inter"/>
                     </Grid>
                     <StackPanel Grid.Row="1">
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
@@ -87,6 +86,7 @@
                 </Grid>
 
                 <StackPanel Grid.Row="1" Orientation="Horizontal" FlowDirection="RightToLeft">
+
                     <Button x:Name="btnXoa" Style="{StaticResource childviewButton}" 
                   Margin="52,0,0,0"
                   Content="Xóa" Click="btnXoa_Click"/>
@@ -98,6 +98,7 @@
                     <Button x:Name="btnThem" Style="{StaticResource childviewButton}" 
                   Margin="52,0,0,0"
                   Content="Thêm" Click="btnThem_Click"/>
+
                 </StackPanel>
             </Grid>
         </Border>
@@ -105,16 +106,18 @@
         <Grid Grid.Row="2">
             <StackPanel Margin="25,10,25,10">
                 <TextBlock Text="Danh sách bệnh án"
-                 FontSize="18"
-                 FontWeight="Bold"
-                 FontFamily="Inter"
-                 HorizontalAlignment="Center"/>
+                             FontSize="18"
+                             FontWeight="Bold"
+                             FontFamily="Inter"
+                             HorizontalAlignment="Center"/>
+
 
                 <DataGrid x:Name="dgDanhSachBenhAn" AutoGenerateColumns="False" 
                 CanUserAddRows="False"
                 CanUserDeleteRows="False"
                 Margin="0,5,0,0"
                 Height="170" SelectionChanged="dgDanhSachBenhAn_SelectionChanged">
+
                     <!-- Style cho header -->
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
@@ -122,7 +125,7 @@
                             <Setter Property="HorizontalContentAlignment" Value="Center" />
                             <Setter Property="FontFamily" Value="Inter"/>
                             <Setter Property="FontSize" Value="14" />
-                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="FontWeight" Value="Medium"/>
                             <Setter Property="Padding" Value="10"/>
                         </Style>
                     </DataGrid.ColumnHeaderStyle>
@@ -130,9 +133,14 @@
                     <!-- Style cho row -->
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
+                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                            <Setter Property="FontFamily" Value="Inter"/>
+                            <Setter Property="FontSize" Value="14" />
+                            <Setter Property="FontWeight" Value="Medium"/>
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="Gray"/>
+                                    <Setter Property="Background" Value="#d4ebf8"/>
+                                    <Setter Property="Foreground" Value ="#00416a"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -141,10 +149,14 @@
                     <!-- Style cho cell -->
                     <DataGrid.CellStyle>
                         <Style TargetType="DataGridCell">
+                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                            <Setter Property="FontFamily" Value="Inter"/>
+                            <Setter Property="FontSize" Value="14" />
                             <Setter Property="Padding" Value="5"/>
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="Gray"/>
+                                    <Setter Property="Background" Value="#d4ebf8"/>
+                                    <Setter Property="Foreground" Value ="#00416a"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>

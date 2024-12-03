@@ -18,11 +18,11 @@
         <customControls:Search Margin="70,10,70,10"/>
 
         <Border Grid.Row="1"
-      Margin="25,10,25,5"
-      BorderThickness="2"
-      BorderBrush="Black"
-      Background="Transparent"
-      CornerRadius="10">
+                  Margin="25,10,25,5"
+                  BorderThickness="2"
+                  BorderBrush="Black"
+                  Background="Transparent"
+                  CornerRadius="10">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -96,7 +96,9 @@
                     <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock Text="Điều trị:" FontWeight="Bold" FontFamily="Inter" Width="160" VerticalAlignment="Center" FontSize="20"/>
+
                             <TextBox Name="txtDieuTri" Height="40" Width="707" Style="{StaticResource TextBoxStyles}"/>
+
                         </StackPanel>
                     </StackPanel>
                 </Grid>
@@ -120,16 +122,18 @@
         <Grid Grid.Row="2">
             <StackPanel Margin="25,10,25,10">
                 <TextBlock Text="Danh sách "
-                 FontSize="18"
-                 FontWeight="Bold"
-                 FontFamily="Inter"
-                 HorizontalAlignment="Center"/>
+                             FontSize="18"
+                             FontWeight="Bold"
+                             FontFamily="Inter"
+                             HorizontalAlignment="Center"/>
+
 
                 <DataGrid x:Name="dgDanhSach" AutoGenerateColumns="False" 
                 CanUserAddRows="False"
                 CanUserDeleteRows="False"
                 Margin="0,5,0,0"
                 Height="170">
+
                     <!-- Style cho header -->
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
@@ -137,7 +141,7 @@
                             <Setter Property="HorizontalContentAlignment" Value="Center" />
                             <Setter Property="FontFamily" Value="Inter"/>
                             <Setter Property="FontSize" Value="14" />
-                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="FontWeight" Value="Medium"/>
                             <Setter Property="Padding" Value="10"/>
                         </Style>
                     </DataGrid.ColumnHeaderStyle>
@@ -145,9 +149,14 @@
                     <!-- Style cho row -->
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
+                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                            <Setter Property="FontFamily" Value="Inter"/>
+                            <Setter Property="FontSize" Value="14" />
+                            <Setter Property="FontWeight" Value="Medium"/>
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="Gray"/>
+                                    <Setter Property="Background" Value="#d4ebf8"/>
+                                    <Setter Property="Foreground" Value ="#00416a"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -156,10 +165,14 @@
                     <!-- Style cho cell -->
                     <DataGrid.CellStyle>
                         <Style TargetType="DataGridCell">
+                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                            <Setter Property="FontFamily" Value="Inter"/>
+                            <Setter Property="FontSize" Value="14" />
                             <Setter Property="Padding" Value="5"/>
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="Gray"/>
+                                    <Setter Property="Background" Value="#d4ebf8"/>
+                                    <Setter Property="Foreground" Value ="#00416a"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>

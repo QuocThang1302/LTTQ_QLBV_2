@@ -17,7 +17,7 @@
                    FontWeight="Bold"
                    FontFamily="Inter"/>
 
-        <Border HorizontalAlignment="Right"
+        <!--<Border HorizontalAlignment="Right"
                 Width="100"
                 Height="33"
                 BorderThickness="0"
@@ -32,7 +32,13 @@
                     FontSize="16"
                     BorderThickness="0">
             </Button>
-        </Border>
+        </Border>-->
+
+        <Button x:Name="btnSearch"
+                Content="Tìm kiếm"
+                Style="{StaticResource childviewButton}"
+                HorizontalAlignment="Right"
+                Height="35"/>
 
         <Border Margin="100,0,150,0"
                 BorderThickness="0"

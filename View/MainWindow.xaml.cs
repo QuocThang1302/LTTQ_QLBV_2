@@ -58,5 +58,199 @@ namespace QuanLyBenhVien
             var expander = button.TemplatedParent as Expander;
             expander.IsExpanded = !expander.IsExpanded;
         }
+
+        private void btnTrangChu_Click(object sender, RoutedEventArgs e)
+        {
+            btnTTNhanVien.IsChecked = false;
+            btnLichHenKham.IsChecked = false;
+            btnLichTruc.IsChecked = false;
+            btnKhoa.IsChecked = false;
+            btnBenhAn.IsChecked = false;
+            btnKhamBenh.IsChecked = false;
+            btnDonThuoc.IsChecked = false;
+            btnBenh.IsChecked = false;
+            btnThuoc.IsChecked = false;
+            btnVatDung.IsChecked = false;
+            btnHoaDon.IsChecked = false;
+        }
+
+        private void btnTTNhanVien_Click(object sender, RoutedEventArgs e)
+        {
+            btnTrangChu.IsChecked = false;
+            btnBenhNhan.IsChecked = false;
+            btnBenhAn.IsChecked = false;
+            btnKhamBenh.IsChecked = false;
+            btnDonThuoc.IsChecked = false;
+            btnBenh.IsChecked = false;
+            btnThuoc.IsChecked = false;
+            btnVatDung.IsChecked = false;
+            btnHoaDon.IsChecked = false;
+
+        }
+
+        private void btnLichTruc_Click(object sender, RoutedEventArgs e)
+        {
+            btnTrangChu.IsChecked = false;
+            btnBenhNhan.IsChecked = false;
+            btnBenhAn.IsChecked = false;
+            btnKhamBenh.IsChecked = false;
+            btnDonThuoc.IsChecked = false;
+            btnBenh.IsChecked = false;
+            btnThuoc.IsChecked = false;
+            btnVatDung.IsChecked = false;
+            btnHoaDon.IsChecked = false;
+        }
+
+        private void btnLichHenKham_Click(object sender, RoutedEventArgs e)
+        {
+            btnTrangChu.IsChecked = false;
+            btnBenhNhan.IsChecked = false;
+            btnBenhAn.IsChecked = false;
+            btnKhamBenh.IsChecked = false;
+            btnDonThuoc.IsChecked = false;
+            btnBenh.IsChecked = false;
+            btnThuoc.IsChecked = false;
+            btnVatDung.IsChecked = false;
+            btnHoaDon.IsChecked = false;
+        }
+
+        private void btnKhoa_Click(object sender, RoutedEventArgs e)
+        {
+            btnTrangChu.IsChecked = false;
+            btnBenhNhan.IsChecked = false;
+            btnBenhAn.IsChecked = false;
+            btnKhamBenh.IsChecked = false;
+            btnDonThuoc.IsChecked = false;
+            btnBenh.IsChecked = false;
+            btnThuoc.IsChecked = false;
+            btnVatDung.IsChecked = false;
+            btnHoaDon.IsChecked = false;
+        }
+
+        private void btnBenhAn_Click(object sender, RoutedEventArgs e)
+        {
+            btnTrangChu.IsChecked=false;
+            btnBenhNhan.IsChecked=false;
+            btnTTNhanVien.IsChecked = false;
+            btnLichHenKham.IsChecked = false;
+            btnLichTruc.IsChecked = false;
+            btnKhoa.IsChecked = false;
+            btnBenh.IsChecked = false;
+            btnThuoc.IsChecked = false;
+            btnVatDung.IsChecked = false;
+            btnHoaDon.IsChecked = false;
+        }
+
+        private void btnKhamBenh_Click(object sender, RoutedEventArgs e)
+        {
+            btnTrangChu.IsChecked = false;
+            btnBenhNhan.IsChecked = false;
+            btnTTNhanVien.IsChecked = false;
+            btnLichHenKham.IsChecked = false;
+            btnLichTruc.IsChecked = false;
+            btnKhoa.IsChecked = false;
+            btnBenh.IsChecked = false;
+            btnThuoc.IsChecked = false;
+            btnVatDung.IsChecked = false;
+            btnHoaDon.IsChecked = false;
+        }
+
+        private void btnDonThuoc_Click(object sender, RoutedEventArgs e)
+        {
+            btnTrangChu.IsChecked = false;
+            btnBenhNhan.IsChecked = false;
+            btnTTNhanVien.IsChecked = false;
+            btnLichHenKham.IsChecked = false;
+            btnLichTruc.IsChecked = false;
+            btnKhoa.IsChecked = false;
+            btnBenh.IsChecked = false;
+            btnThuoc.IsChecked = false;
+            btnVatDung.IsChecked = false;
+            btnHoaDon.IsChecked = false;
+        }
+
+        private void btnBenhNhan_Click(object sender, RoutedEventArgs e)
+        {
+            btnTTNhanVien.IsChecked = false;
+            btnLichHenKham.IsChecked = false;
+            btnLichTruc.IsChecked = false;
+            btnKhoa.IsChecked = false;
+            btnBenhAn.IsChecked = false;
+            btnKhamBenh.IsChecked = false;
+            btnDonThuoc.IsChecked = false;
+            btnBenh.IsChecked = false;
+            btnThuoc.IsChecked = false;
+            btnVatDung.IsChecked = false;
+            btnHoaDon.IsChecked = false;
+        }
+
+        private void btnBenh_Click(object sender, RoutedEventArgs e)
+        {
+            btnTrangChu.IsChecked = false;
+            btnBenhNhan.IsChecked = false;
+            btnTTNhanVien.IsChecked = false;
+            btnLichHenKham.IsChecked = false;
+            btnLichTruc.IsChecked = false;
+            btnKhoa.IsChecked = false;
+            btnBenhAn.IsChecked = false;
+            btnKhamBenh.IsChecked = false;
+            btnDonThuoc.IsChecked = false;
+        }
+
+        private void btnThuoc_Click(object sender, RoutedEventArgs e)
+        {
+            btnTrangChu.IsChecked = false;
+            btnBenhNhan.IsChecked = false;
+            btnTTNhanVien.IsChecked = false;
+            btnLichHenKham.IsChecked = false;
+            btnLichTruc.IsChecked = false;
+            btnKhoa.IsChecked = false;
+            btnBenhAn.IsChecked = false;
+            btnKhamBenh.IsChecked = false;
+            btnDonThuoc.IsChecked = false;
+        }
+
+        private void btnVatDung_Click(object sender, RoutedEventArgs e)
+        {
+            btnTrangChu.IsChecked = false;
+            btnBenhNhan.IsChecked = false;
+            btnTTNhanVien.IsChecked = false;
+            btnLichHenKham.IsChecked = false;
+            btnLichTruc.IsChecked = false;
+            btnKhoa.IsChecked = false;
+            btnBenhAn.IsChecked = false;
+            btnKhamBenh.IsChecked = false;
+            btnDonThuoc.IsChecked = false;
+        }
+
+        private void btnHoaDon_Click(object sender, RoutedEventArgs e)
+        {
+            btnTrangChu.IsChecked = false;
+            btnBenhNhan.IsChecked = false;
+            btnTTNhanVien.IsChecked = false;
+            btnLichHenKham.IsChecked = false;
+            btnLichTruc.IsChecked = false;
+            btnKhoa.IsChecked = false;
+            btnBenhAn.IsChecked = false;
+            btnKhamBenh.IsChecked = false;
+            btnDonThuoc.IsChecked = false;
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            btnTrangChu.IsChecked=false;
+            btnBenhNhan.IsChecked=false;
+            btnTTNhanVien.IsChecked = true;
+            btnLichHenKham.IsChecked = false;
+            btnLichTruc.IsChecked = false;
+            btnKhoa.IsChecked = false;
+            btnBenhAn.IsChecked = false;
+            btnKhamBenh.IsChecked = false;
+            btnDonThuoc.IsChecked = false;
+            btnBenh.IsChecked = false;
+            btnThuoc.IsChecked = false;
+            btnVatDung.IsChecked = false;
+            btnHoaDon.IsChecked = false;
+        }
     }
 }

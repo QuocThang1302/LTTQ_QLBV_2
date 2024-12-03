@@ -31,8 +31,8 @@
                                 DockPanel.Dock="Top"
                                 Height="40"
                                 Margin="-5,0,0,5"
-                                Background="#6CABEA"
-                                Foreground="Black"
+                                Background="#FFA7D4EE"
+                                Foreground="#00416a"
                                 BorderBrush="Transparent"
                                 Click="HeaderButton_Click">
                                 <ContentPresenter ContentSource="Header" 
@@ -43,22 +43,22 @@
                                         <Border Background="{TemplateBinding Background}"
                                             BorderBrush="{TemplateBinding BorderBrush}"
                                             BorderThickness="4,0,0,0"
-                                            CornerRadius="0,20,20,0">
+                                            CornerRadius="0,5,5,0">
                                             <ContentPresenter VerticalAlignment="Center"/>
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter Property="Margin" Value="0,0,0,5"/>
-                                                <Setter Property="Background" Value="#1E8CFB"/>
-                                                <Setter Property="Foreground" Value="Black"/>
-                                                <Setter Property="BorderBrush" Value="#03045e"/>
+                                                <Setter Property="Background" Value="#FF16AAD2"/>
+                                                <Setter Property="Foreground" Value="#d4ebf8"/>
+                                                <Setter Property="BorderBrush" Value="#052342"/>
                                             </Trigger>
 
                                             <Trigger Property="IsChecked" Value="True">
                                                 <Setter Property="Margin" Value="0,0,0,5"/>
-                                                <Setter Property="Background" Value="#1E8CFB"/>
-                                                <Setter Property="Foreground" Value="Black"/>
-                                                <Setter Property="Background" Value="#03045e"/>
+                                                <Setter Property="Background" Value="#FF16AAD2"/>
+                                                <Setter Property="Foreground" Value="#d4ebf8"/>
+                                                <Setter Property="Background" Value="#052342"/>
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -150,30 +150,42 @@
 
             <Border CornerRadius="10,0,0,10"
                 Grid.Column="0"
-                Background="#C0E0FD">
+                Background="#00416a">
                 <StackPanel>
-                    <Image Source="/Images/hospital_logo.png"
-                       Width="140" Height="140" Stretch="Fill"
-                       Margin="0,20,0,0"/>
+                    <Border Width="140" Height="140"
+                            Background="Transparent"
+                            BorderThickness="1"
+                            BorderBrush="#d4ebf8"
+                            Margin="0,30,0,15"
+                            CornerRadius="90">
+                        <Image Source="/Images/hospital_logo.png"
+                               Stretch="Fill"
+                               Margin="0"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Width="180" Height="180"/>
+                    </Border>
 
                     <TextBlock Text="Tên bệnh viện"
                            FontSize="23"
-                           Foreground="Black"
-                           FontFamily="Montserrat"
+                           Foreground="#d4ebf8"
+                           FontFamily="Inter"
                            TextAlignment="Center"
                            Margin="0,5,0,30"/>
 
                     <Grid Height="Auto">
                         <ScrollViewer VerticalScrollBarVisibility="Hidden"
                                   HorizontalScrollBarVisibility="Disabled"
-                                  Height="465">
+                                  Height="440">
                             <StackPanel>
-                                <RadioButton Style="{StaticResource MenuButton}"
+                                <RadioButton x:Name="btnTrangChu"
+                                             Style="{StaticResource MenuButton}"
                                              Command="{Binding ShowTrangChuViewCommand}"
-                                             IsChecked="True">
+                                             IsChecked="True"
+                                             Click="btnTrangChu_Click">
                                     <StackPanel Orientation="Horizontal">
-                                        <fa:IconImage Icon="Home" Style="{StaticResource MenuIcon}" />
-                                        <TextBlock Text="Trang chủ" Style="{StaticResource MenuText}" />
+                                        <fa:IconImage Icon="Home" Style="{StaticResource MenuIcon}"/>
+                                        <TextBlock Text="Trang chủ" Style="{StaticResource MenuText}"/>
                                     </StackPanel>
                                 </RadioButton>
 
@@ -186,29 +198,37 @@
                                     </Expander.Header>
 
                                     <StackPanel Background="Transparent">
-                                        <RadioButton Style="{StaticResource SubMenuButton}"
-                                                     Command="{Binding ShowNhanVienViewCommand}">
+                                        <RadioButton x:Name="btnTTNhanVien"
+                                                     Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowNhanVienViewCommand}"
+                                                     Click="btnTTNhanVien_Click">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="IdCard" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Thông tin" Style="{StaticResource SubMenuText}" />
                                             </StackPanel>
                                         </RadioButton>
-                                        <RadioButton Style="{StaticResource SubMenuButton}"
-                                                     Command="{Binding ShowLichTrucViewCommand}">
+                                        <RadioButton x:Name="btnLichTruc"
+                                                     Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowLichTrucViewCommand}"
+                                                     Click="btnLichTruc_Click">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="CalendarDays" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Lịch trực" Style="{StaticResource SubMenuText}" />
                                             </StackPanel>
                                         </RadioButton>
-                                        <RadioButton Style="{StaticResource SubMenuButton}"
-                                                     Command="{Binding ShowLichHenKhamViewCommand}">
+                                        <RadioButton x:Name="btnLichHenKham"
+                                                     Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowLichHenKhamViewCommand}"
+                                                     Click="btnLichHenKham_Click">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="CalendarCheck" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Lịch hẹn khám" Style="{StaticResource SubMenuText}" />
                                             </StackPanel>
                                         </RadioButton>
-                                        <RadioButton Style="{StaticResource SubMenuButton}"
-                                                     Command="{Binding ShowKhoaViewCommand}">
+                                        <RadioButton x:Name="btnKhoa"
+                                                     Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowKhoaViewCommand}"
+                                                     Click="btnKhoa_Click">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="Users" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Khoa" Style="{StaticResource SubMenuText}" />
@@ -226,22 +246,28 @@
                                     </Expander.Header>
 
                                     <StackPanel Background="Transparent">
-                                        <RadioButton Style="{StaticResource SubMenuButton}"
-                                                     Command="{Binding ShowBenhAnViewCommand}">
+                                        <RadioButton x:Name="btnBenhAn"
+                                                     Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowBenhAnViewCommand}"
+                                                     Click="btnBenhAn_Click">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="FileMedical" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Bệnh án" Style="{StaticResource SubMenuText}" />
                                             </StackPanel>
                                         </RadioButton>
-                                        <RadioButton Style="{StaticResource SubMenuButton}"
-                                                     Command="{Binding ShowPhieuKhamBenhViewCommand}">
+                                        <RadioButton x:Name="btnKhamBenh"
+                                                     Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowPhieuKhamBenhViewCommand}"
+                                                     Click="btnKhamBenh_Click">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="FilePrescription" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Khám bệnh" Style="{StaticResource SubMenuText}" />
                                             </StackPanel>
                                         </RadioButton>
-                                        <RadioButton Style="{StaticResource SubMenuButton}"
-                                                     Command="{Binding ShowDonThuocViewCommand}">
+                                        <RadioButton x:Name="btnDonThuoc"
+                                                     Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowDonThuocViewCommand}"
+                                                     Click="btnDonThuoc_Click">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="HouseMedical" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Đơn thuốc" Style="{StaticResource SubMenuText}" />
@@ -250,8 +276,10 @@
                                     </StackPanel>
                                 </Expander>
 
-                                <RadioButton Style="{StaticResource MenuButton}"
-                                             Command="{Binding ShowBenhNhanViewCommand}">
+                                <RadioButton x:Name="btnBenhNhan"
+                                             Style="{StaticResource MenuButton}"
+                                             Command="{Binding ShowBenhNhanViewCommand}"
+                                             Click="btnBenhNhan_Click">
                                     <StackPanel Orientation="Horizontal">
                                         <fa:IconImage Icon="BedPulse" Style="{StaticResource MenuIcon}" />
                                         <TextBlock Text="Bệnh nhân" Style="{StaticResource MenuText}" />
@@ -267,29 +295,37 @@
                                     </Expander.Header>
 
                                     <StackPanel Background="Transparent">
-                                        <RadioButton Style="{StaticResource SubMenuButton}"
-                                                     Command="{Binding ShowBenhViewCommand}">
+                                        <RadioButton x:Name="btnBenh"
+                                                     Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowBenhViewCommand}"
+                                                     Click="btnBenh_Click">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="VirusCovid" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Bệnh" Style="{StaticResource SubMenuText}" />
                                             </StackPanel>
                                         </RadioButton>
-                                        <RadioButton Style="{StaticResource SubMenuButton}"
-                                                     Command="{Binding ShowThuocViewCommand}">
+                                        <RadioButton x:Name="btnThuoc"
+                                                     Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowThuocViewCommand}"
+                                                     Click="btnThuoc_Click">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="Capsules" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Thuốc" Style="{StaticResource SubMenuText}" />
                                             </StackPanel>
                                         </RadioButton>
-                                        <RadioButton Style="{StaticResource SubMenuButton}"
-                                                     Command="{Binding ShowVatDungViewCommand}">
+                                        <RadioButton x:Name="btnVatDung"
+                                                     Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowVatDungViewCommand}"
+                                                     Click="btnVatDung_Click">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="Microscope" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Vật dụng" Style="{StaticResource SubMenuText}" />
                                             </StackPanel>
                                         </RadioButton>
-                                        <RadioButton Style="{StaticResource SubMenuButton}"
-                                                     Command="{Binding ShowHoaDonViewCommand}">
+                                        <RadioButton x:Name="btnHoaDon"
+                                                     Style="{StaticResource SubMenuButton}"
+                                                     Command="{Binding ShowHoaDonViewCommand}"
+                                                     Click="btnHoaDon_Click">
                                             <StackPanel Orientation="Horizontal">
                                                 <fa:IconImage Icon="FileInvoiceDollar" Style="{StaticResource SubMenuIcon}" />
                                                 <TextBlock Text="Hóa đơn" Style="{StaticResource SubMenuText}" />
@@ -304,14 +340,8 @@
             </Border>
 
             <Border CornerRadius="0,10,10,0"
-                Grid.Column="1">
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5, 1">
-                        <GradientStop Color="#54CAE3" Offset="0" />
-                        <GradientStop Color="White" Offset="1" />
-                    </LinearGradientBrush>
-                </Border.Background>
-
+                    Grid.Column="1"
+                    Background="#d4ebf8">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"></RowDefinition>
@@ -320,32 +350,32 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0"
-                            x:Name="panelControlBar"
-                            Orientation="Horizontal"
-                            FlowDirection="RightToLeft"
-                            Background="Transparent"
-                            Margin="0,0,5,0"
-                            MouseLeftButtonDown="panelControlBar_MouseLeftButtonDown"
-                            MouseEnter="panelControlBar_MouseEnter">
+                                x:Name="panelControlBar"
+                                Orientation="Horizontal"
+                                FlowDirection="RightToLeft"
+                                Background="Transparent"
+                                Margin="0,0,5,0"
+                                MouseLeftButtonDown="panelControlBar_MouseLeftButtonDown"
+                                MouseEnter="panelControlBar_MouseEnter">
                         <Button x:Name="btnClose"
-                            Style ="{StaticResource controlbarButton}"
-                            Tag="#f72585"
-                            Click="btnClose_Click">
+                                Style ="{StaticResource controlbarButton}"
+                                Tag="#f72585"
+                                Click="btnClose_Click">
                             <fa:IconImage Icon="Xmark" Style="{StaticResource controlbarIcon}"/>
                         </Button>
 
                         <Button x:Name="btnMaximize"
-                            Style ="{StaticResource controlbarButton}"
-                            Tag="#3a0ca3"
-                            Click="btnMaximize_Click">
+                                Style ="{StaticResource controlbarButton}"
+                                Tag="#3a0ca3"
+                                Click="btnMaximize_Click">
                             <fa:IconImage Icon="Square" Style="{StaticResource controlbarIcon}"/>
                         </Button>
 
                         <Button x:Name="btnMinimize"
-                            Width="30"
-                            Style ="{StaticResource controlbarButton}"
-                            Tag="#7209b7"
-                            Click="btnMinimize_Click">
+                                Width="30"
+                                Style ="{StaticResource controlbarButton}"
+                                Tag="#7209b7"
+                                Click="btnMinimize_Click">
                             <fa:IconImage Icon="WindowMinimize" Style="{StaticResource controlbarIcon}"/>
                         </Button>
                     </StackPanel>
@@ -357,43 +387,83 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Grid.Column="0"
-                                Orientation="Horizontal"
-                                VerticalAlignment="Center">
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center">
                             <fa:IconImage Icon="{Binding Icon}"
-                                      Height="30"
-                                      Width="30"
-                                      Foreground="Black"
-                                      Margin="35,0,10,0" />
+                                          Height="30"
+                                          Width="30"
+                                          Foreground="#00416a"
+                                          Margin="35,0,10,0" />
 
                             <TextBlock Text="{Binding Caption}"
-                                   Foreground="Black"
-                                   FontSize="16"
-                                   FontFamily="Montserrat"
-                                   FontWeight="Medium"
-                                   VerticalAlignment="Center"/>
+                                       Foreground="#00416a"
+                                       FontSize="16"
+                                       FontFamily="Inter"
+                                       FontWeight="Medium"
+                                       VerticalAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel Grid.Column="1"
-                                Orientation="Horizontal"
-                                VerticalAlignment="Center"
-                                FlowDirection="RightToLeft"
-                                Margin="0,0,10,0">
-                            <Button Style="{StaticResource userIconButton}"
-                                Tag="Gray">
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center"
+                                    FlowDirection="RightToLeft"
+                                    Margin="0,0,10,0">
+                            <!--<Button Style="{StaticResource userIconButton}"
+                                    Tag="Gray">
                                 <fa:IconImage Icon="AngleDown" Style="{StaticResource userIcon}" />
-                            </Button>
+                            </Button>-->
 
-                            <TextBlock
-                                   Text="Phan Ngoc Son"
-                                   Foreground="Black"
-                                   FontFamily="Montserrat"
-                                   FontSize="16"
-                                   VerticalAlignment="Center" />
+                            <Menu Background="Transparent"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center">
+                                <Menu.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel Orientation="Vertical"/>
+                                    </ItemsPanelTemplate>
+                                </Menu.ItemsPanel>
+
+                                <MenuItem Width="25"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center">
+                                    <MenuItem.Icon>
+                                        <fa:IconImage Foreground="#00416a"
+                                                      VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"
+                                                      Icon="AngleDown" Style="{StaticResource userIcon}" />
+                                    </MenuItem.Icon>
+
+                                    <MenuItem Header="Thông tin cá nhân"
+                                              Command="{Binding ShowTTCaNhanViewCommand}"
+                                              Click="MenuItem_Click">
+                                        <MenuItem.Icon>
+                                            <fa:IconImage Foreground="#00416a"
+                                                          VerticalAlignment="Center"
+                                                          HorizontalAlignment="Left"
+                                                          Icon="HospitalUser" Style="{StaticResource userIcon}" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+
+                                    <MenuItem Header="Đăng xuất">
+                                        <MenuItem.Icon>
+                                            <fa:IconImage Foreground="#00416a"
+                                                          VerticalAlignment="Center"
+                                                          HorizontalAlignment="Left"
+                                                          Icon="ArrowRightFromBracket" Style="{StaticResource userIcon}" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </MenuItem>
+                            </Menu>
+
+                            <TextBlock Text="Phan Ngoc Son"
+                                       Foreground="#00416a"
+                                       FontFamily="Inter"
+                                       FontSize="16"
+                                       VerticalAlignment="Center" />
 
                             <Ellipse Height="35" Width="35"
-                                 Stroke="Black"
-                                 StrokeThickness="1.5"
-                                 Margin="10,0,10,0">
+                                     Stroke="#00416a"
+                                     StrokeThickness="1.5"
+                                     Margin="10,0,10,0">
                                 <Ellipse.Fill>
                                     <ImageBrush ImageSource="/Images/hospital_logo.png"></ImageBrush>
                                 </Ellipse.Fill>

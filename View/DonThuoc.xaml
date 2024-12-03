@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:QuanLyBenhVien.View"
              mc:Ignorable="d" 
              xmlns:customControls="clr-namespace:QuanLyBenhVien.CustomControls"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="628" d:DesignWidth="978">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"></RowDefinition>
@@ -30,10 +30,10 @@
                        Margin="10"
                        ></TextBlock >
                 <DataGrid AutoGenerateColumns="False" 
-CanUserAddRows="False"
-CanUserDeleteRows="False"
-Margin="30,5,30,0"
-Height="269">
+                            CanUserAddRows="False"
+                            CanUserDeleteRows="False"
+                            Margin="30,5,30,0"
+                            Height="430">
                     <!-- Style cho header -->
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
@@ -41,7 +41,7 @@ Height="269">
                             <Setter Property="HorizontalContentAlignment" Value="Center" />
                             <Setter Property="FontFamily" Value="Inter"/>
                             <Setter Property="FontSize" Value="14" />
-                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="FontWeight" Value="Medium"/>
                             <Setter Property="Padding" Value="10"/>
                         </Style>
                     </DataGrid.ColumnHeaderStyle>
@@ -49,9 +49,14 @@ Height="269">
                     <!-- Style cho row -->
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
+                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                            <Setter Property="FontFamily" Value="Inter"/>
+                            <Setter Property="FontSize" Value="14" />
+                            <Setter Property="FontWeight" Value="Medium"/>
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="Gray"/>
+                                    <Setter Property="Background" Value="#d4ebf8"/>
+                                    <Setter Property="Foreground" Value ="#00416a"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -60,23 +65,24 @@ Height="269">
                     <!-- Style cho cell -->
                     <DataGrid.CellStyle>
                         <Style TargetType="DataGridCell">
+                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                            <Setter Property="FontFamily" Value="Inter"/>
+                            <Setter Property="FontSize" Value="14" />
                             <Setter Property="Padding" Value="5"/>
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="Gray"/>
+                                    <Setter Property="Background" Value="#d4ebf8"/>
+                                    <Setter Property="Foreground" Value ="#00416a"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="1.5*"/>
+                        <DataGridTextColumn Header="Mã đơn thuốc" Width="1.1*"/>
+                        <DataGridTextColumn Header="Bệnh nhân" Width="*"/>
+                        <DataGridTextColumn Header="Bác sĩ" Width="*"/>
+                        <DataGridTextColumn Header="Ngày lập đơn" Width="1.1*"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <StackPanel Orientation="Horizontal" >
@@ -89,18 +95,18 @@ Height="269">
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <TextBlock Text="Chi tiết đơn thuốc"
-       FontWeight="Bold"
-       FontFamily="Inter"
-       HorizontalAlignment="Center"
-       VerticalAlignment="Center"
-       FontSize="24"
-       Margin="10"
-       ></TextBlock >
+                           FontWeight="Bold"
+                           FontFamily="Inter"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           FontSize="24"
+                           Margin="10"/>
+                
                 <DataGrid AutoGenerateColumns="False" 
-CanUserAddRows="False"
-CanUserDeleteRows="False"
-Margin="30,5,30,0"
-Height="269">
+                            CanUserAddRows="False"
+                            CanUserDeleteRows="False"
+                            Margin="30,5,30,0"
+                            Height="430">
                     <!-- Style cho header -->
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
@@ -108,7 +114,7 @@ Height="269">
                             <Setter Property="HorizontalContentAlignment" Value="Center" />
                             <Setter Property="FontFamily" Value="Inter"/>
                             <Setter Property="FontSize" Value="14" />
-                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="FontWeight" Value="Medium"/>
                             <Setter Property="Padding" Value="10"/>
                         </Style>
                     </DataGrid.ColumnHeaderStyle>
@@ -116,9 +122,14 @@ Height="269">
                     <!-- Style cho row -->
                     <DataGrid.RowStyle>
                         <Style TargetType="DataGridRow">
+                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                            <Setter Property="FontFamily" Value="Inter"/>
+                            <Setter Property="FontSize" Value="14" />
+                            <Setter Property="FontWeight" Value="Medium"/>
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="Gray"/>
+                                    <Setter Property="Background" Value="#d4ebf8"/>
+                                    <Setter Property="Foreground" Value ="#00416a"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -127,37 +138,38 @@ Height="269">
                     <!-- Style cho cell -->
                     <DataGrid.CellStyle>
                         <Style TargetType="DataGridCell">
+                            <Setter Property="HorizontalContentAlignment" Value="Left" />
+                            <Setter Property="FontFamily" Value="Inter"/>
+                            <Setter Property="FontSize" Value="14" />
                             <Setter Property="Padding" Value="5"/>
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="Gray"/>
+                                    <Setter Property="Background" Value="#d4ebf8"/>
+                                    <Setter Property="Foreground" Value ="#00416a"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="*"/>
-                        <DataGridTextColumn Header="" Width="1.5*"/>
+                        <DataGridTextColumn Header="Tên thuốc" Width="*"/>
+                        <DataGridTextColumn Header="Số lượng" Width="*"/>
+                        <DataGridTextColumn Header="Giá tiền" Width="*"/>
+                        <DataGridTextColumn Header="Hướng dẫn" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
                     <Button Style="{StaticResource childviewButton}" 
-                        Margin="30,15,0,0"
-                        Content="Xóa"/>
+                            Margin="30,15,0,0"
+                            Content="Xóa"/>
 
                     <Button Style="{StaticResource childviewButton}" 
-                        Margin="30,15,0,0"
-                        Content="Cập nhật"/>
+                            Margin="30,15,0,0"
+                            Content="Cập nhật"/>
 
                     <Button Style="{StaticResource childviewButton}" 
-                        Margin="30,15,0,0"
-                        Content="Thêm" Click="Button_Click"/>
+                            Margin="30,15,0,0"
+                            Content="Thêm" Click="Button_Click"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

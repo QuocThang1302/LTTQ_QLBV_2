@@ -27,7 +27,20 @@ namespace QuanLyBenhVien.View
         {
             InitializeComponent();
         }
-
+        private void CLearTextBoxes()
+        {
+            txtCCCD.Clear();
+            txtDiaChi.Clear();
+            txtEmail.Clear();
+            txtGioiTinh.Clear();
+            txtHo.Clear();
+            txtKhoa.Clear();
+            txtMaBenhNhan.Clear();
+            txtNgheNghiep.Clear();
+            txtSDT.Clear();
+            txtTen.Clear();
+            txtNgaySinh.Clear();
+        }
         string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
@@ -52,6 +65,7 @@ namespace QuanLyBenhVien.View
             if (kq > 0)
             {
                 MessageBox.Show("Thêm dữ liệu thành công!!!");
+                CLearTextBoxes();
             }
             else
             {
@@ -121,7 +135,7 @@ namespace QuanLyBenhVien.View
                         dgDanhSachBenhNhan.ItemsSource = ds.Tables["tblBenhNhan"].DefaultView;
 
                         // Xóa dữ liệu trong TextBox
-                        //ClearTextBoxes();
+                        CLearTextBoxes();
                     }
                     else
                     {
@@ -195,6 +209,8 @@ namespace QuanLyBenhVien.View
 
                     // Đặt lại vị trí dòng đã chọn
                     dgDanhSachBenhNhan.SelectedIndex = vitri;
+                    CLearTextBoxes();
+
                 }
                 else
                 {
