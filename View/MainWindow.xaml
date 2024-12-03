@@ -19,66 +19,6 @@
 </Window.DataContext>
 
     <Window.Resources>
-        <!-- Style cho Expander - ẩn mũi tên -->
-        <Style x:Key="CustomExpander" TargetType="Expander">
-            <Setter Property="Width" Value="260" />
-            <Setter Property="HorizontalAlignment" Value="Left" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Expander">
-                        <DockPanel>
-                            <RadioButton x:Name="HeaderButton"
-                                DockPanel.Dock="Top"
-                                Height="40"
-                                Margin="-5,0,0,5"
-                                Background="#FFA7D4EE"
-                                Foreground="#00416a"
-                                BorderBrush="Transparent"
-                                Click="HeaderButton_Click">
-                                <ContentPresenter ContentSource="Header" 
-                                          HorizontalAlignment="Left" 
-                                          Margin="20,0,0,0"/>
-                                <RadioButton.Template>
-                                    <ControlTemplate TargetType="RadioButton">
-                                        <Border Background="{TemplateBinding Background}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="4,0,0,0"
-                                            CornerRadius="0,5,5,0">
-                                            <ContentPresenter VerticalAlignment="Center"/>
-                                        </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Margin" Value="0,0,0,5"/>
-                                                <Setter Property="Background" Value="#FF16AAD2"/>
-                                                <Setter Property="Foreground" Value="#d4ebf8"/>
-                                                <Setter Property="BorderBrush" Value="#052342"/>
-                                            </Trigger>
-
-                                            <Trigger Property="IsChecked" Value="True">
-                                                <Setter Property="Margin" Value="0,0,0,5"/>
-                                                <Setter Property="Background" Value="#FF16AAD2"/>
-                                                <Setter Property="Foreground" Value="#d4ebf8"/>
-                                                <Setter Property="Background" Value="#052342"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </RadioButton.Template>
-                            </RadioButton>
-                            <ContentPresenter x:Name="ExpanderContent"
-                                        DockPanel.Dock="Bottom"
-                                        Content="{TemplateBinding Content}"
-                                        Visibility="Collapsed"/>
-                        </DockPanel>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsExpanded" Value="True">
-                                <Setter TargetName="ExpanderContent" Property="Visibility" Value="Visible"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
         <DataTemplate DataType="{x:Type viewModel:BenhNhanViewModel}">
             <local:ThongTinBenhNhan></local:ThongTinBenhNhan>
         </DataTemplate>
@@ -189,12 +129,19 @@
                                     </StackPanel>
                                 </RadioButton>
 
-                                <Expander Style="{StaticResource CustomExpander}">
+                                <Expander x:Name="exNhanVien"
+                                          Style="{StaticResource CustomExpander}">
                                     <Expander.Header>
-                                        <StackPanel Orientation="Horizontal" >
-                                            <fa:IconImage Icon="HospitalUser" Style="{StaticResource MenuIcon}" />
-                                            <TextBlock Text="Nhân viên" Style="{StaticResource MenuText}" />
-                                        </StackPanel>
+                                        <DockPanel>
+                                            <RadioButton x:Name="btnNhanVien"
+                                                         Style="{StaticResource MenuButton}"
+                                                         Click="btnNhanVien_Click">
+                                                <StackPanel Orientation="Horizontal" >
+                                                    <fa:IconImage Icon="HospitalUser" Style="{StaticResource MenuIcon}" />
+                                                    <TextBlock Text="Nhân viên" Style="{StaticResource MenuText}" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                        </DockPanel>
                                     </Expander.Header>
 
                                     <StackPanel Background="Transparent">
@@ -237,12 +184,19 @@
                                     </StackPanel>
                                 </Expander>
 
-                                <Expander Style="{StaticResource CustomExpander}">
+                                <Expander x:Name="exDieuTri"
+                                          Style="{StaticResource CustomExpander}">
                                     <Expander.Header>
-                                        <StackPanel Orientation="Horizontal" >
-                                            <fa:IconImage Icon="Syringe" Style="{StaticResource MenuIcon}" />
-                                            <TextBlock Text="Điều trị" Style="{StaticResource MenuText}" />
-                                        </StackPanel>
+                                        <DockPanel>
+                                            <RadioButton x:Name="btnDieuTri"
+                                                         Style="{StaticResource MenuButton}"
+                                                         Click="btnDieuTri_Click">
+                                                <StackPanel Orientation="Horizontal" >
+                                                    <fa:IconImage Icon="Syringe" Style="{StaticResource MenuIcon}" />
+                                                    <TextBlock Text="Điều trị" Style="{StaticResource MenuText}" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                        </DockPanel>
                                     </Expander.Header>
 
                                     <StackPanel Background="Transparent">
@@ -286,12 +240,19 @@
                                     </StackPanel>
                                 </RadioButton>
 
-                                <Expander Style="{StaticResource CustomExpander}">
+                                <Expander x:Name="exThongTin"
+                                          Style="{StaticResource CustomExpander}">
                                     <Expander.Header>
-                                        <StackPanel Orientation="Horizontal" >
-                                            <fa:IconImage Icon="HospitalUser" Style="{StaticResource MenuIcon}" />
-                                            <TextBlock Text="Thông tin" Style="{StaticResource MenuText}" />
-                                        </StackPanel>
+                                        <DockPanel>
+                                            <RadioButton x:Name="btnThongTin"
+                                                         Style="{StaticResource MenuButton}"
+                                                         Click="btnThongTin_Click">
+                                                <StackPanel Orientation="Horizontal" >
+                                                    <fa:IconImage Icon="HospitalUser" Style="{StaticResource MenuIcon}" />
+                                                    <TextBlock Text="Thông tin" Style="{StaticResource MenuText}" />
+                                                </StackPanel>
+                                            </RadioButton>
+                                        </DockPanel>
                                     </Expander.Header>
 
                                     <StackPanel Background="Transparent">

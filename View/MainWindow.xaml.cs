@@ -52,15 +52,14 @@ namespace QuanLyBenhVien
             this.WindowState = WindowState.Minimized;
         }
 
-        private void HeaderButton_Click(object sender, RoutedEventArgs e)
-        {
-            var button = sender as RadioButton;
-            var expander = button.TemplatedParent as Expander;
-            expander.IsExpanded = !expander.IsExpanded;
-        }
-
         private void btnTrangChu_Click(object sender, RoutedEventArgs e)
         {
+            exNhanVien.IsExpanded = false;
+            exDieuTri.IsExpanded = false;
+            exThongTin.IsExpanded = false;
+            btnNhanVien.IsChecked = false;
+            btnDieuTri.IsChecked = false;
+            btnThongTin.IsChecked = false;
             btnTTNhanVien.IsChecked = false;
             btnLichHenKham.IsChecked = false;
             btnLichTruc.IsChecked = false;
@@ -76,6 +75,10 @@ namespace QuanLyBenhVien
 
         private void btnTTNhanVien_Click(object sender, RoutedEventArgs e)
         {
+            exDieuTri.IsExpanded = false;
+            exThongTin.IsExpanded = false;
+            btnDieuTri.IsChecked=false;
+            btnThongTin.IsChecked=false;
             btnTrangChu.IsChecked = false;
             btnBenhNhan.IsChecked = false;
             btnBenhAn.IsChecked = false;
@@ -90,6 +93,10 @@ namespace QuanLyBenhVien
 
         private void btnLichTruc_Click(object sender, RoutedEventArgs e)
         {
+            exDieuTri.IsExpanded = false;
+            exThongTin.IsExpanded = false;
+            btnDieuTri.IsChecked = false;
+            btnThongTin.IsChecked = false;
             btnTrangChu.IsChecked = false;
             btnBenhNhan.IsChecked = false;
             btnBenhAn.IsChecked = false;
@@ -103,6 +110,10 @@ namespace QuanLyBenhVien
 
         private void btnLichHenKham_Click(object sender, RoutedEventArgs e)
         {
+            exDieuTri.IsExpanded = false;
+            exThongTin.IsExpanded = false;
+            btnDieuTri.IsChecked = false;
+            btnThongTin.IsChecked = false;
             btnTrangChu.IsChecked = false;
             btnBenhNhan.IsChecked = false;
             btnBenhAn.IsChecked = false;
@@ -116,6 +127,10 @@ namespace QuanLyBenhVien
 
         private void btnKhoa_Click(object sender, RoutedEventArgs e)
         {
+            exDieuTri.IsExpanded = false;
+            exThongTin.IsExpanded = false;
+            btnDieuTri.IsChecked = false;
+            btnThongTin.IsChecked = false;
             btnTrangChu.IsChecked = false;
             btnBenhNhan.IsChecked = false;
             btnBenhAn.IsChecked = false;
@@ -129,6 +144,10 @@ namespace QuanLyBenhVien
 
         private void btnBenhAn_Click(object sender, RoutedEventArgs e)
         {
+            exNhanVien.IsExpanded = false;
+            exThongTin.IsExpanded = false;
+            btnNhanVien.IsChecked = false;
+            btnThongTin.IsChecked = false;
             btnTrangChu.IsChecked=false;
             btnBenhNhan.IsChecked=false;
             btnTTNhanVien.IsChecked = false;
@@ -143,6 +162,10 @@ namespace QuanLyBenhVien
 
         private void btnKhamBenh_Click(object sender, RoutedEventArgs e)
         {
+            exNhanVien.IsExpanded = false;
+            exThongTin.IsExpanded = false;
+            btnNhanVien.IsChecked = false;
+            btnThongTin.IsChecked = false;
             btnTrangChu.IsChecked = false;
             btnBenhNhan.IsChecked = false;
             btnTTNhanVien.IsChecked = false;
@@ -157,6 +180,10 @@ namespace QuanLyBenhVien
 
         private void btnDonThuoc_Click(object sender, RoutedEventArgs e)
         {
+            exNhanVien.IsExpanded = false;
+            exThongTin.IsExpanded = false;
+            btnNhanVien.IsChecked = false;
+            btnThongTin.IsChecked = false;
             btnTrangChu.IsChecked = false;
             btnBenhNhan.IsChecked = false;
             btnTTNhanVien.IsChecked = false;
@@ -171,6 +198,12 @@ namespace QuanLyBenhVien
 
         private void btnBenhNhan_Click(object sender, RoutedEventArgs e)
         {
+            exNhanVien.IsExpanded = false;
+            exDieuTri.IsExpanded = false;
+            exThongTin.IsExpanded = false;
+            btnNhanVien.IsChecked = false;
+            btnDieuTri.IsChecked = false;
+            btnThongTin.IsChecked = false;
             btnTTNhanVien.IsChecked = false;
             btnLichHenKham.IsChecked = false;
             btnLichTruc.IsChecked = false;
@@ -186,6 +219,10 @@ namespace QuanLyBenhVien
 
         private void btnBenh_Click(object sender, RoutedEventArgs e)
         {
+            exNhanVien.IsExpanded = false;
+            exDieuTri.IsExpanded = false;
+            btnNhanVien.IsChecked = false;
+            btnDieuTri.IsChecked = false;
             btnTrangChu.IsChecked = false;
             btnBenhNhan.IsChecked = false;
             btnTTNhanVien.IsChecked = false;
@@ -199,6 +236,10 @@ namespace QuanLyBenhVien
 
         private void btnThuoc_Click(object sender, RoutedEventArgs e)
         {
+            exNhanVien.IsExpanded = false;
+            exDieuTri.IsExpanded = false;
+            btnNhanVien.IsChecked = false;
+            btnDieuTri.IsChecked = false;
             btnTrangChu.IsChecked = false;
             btnBenhNhan.IsChecked = false;
             btnTTNhanVien.IsChecked = false;
@@ -212,6 +253,10 @@ namespace QuanLyBenhVien
 
         private void btnVatDung_Click(object sender, RoutedEventArgs e)
         {
+            exNhanVien.IsExpanded = false;
+            exDieuTri.IsExpanded = false;
+            btnNhanVien.IsChecked = false;
+            btnDieuTri.IsChecked = false;
             btnTrangChu.IsChecked = false;
             btnBenhNhan.IsChecked = false;
             btnTTNhanVien.IsChecked = false;
@@ -225,6 +270,10 @@ namespace QuanLyBenhVien
 
         private void btnHoaDon_Click(object sender, RoutedEventArgs e)
         {
+            exNhanVien.IsExpanded = false;
+            exDieuTri.IsExpanded = false;
+            btnNhanVien.IsChecked = false;
+            btnDieuTri.IsChecked = false;
             btnTrangChu.IsChecked = false;
             btnBenhNhan.IsChecked = false;
             btnTTNhanVien.IsChecked = false;
@@ -238,6 +287,12 @@ namespace QuanLyBenhVien
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
+            exNhanVien.IsExpanded = true;
+            exDieuTri.IsExpanded = false;
+            exThongTin.IsExpanded = false;
+            btnNhanVien.IsChecked = true;
+            btnDieuTri.IsChecked = false;
+            btnThongTin.IsChecked = false;
             btnTrangChu.IsChecked=false;
             btnBenhNhan.IsChecked=false;
             btnTTNhanVien.IsChecked = true;
@@ -251,6 +306,82 @@ namespace QuanLyBenhVien
             btnThuoc.IsChecked = false;
             btnVatDung.IsChecked = false;
             btnHoaDon.IsChecked = false;
+        }
+
+        private void btnNhanVien_Click(object sender, RoutedEventArgs e)
+        {
+            var expander = exNhanVien;
+
+            if (expander != null)
+            {
+                // Đảo ngược trạng thái IsExpanded của Expander
+                expander.IsExpanded = !expander.IsExpanded;
+            }
+
+            exDieuTri.IsExpanded = false;
+            exThongTin.IsExpanded = false;
+            btnDieuTri.IsChecked = false;
+            btnThongTin.IsChecked = false;
+            btnTrangChu.IsChecked = false;
+            btnBenhNhan.IsChecked = false;
+            btnBenhAn.IsChecked = false;
+            btnKhamBenh.IsChecked = false;
+            btnDonThuoc.IsChecked = false;
+            btnBenh.IsChecked = false;
+            btnThuoc.IsChecked = false;
+            btnVatDung.IsChecked = false;
+            btnHoaDon.IsChecked = false;
+        }
+
+        private void btnDieuTri_Click(object sender, RoutedEventArgs e)
+        {
+            var expander = exDieuTri;
+
+            if (expander != null)
+            {
+                // Đảo ngược trạng thái IsExpanded của Expander
+                expander.IsExpanded = !expander.IsExpanded;
+            }
+
+            exNhanVien.IsExpanded = false;
+            exThongTin.IsExpanded = false;
+            btnNhanVien.IsChecked = false;
+            btnThongTin.IsChecked = false;
+            btnTrangChu.IsChecked = false;
+            btnBenhNhan.IsChecked = false;
+            btnTTNhanVien.IsChecked = false;
+            btnLichHenKham.IsChecked = false;
+            btnLichTruc.IsChecked = false;
+            btnKhoa.IsChecked = false;
+            btnBenh.IsChecked = false;
+            btnThuoc.IsChecked = false;
+            btnVatDung.IsChecked = false;
+            btnHoaDon.IsChecked = false;
+        }
+
+        private void btnThongTin_Click(object sender, RoutedEventArgs e)
+        {
+            var expander = exThongTin;
+
+            if (expander != null)
+            {
+                // Đảo ngược trạng thái IsExpanded của Expander
+                expander.IsExpanded = !expander.IsExpanded;
+            }
+
+            exNhanVien.IsExpanded = false;
+            exDieuTri.IsExpanded = false;
+            btnNhanVien.IsChecked = false;
+            btnDieuTri.IsChecked = false;
+            btnTrangChu.IsChecked = false;
+            btnBenhNhan.IsChecked = false;
+            btnTTNhanVien.IsChecked = false;
+            btnLichHenKham.IsChecked = false;
+            btnLichTruc.IsChecked = false;
+            btnKhoa.IsChecked = false;
+            btnBenhAn.IsChecked = false;
+            btnKhamBenh.IsChecked = false;
+            btnDonThuoc.IsChecked = false;
         }
     }
 }
