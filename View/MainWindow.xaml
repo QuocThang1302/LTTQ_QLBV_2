@@ -342,13 +342,6 @@
             <Border CornerRadius="0,10,10,0"
                     Grid.Column="1"
                     Background="#d4ebf8">
-                <!--<Border.Background>
-                    <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5, 1">
-                        <GradientStop Color="#54CAE3" Offset="0" />
-                        <GradientStop Color="White" Offset="1" />
-                    </LinearGradientBrush>
-                </Border.Background>-->
-
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"></RowDefinition>
@@ -357,32 +350,32 @@
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0"
-                            x:Name="panelControlBar"
-                            Orientation="Horizontal"
-                            FlowDirection="RightToLeft"
-                            Background="Transparent"
-                            Margin="0,0,5,0"
-                            MouseLeftButtonDown="panelControlBar_MouseLeftButtonDown"
-                            MouseEnter="panelControlBar_MouseEnter">
+                                x:Name="panelControlBar"
+                                Orientation="Horizontal"
+                                FlowDirection="RightToLeft"
+                                Background="Transparent"
+                                Margin="0,0,5,0"
+                                MouseLeftButtonDown="panelControlBar_MouseLeftButtonDown"
+                                MouseEnter="panelControlBar_MouseEnter">
                         <Button x:Name="btnClose"
-                            Style ="{StaticResource controlbarButton}"
-                            Tag="#f72585"
-                            Click="btnClose_Click">
+                                Style ="{StaticResource controlbarButton}"
+                                Tag="#f72585"
+                                Click="btnClose_Click">
                             <fa:IconImage Icon="Xmark" Style="{StaticResource controlbarIcon}"/>
                         </Button>
 
                         <Button x:Name="btnMaximize"
-                            Style ="{StaticResource controlbarButton}"
-                            Tag="#3a0ca3"
-                            Click="btnMaximize_Click">
+                                Style ="{StaticResource controlbarButton}"
+                                Tag="#3a0ca3"
+                                Click="btnMaximize_Click">
                             <fa:IconImage Icon="Square" Style="{StaticResource controlbarIcon}"/>
                         </Button>
 
                         <Button x:Name="btnMinimize"
-                            Width="30"
-                            Style ="{StaticResource controlbarButton}"
-                            Tag="#7209b7"
-                            Click="btnMinimize_Click">
+                                Width="30"
+                                Style ="{StaticResource controlbarButton}"
+                                Tag="#7209b7"
+                                Click="btnMinimize_Click">
                             <fa:IconImage Icon="WindowMinimize" Style="{StaticResource controlbarIcon}"/>
                         </Button>
                     </StackPanel>
@@ -394,43 +387,83 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Grid.Column="0"
-                                Orientation="Horizontal"
-                                VerticalAlignment="Center">
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center">
                             <fa:IconImage Icon="{Binding Icon}"
-                                      Height="30"
-                                      Width="30"
-                                      Foreground="#00416a"
-                                      Margin="35,0,10,0" />
+                                          Height="30"
+                                          Width="30"
+                                          Foreground="#00416a"
+                                          Margin="35,0,10,0" />
 
                             <TextBlock Text="{Binding Caption}"
-                                   Foreground="#00416a"
-                                   FontSize="16"
-                                   FontFamily="Inter"
-                                   FontWeight="Medium"
-                                   VerticalAlignment="Center"/>
+                                       Foreground="#00416a"
+                                       FontSize="16"
+                                       FontFamily="Inter"
+                                       FontWeight="Medium"
+                                       VerticalAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel Grid.Column="1"
-                                Orientation="Horizontal"
-                                VerticalAlignment="Center"
-                                FlowDirection="RightToLeft"
-                                Margin="0,0,10,0">
-                            <Button Style="{StaticResource userIconButton}"
-                                Tag="Gray">
+                                    Orientation="Horizontal"
+                                    VerticalAlignment="Center"
+                                    FlowDirection="RightToLeft"
+                                    Margin="0,0,10,0">
+                            <!--<Button Style="{StaticResource userIconButton}"
+                                    Tag="Gray">
                                 <fa:IconImage Icon="AngleDown" Style="{StaticResource userIcon}" />
-                            </Button>
+                            </Button>-->
 
-                            <TextBlock
-                                   Text="Phan Ngoc Son"
-                                   Foreground="#00416a"
-                                   FontFamily="Inter"
-                                   FontSize="16"
-                                   VerticalAlignment="Center" />
+                            <Menu Background="Transparent"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Center">
+                                <Menu.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel Orientation="Vertical"/>
+                                    </ItemsPanelTemplate>
+                                </Menu.ItemsPanel>
+
+                                <MenuItem Width="25"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center">
+                                    <MenuItem.Icon>
+                                        <fa:IconImage Foreground="#00416a"
+                                                      VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"
+                                                      Icon="AngleDown" Style="{StaticResource userIcon}" />
+                                    </MenuItem.Icon>
+
+                                    <MenuItem Header="Thông tin cá nhân"
+                                              Command="{Binding ShowTTCaNhanViewCommand}"
+                                              Click="MenuItem_Click">
+                                        <MenuItem.Icon>
+                                            <fa:IconImage Foreground="#00416a"
+                                                          VerticalAlignment="Center"
+                                                          HorizontalAlignment="Left"
+                                                          Icon="HospitalUser" Style="{StaticResource userIcon}" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+
+                                    <MenuItem Header="Đăng xuất">
+                                        <MenuItem.Icon>
+                                            <fa:IconImage Foreground="#00416a"
+                                                          VerticalAlignment="Center"
+                                                          HorizontalAlignment="Left"
+                                                          Icon="ArrowRightFromBracket" Style="{StaticResource userIcon}" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </MenuItem>
+                            </Menu>
+
+                            <TextBlock Text="Phan Ngoc Son"
+                                       Foreground="#00416a"
+                                       FontFamily="Inter"
+                                       FontSize="16"
+                                       VerticalAlignment="Center" />
 
                             <Ellipse Height="35" Width="35"
-                                 Stroke="#00416a"
-                                 StrokeThickness="1.5"
-                                 Margin="10,0,10,0">
+                                     Stroke="#00416a"
+                                     StrokeThickness="1.5"
+                                     Margin="10,0,10,0">
                                 <Ellipse.Fill>
                                     <ImageBrush ImageSource="/Images/hospital_logo.png"></ImageBrush>
                                 </Ellipse.Fill>

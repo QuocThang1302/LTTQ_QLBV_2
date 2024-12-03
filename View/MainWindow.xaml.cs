@@ -235,5 +235,22 @@ namespace QuanLyBenhVien
             btnKhamBenh.IsChecked = false;
             btnDonThuoc.IsChecked = false;
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            btnTrangChu.IsChecked=false;
+            btnBenhNhan.IsChecked=false;
+            btnTTNhanVien.IsChecked = true;
+            btnLichHenKham.IsChecked = false;
+            btnLichTruc.IsChecked = false;
+            btnKhoa.IsChecked = false;
+            btnBenhAn.IsChecked = false;
+            btnKhamBenh.IsChecked = false;
+            btnDonThuoc.IsChecked = false;
+            btnBenh.IsChecked = false;
+            btnThuoc.IsChecked = false;
+            btnVatDung.IsChecked = false;
+            btnHoaDon.IsChecked = false;
+        }
     }
 }

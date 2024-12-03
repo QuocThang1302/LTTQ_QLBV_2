@@ -8,6 +8,7 @@ using FontAwesome.Sharp;
 using System.Windows.Input;
 using QuanLyBenhVien.Model;
 using QuanLyBenhVien.Repositories;
+using QuanLyBenhVien.View;
 
 namespace QuanLyBenhVien.ViewModel
 {
@@ -70,10 +71,18 @@ namespace QuanLyBenhVien.ViewModel
             ShowThuocViewCommand = new ViewModelCommand(ExecuteShowThuocViewCommand);
             ShowVatDungViewCommand = new ViewModelCommand(ExecuteShowVatDungViewCommand);
             ShowHoaDonViewCommand = new ViewModelCommand(ExecuteShowHoaDonViewCommand);
+            ShowTTCaNhanViewCommand = new ViewModelCommand(ExecuteShowTTCaNhanViewCommand);
             //Default view
             ExecuteShowTrangChuViewCommand(null);
 
             LoadCurrentUserData();
+        }
+
+        private void ExecuteShowTTCaNhanViewCommand(object obj)
+        {
+            CurrentChildView = new NhanVienViewModel();
+            Caption = "Nhân viên";
+            Icon = IconChar.IdCard;
         }
 
         private void ExecuteShowHoaDonViewCommand(object obj)
@@ -181,6 +190,7 @@ namespace QuanLyBenhVien.ViewModel
         public ICommand ShowThuocViewCommand { get; }
         public ICommand ShowVatDungViewCommand { get; }
         public ICommand ShowHoaDonViewCommand { get; }
+        public ICommand ShowTTCaNhanViewCommand { get; }
 
         private void LoadCurrentUserData()
         {
