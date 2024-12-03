@@ -110,16 +110,17 @@
 
                 <StackPanel Grid.Row="4" Orientation="Horizontal" FlowDirection="RightToLeft">
                     <Button x:Name="btnXoa" Style="{StaticResource childviewButton}" 
-                            Margin="52,0,0,0"
-                            Content="Xóa" Click="btnXoa_Click"/>
+                        Margin="52,0,0,0"
+                        Content="Xóa"/>
 
                     <Button x:Name="btnCapNhat" Style="{StaticResource childviewButton}" 
-                            Margin="52,0,0,0"
-                            Content="Cập nhật" Click="btnCapNhat_Click"/>
+                        Margin="52,0,0,0"
+                        Content="Cập nhật"/>
 
                     <Button x:Name="btnThem" Style="{StaticResource childviewButton}" 
-                            Margin="52,0,0,0"
-                            Content="Thêm" Click="btnThem_Click"/>
+                        Margin="52,0,0,0"
+                        Content="Thêm"/>
+
                 </StackPanel>
             </Grid>
         </Border>
@@ -127,6 +128,7 @@
         <Grid Grid.Row="2">
             <StackPanel Margin="25,10,25,10">
                 <TextBlock Text="Danh sách thuốc"
+
                            FontSize="18"
                            FontWeight="Bold"
                            FontFamily="Inter"
@@ -138,6 +140,7 @@
                           CanUserDeleteRows="False"
                           Margin="0,5,0,0"
                           Height="180" Loaded="dgDanhSachThuoc_Loaded" SelectionChanged="dgDanhSachThuoc_SelectionChanged">
+
                     <!-- Style cho header -->
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">

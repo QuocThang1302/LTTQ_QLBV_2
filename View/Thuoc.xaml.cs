@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using System.Data.SqlClient;
 using System.Diagnostics;
 
+
+
 namespace QuanLyBenhVien.View
 {
     /// <summary>
@@ -63,6 +65,7 @@ namespace QuanLyBenhVien.View
 
             dgDanhSachThuoc.ItemsSource = ds.Tables["tblThuoc"].DefaultView;
         }
+
         private int vitri = -1;
 
         private void dgDanhSachThuoc_Loaded(object sender, RoutedEventArgs e)
@@ -211,6 +214,7 @@ namespace QuanLyBenhVien.View
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
     }
 
 }
