@@ -7,7 +7,7 @@
              xmlns:customControls="clr-namespace:QuanLyBenhVien.CustomControls"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
-             d:DesignHeight="628" d:DesignWidth="978">
+             d:DesignHeight="628" d:DesignWidth="978" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -133,11 +133,11 @@
                            FontFamily="Inter"
                            HorizontalAlignment="Center"/>
 
-                <DataGrid AutoGenerateColumns="False" 
+                <DataGrid x:Name="dgDanhSachVatDung" AutoGenerateColumns="False" 
                           CanUserAddRows="False"
                           CanUserDeleteRows="False"
                           Margin="0,5,0,0"
-                          Height="180">
+                          Height="180" SelectionChanged="dgDanhSachVatDung_SelectionChanged">
                     <!-- Style cho header -->
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
@@ -183,12 +183,12 @@
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Mã vật dụng" Width="*"/>
-                        <DataGridTextColumn Header="Tên vật dụng" Width="*"/>
-                        <DataGridTextColumn Header="Mô tả" Width="*"/>
-                        <DataGridTextColumn Header="Số lượng" Width="*"/>
-                        <DataGridTextColumn Header="Giá tiền" Width="*"/>
-                        <DataGridTextColumn Header="Mã quản lý" Width="*"/>
+                        <DataGridTextColumn Header="Mã vật dụng" Width="*" Binding="{Binding MaVatDung}"/>
+                        <DataGridTextColumn Header="Tên vật dụng" Width="*" Binding="{Binding TenVatDung}"/>
+                        <DataGridTextColumn Header="Mô tả" Width="*" Binding="{Binding MoTa}"/>
+                        <DataGridTextColumn Header="Số lượng" Width="*" Binding="{Binding SoLuong}"/>
+                        <DataGridTextColumn Header="Giá tiền" Width="*" Binding="{Binding Gia}"/>
+                        <DataGridTextColumn Header="Mã quản lý" Width="*" Binding="{Binding MaQuanLy}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
