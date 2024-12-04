@@ -61,11 +61,11 @@ namespace QuanLyBenhVien.Repositories
                     {
                         user = new UserModel()
                         {
-                            Id = reader[0].ToString(),
+                            Id = reader["MaNhanVien"].ToString(),
                             Password = string.Empty,
-                            FirstName = reader[2].ToString(),
-                            LastName = reader[3].ToString(),
-                            Email = reader[4].ToString()
+                            FirstName = reader["Ho"].ToString(),
+                            LastName = reader["Ten"].ToString(),
+                            Email = reader["Email"].ToString()
                         };
                     }
                 }

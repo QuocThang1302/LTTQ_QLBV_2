@@ -115,8 +115,8 @@
 
                     <Grid Height="Auto">
                         <ScrollViewer VerticalScrollBarVisibility="Hidden"
-                                  HorizontalScrollBarVisibility="Disabled"
-                                  Height="440">
+                                      HorizontalScrollBarVisibility="Disabled"
+                                      Height="440">
                             <StackPanel>
                                 <RadioButton x:Name="btnTrangChu"
                                              Style="{StaticResource MenuButton}"
@@ -378,7 +378,7 @@
                                     </ItemsPanelTemplate>
                                 </Menu.ItemsPanel>
 
-                                <MenuItem Width="25"
+                                <MenuItem Width="Auto"
                                           Style="{StaticResource MenuItemStyle}"
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center">
@@ -388,6 +388,15 @@
                                                       HorizontalAlignment="Center"
                                                       Icon="AngleDown" Style="{StaticResource userIcon}" />
                                     </MenuItem.Icon>
+
+                                    <MenuItem.Header>
+                                        <TextBlock Text="Phan Ngọc Sơn"
+                                                   Margin="5,0,0,0"
+                                                   Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=MenuItem}}"
+                                                   FontFamily="Inter"
+                                                   FontSize="16"
+                                                   VerticalAlignment="Center" />
+                                    </MenuItem.Header>
 
                                     <MenuItem Command="{Binding ShowTTCaNhanViewCommand}"
                                               Click="MenuItem_Click"
@@ -441,13 +450,6 @@
                                     </MenuItem>
                                 </MenuItem>
                             </Menu>
-
-                            <TextBlock Text="Phan Ngoc Son"
-                                       Margin="10,0,0,0"
-                                       Foreground="#00416a"
-                                       FontFamily="Inter"
-                                       FontSize="16"
-                                       VerticalAlignment="Center" />
 
                             <Ellipse Height="35" Width="35"
                                      Stroke="#00416a"

@@ -87,7 +87,6 @@ namespace QuanLyBenhVien.ViewModel
                 var loginWindow = new LoginView();
                 loginWindow.Show();
 
-                // Đóng cửa sổ chính
                 Application.Current.MainWindow = loginWindow;
 
                 Application.Current.Windows.OfType<MainWindow>().FirstOrDefault()?.Close();
