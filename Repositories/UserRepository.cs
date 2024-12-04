@@ -63,8 +63,8 @@ namespace QuanLyBenhVien.Repositories
                         {
                             Id = reader["MaNhanVien"].ToString(),
                             Password = string.Empty,
-                            FirstName = reader["Ho"].ToString(),
-                            LastName = reader["Ten"].ToString(),
+                            FirstName = reader["Ten"].ToString(),
+                            LastName = reader["Ho"].ToString(),
                             Email = reader["Email"].ToString()
                         };
                     }

@@ -390,7 +390,7 @@
                                     </MenuItem.Icon>
 
                                     <MenuItem.Header>
-                                        <TextBlock Text="Phan Ngọc Sơn"
+                                        <TextBlock Text="{Binding DisplayName}"
                                                    Margin="5,0,0,0"
                                                    Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=MenuItem}}"
                                                    FontFamily="Inter"

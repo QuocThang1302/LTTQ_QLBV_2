@@ -14,6 +14,20 @@ namespace QuanLyBenhVien.ViewModel
 {
     internal class MainViewModel : ViewModelBase
     {
+        // Display name này để lưu trữ tên người dùng
+        private string _displayName;
+        public string DisplayName
+        {
+            get { return _displayName; }
+            set
+            {
+                if (_displayName != value)
+                {
+                    _displayName = value;
+                    OnPropertyChanged(nameof(DisplayName));
+                }
+            }
+        }
         //fields
         private UserAccountModel _currentUserAccount;
         private IUserRepository _userRepository;
@@ -77,6 +91,7 @@ namespace QuanLyBenhVien.ViewModel
             ExecuteShowTrangChuViewCommand(null);
 
             LoadCurrentUserData();
+            DisplayName = CurrentUserAccount.DisplayName;
         }
 
         private void ExecuteLogOutCommand(object obj)
@@ -95,9 +110,14 @@ namespace QuanLyBenhVien.ViewModel
                 {
                     if (loginWindow.IsVisible == false && loginWindow.IsLoaded)
                     {
-                        var mainWindow = new MainWindow();
-                        mainWindow.Show();
-                        loginWindow.Close();
+                        Application.Current.Dispatcher.InvokeAsync(() =>
+                        {
+                            var mainWindow = new MainWindow();
+                            mainWindow.Show();
+
+                            // Đảm bảo không gọi Close() ngay lập tức
+                            loginWindow.Close();
+                        });
                     }
                 };
             });
