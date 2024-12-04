@@ -72,10 +72,36 @@ namespace QuanLyBenhVien.ViewModel
             ShowVatDungViewCommand = new ViewModelCommand(ExecuteShowVatDungViewCommand);
             ShowHoaDonViewCommand = new ViewModelCommand(ExecuteShowHoaDonViewCommand);
             ShowTTCaNhanViewCommand = new ViewModelCommand(ExecuteShowTTCaNhanViewCommand);
+            LogoutCommand = new ViewModelCommand(ExecuteLogOutCommand);
             //Default view
             ExecuteShowTrangChuViewCommand(null);
 
             LoadCurrentUserData();
+        }
+
+        private void ExecuteLogOutCommand(object obj)
+        {
+            // Đăng xuất: điều hướng trở lại màn hình đăng nhập
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var loginWindow = new LoginView();
+                loginWindow.Show();
+
+                // Đóng cửa sổ chính
+                Application.Current.MainWindow = loginWindow;
+
+                Application.Current.Windows.OfType<MainWindow>().FirstOrDefault()?.Close();
+
+                loginWindow.IsVisibleChanged += (s, ev) =>
+                {
+                    if (loginWindow.IsVisible == false && loginWindow.IsLoaded)
+                    {
+                        var mainWindow = new MainWindow();
+                        mainWindow.Show();
+                        loginWindow.Close();
+                    }
+                };
+            });
         }
 
         private void ExecuteShowTTCaNhanViewCommand(object obj)
@@ -191,7 +217,7 @@ namespace QuanLyBenhVien.ViewModel
         public ICommand ShowVatDungViewCommand { get; }
         public ICommand ShowHoaDonViewCommand { get; }
         public ICommand ShowTTCaNhanViewCommand { get; }
-
+        public ICommand LogoutCommand { get; }
         private void LoadCurrentUserData()
         {
             //var user = _userRepository.GetByID("abcxyz");

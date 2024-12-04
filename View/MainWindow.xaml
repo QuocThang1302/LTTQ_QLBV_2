@@ -369,11 +369,6 @@
                                     VerticalAlignment="Center"
                                     FlowDirection="RightToLeft"
                                     Margin="0,0,10,0">
-                            <!--<Button Style="{StaticResource userIconButton}"
-                                    Tag="Gray">
-                                <fa:IconImage Icon="AngleDown" Style="{StaticResource userIcon}" />
-                            </Button>-->
-
                             <Menu Background="Transparent"
                                   VerticalAlignment="Center"
                                   HorizontalAlignment="Center">
@@ -384,38 +379,71 @@
                                 </Menu.ItemsPanel>
 
                                 <MenuItem Width="25"
+                                          Style="{StaticResource MenuItemStyle}"
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center">
                                     <MenuItem.Icon>
-                                        <fa:IconImage Foreground="#00416a"
+                                        <fa:IconImage Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=MenuItem}}"
                                                       VerticalAlignment="Center"
                                                       HorizontalAlignment="Center"
                                                       Icon="AngleDown" Style="{StaticResource userIcon}" />
                                     </MenuItem.Icon>
 
-                                    <MenuItem Header="Thông tin cá nhân"
-                                              Command="{Binding ShowTTCaNhanViewCommand}"
-                                              Click="MenuItem_Click">
-                                        <MenuItem.Icon>
-                                            <fa:IconImage Foreground="#00416a"
-                                                          VerticalAlignment="Center"
-                                                          HorizontalAlignment="Left"
-                                                          Icon="HospitalUser" Style="{StaticResource userIcon}" />
-                                        </MenuItem.Icon>
+                                    <MenuItem Command="{Binding ShowTTCaNhanViewCommand}"
+                                              Click="MenuItem_Click"
+                                              Style="{StaticResource SubMenuItemStyle}" Icon="{x:Null}" IsCheckable="False">
+                                        <MenuItem.Header>
+                                            <RadioButton x:Name="btnTTCaNhan"
+                                                         Command="{Binding ShowTTCaNhanViewCommand}"
+                                                         Style="{StaticResource RadioButtonStyle}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <fa:IconImage Icon="UserLarge"
+                                                                  VerticalAlignment="Center"
+                                                                  Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=MenuItem}}"
+                                                                  Margin="10,0,15,0"
+                                                                  HorizontalAlignment="Left"
+                                                                  Width="20" Height="20"
+                                                                  Style="{StaticResource userIcon}"/>
+                                                    <TextBlock Text="Thông tin cá nhân"
+                                                               Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=MenuItem}}"
+                                                               FontSize="16"
+                                                               VerticalAlignment="Center"
+                                                               FontWeight="Bold"
+                                                               FontFamily="Inter"/>
+                                                </StackPanel>
+                                            </RadioButton>
+                                        </MenuItem.Header>
                                     </MenuItem>
 
-                                    <MenuItem Header="Đăng xuất">
-                                        <MenuItem.Icon>
-                                            <fa:IconImage Foreground="#00416a"
-                                                          VerticalAlignment="Center"
-                                                          HorizontalAlignment="Left"
-                                                          Icon="ArrowRightFromBracket" Style="{StaticResource userIcon}" />
-                                        </MenuItem.Icon>
+                                    <MenuItem Style="{StaticResource SubMenuItemStyle}" Icon="{x:Null}" IsCheckable="False"
+                                              Command="{Binding LogoutCommand}">
+                                        <MenuItem.Header>
+                                            <RadioButton x:Name="btnDangXuat"
+                                                         Command="{Binding LogoutCommand}"
+                                                         Style="{StaticResource RadioButtonStyle}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <fa:IconImage VerticalAlignment="Center"
+                                                                  Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=MenuItem}}"
+                                                                  Icon="RightFromBracket"
+                                                                  Margin="10,0,15,0"
+                                                                  HorizontalAlignment="Left"
+                                                                  Width="20" Height="20"
+                                                                  Style="{StaticResource userIcon}"/>
+                                                    <TextBlock Text="Đăng xuất"
+                                                               Foreground="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType=MenuItem}}"
+                                                               FontSize="16"
+                                                               VerticalAlignment="Center"
+                                                               FontWeight="Bold"
+                                                               FontFamily="Inter"/>
+                                                </StackPanel>
+                                            </RadioButton>
+                                        </MenuItem.Header>
                                     </MenuItem>
                                 </MenuItem>
                             </Menu>
 
                             <TextBlock Text="Phan Ngoc Son"
+                                       Margin="10,0,0,0"
                                        Foreground="#00416a"
                                        FontFamily="Inter"
                                        FontSize="16"
