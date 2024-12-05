@@ -32,7 +32,7 @@ namespace QuanLyBenhVien.View
             // Đăng ký sự kiện SearchButtonClicked
             searchControl.SearchButtonClicked += SearchControl_SearchButtonClicked;
         }
-        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;

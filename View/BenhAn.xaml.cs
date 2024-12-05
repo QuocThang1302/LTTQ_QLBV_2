@@ -105,7 +105,7 @@ namespace QuanLyBenhVien.View
             txtBenh.Text = "";
             txtHuongDieuTri.Text = "";
         }
-        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
