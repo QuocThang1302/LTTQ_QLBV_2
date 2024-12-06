@@ -80,7 +80,7 @@
                     <Button Content="Đồng ý"
                             Style= "{StaticResource childviewButton}"
                             Grid.Column="1" 
-                            Margin="0,0,0,25"/>
+                            Margin="0,0,0,25" Click="Button_Click_1"/>
                     <Button Content="Thoát"
                             Style= "{StaticResource childviewButton}"
                             Grid.Column="3"
