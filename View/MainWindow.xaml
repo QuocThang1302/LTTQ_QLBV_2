@@ -400,6 +400,7 @@
 
                                     <MenuItem Command="{Binding ShowTTCaNhanViewCommand}"
                                               Click="MenuItem_Click"
+                                              PreviewMouseDown="MenuItem_PreviewMouseDown"
                                               Style="{StaticResource SubMenuItemStyle}" Icon="{x:Null}" IsCheckable="False">
                                         <MenuItem.Header>
                                             <RadioButton x:Name="btnTTCaNhan"

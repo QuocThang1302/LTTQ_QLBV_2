@@ -295,19 +295,19 @@ namespace QuanLyBenhVien
                 expander.IsExpanded = !expander.IsExpanded;
             }
 
-            exDieuTri.IsExpanded = false;
-            exThongTin.IsExpanded = false;
-            btnDieuTri.IsChecked = false;
-            btnThongTin.IsChecked = false;
-            btnTrangChu.IsChecked = false;
-            btnBenhNhan.IsChecked = false;
-            btnBenhAn.IsChecked = false;
-            btnKhamBenh.IsChecked = false;
-            btnDonThuoc.IsChecked = false;
-            btnBenh.IsChecked = false;
-            btnThuoc.IsChecked = false;
-            btnVatDung.IsChecked = false;
-            btnHoaDon.IsChecked = false;
+            //exDieuTri.IsExpanded = false;
+            //exThongTin.IsExpanded = false;
+            //btnDieuTri.IsChecked = false;
+            //btnThongTin.IsChecked = false;
+            //btnTrangChu.IsChecked = false;
+            //btnBenhNhan.IsChecked = false;
+            //btnBenhAn.IsChecked = false;
+            //btnKhamBenh.IsChecked = false;
+            //btnDonThuoc.IsChecked = false;
+            //btnBenh.IsChecked = false;
+            //btnThuoc.IsChecked = false;
+            //btnVatDung.IsChecked = false;
+            //btnHoaDon.IsChecked = false;
         }
 
         private void btnDieuTri_Click(object sender, RoutedEventArgs e)
@@ -320,20 +320,20 @@ namespace QuanLyBenhVien
                 expander.IsExpanded = !expander.IsExpanded;
             }
 
-            exNhanVien.IsExpanded = false;
-            exThongTin.IsExpanded = false;
-            btnNhanVien.IsChecked = false;
-            btnThongTin.IsChecked = false;
-            btnTrangChu.IsChecked = false;
-            btnBenhNhan.IsChecked = false;
-            btnTTNhanVien.IsChecked = false;
-            btnLichHenKham.IsChecked = false;
-            btnLichTruc.IsChecked = false;
-            btnKhoa.IsChecked = false;
-            btnBenh.IsChecked = false;
-            btnThuoc.IsChecked = false;
-            btnVatDung.IsChecked = false;
-            btnHoaDon.IsChecked = false;
+            //exNhanVien.IsExpanded = false;
+            //exThongTin.IsExpanded = false;
+            //btnNhanVien.IsChecked = false;
+            //btnThongTin.IsChecked = false;
+            //btnTrangChu.IsChecked = false;
+            //btnBenhNhan.IsChecked = false;
+            //btnTTNhanVien.IsChecked = false;
+            //btnLichHenKham.IsChecked = false;
+            //btnLichTruc.IsChecked = false;
+            //btnKhoa.IsChecked = false;
+            //btnBenh.IsChecked = false;
+            //btnThuoc.IsChecked = false;
+            //btnVatDung.IsChecked = false;
+            //btnHoaDon.IsChecked = false;
         }
 
         private void btnThongTin_Click(object sender, RoutedEventArgs e)
@@ -346,19 +346,19 @@ namespace QuanLyBenhVien
                 expander.IsExpanded = !expander.IsExpanded;
             }
 
-            exNhanVien.IsExpanded = false;
-            exDieuTri.IsExpanded = false;
-            btnNhanVien.IsChecked = false;
-            btnDieuTri.IsChecked = false;
-            btnTrangChu.IsChecked = false;
-            btnBenhNhan.IsChecked = false;
-            btnTTNhanVien.IsChecked = false;
-            btnLichHenKham.IsChecked = false;
-            btnLichTruc.IsChecked = false;
-            btnKhoa.IsChecked = false;
-            btnBenhAn.IsChecked = false;
-            btnKhamBenh.IsChecked = false;
-            btnDonThuoc.IsChecked = false;
+            //exNhanVien.IsExpanded = false;
+            //exDieuTri.IsExpanded = false;
+            //btnNhanVien.IsChecked = false;
+            //btnDieuTri.IsChecked = false;
+            //btnTrangChu.IsChecked = false;
+            //btnBenhNhan.IsChecked = false;
+            //btnTTNhanVien.IsChecked = false;
+            //btnLichHenKham.IsChecked = false;
+            //btnLichTruc.IsChecked = false;
+            //btnKhoa.IsChecked = false;
+            //btnBenhAn.IsChecked = false;
+            //btnKhamBenh.IsChecked = false;
+            //btnDonThuoc.IsChecked = false;
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
@@ -382,6 +382,11 @@ namespace QuanLyBenhVien
             btnThuoc.IsChecked = false;
             btnVatDung.IsChecked = false;
             btnHoaDon.IsChecked = false;
+        }
+
+        private void MenuItem_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MenuItem_Click(sender, e);
         }
     }
 }
