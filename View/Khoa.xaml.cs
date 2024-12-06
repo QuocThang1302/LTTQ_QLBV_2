@@ -55,7 +55,7 @@ namespace QuanLyBenhVien.View
             // Kết nối đến cơ sở dữ liệu và thêm thông tin
             try
             {
-                using (SqlConnection conn = new SqlConnection("Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True"))
+                using (SqlConnection conn = new SqlConnection("Data Source=QUOCTHANG\\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True"))
                 {
                     conn.Open();
 

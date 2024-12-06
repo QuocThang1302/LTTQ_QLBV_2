@@ -42,7 +42,7 @@ namespace QuanLyBenhVien.View
             }
 
             // Chuỗi kết nối tới cơ sở dữ liệu
-            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+            string connectionString = "Data Source=QUOCTHANG\\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
 
             // Câu lệnh SQL để tìm kiếm thông tin bệnh nhân
             string query = "SELECT * FROM BenhNhan WHERE MaBenhNhan=@MaBenhNhan OR Ten=@MaBenhNhan";
@@ -111,7 +111,7 @@ namespace QuanLyBenhVien.View
             txtTen.Clear();
             txtNgaySinh.Clear();
         }
-        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
@@ -121,7 +121,7 @@ namespace QuanLyBenhVien.View
             dataRow["MaBenhNhan"] = txtMaBenhNhan.Text.Trim();
             dataRow["Ho"] = txtHo.Text.Trim();
             dataRow["Ten"] = txtTen.Text.Trim();
-            dataRow["NgaySinh"] = DBNull.Value;
+            dataRow["NgaySinh"] = Convert.ToDateTime(dataRow["NgaySinh"]).ToString("yyyy-MM-dd");
             dataRow["GioiTinh"] = txtGioiTinh.Text.Trim();
             dataRow["NgheNghiep"] = txtNgheNghiep.Text.Trim();
             dataRow["CCCD"] = txtCCCD.Text.Trim();
@@ -257,7 +257,7 @@ namespace QuanLyBenhVien.View
                 dataRow["MaBenhNhan"] = txtMaBenhNhan.Text.Trim();
                 dataRow["Ho"] = txtHo.Text.Trim();
                 dataRow["Ten"] = txtTen.Text.Trim();
-                dataRow["NgaySinh"] = string.IsNullOrEmpty(txtNgaySinh.Text.Trim()) ? DBNull.Value : DateTime.Parse(txtNgaySinh.Text.Trim());
+                dataRow["NgaySinh"] = Convert.ToDateTime(dataRow["NgaySinh"]).ToString("yyyy-MM-dd");
                 dataRow["GioiTinh"] = txtGioiTinh.Text.Trim();
                 dataRow["NgheNghiep"] = txtNgheNghiep.Text.Trim();
                 dataRow["CCCD"] = txtCCCD.Text.Trim();

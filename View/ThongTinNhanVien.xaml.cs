@@ -32,7 +32,7 @@ namespace QuanLyBenhVien.View
             // Đăng ký sự kiện SearchButtonClicked
             searchControl.SearchButtonClicked += SearchControl_SearchButtonClicked;
         }
-        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
@@ -47,7 +47,7 @@ namespace QuanLyBenhVien.View
             dataRow["GioiTinh"] = txtGioiTinh.Text.Trim();
             dataRow["CCCD"] = txtCCCD.Text.Trim();
             dataRow["SDT"] = txtSDT.Text.Trim();
-            dataRow["NgaySinh"] = DBNull.Value;
+            dataRow["NgaySinh"] = Convert.ToDateTime(dataRow["NgaySinh"]).ToString("yyyy-MM-dd");
             dataRow["Email"] = txtEmail.Text.Trim();
             dataRow["DiaChi"] = txtDiaChi.Text.Trim();
             
@@ -185,7 +185,7 @@ namespace QuanLyBenhVien.View
                 dataRow["GioiTinh"] = txtGioiTinh.Text.Trim();
                 dataRow["CCCD"] = txtCCCD.Text.Trim();
                 dataRow["SDT"] = txtSDT.Text.Trim();
-                dataRow["NgaySinh"] = DBNull.Value;
+                dataRow["NgaySinh"] = Convert.ToDateTime(dataRow["NgaySinh"]).ToString("yyyy-MM-dd");
                 dataRow["Email"] = txtEmail.Text.Trim();
                 dataRow["DiaChi"] = txtDiaChi.Text.Trim();
                 
@@ -229,7 +229,7 @@ namespace QuanLyBenhVien.View
             }
 
             // Chuỗi kết nối tới cơ sở dữ liệu
-            string connectionString = "Data Source=DESKTOP-U5DJ7HG\\SQLEXPRESS01;Initial Catalog=BV;Integrated Security=True";
+            string connectionString = "Data Source=QUOCTHANG\\\\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
 
             // Câu lệnh SQL để tìm kiếm thông tin nhân viên
             string query = "SELECT * FROM NhanVien WHERE MaNhanVien = @MaNhanVien OR Ten = @MaNhanVien";
