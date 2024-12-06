@@ -13,7 +13,7 @@ namespace QuanLyBenhVien.Repositories
         private readonly string _connectionString;
         public RepositoryBase()
         {
-            _connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True;Trust Server Certificate=True";
+            _connectionString = "Data Source=DESKTOP-U5DJ7HG\\SQLEXPRESS01;Initial Catalog=BV;Integrated Security=True;Trust Server Certificate=True";
         }
         protected SqlConnection GetConnection()
         {

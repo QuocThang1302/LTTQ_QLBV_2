@@ -285,29 +285,6 @@ namespace QuanLyBenhVien
             btnDonThuoc.IsChecked = false;
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            exNhanVien.IsExpanded = true;
-            exDieuTri.IsExpanded = false;
-            exThongTin.IsExpanded = false;
-            btnNhanVien.IsChecked = true;
-            btnDieuTri.IsChecked = false;
-            btnThongTin.IsChecked = false;
-            btnTrangChu.IsChecked=false;
-            btnBenhNhan.IsChecked=false;
-            btnTTNhanVien.IsChecked = true;
-            btnLichHenKham.IsChecked = false;
-            btnLichTruc.IsChecked = false;
-            btnKhoa.IsChecked = false;
-            btnBenhAn.IsChecked = false;
-            btnKhamBenh.IsChecked = false;
-            btnDonThuoc.IsChecked = false;
-            btnBenh.IsChecked = false;
-            btnThuoc.IsChecked = false;
-            btnVatDung.IsChecked = false;
-            btnHoaDon.IsChecked = false;
-        }
-
         private void btnNhanVien_Click(object sender, RoutedEventArgs e)
         {
             var expander = exNhanVien;
@@ -382,6 +359,29 @@ namespace QuanLyBenhVien
             btnBenhAn.IsChecked = false;
             btnKhamBenh.IsChecked = false;
             btnDonThuoc.IsChecked = false;
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            exNhanVien.IsExpanded = true;
+            exDieuTri.IsExpanded = false;
+            exThongTin.IsExpanded = false;
+            btnNhanVien.IsChecked = true;
+            btnDieuTri.IsChecked = false;
+            btnThongTin.IsChecked = false;
+            btnTrangChu.IsChecked = false;
+            btnBenhNhan.IsChecked = false;
+            btnTTNhanVien.IsChecked = true;
+            btnLichHenKham.IsChecked = false;
+            btnLichTruc.IsChecked = false;
+            btnKhoa.IsChecked = false;
+            btnBenhAn.IsChecked = false;
+            btnKhamBenh.IsChecked = false;
+            btnDonThuoc.IsChecked = false;
+            btnBenh.IsChecked = false;
+            btnThuoc.IsChecked = false;
+            btnVatDung.IsChecked = false;
+            btnHoaDon.IsChecked = false;
         }
     }
 }

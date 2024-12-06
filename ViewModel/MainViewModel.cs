@@ -14,6 +14,20 @@ namespace QuanLyBenhVien.ViewModel
 {
     internal class MainViewModel : ViewModelBase
     {
+        // Display name này để lưu trữ tên người dùng
+        private string _displayName;
+        public string DisplayName
+        {
+            get { return _displayName; }
+            set
+            {
+                if (_displayName != value)
+                {
+                    _displayName = value;
+                    OnPropertyChanged(nameof(DisplayName));
+                }
+            }
+        }
         //fields
         private UserAccountModel _currentUserAccount;
         private IUserRepository _userRepository;
@@ -72,10 +86,41 @@ namespace QuanLyBenhVien.ViewModel
             ShowVatDungViewCommand = new ViewModelCommand(ExecuteShowVatDungViewCommand);
             ShowHoaDonViewCommand = new ViewModelCommand(ExecuteShowHoaDonViewCommand);
             ShowTTCaNhanViewCommand = new ViewModelCommand(ExecuteShowTTCaNhanViewCommand);
+            LogoutCommand = new ViewModelCommand(ExecuteLogOutCommand);
             //Default view
             ExecuteShowTrangChuViewCommand(null);
 
             LoadCurrentUserData();
+            DisplayName = CurrentUserAccount.DisplayName;
+        }
+
+        private void ExecuteLogOutCommand(object obj)
+        {
+            // Đăng xuất: điều hướng trở lại màn hình đăng nhập
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var loginWindow = new LoginView();
+                loginWindow.Show();
+
+                Application.Current.MainWindow = loginWindow;
+
+                Application.Current.Windows.OfType<MainWindow>().FirstOrDefault()?.Close();
+
+                loginWindow.IsVisibleChanged += (s, ev) =>
+                {
+                    if (loginWindow.IsVisible == false && loginWindow.IsLoaded)
+                    {
+                        Application.Current.Dispatcher.InvokeAsync(() =>
+                        {
+                            var mainWindow = new MainWindow();
+                            mainWindow.Show();
+
+                            // Đảm bảo không gọi Close() ngay lập tức
+                            loginWindow.Close();
+                        });
+                    }
+                };
+            });
         }
 
         private void ExecuteShowTTCaNhanViewCommand(object obj)
@@ -191,7 +236,7 @@ namespace QuanLyBenhVien.ViewModel
         public ICommand ShowVatDungViewCommand { get; }
         public ICommand ShowHoaDonViewCommand { get; }
         public ICommand ShowTTCaNhanViewCommand { get; }
-
+        public ICommand LogoutCommand { get; }
         private void LoadCurrentUserData()
         {
             //var user = _userRepository.GetByID("abcxyz");
