@@ -45,7 +45,7 @@ namespace QuanLyBenhVien.View
             }
 
             // Chuỗi kết nối tới cơ sở dữ liệu
-            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+            string connectionString = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
 
             // Câu lệnh SQL để tìm kiếm thông tin thuốc
             string query = "SELECT * FROM Thuoc WHERE MaThuoc = @MaThuoc OR TenThuoc=@MaThuoc";
@@ -105,7 +105,7 @@ namespace QuanLyBenhVien.View
             tbGiaTien.Text = "";
             tbHSD.Text = "";
         }
-        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;

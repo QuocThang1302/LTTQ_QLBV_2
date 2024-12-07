@@ -43,7 +43,7 @@ namespace QuanLyBenhVien.View
                 return;
             }
 
-            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+            string connectionString = "Data Source=QUOCTHANG\\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
             string query = "SELECT * FROM BenhAn JOIN BenhNhan ON BenhAn.MaBenhNhan=BenhNhan.MaBenhNhan WHERE MaBenhAn=@MaBenhAn OR BenhNhan.MaBenhNhan=@MaBenhAn";
 
             try
@@ -104,7 +104,7 @@ namespace QuanLyBenhVien.View
             txtBenh.Text = "";
             txtHuongDieuTri.Text = "";
         }
-        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
@@ -196,7 +196,7 @@ namespace QuanLyBenhVien.View
                 // Cập nhật dữ liệu từ các TextBox vào DataRow
                 dataRow["MaBenhAn"] = txtMaBenhAn.Text.Trim();
                 dataRow["MaBenhNhan"] = txtMaBenhNhan.Text.Trim();
-                dataRow["NgayTaoLap"] = DBNull.Value;
+                dataRow["NgayTaoLap"] = Convert.ToDateTime(dataRow["NgayTaoLap"]).ToString("yyyy-MM-dd");
                 dataRow["Benh"] = txtBenh.Text.Trim();
                 dataRow["TinhTrang"] = txtTinhTrang.Text.Trim();
                 dataRow["DieuTri"] = txtHuongDieuTri.Text.Trim();

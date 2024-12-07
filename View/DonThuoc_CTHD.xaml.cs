@@ -62,7 +62,7 @@ namespace QuanLyBenhVien.View
             // Kết nối cơ sở dữ liệu và thêm dữ liệu vào hai bảng
             try
             {
-                using (SqlConnection conn = new SqlConnection("Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True"))
+                using (SqlConnection conn = new SqlConnection("Data Source=QUOCTHANG\\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True"))
                 {
                     conn.Open();
                     using (SqlTransaction transaction = conn.BeginTransaction())
