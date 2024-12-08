@@ -67,9 +67,6 @@ namespace QuanLyBenhVien.View
                     {
                         MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        // Xóa dữ liệu của DataGridView nếu không có kết quả
-                        dgvCTDonThuoc.ItemsSource = null;
-                        return;
                     }
 
                     // Hiển thị thông tin của CTDonThuoc

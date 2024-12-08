@@ -38,12 +38,11 @@ namespace QuanLyBenhVien.View
             if (string.IsNullOrEmpty(maBenhAn))
             {
                 MessageBox.Show("Vui lòng nhập dữ liệu trước khi tìm kiếm!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                ClearFields();
-                dgDanhSachBenhAn.ItemsSource = null;
+                
                 return;
             }
 
-            string connectionString = "Data Source=QUOCTHANG\\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
             string query = "SELECT * FROM BenhAn JOIN BenhNhan ON BenhAn.MaBenhNhan=BenhNhan.MaBenhNhan WHERE MaBenhAn=@MaBenhAn OR BenhNhan.MaBenhNhan=@MaBenhAn";
 
             try
@@ -61,8 +60,7 @@ namespace QuanLyBenhVien.View
                     if (dataTable.Rows.Count == 0)
                     {
                         MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                        ClearFields();
-                        dgDanhSachBenhAn.ItemsSource = null;
+                      
                     }
                     else if (dataTable.Rows.Count == 1)
                     {
@@ -104,7 +102,7 @@ namespace QuanLyBenhVien.View
             txtBenh.Text = "";
             txtHuongDieuTri.Text = "";
         }
-        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;

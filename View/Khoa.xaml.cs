@@ -52,21 +52,36 @@ namespace QuanLyBenhVien.View
                 return;
             }
 
-            // Kết nối đến cơ sở dữ liệu và thêm thông tin
+            // Kết nối đến cơ sở dữ liệu và xử lý
             try
             {
-                using (SqlConnection conn = new SqlConnection("Data Source=QUOCTHANG\\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True"))
+                using (SqlConnection conn = new SqlConnection("Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True"))
                 {
                     conn.Open();
 
-                    string query = "INSERT INTO Khoa (MaKhoa, TenKhoa, TruongKhoa) VALUES (@MaKhoa, @TenKhoa, @TruongKhoa)";
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    // Kiểm tra mã khoa đã tồn tại hay chưa
+                    string checkQuery = "SELECT COUNT(*) FROM Khoa WHERE MaKhoa = @MaKhoa";
+                    using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn))
                     {
-                        cmd.Parameters.AddWithValue("@MaKhoa", maKhoa);
-                        cmd.Parameters.AddWithValue("@TenKhoa", tenKhoa);
-                        cmd.Parameters.AddWithValue("@TruongKhoa", truongKhoa);
+                        checkCmd.Parameters.AddWithValue("@MaKhoa", maKhoa);
+                        int count = (int)checkCmd.ExecuteScalar();
 
-                        int rowsAffected = cmd.ExecuteNonQuery();
+                        if (count > 0)
+                        {
+                            MessageBox.Show("Mã khoa đã tồn tại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+                    }
+
+                    // Thêm thông tin mới
+                    string insertQuery = "INSERT INTO Khoa (MaKhoa, TenKhoa, TruongKhoa) VALUES (@MaKhoa, @TenKhoa, @TruongKhoa)";
+                    using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn))
+                    {
+                        insertCmd.Parameters.AddWithValue("@MaKhoa", maKhoa);
+                        insertCmd.Parameters.AddWithValue("@TenKhoa", tenKhoa);
+                        insertCmd.Parameters.AddWithValue("@TruongKhoa", truongKhoa);
+
+                        int rowsAffected = insertCmd.ExecuteNonQuery();
                         if (rowsAffected > 0)
                         {
                             MessageBox.Show("Thêm thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);

@@ -69,7 +69,7 @@ namespace QuanLyBenhVien.View
                         MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
                         // Xóa dữ liệu của DataGridView nếu không có kết quả
-                        dgvPhanCong.ItemsSource = null;
+                        
                         return;
                     }
 

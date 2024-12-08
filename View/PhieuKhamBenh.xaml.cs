@@ -40,8 +40,7 @@ namespace QuanLyBenhVien.View
             if (string.IsNullOrEmpty(maPhieuKham))
             {
                 MessageBox.Show("Vui lòng nhập dữ liệu!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                dgDanhSach.ItemsSource = null; // Xóa dữ liệu trong DataGrid
-                ClearFields();
+                
                 return;
             }
 
@@ -85,8 +84,7 @@ namespace QuanLyBenhVien.View
                     if (dataTable.Rows.Count == 0)
                     {
                         MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                        ClearFields(); // Xóa TextBox
-                        dgDanhSach.ItemsSource = null; // Xóa dữ liệu trong DataGrid
+                        
                     }
                     else if (dataTable.Rows.Count == 1)
                     {
