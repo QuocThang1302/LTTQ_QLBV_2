@@ -117,23 +117,46 @@ namespace QuanLyBenhVien.View
 
             // Thêm dữ liệu vào bảng CTDonThuoc
             string queryInsert = @"
-        INSERT INTO CTDonThuoc (MaDonThuoc, MaThuoc, SoLuong, GiaTien, HuongDanSuDung, MaHoaDon) 
-        VALUES (@MaDonThuoc, @MaThuoc, @SoLuong, @GiaTien, @HuongDanSuDung, @MaHoaDon)";
-            int result = ExecuteNonQuery(queryInsert,
-                new SqlParameter("@MaDonThuoc", maDonThuoc),
-                new SqlParameter("@MaThuoc", maThuoc),
-                new SqlParameter("@SoLuong", soLuong),
-                new SqlParameter("@GiaTien", giaTien),
-                new SqlParameter("@HuongDanSuDung", huongDan),
-                new SqlParameter("@MaHoaDon", maHoaDon));
+    INSERT INTO CTDonThuoc (MaDonThuoc, MaThuoc, SoLuong, GiaTien, HuongDanSuDung, MaHoaDon) 
+    VALUES (@MaDonThuoc, @MaThuoc, @SoLuong, @GiaTien, @HuongDanSuDung, @MaHoaDon)";
 
-            if (result > 0)
+            try
             {
-                MessageBox.Show("Thêm thành công!");
+                int result = ExecuteNonQuery(queryInsert,
+                    new SqlParameter("@MaDonThuoc", maDonThuoc),
+                    new SqlParameter("@MaThuoc", maThuoc),
+                    new SqlParameter("@SoLuong", soLuong),
+                    new SqlParameter("@GiaTien", giaTien),
+                    new SqlParameter("@HuongDanSuDung", huongDan),
+                    new SqlParameter("@MaHoaDon", maHoaDon));
+
+                if (result > 0)
+                {
+                    MessageBox.Show("Thêm thành công!");
+                }
+                else
+                {
+                    MessageBox.Show("Thêm thất bại!");
+                }
             }
-            else
+            catch (SqlException sqlEx)
             {
-                MessageBox.Show("Thêm thất bại!");
+                if (sqlEx.Number == 2627) // Vi phạm khóa chính
+                {
+                    MessageBox.Show("Chi tiết đơn thuốc đã tồn tại (vi phạm khóa chính)!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else if (sqlEx.Number == 547) // Vi phạm khóa ngoại
+                {
+                    MessageBox.Show("Dữ liệu nhập vào vi phạm ràng buộc khóa ngoại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else
+                {
+                    MessageBox.Show($"Lỗi SQL: {sqlEx.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

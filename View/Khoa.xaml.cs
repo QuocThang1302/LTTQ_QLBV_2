@@ -73,7 +73,7 @@ namespace QuanLyBenhVien.View
                         }
                     }
 
-                    // Thêm thông tin mới
+                    // Thêm thông tin mới vào bảng Khoa
                     string insertQuery = "INSERT INTO Khoa (MaKhoa, TenKhoa, TruongKhoa) VALUES (@MaKhoa, @TenKhoa, @TruongKhoa)";
                     using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn))
                     {
@@ -81,14 +81,32 @@ namespace QuanLyBenhVien.View
                         insertCmd.Parameters.AddWithValue("@TenKhoa", tenKhoa);
                         insertCmd.Parameters.AddWithValue("@TruongKhoa", truongKhoa);
 
-                        int rowsAffected = insertCmd.ExecuteNonQuery();
-                        if (rowsAffected > 0)
+                        try
                         {
-                            MessageBox.Show("Thêm thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                            int rowsAffected = insertCmd.ExecuteNonQuery();
+                            if (rowsAffected > 0)
+                            {
+                                MessageBox.Show("Thêm thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Thêm thông tin thất bại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
                         }
-                        else
+                        catch (SqlException sqlEx)
                         {
-                            MessageBox.Show("Thêm thông tin thất bại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                            if (sqlEx.Number == 2627) // Vi phạm khóa chính
+                            {
+                                MessageBox.Show("Mã khoa đã tồn tại (vi phạm khóa chính)!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            }
+                            else if (sqlEx.Number == 547) // Vi phạm khóa ngoại
+                            {
+                                MessageBox.Show("Dữ liệu nhập vào vi phạm ràng buộc khóa ngoại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            }
+                            else
+                            {
+                                MessageBox.Show($"Lỗi SQL: {sqlEx.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
                         }
                     }
                 }

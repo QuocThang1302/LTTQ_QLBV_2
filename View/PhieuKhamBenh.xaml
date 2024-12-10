@@ -179,17 +179,17 @@
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Mã phiếu" Width="*" Binding="{Binding PhieuKhamBenh.MaPhieuKham}" />
-                        <DataGridTextColumn Header="Mã bệnh nhân" Width="1.4*" Binding="{Binding PhieuKhamBenh.MaBenhNhan}" />
-                        <DataGridTextColumn Header="Bệnh nhân" Width="1.2*" Binding="{Binding BenhNhan.Ten}"/>
-                        <DataGridTextColumn Header="Ngày khám" Width="1.2*" Binding="{Binding NgayKham}"/>
-                        <DataGridTextColumn Header="Lý do" Width="0.7*" Binding="{Binding LyDoKhamBenh}"/>
-                        <DataGridTextColumn Header="Chẩn đoán" Width="1.2*" Binding="{Binding ChanDoan}"/>
-                        <DataGridTextColumn Header="Khám" Width="0.7*" Binding="{Binding KhamLamSang}"/>
-                        <DataGridTextColumn Header="Kết quả" Width="*" Binding="{Binding KetQuaKham}"/>
-                        <DataGridTextColumn Header="Mã bác sĩ" Width="*" Binding="{Binding PhieuKhamBenh.MaBacSi}"/>
-                        <DataGridTextColumn Header="Bác sĩ" Width="*" Binding="{Binding NhanVien.Ten}"/>
-                        <DataGridTextColumn Header="Điều trị" Width="*" Binding="{Binding DieuTri}"/>
+                        <DataGridTextColumn Header="Mã phiếu" Width="*" Binding="{Binding MaPhieuKham}" />
+                        <DataGridTextColumn Header="Mã bệnh nhân" Width="1.4*" Binding="{Binding MaBenhNhan}" />
+                        <DataGridTextColumn Header="Bệnh nhân" Width="1.2*" Binding="{Binding TEN_BENHNHAN}" />
+                        <DataGridTextColumn Header="Ngày khám" Width="1.2*" Binding="{Binding NgayKham, StringFormat={}{0:dd/MM/yyyy}}" />
+                        <DataGridTextColumn Header="Lý do" Width="0.7*" Binding="{Binding LyDoKhamBenh}" />
+                        <DataGridTextColumn Header="Chẩn đoán" Width="1.2*" Binding="{Binding ChanDoan}" />
+                        <DataGridTextColumn Header="Khám" Width="0.7*" Binding="{Binding KhamLamSang}" />
+                        <DataGridTextColumn Header="Kết quả" Width="*" Binding="{Binding KetQuaKham}" />
+                        <DataGridTextColumn Header="Mã bác sĩ" Width="*" Binding="{Binding MaBacSi}" />
+                        <DataGridTextColumn Header="Bác sĩ" Width="*" Binding="{Binding TEN_BACSI}" />
+                        <DataGridTextColumn Header="Điều trị" Width="*" Binding="{Binding DieuTri}" />
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

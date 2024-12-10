@@ -22,7 +22,7 @@ namespace QuanLyBenhVien.CustomControls
 
         // Sự kiện được kích hoạt khi nhấn nút Tìm kiếm
         public event EventHandler<string> SearchButtonClicked;
-
+        public event EventHandler ClearButtonClicked;
         public Search()
         {
             InitializeComponent();
@@ -50,7 +50,14 @@ namespace QuanLyBenhVien.CustomControls
             }
         }
 
+        private void btnClear_Click(object sender, RoutedEventArgs e)
+        {
+            // Xóa dữ liệu trong TextBox
+            tbInput.Text = string.Empty;
+            // Gọi sự kiện nếu đã được đăng ký
+            ClearButtonClicked?.Invoke(this, EventArgs.Empty);
 
+        }
 
         // Xử lý sự kiện nút "Tìm kiếm" được nhấn
         private void btnSearch_Click(object sender, RoutedEventArgs e)

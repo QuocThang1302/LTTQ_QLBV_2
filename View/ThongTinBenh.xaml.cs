@@ -29,6 +29,14 @@ namespace QuanLyBenhVien.View
             searchControl.Tmp = "Nhập mã bệnh hoặc tên bệnh";
             // Đăng ký sự kiện SearchButtonClicked
             searchControl.SearchButtonClicked += SearchControl_SearchButtonClicked;
+            // Đăng ký sự kiện ClearButtonClicked cho nút X
+            searchControl.ClearButtonClicked += SearchControl_ClearButtonClicked;
+
+        }
+        private void SearchControl_ClearButtonClicked(object sender, EventArgs e)
+        {
+            // Logic khi nút X được nhấn
+            HienThiDanhSach();
         }
         private void SearchControl_SearchButtonClicked(object sender, string searchText)
         {
@@ -41,7 +49,7 @@ namespace QuanLyBenhVien.View
                 return;
             }
 
-            string connectionString = "Data Source=QUOCTHANG\\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
 
             // Câu lệnh SQL để tìm kiếm thông tin bệnh
             string query = "SELECT * FROM Benh WHERE MaBenh=@MaBenh OR TenBenh=@MaBenh";
@@ -88,7 +96,7 @@ namespace QuanLyBenhVien.View
                 MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;

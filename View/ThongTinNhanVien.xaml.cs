@@ -31,8 +31,16 @@ namespace QuanLyBenhVien.View
             searchControl.Tmp = "Nhập mã nhân viên hoặc tên nhân viên";
             // Đăng ký sự kiện SearchButtonClicked
             searchControl.SearchButtonClicked += SearchControl_SearchButtonClicked;
+            // Đăng ký sự kiện ClearButtonClicked cho nút X
+            searchControl.ClearButtonClicked += SearchControl_ClearButtonClicked;
+
         }
-        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+        private void SearchControl_ClearButtonClicked(object sender, EventArgs e)
+        {
+            // Logic khi nút X được nhấn
+            HienThiDanhSach();
+        }
+        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
@@ -228,7 +236,7 @@ namespace QuanLyBenhVien.View
             }
 
             // Chuỗi kết nối tới cơ sở dữ liệu
-            string connectionString = "Data Source=QUOCTHANG\\\\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
 
             // Câu lệnh SQL để tìm kiếm thông tin nhân viên
             string query = "SELECT * FROM NhanVien WHERE MaNhanVien = @MaNhanVien OR Ten = @MaNhanVien";

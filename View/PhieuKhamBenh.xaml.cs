@@ -30,6 +30,14 @@ namespace QuanLyBenhVien.View
             searchControl.Tmp = "Nhập mã phiếu khám hoặc mã bác sĩ";
             // Đăng ký sự kiện SearchButtonClicked
             searchControl.SearchButtonClicked += SearchControl_SearchButtonClicked;
+            // Đăng ký sự kiện ClearButtonClicked cho nút X
+            searchControl.ClearButtonClicked += SearchControl_ClearButtonClicked;
+
+        }
+        private void SearchControl_ClearButtonClicked(object sender, EventArgs e)
+        {
+            // Logic khi nút X được nhấn
+            HienThiDanhSach();
         }
         private void SearchControl_SearchButtonClicked(object sender, string searchText)
         {
@@ -44,7 +52,7 @@ namespace QuanLyBenhVien.View
                 return;
             }
 
-            string connectionString = "Data Source=QUOCTHANG\\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
 
             // Câu lệnh SQL để tìm kiếm thông tin phiếu khám bệnh và chi tiết phiếu khám bệnh
             string query = @"
@@ -118,7 +126,7 @@ namespace QuanLyBenhVien.View
                 MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
@@ -156,7 +164,7 @@ namespace QuanLyBenhVien.View
             {
                 sqlCon = new SqlConnection(strCon);
             }
-            string query = "SELECT \r\n    PhieuKhamBenh.MaPhieuKham, \r\n    PhieuKhamBenh.MaBenhNhan, \r\n    BenhNhan.Ten, \r\n\tNgayKham,\r\n\tLyDoKhamBenh,\r\n\tChanDoan,\r\n\tKhamLamSang,\r\n\tKetQuaKham,\r\n    PhieuKhamBenh.MaBacSi, \r\n    NhanVien.Ten,\r\n\tDieuTri\r\nFROM \r\n    PhieuKhamBenh\r\nJOIN \r\n    BenhNhan ON PhieuKhamBenh.MaBenhNhan = BenhNhan.MaBenhNhan\r\nJOIN \r\n    NhanVien ON PhieuKhamBenh.MaBacSi = NhanVien.MaNhanVien;";
+            string query = "SELECT \r\nBN.Ten AS TEN_BENHNHAN, \r\nNV.Ten AS TEN_BACSI, \r\nMaPhieuKham, \r\nPK.MaBenhNhan, \r\nNgayKham, \r\nLyDoKhamBenh, \r\n KhamLamSang, \r\n ChanDoan, \r\n KetQuaKham, \r\n DieuTri, \r\n MaBacSi\r\n FROM \r\n BenhNhan BN \r\n JOIN \r\n PhieuKhamBenh PK ON PK.MaBenhNhan = BN.MaBenhNhan\r\n JOIN \r\n NhanVien NV ON NV.MaNhanVien = PK.MaBacSi";
             adapter = new SqlDataAdapter(query, sqlCon);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
 
