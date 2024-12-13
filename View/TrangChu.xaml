@@ -4,8 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuanLyBenhVien.View"
+             xmlns:livechart="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="628" d:DesignWidth="978">
     <Grid>
         <Grid.RowDefinitions>
@@ -59,7 +60,7 @@
 
             <Border Grid.Column="1"
                     Margin="15,20,15,20"
-                    Background="#cfd8ef"
+                    Background="#FFA7D4EE"
                     CornerRadius="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -67,12 +68,12 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <fa:IconImage Icon="BedPulse" Foreground="#00416a"
+                    <fa:IconImage Icon="BedPulse" Foreground="#FF03273E"
                                   Margin="10"/>
 
                     <StackPanel Grid.Column="1">
                         <TextBlock Text="Số lượng bệnh nhân"
-                                   Foreground="#00416a"
+                                   Foreground="#FF03273E"
                                    Margin="0,5,0,0"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"
@@ -80,7 +81,7 @@
                                    FontWeight="Medium"
                                    FontFamily="Inter"/>
                         <TextBlock Text="..."
-                                   Foreground="#00416a"
+                                   Foreground="#FF03273E"
                                    Margin="0,10,0,0"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
@@ -93,7 +94,7 @@
 
             <Border Grid.Column="2"
                     Margin="15,20,15,20"
-                    Background="#FF16AAD2"
+                    Background="#FFA7D4EE"
                     CornerRadius="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -101,12 +102,12 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <fa:IconImage Icon="HouseMedical" Foreground="#d4ebf8"
+                    <fa:IconImage Icon="HouseMedical" Foreground="#FF03273E"
                                   Margin="10"/>
 
                     <StackPanel Grid.Column="1">
                         <TextBlock Text="Số lượng khoa"
-                                   Foreground="#d4ebf8"
+                                   Foreground="#FF03273E"
                                    Margin="0,5,0,0"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
@@ -114,7 +115,7 @@
                                    FontWeight="Medium"
                                    FontFamily="Inter"/>
                         <TextBlock Text="..."
-                                   Foreground="#d4ebf8"
+                                   Foreground="#FF03273E"
                                    Margin="0,10,0,0"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
@@ -127,7 +128,7 @@
 
             <Border Grid.Column="3"
                     Margin="15,20,15,20"
-                    Background="#cfd8ef"
+                    Background="#FFA7D4EE"
                     CornerRadius="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -173,6 +174,78 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0"
+                    Margin="10" CornerRadius="10" Background="White">
+                <DockPanel>
+                    <TextBlock Text="Doanh thu bệnh viện" DockPanel.Dock="Top" Foreground="#FF03273E"
+                               FontSize="16" FontFamily="Inter" FontWeight="Medium" Margin="10,5,0,0" Height="19"/>
+                    <livechart:CartesianChart Series="{Binding SeriesCollectionColumn}"
+                                              LegendLocation="Top" Margin="5,0,5,0">
+                        <livechart:CartesianChart.AxisX>
+                            <livechart:Axis Title="Tháng" Labels="{Binding Labels}"
+                                            Separator="{Binding AxisSeparator}"/>
+                        </livechart:CartesianChart.AxisX>
+
+                        <livechart:CartesianChart.AxisY>
+                            <livechart:Axis Title="Doanh thu" MinValue="0"
+                        LabelFormatter="{Binding Values}"/>
+                        </livechart:CartesianChart.AxisY>
+
+                        <livechart:CartesianChart.DataTooltip>
+                            <livechart:DefaultTooltip SelectionMode="OnlySender"/>
+                        </livechart:CartesianChart.DataTooltip>
+                    </livechart:CartesianChart>
+                </DockPanel>
+            </Border>
+
+            <Border Grid.Column="1"
+                    Margin="10"
+                    CornerRadius="10"
+                    Background="White">
+                <Grid>
+                    <TextBlock Text="Thống kê số thuốc" Foreground="#FF03273E"
+                               FontSize="16" FontFamily="Inter" FontWeight="Medium"
+                               HorizontalAlignment="Right" Margin="0,7,32,-6"/>
+
+                    <TextBlock Text="đã được mua trong tháng" Foreground="#FF03273E"
+                               FontSize="16" FontFamily="Inter" FontWeight="Medium"
+                               HorizontalAlignment="Right" Margin="0,25,10,-25"/>
+
+                    <livechart:PieChart LegendLocation="Right" DataClick="PieChart_DataClick"
+                                        Hoverable="False" Margin="-19,5,39,5"
+                                        InnerRadius="50" Series="{Binding SeriesCollectionPie}">
+                        <livechart:PieChart.ChartLegend>
+                            <livechart:DefaultLegend BulletSize="20"/>
+                        </livechart:PieChart.ChartLegend>
+
+                        <livechart:PieChart.DataTooltip>
+                            <livechart:DefaultTooltip BulletSize="20" SelectionMode="OnlySender"/>
+                        </livechart:PieChart.DataTooltip>
+                    </livechart:PieChart>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Border Margin="10" Background="White" CornerRadius="10">
+                <DockPanel>
+                    <TextBlock Text="Số lượt khám bệnh trong tuần" DockPanel.Dock="Top"
+                               VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FF03273E"
+                               FontSize="16" FontFamily="Inter" FontWeight="Medium" Margin="0,5,0,0" Height="19"/>
+                    
+                    <livechart:CartesianChart Series="{Binding SeriesCollection}"
+                                              LegendLocation="None" Margin="5,0,5,0">
+                        <livechart:CartesianChart.AxisX>
+                            <livechart:Axis Title="Thứ" Labels="{Binding LabelsLine}"/>
+                        </livechart:CartesianChart.AxisX>
+
+                        <livechart:CartesianChart.AxisY>
+                            <livechart:Axis Title="Lượt khám" MinValue="0"/>
+                        </livechart:CartesianChart.AxisY>
+                    </livechart:CartesianChart>
+                </DockPanel>
+            </Border>
         </Grid>
     </Grid>
 </UserControl>

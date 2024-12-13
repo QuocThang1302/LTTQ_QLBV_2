@@ -293,21 +293,17 @@ namespace QuanLyBenhVien
             {
                 // Đảo ngược trạng thái IsExpanded của Expander
                 expander.IsExpanded = !expander.IsExpanded;
-            }
+                if (expander.IsExpanded == true)
+                    btnNhanVien.IsChecked = true;
+                else
+                    btnNhanVien.IsChecked = false;
 
-            //exDieuTri.IsExpanded = false;
-            //exThongTin.IsExpanded = false;
-            //btnDieuTri.IsChecked = false;
-            //btnThongTin.IsChecked = false;
-            //btnTrangChu.IsChecked = false;
-            //btnBenhNhan.IsChecked = false;
-            //btnBenhAn.IsChecked = false;
-            //btnKhamBenh.IsChecked = false;
-            //btnDonThuoc.IsChecked = false;
-            //btnBenh.IsChecked = false;
-            //btnThuoc.IsChecked = false;
-            //btnVatDung.IsChecked = false;
-            //btnHoaDon.IsChecked = false;
+                if (btnTTNhanVien.IsChecked == true || btnLichHenKham.IsChecked == true || btnLichTruc.IsChecked == true || btnKhoa.IsChecked == true)
+                {
+                    expander.IsExpanded = true;
+                    btnNhanVien.IsChecked = true;
+                }    
+            }
         }
 
         private void btnDieuTri_Click(object sender, RoutedEventArgs e)
@@ -318,22 +314,17 @@ namespace QuanLyBenhVien
             {
                 // Đảo ngược trạng thái IsExpanded của Expander
                 expander.IsExpanded = !expander.IsExpanded;
-            }
+                if (expander.IsExpanded == true)
+                    btnDieuTri.IsChecked = true;
+                else
+                    btnDieuTri.IsChecked = false;
 
-            //exNhanVien.IsExpanded = false;
-            //exThongTin.IsExpanded = false;
-            //btnNhanVien.IsChecked = false;
-            //btnThongTin.IsChecked = false;
-            //btnTrangChu.IsChecked = false;
-            //btnBenhNhan.IsChecked = false;
-            //btnTTNhanVien.IsChecked = false;
-            //btnLichHenKham.IsChecked = false;
-            //btnLichTruc.IsChecked = false;
-            //btnKhoa.IsChecked = false;
-            //btnBenh.IsChecked = false;
-            //btnThuoc.IsChecked = false;
-            //btnVatDung.IsChecked = false;
-            //btnHoaDon.IsChecked = false;
+                if (btnBenhAn.IsChecked == true || btnKhamBenh.IsChecked == true || btnDonThuoc.IsChecked == true)
+                {
+                    expander.IsExpanded = true;
+                    btnDieuTri.IsChecked = true;
+                }
+            }
         }
 
         private void btnThongTin_Click(object sender, RoutedEventArgs e)
@@ -344,21 +335,17 @@ namespace QuanLyBenhVien
             {
                 // Đảo ngược trạng thái IsExpanded của Expander
                 expander.IsExpanded = !expander.IsExpanded;
-            }
+                if (expander.IsExpanded == true)
+                    btnThongTin.IsChecked = true;
+                else
+                    btnThongTin.IsChecked = false;
 
-            //exNhanVien.IsExpanded = false;
-            //exDieuTri.IsExpanded = false;
-            //btnNhanVien.IsChecked = false;
-            //btnDieuTri.IsChecked = false;
-            //btnTrangChu.IsChecked = false;
-            //btnBenhNhan.IsChecked = false;
-            //btnTTNhanVien.IsChecked = false;
-            //btnLichHenKham.IsChecked = false;
-            //btnLichTruc.IsChecked = false;
-            //btnKhoa.IsChecked = false;
-            //btnBenhAn.IsChecked = false;
-            //btnKhamBenh.IsChecked = false;
-            //btnDonThuoc.IsChecked = false;
+                if (btnBenh.IsChecked == true || btnThuoc.IsChecked == true || btnVatDung.IsChecked == true || btnHoaDon.IsChecked == true)
+                {
+                    expander.IsExpanded = true;
+                    btnThongTin.IsChecked = true;
+                }
+            }
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
