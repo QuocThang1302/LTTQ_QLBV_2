@@ -16,7 +16,6 @@ using System.Windows.Shapes;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
-using Separator = LiveCharts.Wpf.Separator;
 
 namespace QuanLyBenhVien.View
 {
@@ -99,11 +98,6 @@ namespace QuanLyBenhVien.View
                      DataLabels = true
                  }};
 
-            AxisSeparator = new Separator
-            {
-                Step = 1, // Hiển thị nhãn mỗi bước là 1 (tức tháng 1, 2, 3, 4, 5)
-                IsEnabled = true
-            };
             Labels = new[] { "1", "2", "3", "4", "5" };
             Values = value => value.ToString("N0") + "M";
             DataContext = this;
@@ -115,7 +109,6 @@ namespace QuanLyBenhVien.View
         public string[] Labels { get; set; }
         public string[] LabelsLine { get; set; }
         public Func<double, string> Values { get; set; }
-        public Separator AxisSeparator { get; set; }
 
         private void PieChart_DataClick(object sender, ChartPoint chartPoint)
         {

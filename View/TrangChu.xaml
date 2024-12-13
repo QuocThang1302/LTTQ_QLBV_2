@@ -183,13 +183,16 @@
                     <livechart:CartesianChart Series="{Binding SeriesCollectionColumn}"
                                               LegendLocation="Top" Margin="5,0,5,0">
                         <livechart:CartesianChart.AxisX>
-                            <livechart:Axis Title="Tháng" Labels="{Binding Labels}"
-                                            Separator="{Binding AxisSeparator}"/>
+                            <livechart:Axis Title="Tháng" Labels="{Binding Labels}">
+                                <livechart:Axis.Separator>
+                                    <livechart:Separator Step="1"/>
+                                </livechart:Axis.Separator>
+                            </livechart:Axis>
                         </livechart:CartesianChart.AxisX>
 
                         <livechart:CartesianChart.AxisY>
                             <livechart:Axis Title="Doanh thu" MinValue="0"
-                        LabelFormatter="{Binding Values}"/>
+                                            LabelFormatter="{Binding Values}"/>
                         </livechart:CartesianChart.AxisY>
 
                         <livechart:CartesianChart.DataTooltip>
