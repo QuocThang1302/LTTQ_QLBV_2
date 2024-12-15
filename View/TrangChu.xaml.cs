@@ -38,24 +38,28 @@ namespace QuanLyBenhVien.View
                 {
                     Title = "Paracetamol",
                     Values = new ChartValues<ObservableValue> {new ObservableValue(20)},
+                    Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#4DA3D4")),
                     DataLabels = true
                 },
                 new PieSeries
                 {
                     Title = "Vitamin C",
                     Values = new ChartValues<ObservableValue> {new ObservableValue(15)},
+                    Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E5B7EA")),
                     DataLabels = true
                 },
                 new PieSeries
                 {
                     Title = "Amoxicillin",
                     Values = new ChartValues<ObservableValue> {new ObservableValue(10)},
+                    Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#BA94E0")),
                     DataLabels = true
                 },
                 new PieSeries
                 {
                     Title = "Ibuprofen",
                     Values = new ChartValues<ObservableValue> {new ObservableValue(5)},
+                    Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#A3D8F4")),
                     DataLabels = true
                 }
             };
@@ -88,6 +92,7 @@ namespace QuanLyBenhVien.View
                     Title = "Thuốc",
                     Values = new ChartValues<double> {6,4,7,5,8},
                     StackMode = StackMode.Values,
+                    Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#DBBDE2")),
                     DataLabels = true
                 },
                  new StackedColumnSeries
@@ -95,6 +100,7 @@ namespace QuanLyBenhVien.View
                      Title = "Dịch vụ",
                      Values = new ChartValues<double> {1,2,3,4,3},
                      StackMode = StackMode.Values,
+                     Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#78C7D9")),
                      DataLabels = true
                  }};
 
