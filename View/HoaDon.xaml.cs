@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -42,7 +44,7 @@ namespace QuanLyBenhVien.View
             }
 
             // Chuỗi kết nối tới cơ sở dữ liệu
-            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+            string connectionString = "Data Source=QUOCTHANG\\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
 
             // Câu lệnh SQL để tìm kiếm thông tin đơn thuốc và chi tiết đơn thuốc
             string queryHoaDon = "SELECT * FROM HoaDon WHERE MaHoaDon = @MaHoaDon OR TenHoaDon = @MaHoaDon";
@@ -85,6 +87,90 @@ namespace QuanLyBenhVien.View
         {
             CTHD cTHD = new CTHD();
             cTHD.Show();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            // Kiểm tra xem người dùng đã chọn dòng nào chưa
+            if (vitri == -1)
+            {
+                MessageBox.Show("Vui lòng chọn một dòng để xóa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            try
+            {
+                // Xác nhận từ người dùng trước khi xóa
+                var result = MessageBox.Show("Bạn có chắc chắn muốn xóa dòng này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    // Xóa dòng được chọn trong DataTable
+                    DataRow dataRow = ds.Tables["tblHoaDon"].Rows[vitri];
+                    dataRow.Delete();
+
+                    // Cập nhật thay đổi vào cơ sở dữ liệu
+                    int kq = adapter.Update(ds.Tables["tblHoaDon"]);
+
+                    if (kq > 0)
+                    {
+                        MessageBox.Show("Xóa dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        // Cập nhật giao diện DataGrid
+                        dgvHoaDon.ItemsSource = null;
+                        dgvHoaDon.ItemsSource = ds.Tables["tblHoaDon"].DefaultView;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Xóa dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HienThiDanhSach();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error: {ex.Message}");
+            }
+        }
+        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+        SqlConnection sqlCon = null;
+        SqlDataAdapter adapter = null;
+        DataSet ds = null;
+        private void HienThiDanhSach()
+        {
+            if (sqlCon == null)
+            {
+                sqlCon = new SqlConnection(strCon);
+            }
+            string query = "SELECT \r\n    HD.MaHoaDon, \r\n    HD.TenHoaDon, \r\n    BN.MaBenhNhan, \r\n    NV.MaNhanVien, \r\n    HD.NgayLapHoaDon, \r\n    HD.GiaTien, \r\n    HD.TrangThai\r\nFROM HoaDon HD\r\nJOIN BenhNhan BN ON HD.MaBenhNhan = BN.MaBenhNhan\r\nJOIN NhanVien NV ON HD.MaNhanVien = NV.MaNhanVien;";
+            adapter = new SqlDataAdapter(query, sqlCon);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+
+            ds = new DataSet();
+            if (sqlCon.State == ConnectionState.Closed)
+            {
+                sqlCon.Open();
+            }
+            adapter.Fill(ds, "tblHoaDon");
+            sqlCon.Close();
+
+            dgvHoaDon.ItemsSource = ds.Tables["tblHoaDon"].DefaultView;
+        }
+        private int vitri = -1;
+        private void dgvHoaDon_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            vitri = dgvHoaDon.SelectedIndex;
+            if (vitri == -1) return;
         }
     }
 }
