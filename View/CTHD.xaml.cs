@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace QuanLyBenhVien.View
 {
@@ -27,163 +28,246 @@ namespace QuanLyBenhVien.View
         string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         private void btnThem_Click(object sender, RoutedEventArgs e)
         {
+            // Kiểm tra mã hóa đơn có trống không
+            if (string.IsNullOrEmpty(txtMaHoaDon.Text) || string.IsNullOrEmpty(txtMaDonThuoc.Text))
+            {
+                MessageBox.Show("Vui lòng nhập mã hóa đơn và mã đơn thuốc!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+            string maDonThuoc = txtMaDonThuoc.Text.Trim();
+            string maHoaDon = txtMaHoaDon.Text.Trim();
+            string tenHoaDon = txtTenHoaDon.Text.Trim();
+            string maBenhNhan = txtMaBenhNhan.Text.Trim();
+            string maNhanVien = txtMaNhanVien.Text.Trim();
+            string ngayLapHoaDon = txtNgayLap.Text.Trim();
+            
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
+                conn.Open();
+
                 try
                 {
-                    conn.Open();
+                    // Kiểm tra HoaDon đã tồn tại chưa
+                    string queryCheckHoaDon = "SELECT COUNT(*) FROM HoaDon WHERE MaHoaDon = @MaHoaDon";
+                    SqlCommand cmdCheck = new SqlCommand(queryCheckHoaDon, conn);
+                    cmdCheck.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+                    int count = (int)cmdCheck.ExecuteScalar();
 
-                    // Kiểm tra nếu TextBox Mã Hóa Đơn trống
-                    if (string.IsNullOrWhiteSpace(txtMaHoaDon.Text))
+                    if (count == 0) // Trường hợp 1: Thêm mới hóa đơn
                     {
-                        MessageBox.Show("Vui lòng nhập Mã Hóa Đơn!", "Lỗi");
-                        return;
+                        if (string.IsNullOrEmpty(tenHoaDon) || string.IsNullOrEmpty(maBenhNhan) ||
+                            string.IsNullOrEmpty(maNhanVien) || string.IsNullOrEmpty(ngayLapHoaDon))
+                        {
+                            MessageBox.Show("Vui lòng nhập đầy đủ thông tin cho hóa đơn mới!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            return;
+                        }
+                        // Truy vấn tên bệnh nhân từ bảng BenhNhan
+                        string getTenBenhNhanQuery = "SELECT Ho + ' ' + Ten AS TenBenhNhan FROM BenhNhan WHERE MaBenhNhan = @MaBenhNhan";
+                        using (SqlConnection connBenhNhan = new SqlConnection(connectionString))
+                        {
+                            connBenhNhan.Open();
+                            using (SqlCommand getTenBenhNhanCmd = new SqlCommand(getTenBenhNhanQuery, connBenhNhan))
+                            {
+                                getTenBenhNhanCmd.Parameters.AddWithValue("@MaBenhNhan", txtMaBenhNhan.Text);
+                                object benhNhanResult = getTenBenhNhanCmd.ExecuteScalar();
+                                if (benhNhanResult != null)
+                                {
+                                    txtBenhNhan.Text = benhNhanResult.ToString();
+                                }
+                                else
+                                {
+                                    txtBenhNhan.Text = "Không tìm thấy!";
+                                }
+                            }
+                        }
+
+                        // Truy vấn tên bác sĩ từ bảng NhanVien
+                        string getTenNhanVienQuery = "SELECT Ho + ' ' + Ten AS TenNhanVien FROM NhanVien WHERE MaNhanVien = @MaNhanVien";
+                        using (SqlConnection connNhanVien = new SqlConnection(connectionString))
+                        {
+                            connNhanVien.Open();
+                            using (SqlCommand getTenNhanVienCmd = new SqlCommand(getTenNhanVienQuery, connNhanVien))
+                            {
+                                getTenNhanVienCmd.Parameters.AddWithValue("@MaNhanVien", txtMaNhanVien.Text);
+                                object nhanVienResult = getTenNhanVienCmd.ExecuteScalar();
+                                if (nhanVienResult != null)
+                                {
+                                    txtNhanVien.Text = nhanVienResult.ToString();
+                                }
+                                else
+                                {
+                                    txtNhanVien.Text = "Không tìm thấy!";
+                                }
+                            }
+                        }
+
+                        string queryInsertHoaDon = @"INSERT INTO HoaDon (MaHoaDon, TenHoaDon, MaBenhNhan, MaNhanVien, NgayLapHoaDon)
+                                             VALUES (@MaHoaDon, @TenHoaDon, @MaBenhNhan, @MaNhanVien, @NgayLapHoaDon, GiaTien, TrangThai)";
+                        SqlCommand cmdInsert = new SqlCommand(queryInsertHoaDon, conn);
+                        cmdInsert.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+                        cmdInsert.Parameters.AddWithValue("@TenHoaDon", tenHoaDon);
+                        cmdInsert.Parameters.AddWithValue("@MaBenhNhan", maBenhNhan);
+                        cmdInsert.Parameters.AddWithValue("@MaNhanVien", maNhanVien);
+                        cmdInsert.Parameters.AddWithValue("@NgayLapHoaDon", ngayLapHoaDon);
+                        cmdInsert.Parameters.AddWithValue("@GiaTien", 0);
+                        cmdInsert.Parameters.AddWithValue("@TrangThai", "Chưa thanh toán");
+
+                        cmdInsert.ExecuteNonQuery();
+                        MessageBox.Show("Thêm hóa đơn mới thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else // Trường hợp 2: Đã tồn tại
+                    {
+                        // Truy vấn thông tin hóa đơn đã tồn tại
+                        string queryGetHoaDon = @"SELECT TenHoaDon, MaBenhNhan, MaNhanVien, NgayLapHoaDon 
+                              FROM HoaDon 
+                              WHERE MaHoaDon = @MaHoaDon";
+                        using (SqlCommand cmdGetHoaDon = new SqlCommand(queryGetHoaDon, conn))
+                        {
+                            cmdGetHoaDon.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+
+                            using (SqlDataReader reader = cmdGetHoaDon.ExecuteReader())
+                            {
+                                if (reader.Read()) // Đọc dữ liệu từ hóa đơn đã tồn tại
+                                {
+                                    // Điền thông tin vào các textBox
+                                    txtTenHoaDon.Text = reader["TenHoaDon"].ToString();
+                                    txtMaBenhNhan.Text = reader["MaBenhNhan"].ToString();
+                                    txtMaNhanVien.Text = reader["MaNhanVien"].ToString();
+                                    txtNgayLap.Text = Convert.ToDateTime(reader["NgayLapHoaDon"]).ToString("yyyy-MM-dd");
+                                    // Truy vấn tên bệnh nhân từ bảng BenhNhan
+                                    string getTenBenhNhanQuery = "SELECT Ho + ' ' + Ten AS TenBenhNhan FROM BenhNhan WHERE MaBenhNhan = @MaBenhNhan";
+                                    using (SqlConnection connBenhNhan = new SqlConnection(connectionString))
+                                    {
+                                        connBenhNhan.Open();
+                                        using (SqlCommand getTenBenhNhanCmd = new SqlCommand(getTenBenhNhanQuery, connBenhNhan))
+                                        {
+                                            getTenBenhNhanCmd.Parameters.AddWithValue("@MaBenhNhan", txtMaBenhNhan.Text);
+                                            object benhNhanResult = getTenBenhNhanCmd.ExecuteScalar();
+                                            if (benhNhanResult != null)
+                                            {
+                                                txtBenhNhan.Text = benhNhanResult.ToString();
+                                            }
+                                            else
+                                            {
+                                                txtBenhNhan.Text = "Không tìm thấy!";
+                                            }
+                                        }
+                                    }
+
+                                    // Truy vấn tên bác sĩ từ bảng NhanVien
+                                    string getTenNhanVienQuery = "SELECT Ho + ' ' + Ten AS TenNhanVien FROM NhanVien WHERE MaNhanVien = @MaNhanVien";
+                                    using (SqlConnection connNhanVien = new SqlConnection(connectionString))
+                                    {
+                                        connNhanVien.Open();
+                                        using (SqlCommand getTenNhanVienCmd = new SqlCommand(getTenNhanVienQuery, connNhanVien))
+                                        {
+                                            getTenNhanVienCmd.Parameters.AddWithValue("@MaNhanVien", txtMaNhanVien.Text);
+                                            object nhanVienResult = getTenNhanVienCmd.ExecuteScalar();
+                                            if (nhanVienResult != null)
+                                            {
+                                                txtNhanVien.Text = nhanVienResult.ToString();
+                                            }
+                                            else
+                                            {
+                                                txtNhanVien.Text = "Không tìm thấy!";
+                                            }
+                                        }
+                                    }
+
+                                    MessageBox.Show("Mã hóa đơn đã tồn tại. Thông tin đã được hiển thị.",
+                                                    "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Không thể lấy thông tin hóa đơn đã tồn tại!",
+                                                    "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
+                            }
+                        }
                     }
 
-                    // Kiểm tra xem hóa đơn đã tồn tại hay chưa
-                    string checkHoaDonQuery = "SELECT * FROM HoaDon WHERE MaHoaDon = @MaHoaDon";
-                    SqlCommand checkHoaDonCmd = new SqlCommand(checkHoaDonQuery, conn);
-                    checkHoaDonCmd.Parameters.AddWithValue("@MaHoaDon", txtMaHoaDon.Text);
+                    // Cập nhật DonThuoc
+                    string queryUpdateDonThuoc = "UPDATE DonThuoc SET MaHoaDon = @MaHoaDon WHERE MaDonThuoc = @MaDonThuoc AND MaHoaDon IS NULL";
+                    SqlCommand cmdUpdate = new SqlCommand(queryUpdateDonThuoc, conn);
+                    cmdUpdate.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+                    cmdUpdate.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
 
-                    using (SqlDataReader reader = checkHoaDonCmd.ExecuteReader())
+                    int rowsAffected = cmdUpdate.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
                     {
-                        if (reader.HasRows) // Nếu hóa đơn tồn tại
+                        MessageBox.Show("Cập nhật đơn thuốc thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        // Hiển thị ngày lập đơn thuốc
+                        string queryGetNgayLapDon = "SELECT NgayLapDon FROM DonThuoc WHERE MaDonThuoc = @MaDonThuoc";
+                        SqlCommand cmdGetNgay = new SqlCommand(queryGetNgayLapDon, conn);
+                        cmdGetNgay.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
+                        object result = cmdGetNgay.ExecuteScalar(); // Lấy giá trị NgayLapDon
+
+                        // Kiểm tra nếu có giá trị trả về
+                        if (result != null)
                         {
-                            reader.Read(); // Lấy thông tin hóa đơn
-                            txtTenHoaDon.Text = reader["TenHoaDon"].ToString();
-                            txtMaBenhNhan.Text = reader["MaBenhNhan"].ToString();
-                            txtMaNhanVien.Text = reader["MaNhanVien"].ToString();
-                            txtNgayLap.Text = Convert.ToDateTime(reader["NgayLapHoaDon"]).ToString("yyyy-MM-dd");
-
-                            // Truy vấn tên bệnh nhân từ bảng BenhNhan
-                            string getTenBenhNhanQuery = "SELECT Ho + ' ' + Ten AS TenBenhNhan FROM BenhNhan WHERE MaBenhNhan = @MaBenhNhan";
-                            using (SqlConnection connBenhNhan = new SqlConnection(connectionString))
-                            {
-                                connBenhNhan.Open();
-                                using (SqlCommand getTenBenhNhanCmd = new SqlCommand(getTenBenhNhanQuery, connBenhNhan))
-                                {
-                                    getTenBenhNhanCmd.Parameters.AddWithValue("@MaBenhNhan", txtMaBenhNhan.Text);
-                                    object benhNhanResult = getTenBenhNhanCmd.ExecuteScalar();
-                                    if (benhNhanResult != null)
-                                    {
-                                        txtBenhNhan.Text = benhNhanResult.ToString();
-                                    }
-                                    else
-                                    {
-                                        txtBenhNhan.Text = "Không tìm thấy!";
-                                    }
-                                }
-                            }
-
-                            // Truy vấn tên bác sĩ từ bảng NhanVien
-                            string getTenNhanVienQuery = "SELECT Ho + ' ' + Ten AS TenNhanVien FROM NhanVien WHERE MaNhanVien = @MaNhanVien";
-                            using (SqlConnection connNhanVien = new SqlConnection(connectionString))
-                            {
-                                connNhanVien.Open();
-                                using (SqlCommand getTenNhanVienCmd = new SqlCommand(getTenNhanVienQuery, connNhanVien))
-                                {
-                                    getTenNhanVienCmd.Parameters.AddWithValue("@MaNhanVien", txtMaNhanVien.Text);
-                                    object nhanVienResult = getTenNhanVienCmd.ExecuteScalar();
-                                    if (nhanVienResult != null)
-                                    {
-                                        txtNhanVien.Text = nhanVienResult.ToString();
-                                    }
-                                    else
-                                    {
-                                        txtNhanVien.Text = "Không tìm thấy!";
-                                    }
-                                }
-                            }
+                            txtNgayLapDon.Text = result.ToString(); // Gán giá trị vào TextBox
                         }
                         else
                         {
-                            // Nếu hóa đơn chưa tồn tại, yêu cầu nhập thông tin đầy đủ
-                            if (string.IsNullOrWhiteSpace(txtTenHoaDon.Text) ||
-                                string.IsNullOrWhiteSpace(txtMaBenhNhan.Text) ||
-                                string.IsNullOrWhiteSpace(txtMaNhanVien.Text) ||
-                                string.IsNullOrWhiteSpace(txtNgayLap.Text) ||
-                                string.IsNullOrWhiteSpace(txtMaHoaDon.Text)
-                                )
-                            {
-                                MessageBox.Show("Hóa đơn không tồn tại. Vui lòng nhập đầy đủ thông tin để tạo hóa đơn mới!", "Lỗi");
-                                return;
-                            }
-
-                            // Thêm hóa đơn mới
-                            string insertHoaDonQuery = "INSERT INTO HoaDon (MaHoaDon, TenHoaDon, MaBenhNhan, MaNhanVien, NgayLapHoaDon, GiaTien, TrangThai) " +
-                                                       "VALUES (@MaHoaDon, @TenHoaDon, @MaBenhNhan, @MaNhanVien, @NgayLapHoaDon, @GiaTien, @TrangThai)";
-                            using (SqlCommand insertHoaDonCmd = new SqlCommand(insertHoaDonQuery, conn))
-                            {
-                                insertHoaDonCmd.Parameters.AddWithValue("@MaHoaDon", txtMaHoaDon.Text);
-                                insertHoaDonCmd.Parameters.AddWithValue("@TenHoaDon", txtTenHoaDon.Text);
-                                insertHoaDonCmd.Parameters.AddWithValue("@MaBenhNhan", txtMaBenhNhan.Text);
-                                insertHoaDonCmd.Parameters.AddWithValue("@MaNhanVien", txtMaNhanVien.Text);
-                                insertHoaDonCmd.Parameters.AddWithValue("@NgayLapHoaDon", DateTime.Parse(txtNgayLap.Text));
-                                insertHoaDonCmd.Parameters.AddWithValue("@GiaTien", 0); // Ban đầu là 0
-                                insertHoaDonCmd.Parameters.AddWithValue("@TrangThai", "Chưa thanh toán");
-
-                                insertHoaDonCmd.ExecuteNonQuery();
-                                MessageBox.Show("Hóa đơn mới đã được tạo!", "Thông báo");
-                            }
+                            txtNgayLapDon.Text = "Không có ngày lập đơn thuốc"; // Trường hợp không tìm thấy ngày lập đơn
                         }
-                    }
 
-                    // Truy vấn MaThuoc từ TenThuoc
-                    string selectThuocQuery = "SELECT MaThuoc FROM Thuoc WHERE TenThuoc = @TenThuoc";
-                    SqlCommand selectThuocCmd = new SqlCommand(selectThuocQuery, conn);
-                    selectThuocCmd.Parameters.AddWithValue("@TenThuoc", txtTenThuoc.Text);
-
-                    object result = selectThuocCmd.ExecuteScalar();
-                    if (result == null)
-                    {
-                        MessageBox.Show("Không tìm thấy thông tin thuốc!", "Lỗi");
-                        return;
-                    }
-                    string maThuoc = result.ToString();
-
-                    // Thêm chi tiết đơn thuốc vào bảng CTDonThuoc
-                    string insertCTDonThuocQuery = "INSERT INTO CTDonThuoc (MaDonThuoc, MaThuoc, SoLuong, GiaTien, HuongDanSuDung, MaHoaDon) " +
-                                                   "VALUES (@MaDonThuoc, @MaThuoc, @SoLuong, @GiaTien, @HuongDanSuDung, @MaHoaDon)";
-                    using (SqlCommand insertCTDonThuocCmd = new SqlCommand(insertCTDonThuocQuery, conn))
-                    {
-                        insertCTDonThuocCmd.Parameters.AddWithValue("@MaDonThuoc", Guid.NewGuid().ToString());
-                        insertCTDonThuocCmd.Parameters.AddWithValue("@MaThuoc", maThuoc);
-                        insertCTDonThuocCmd.Parameters.AddWithValue("@SoLuong", int.Parse(txtSoLuong.Text));
-                        insertCTDonThuocCmd.Parameters.AddWithValue("@HuongDanSuDung", "Uống sau ăn");
-                        insertCTDonThuocCmd.Parameters.AddWithValue("@MaHoaDon", txtMaHoaDon.Text);
-
-                        insertCTDonThuocCmd.ExecuteNonQuery();
-                    }
-
-                    MessageBox.Show("Thêm thông tin thành công!");
-                }
-                catch (FormatException)
-                {
-                    MessageBox.Show("Dữ liệu nhập vào không hợp lệ. Vui lòng kiểm tra lại!", "Lỗi");
-                }
-                catch (SqlException ex)
-                {
-                    if (ex.Number == 2627) // Lỗi vi phạm khóa chính
-                    {
-                        MessageBox.Show("Dữ liệu không hợp lệ. Vui lòng kiểm tra lại các thông tin liên quan!", "Lỗi");
-                    }
-                    else if (ex.Number == 547) // Lỗi vi phạm khóa ngoại
-                    {
-                        MessageBox.Show("Dữ liệu không hợp lệ. Vui lòng kiểm tra lại các thông tin liên quan!", "Lỗi");
                     }
                     else
                     {
-                        MessageBox.Show($"Dữ liệu không hợp lệ. Vui lòng kiểm tra lại các thông tin liên quan!", "Lỗi");
+                        MessageBox.Show("Đơn thuốc đã có mã hóa đơn hoặc không tồn tại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        // Hiển thị ngày lập đơn thuốc
+                        string queryGetNgayLapDon = "SELECT NgayLapDon FROM DonThuoc WHERE MaDonThuoc = @MaDonThuoc";
+                        SqlCommand cmdGetNgay = new SqlCommand(queryGetNgayLapDon, conn);
+                        cmdGetNgay.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
+                        object result = cmdGetNgay.ExecuteScalar(); // Lấy giá trị NgayLapDon
+
+                        // Kiểm tra nếu có giá trị trả về
+                        if (result != null)
+                        {
+                            txtNgayLapDon.Text = result.ToString(); // Gán giá trị vào TextBox
+                        }
+                        else
+                        {
+                            txtNgayLapDon.Text = "Không có ngày lập đơn thuốc"; // Trường hợp không tìm thấy ngày lập đơn
+                        }
+                    }
+
+                    // Load dữ liệu vào DataGrid
+                    string queryLoadData = @"SELECT Thuoc.TenThuoc, Thuoc.SoLuong, Thuoc.GiaTien AS DonGia, 
+                                    (CTDonThuoc.SoLuong * Thuoc.GiaTien) AS ThanhTien
+                                    FROM CTDonThuoc
+                                    INNER JOIN Thuoc ON CTDonThuoc.MaThuoc = Thuoc.MaThuoc
+                                    WHERE CTDonThuoc.MaDonThuoc = @MaDonThuoc";
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(queryLoadData, conn);
+                    adapter.SelectCommand.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
+
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    dgThuoc.ItemsSource = dt.DefaultView;
+                }
+                catch (SqlException ex)
+                {
+                    // Xử lý lỗi khóa chính và khóa ngoại
+                    if (ex.Number == 2627) // Lỗi khóa chính
+                    {
+                        MessageBox.Show("Lỗi: Dữ liệu đã tồn tại. Vui lòng kiểm tra lại mã hóa đơn hoặc đơn thuốc!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else if (ex.Number == 547) // Lỗi khóa ngoại
+                    {
+                        MessageBox.Show("Lỗi: Vi phạm ràng buộc khóa ngoại. Vui lòng kiểm tra dữ liệu liên quan!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi");
-                }
-                finally
-                {
-                    if (conn.State == System.Data.ConnectionState.Open)
-                        conn.Close();
+                    MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

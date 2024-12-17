@@ -11,7 +11,7 @@
         MouseDown="Window_MouseDown"
         Background="Transparent"
         Title="CTHD" Height="700" Width="1240">
-    
+
     <Grid>
         <Border Grid.Column="0"
                 Background="#d4ebf8"
@@ -100,12 +100,12 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <!-- Tên thuốc -->
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Tên thuốc:" VerticalAlignment="Center" Margin="5" Style="{StaticResource TextBlockStyle}"/>
-                            <TextBox Grid.Row="0" Grid.Column="1" Name="txtTenThuoc" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Mã đơn thuốc:" VerticalAlignment="Center" Margin="5" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" Name="txtMaDonThuoc" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
                             <!-- Số lượng -->
-                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Số lượng:" VerticalAlignment="Center" Margin="5" Style="{StaticResource TextBlockStyle}"/>
-                            <TextBox Grid.Row="1" Grid.Column="1" Name="txtSoLuong" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
-                            
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Ngày lập đơn:" VerticalAlignment="Top" Margin="5,8,5,0" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBox Grid.Row="1" Grid.Column="1" Name="txtNgayLapDon" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
+
                             <!-- Nút Thêm và Xóa -->
                             <Button Grid.Row="3" Grid.Column="0" Margin="24,0,25,5" Click="btnThem_Click" Style= "{StaticResource childviewButton}" Content="Thêm"  VerticalAlignment="Bottom"/>
                             <Button Grid.Row="3" Grid.Column="1" Content="Xóa" Margin="5" Click="btnXoa_Click" Style= "{StaticResource childviewButton}" />
@@ -115,7 +115,7 @@
                                     <DataGridTextColumn Header="Tên thuốc" Binding="{Binding TenThuoc}" Width="100"/>
                                     <DataGridTextColumn Header="Số lượng" Binding="{Binding SoLuong}" Width="80"/>
                                     <DataGridTextColumn Header="Đơn giá" Binding="{Binding DonGia}" Width="80"/>
-                                    <DataGridTextColumn Header="Thành tiền" Binding="{Binding ThanhTien}" Width="100"/>
+                                    <DataGridTextColumn Header="Thành tiền" Binding="{Binding ThanhTien}" Width="Auto"/>
                                 </DataGrid.Columns>
                                 <!-- Style cho header -->
                                 <DataGrid.ColumnHeaderStyle>
@@ -136,12 +136,7 @@
                                         <Setter Property="FontFamily" Value="Inter"/>
                                         <Setter Property="FontSize" Value="14" />
                                         <Setter Property="FontWeight" Value="Medium"/>
-                                        <Style.Triggers>
-                                            <Trigger Property="IsSelected" Value="True">
-                                                <Setter Property="Background" Value="#d4ebf8"/>
-                                                <Setter Property="Foreground" Value ="#00416a"/>
-                                            </Trigger>
-                                        </Style.Triggers>
+                                        
                                     </Style>
                                 </DataGrid.RowStyle>
 
@@ -152,12 +147,7 @@
                                         <Setter Property="FontFamily" Value="Inter"/>
                                         <Setter Property="FontSize" Value="14" />
                                         <Setter Property="Padding" Value="5"/>
-                                        <Style.Triggers>
-                                            <Trigger Property="IsSelected" Value="True">
-                                                <Setter Property="Background" Value="#d4ebf8"/>
-                                                <Setter Property="Foreground" Value ="#00416a"/>
-                                            </Trigger>
-                                        </Style.Triggers>
+                                        
                                     </Style>
                                 </DataGrid.CellStyle>
                             </DataGrid>
@@ -189,7 +179,7 @@
                             <!-- Số lượng -->
                             <TextBlock Style="{StaticResource TextBlockStyle}" Grid.Row="1" Grid.Column="0" Text="Số lượng:" VerticalAlignment="Center" Margin="5"/>
                             <TextBox Grid.Row="1" Grid.Column="1" Name="txtSoLuong2" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
-                           
+
                             <!-- Nút Thêm và Xóa -->
                             <Button Grid.Row="3" Grid.Column="0" Content="Thêm" Margin="5" Click="btnThem2_Click" Style= "{StaticResource childviewButton}"/>
                             <Button Grid.Row="3" Grid.Column="1" Content="Xóa" Margin="5" Click="btnXoa2_Click" Style= "{StaticResource childviewButton}"/>
@@ -199,7 +189,7 @@
                                     <DataGridTextColumn Header="Tên vật dụng" Binding="{Binding TenVatDung}" Width="110"/>
                                     <DataGridTextColumn Header="Số lượng" Binding="{Binding SoLuong}" Width="80"/>
                                     <DataGridTextColumn Header="Đơn giá" Binding="{Binding DonGia}" Width="80"/>
-                                    <DataGridTextColumn Header="Thành tiền" Binding="{Binding ThanhTien}" Width="100"/>
+                                    <DataGridTextColumn Header="Thành tiền" Binding="{Binding ThanhTien}" Width="Auto"/>
                                 </DataGrid.Columns>
                                 <!-- Style cho header -->
                                 <DataGrid.ColumnHeaderStyle>

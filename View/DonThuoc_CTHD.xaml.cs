@@ -41,124 +41,142 @@ namespace QuanLyBenhVien.View
             Close();
         }
 
-        private void ButtonThem_Click(object sender, RoutedEventArgs e)
+        private void btnThem_Click(object sender, RoutedEventArgs e)
         {
-            string maDonThuoc = TxB_MaDonThuoc.Text.Trim();
-            string tenThuoc = TxB_TenThuoc.Text.Trim();
-            string huongDan = TxB_HuongDan.Text.Trim();
-            int soLuong;
-
-            // Kiểm tra các trường dữ liệu
-            if (string.IsNullOrEmpty(maDonThuoc) || string.IsNullOrEmpty(tenThuoc) ||
-                string.IsNullOrEmpty(huongDan) || string.IsNullOrEmpty(TxB_SoLuong.Text.Trim()))
+            // Kiểm tra các ô không được trống
+            if (string.IsNullOrWhiteSpace(TxB_MaDonThuoc.Text) || string.IsNullOrWhiteSpace(TxB_TenThuoc.Text) ||
+                string.IsNullOrWhiteSpace(TxB_SoLuong.Text) || string.IsNullOrWhiteSpace(TxB_HuongDan.Text))
             {
-                MessageBox.Show("Vui lòng nhập đầy đủ dữ liệu!");
+                MessageBox.Show("Vui lòng nhập đầy đủ dữ liệu!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
-            // Kiểm tra tính hợp lệ của số lượng
-            if (!int.TryParse(TxB_SoLuong.Text.Trim(), out soLuong) || soLuong <= 0)
+            
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                MessageBox.Show("Số lượng không hợp lệ!");
-                return;
-            }
-
-            // Tìm thông tin thuốc từ tên thuốc
-            string queryThuoc = "SELECT MaThuoc, GiaTien FROM Thuoc WHERE TenThuoc = @TenThuoc";
-            DataTable dtThuoc = GetDataTable(queryThuoc, new SqlParameter("@TenThuoc", tenThuoc));
-
-            if (dtThuoc.Rows.Count == 0)
-            {
-                MessageBox.Show("Thuốc không tồn tại!");
-                return;
-            }
-
-            string maThuoc = dtThuoc.Rows[0]["MaThuoc"].ToString();
-            decimal giaTien = Convert.ToDecimal(dtThuoc.Rows[0]["GiaTien"]);
-
-            // Lấy MaBenhNhan từ Mã đơn thuốc
-            string queryMaBenhNhan = "SELECT MaBenhNhan FROM DonThuoc WHERE MaDonThuoc = @MaDonThuoc";
-            DataTable dtBenhNhan = GetDataTable(queryMaBenhNhan, new SqlParameter("@MaDonThuoc", maDonThuoc));
-
-            if (dtBenhNhan.Rows.Count == 0)
-            {
-                MessageBox.Show("Mã đơn thuốc không hợp lệ!");
-                return;
-            }
-
-            string maBenhNhan = dtBenhNhan.Rows[0]["MaBenhNhan"].ToString();
-
-            // Tìm MaHoaDon từ MaBenhNhan
-            string queryHoaDon = "SELECT MaHoaDon FROM HoaDon WHERE MaBenhNhan = @MaBenhNhan";
-            DataTable dtHoaDon = GetDataTable(queryHoaDon, new SqlParameter("@MaBenhNhan", maBenhNhan));
-
-            if (dtHoaDon.Rows.Count == 0)
-            {
-                MessageBox.Show("Không tìm thấy hóa đơn liên quan!");
-                return;
-            }
-
-            string queryCheck = @"
-    SELECT COUNT(*) 
-    FROM CTDonThuoc 
-    WHERE MaDonThuoc = @MaDonThuoc AND MaThuoc = @MaThuoc";
-
-            int count = ExecuteCountQuery(queryCheck,
-                new SqlParameter("@MaDonThuoc", maDonThuoc),
-                new SqlParameter("@MaThuoc", maThuoc));
-
-            if (count > 0)
-            {
-                MessageBox.Show("Chi tiết đơn thuốc này đã tồn tại!");
-                return;
-            }
-
-            string maHoaDon = dtHoaDon.Rows[0]["MaHoaDon"].ToString();
-
-            // Thêm dữ liệu vào bảng CTDonThuoc
-            string queryInsert = @"
-    INSERT INTO CTDonThuoc (MaDonThuoc, MaThuoc, SoLuong, GiaTien, HuongDanSuDung, MaHoaDon) 
-    VALUES (@MaDonThuoc, @MaThuoc, @SoLuong, @GiaTien, @HuongDanSuDung, @MaHoaDon)";
-
-            try
-            {
-                int result = ExecuteNonQuery(queryInsert,
-                    new SqlParameter("@MaDonThuoc", maDonThuoc),
-                    new SqlParameter("@MaThuoc", maThuoc),
-                    new SqlParameter("@SoLuong", soLuong),
-                    new SqlParameter("@GiaTien", giaTien),
-                    new SqlParameter("@HuongDanSuDung", huongDan),
-                    new SqlParameter("@MaHoaDon", maHoaDon));
-
-                if (result > 0)
+                // Kiểm tra các ô không được trống
+                if (string.IsNullOrWhiteSpace(TxB_MaDonThuoc.Text) || string.IsNullOrWhiteSpace(TxB_TenThuoc.Text) ||
+                string.IsNullOrWhiteSpace(TxB_SoLuong.Text) || string.IsNullOrWhiteSpace(TxB_HuongDan.Text))
                 {
-                    MessageBox.Show("Thêm thành công!");
+                    MessageBox.Show("Mã đơn thuốc và Tên thuốc không được để trống!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
-                else
-                {
-                    MessageBox.Show("Thêm thất bại!");
-                }
-            }
-            catch (SqlException sqlEx)
-            {
-                if (sqlEx.Number == 2627) // Vi phạm khóa chính
-                {
-                    MessageBox.Show("Chi tiết đơn thuốc đã tồn tại (vi phạm khóa chính)!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                else if (sqlEx.Number == 547) // Vi phạm khóa ngoại
-                {
-                    MessageBox.Show("Dữ liệu nhập vào vi phạm ràng buộc khóa ngoại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                else
-                {
-                    MessageBox.Show($"Lỗi SQL: {sqlEx.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                
+                
+                    try
+                    {
+                        conn.Open();
+                        string maDonThuoc = TxB_MaDonThuoc.Text;
+                        string maBenhNhan = TxB_MaBenhNhan.Text;
+                        string maBacSi = TxB_MaBacSi.Text;
+                        string ngayLapDon = TxB_NgayLapDon.Text;
+                        string tenThuoc = TxB_TenThuoc.Text;
+                        int soLuong = int.Parse(TxB_SoLuong.Text);
+                        string huongDan = TxB_HuongDan.Text;
+
+                        // Kiểm tra MaDonThuoc đã tồn tại hay chưa
+                        string checkDonThuocQuery = "SELECT COUNT(*) FROM DonThuoc WHERE MaDonThuoc = @MaDonThuoc";
+                        SqlCommand checkCmd = new SqlCommand(checkDonThuocQuery, conn);
+                        checkCmd.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
+                        int donThuocExists = (int)checkCmd.ExecuteScalar();
+
+                        if (donThuocExists == 0) // Trường hợp 1: Chưa tồn tại DonThuoc
+                        {
+                            // Kiểm tra đủ thông tin bắt buộc
+                            if (string.IsNullOrWhiteSpace(maBenhNhan) || string.IsNullOrWhiteSpace(maBacSi) || string.IsNullOrWhiteSpace(ngayLapDon))
+                            {
+                                MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+
+                            
+
+                            // Thêm DonThuoc mới
+                            string insertDonThuocQuery = @"INSERT INTO DonThuoc (MaDonThuoc, MaBenhNhan, MaBacSi, NgayLapDon, MaHoaDon) 
+                                               VALUES (@MaDonThuoc, @MaBenhNhan, @MaBacSi, @NgayLapDon, @MaHoaDon)";
+                            SqlCommand insertDonThuocCmd = new SqlCommand(insertDonThuocQuery, conn);
+                            insertDonThuocCmd.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
+                            insertDonThuocCmd.Parameters.AddWithValue("@MaBenhNhan", maBenhNhan);
+                            insertDonThuocCmd.Parameters.AddWithValue("@MaBacSi", maBacSi);
+                            insertDonThuocCmd.Parameters.AddWithValue("@NgayLapDon", ngayLapDon);
+                            insertDonThuocCmd.Parameters.AddWithValue("@MaHoaDon", DBNull.Value);
+                            insertDonThuocCmd.ExecuteNonQuery();
+                        }
+                        else // Trường hợp 2: MaDonThuoc đã tồn tại
+                        {
+                            string updateFieldsQuery = @"SELECT MaBenhNhan, MaBacSi, NgayLapDon 
+                                             FROM DonThuoc WHERE MaDonThuoc = @MaDonThuoc";
+                            SqlCommand getFieldsCmd = new SqlCommand(updateFieldsQuery, conn);
+                            getFieldsCmd.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
+                            SqlDataReader reader = getFieldsCmd.ExecuteReader();
+
+                            if (reader.Read())
+                            {
+                                TxB_MaBenhNhan.Text = reader["MaBenhNhan"].ToString();
+                                TxB_MaBacSi.Text = reader["MaBacSi"].ToString();
+                                TxB_NgayLapDon.Text = reader["NgayLapDon"].ToString();
+                            }
+                            reader.Close();
+                        }
+
+                        // Xử lý chi tiết đơn thuốc (CTDonThuoc)
+                        // Truy MaThuoc từ TenThuoc
+                        string getMaThuocQuery = "SELECT MaThuoc, GiaTien, SoLuong FROM Thuoc WHERE TenThuoc = @TenThuoc";
+                        SqlCommand getMaThuocCmd = new SqlCommand(getMaThuocQuery, conn);
+                        getMaThuocCmd.Parameters.AddWithValue("@TenThuoc", tenThuoc);
+                        SqlDataReader thuocReader = getMaThuocCmd.ExecuteReader();
+
+                        if (thuocReader.Read())
+                        {
+                            string maThuoc = thuocReader["MaThuoc"].ToString();
+                            decimal giaTienThuoc = (decimal)thuocReader["GiaTien"];
+                            int soLuongTonKho = (int)thuocReader["SoLuong"];
+                            thuocReader.Close();
+                            
+                        if (soLuong > soLuongTonKho)
+                        {
+                            MessageBox.Show($"Số lượng thuốc trong kho không đủ! Hiện tại còn {soLuongTonKho}.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                        // Tính giá tiền
+                        decimal giaTien = giaTienThuoc * soLuong;
+
+                            // Thêm chi tiết đơn thuốc
+                            string insertCTDonThuocQuery = @"INSERT INTO CTDonThuoc (MaDonThuoc, MaThuoc, SoLuong, GiaTien, HuongDanSuDung) 
+                                                VALUES (@MaDonThuoc, @MaThuoc, @SoLuong, @GiaTien, @HuongDan)";
+                            SqlCommand insertCTCmd = new SqlCommand(insertCTDonThuocQuery, conn);
+                            insertCTCmd.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
+                            insertCTCmd.Parameters.AddWithValue("@MaThuoc", maThuoc);
+                            insertCTCmd.Parameters.AddWithValue("@SoLuong", soLuong);
+                            insertCTCmd.Parameters.AddWithValue("@GiaTien", giaTien);
+                            insertCTCmd.Parameters.AddWithValue("@HuongDan", huongDan);
+
+                            insertCTCmd.ExecuteNonQuery();
+                            MessageBox.Show("Thêm đơn thuốc thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Không tìm thấy thông tin thuốc!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        // Bắt lỗi khóa chính hoặc khóa ngoại
+                        if (ex.Number == 2627) // Lỗi khóa chính
+                            MessageBox.Show("Chi tiết đơn thuốc đã tồn tại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        else if (ex.Number == 547) // Lỗi khóa ngoại
+                            MessageBox.Show("Dữ liệu không hợp lệ, vi phạm khóa ngoại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        else
+                            MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
             }
         }
+
 
         // Hàm thực thi câu lệnh truy vấn trả về DataTable
         private DataTable GetDataTable(string query, params SqlParameter[] parameters)
