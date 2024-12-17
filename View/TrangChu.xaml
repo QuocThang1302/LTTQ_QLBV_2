@@ -74,7 +74,7 @@
                     <StackPanel Grid.Column="1">
                         <TextBlock Text="Số lượng bệnh nhân"
                                    Foreground="#FF03273E"
-                                   Margin="0,5,0,0"
+                                   Margin="-3,5,0,0"
                                    HorizontalAlignment="Left"
                                    VerticalAlignment="Center"
                                    FontSize="15"

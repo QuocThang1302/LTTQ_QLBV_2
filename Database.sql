@@ -1,179 +1,162 @@
 CREATE DATABASE BV
 USE BV
 
-CREATE TABLE CTHDVatDung (
-  MaHoaDon NVARCHAR(20),
-  MaVatDung NVARCHAR(20),
-  SoLuong INT,
-  ThanhTien DECIMAL(10,2),
-  PRIMARY KEY (MaHoaDon, MaVatDung)
-)
 
-GO
+CREATE TABLE CTHDVatDung (
+    MaHoaDon NVARCHAR(20),
+    MaVatDung NVARCHAR(20),
+    SoLuong INT,
+    ThanhTien DECIMAL(10,2),
+    PRIMARY KEY (MaHoaDon, MaVatDung)
+);
 
 CREATE TABLE VatDung (
-  MaVatDung NVARCHAR(20) PRIMARY KEY,
-  TenVatDung NVARCHAR(100),
-  MoTa NTEXT,
-  SoLuong INT,
-  Gia DECIMAL(10,2),
-  MaQuanLy NVARCHAR(20)
-)
-SELECT * from VatDung
-GO
+    MaVatDung NVARCHAR(20) PRIMARY KEY,
+    TenVatDung NVARCHAR(100),
+    MoTa NTEXT,
+    SoLuong INT,
+    Gia DECIMAL(10,2),
+    MaQuanLy NVARCHAR(20)
+);
 
 CREATE TABLE HoaDon (
-  MaHoaDon NVARCHAR(20) PRIMARY KEY,
-  TenHoaDon NVARCHAR(50),
-  MaBenhNhan NVARCHAR(20),
-  MaNhanVien NVARCHAR(20),
-  NgayLapHoaDon DATE,
-  GiaTien DECIMAL(10,2),
-  TrangThai NVARCHAR(50)
-)
-GO
+    MaHoaDon NVARCHAR(20) PRIMARY KEY,
+    TenHoaDon NVARCHAR(50),
+    MaBenhNhan NVARCHAR(20),
+    MaNhanVien NVARCHAR(20),
+    NgayLapHoaDon DATE,
+    GiaTien DECIMAL(10,2),
+    TrangThai NVARCHAR(50)
+);
 
 CREATE TABLE Thuoc (
-  MaThuoc NVARCHAR(20) PRIMARY KEY,
-  TenThuoc NVARCHAR(100),
-  CongDung NTEXT,
-  SoLuong INT,
-  GiaTien DECIMAL(10,2),
-  HanSuDung DATE
-)
-GO
+    MaThuoc NVARCHAR(20) PRIMARY KEY,
+    TenThuoc NVARCHAR(100),
+    CongDung NTEXT,
+    SoLuong INT,
+    GiaTien DECIMAL(10,2),
+    HanSuDung DATE
+);
 
 CREATE TABLE CongViec (
-  MaCongViec NVARCHAR(20) PRIMARY KEY,
-  TenCongViec NVARCHAR(100),
-  MoTaCongViec NTEXT,
-  GhiChu NTEXT
-)
-GO
+    MaCongViec NVARCHAR(20) PRIMARY KEY,
+    TenCongViec NVARCHAR(100),
+    MoTaCongViec NTEXT,
+    GhiChu NTEXT
+);
 
 CREATE TABLE LichTruc (
-  MaLichTruc NVARCHAR(20) PRIMARY KEY,
-  MaBacSi NVARCHAR(20),
-  NgayTruc DATE,
-  PhanCong NVARCHAR(20),
-  TrangThai NVARCHAR(50)
-)
-GO
+    MaLichTruc NVARCHAR(20) PRIMARY KEY,
+    MaBacSi NVARCHAR(20),
+    NgayTruc DATE,
+    PhanCong NVARCHAR(20),
+    TrangThai NVARCHAR(50)
+);
 
 CREATE TABLE Khoa (
-  MaKhoa NVARCHAR(20) PRIMARY KEY,
-  TenKhoa NVARCHAR(100),
-  TruongKhoa NVARCHAR(20)
-)
-GO
+    MaKhoa NVARCHAR(20) PRIMARY KEY,
+    TenKhoa NVARCHAR(100),
+    TruongKhoa NVARCHAR(20)
+);
 
 CREATE TABLE ChuyenNganh (
-  MaChuyenNganh NVARCHAR(20) PRIMARY KEY,
-  TenChuyenNganh NVARCHAR(100),
-  Khoa NVARCHAR(20)
-)
-GO
+    MaChuyenNganh NVARCHAR(20) PRIMARY KEY,
+    TenChuyenNganh NVARCHAR(100),
+    Khoa NVARCHAR(20)
+);
 
 CREATE TABLE Role (
-  RoleID NVARCHAR(20) PRIMARY KEY,
-  TenRole NVARCHAR(50)
-)
-GO
+    RoleID NVARCHAR(20) PRIMARY KEY,
+    TenRole NVARCHAR(50)
+);
 
 CREATE TABLE PhieuKhamBenh (
-  MaPhieuKham NVARCHAR(20) PRIMARY KEY,
-  MaBenhNhan NVARCHAR(20),
-  NgayKham DATE,
-  LyDoKhamBenh NTEXT,
-  KhamLamSang NTEXT,
-  ChanDoan NTEXT,
-  KetQuaKham NTEXT,
-  DieuTri NTEXT,
-  MaBacSi NVARCHAR(20)
-)
-GO
+    MaPhieuKham NVARCHAR(20) PRIMARY KEY,
+    MaBenhNhan NVARCHAR(20),
+    NgayKham DATE,
+    LyDoKhamBenh NTEXT,
+    KhamLamSang NTEXT,
+    ChanDoan NTEXT,
+    KetQuaKham NTEXT,
+    DieuTri NTEXT,
+    MaBacSi NVARCHAR(20)
+);
 
 CREATE TABLE LichHenKham (
-  MaLichHen NVARCHAR(20) PRIMARY KEY,
-  MaBenhNhan NVARCHAR(20),
-  NgayHenKham DATE,
-  MaBacSi NVARCHAR(20)
-)
-GO
+    MaLichHen NVARCHAR(20) PRIMARY KEY,
+    MaBenhNhan NVARCHAR(20),
+    NgayHenKham DATE,
+    MaBacSi NVARCHAR(20)
+);
 
 CREATE TABLE BenhNhan (
-  MaBenhNhan NVARCHAR(20) PRIMARY KEY,
-  Ho NVARCHAR(50),
-  Ten NVARCHAR(50),
-  NgaySinh DATE,
-  GioiTinh NVARCHAR(10),
-  CCCD NVARCHAR(20),
-  NgheNghiep NVARCHAR(100),
-  DiaChi NTEXT,
-  SDT NVARCHAR(20),
-  Email NVARCHAR(100),
-  MaKhoa NVARCHAR(20)
-)
-GO
+    MaBenhNhan NVARCHAR(20) PRIMARY KEY,
+    Ho NVARCHAR(50),
+    Ten NVARCHAR(50),
+    NgaySinh DATE,
+    GioiTinh NVARCHAR(10),
+    CCCD NVARCHAR(20),
+    NgheNghiep NVARCHAR(100),
+    DiaChi NTEXT,
+    SDT NVARCHAR(20),
+    Email NVARCHAR(100),
+    MaKhoa NVARCHAR(20)
+);
 
 CREATE TABLE BenhAn (
-  MaBenhAn NVARCHAR(20) PRIMARY KEY,
-  MaBenhNhan NVARCHAR(20),
-  NgayTaoLap DATE,
-  Benh NVARCHAR(20),
-  TinhTrang NTEXT,
-  DieuTri NTEXT
-)
-GO
+    MaBenhAn NVARCHAR(20) PRIMARY KEY,
+    MaBenhNhan NVARCHAR(20),
+    NgayTaoLap DATE,
+    Benh NVARCHAR(20),
+    TinhTrang NTEXT,
+    DieuTri NTEXT
+);
 
 CREATE TABLE Benh (
-  MaBenh NVARCHAR(20) PRIMARY KEY,
-  TenBenh NVARCHAR(100),
-  MoTa NTEXT,
-  TrieuChung NTEXT
-)
-GO
+    MaBenh NVARCHAR(20) PRIMARY KEY,
+    TenBenh NVARCHAR(100),
+    MoTa NTEXT,
+    TrieuChung NTEXT
+);
 
 CREATE TABLE CTDonThuoc (
-  MaDonThuoc NVARCHAR(20),
-  MaThuoc NVARCHAR(20),
-  SoLuong INT,
-  GiaTien decimal(10,2),
-  HuongDanSuDung NTEXT,
-  MaHoaDon NVARCHAR(20),
-  PRIMARY KEY (MaDonThuoc, MaThuoc)
-)
-GO
+    MaDonThuoc NVARCHAR(20),
+    MaThuoc NVARCHAR(20),
+    SoLuong INT,
+    GiaTien DECIMAL(10,2),
+    HuongDanSuDung NTEXT,
+    PRIMARY KEY (MaDonThuoc, MaThuoc)
+);
 
 CREATE TABLE DonThuoc (
-  MaDonThuoc NVARCHAR(20) PRIMARY KEY,
-  MaBenhNhan NVARCHAR(20),
-  MaBacSi NVARCHAR(20),
-  NgayLapDon DATE
-)
-GO
+    MaDonThuoc NVARCHAR(20) PRIMARY KEY,
+    MaBenhNhan NVARCHAR(20),
+    MaBacSi NVARCHAR(20),
+    NgayLapDon DATE,
+    MaHoaDon NVARCHAR(20)
+);
 
 CREATE TABLE NhanVien (
-  MaNhanVien NVARCHAR(20) PRIMARY KEY,
-  Ho NVARCHAR(50),
-  Ten NVARCHAR(50),
-  MaChuyenNganh NVARCHAR(20),
-  RoleID NVARCHAR(20),
-  LoaiNhanVien NVARCHAR(20),
-  NgaySinh DATE,
-  GioiTinh NVARCHAR(10),
-  CCCD NVARCHAR(20),
-  DiaChi NTEXT,
-  SDT NVARCHAR(20),
-  Email NVARCHAR(100),
-  MatKhau NVARCHAR(100)
-)
+    MaNhanVien NVARCHAR(20) PRIMARY KEY,
+    Ho NVARCHAR(50),
+    Ten NVARCHAR(50),
+    MaChuyenNganh NVARCHAR(20),
+    RoleID NVARCHAR(20),
+    LoaiNhanVien NVARCHAR(20),
+    NgaySinh DATE,
+    GioiTinh NVARCHAR(10),
+    CCCD NVARCHAR(20),
+    DiaChi NTEXT,
+    SDT NVARCHAR(20),
+    Email NVARCHAR(100),
+    MatKhau NVARCHAR(100)
+);
 GO
 
 ALTER TABLE BenhNhan ADD FOREIGN KEY (MaKhoa) REFERENCES Khoa (MaKhoa)
 GO
 
-ALTER TABLE CTDonThuoc ADD FOREIGN KEY (MaHoaDon) REFERENCES HoaDon (MaHoaDon)
+ALTER TABLE DonThuoc ADD FOREIGN KEY (MaHoaDon) REFERENCES HoaDon (MaHoaDon)
 GO
 
 ALTER TABLE VatDung ADD FOREIGN KEY (MaQuanLy) REFERENCES NhanVien (MaNhanVien)
@@ -318,11 +301,11 @@ INSERT INTO Thuoc (MaThuoc, TenThuoc, CongDung, SoLuong, GiaTien, HanSuDung) VAL
 ('T004', N'Ibuprofen', N'Giảm đau, kháng viêm', 100, 3000.00, '2024-11-30');
 
 -- DonThuoc table
-INSERT INTO DonThuoc (MaDonThuoc, MaBenhNhan, MaBacSi, NgayLapDon) VALUES
-('DT001', 'BN001', 'NV002', '2024-01-01'),
-('DT002', 'BN002', 'NV003', '2024-01-02'),
-('DT003', 'BN003', 'NV004', '2024-01-03'),
-('DT004', 'BN004', 'NV001', '2024-01-04');
+INSERT INTO DonThuoc (MaDonThuoc, MaBenhNhan, MaBacSi, NgayLapDon, MaHoaDon) VALUES
+('DT001', 'BN001', 'NV002', '2024-01-01', 'HD001'),
+('DT002', 'BN002', 'NV003', '2024-01-02', 'HD002'),
+('DT003', 'BN003', 'NV004', '2024-01-03', 'HD003'),
+('DT004', 'BN004', 'NV001', '2024-01-04', 'HD004');
 
 -- Benh table
 INSERT INTO Benh (MaBenh, TenBenh, MoTa, TrieuChung) VALUES
@@ -352,11 +335,11 @@ INSERT INTO CTHDVatDung (MaHoaDon, MaVatDung, SoLuong, ThanhTien) VALUES
 ('HD004', 'VD004', 1, 1000000.00);
 
 -- CTDonThuoc table
-INSERT INTO CTDonThuoc (MaDonThuoc, MaThuoc, SoLuong, GiaTien, HuongDanSuDung, MaHoaDon) VALUES
-('DT001', 'T001', 20, 40000.00, N'Uống 2 viên sau khi ăn', 'HD001'),
-('DT002', 'T002', 15, 15000.00, N'Uống 1 viên mỗi sáng', 'HD002'),
-('DT003', 'T003', 10, 50000.00, N'Uống 1 viên sau bữa tối', 'HD003'),
-('DT004', 'T004', 5, 15000.00, N'Uống 1 viên sau khi ăn', 'HD004');
+INSERT INTO CTDonThuoc (MaDonThuoc, MaThuoc, SoLuong, GiaTien, HuongDanSuDung) VALUES
+('DT001', 'T001', 20, 40000.00, N'Uống 2 viên sau khi ăn'),
+('DT002', 'T002', 15, 15000.00, N'Uống 1 viên mỗi sáng'),
+('DT003', 'T003', 10, 50000.00, N'Uống 1 viên sau bữa tối'),
+('DT004', 'T004', 5, 15000.00, N'Uống 1 viên sau khi ăn');
 
 -- LichHenKham table
 INSERT INTO LichHenKham (MaLichHen, MaBenhNhan, NgayHenKham, MaBacSi) VALUES
