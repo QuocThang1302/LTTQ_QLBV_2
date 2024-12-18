@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuanLyBenhVien.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,8 @@ namespace QuanLyBenhVien.View
         public PhanCong()
         {   
             InitializeComponent();
+            PhanCongViewModel viewModel = new PhanCongViewModel();
+            DataContext = viewModel;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -35,11 +38,6 @@ namespace QuanLyBenhVien.View
         private void btnThoat_Click(object sender, RoutedEventArgs e)
         {
             Close();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
