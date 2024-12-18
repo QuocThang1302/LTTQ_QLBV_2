@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -51,7 +51,7 @@ namespace QuanLyBenhVien.View
             }
 
             // Chuỗi kết nối tới cơ sở dữ liệu
-            string connectionString = "Data Source=QUOCTHANG\\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+            string connectionString = "Data Source=DESKTOP-U5DJ7HG\\SQLEXPRESS01;Initial Catalog=BV;Integrated Security=True";
 
             // Câu lệnh SQL để tìm kiếm thông tin đơn thuốc và chi tiết đơn thuốc
             string queryCongViec = "SELECT * FROM CongViec WHERE MaCongViec = @MaCongViec OR TenCongViec = @MaCongViec";
