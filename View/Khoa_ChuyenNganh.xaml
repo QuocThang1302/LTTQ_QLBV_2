@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:QuanLyBenhVien.View"
              xmlns:customControls="clr-namespace:QuanLyBenhVien.CustomControls"
              mc:Ignorable="d" 
-             d:DesignHeight="628" d:DesignWidth="978">
+             d:DesignHeight="628" d:DesignWidth="978" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80"></RowDefinition>
@@ -45,7 +45,7 @@
                            VerticalAlignment="Center"/>
             </Grid>
 
-            <Grid Grid.Row="1">
+            <Grid Grid.Row="1" SizeChanged="Grid_SizeChanged">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -56,7 +56,7 @@
                           CanUserAddRows="False"
                           CanUserDeleteRows="False"
                           Margin="40,5,10,0"
-                          Height="Auto">
+                          Height="Auto" SelectionChanged="dgvKhoa_SelectionChanged">
                     <!-- Style cho header -->
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
@@ -113,7 +113,7 @@
                           CanUserAddRows="False"
                           CanUserDeleteRows="False"
                           Margin="10,5,40,0"
-                          Height="Auto">
+                          Height="Auto" SelectionChanged="dgvChuyenNganh_SelectionChanged">
                     <!-- Style cho header -->
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
@@ -168,27 +168,27 @@
         </Grid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" FlowDirection="RightToLeft">
-            <Button Style="{StaticResource childviewButton}" 
+            <Button x:Name="btnXoa2" Style="{StaticResource childviewButton}" 
                     Margin="52,0,0,0"
-                    Content="Xóa"/>
+                    Content="Xóa" Click="btnXoa2_Click"/>
 
-            <Button Style="{StaticResource childviewButton}" 
+            <Button x:Name="btnCapNhat2" Style="{StaticResource childviewButton}" 
                     Margin="52,0,0,0"
                     Content="Cập nhật"/>
 
-            <Button Style="{StaticResource childviewButton}" 
+            <Button x:Name="btnThem2" Style="{StaticResource childviewButton}" 
                     Margin="52,0,0,0"
                     Content="Thêm" Click="Button_Click"/>
 
-            <Button Style="{StaticResource childviewButton}" 
+            <Button x:Name="btnXoa1" Style="{StaticResource childviewButton}" 
                     Margin="64,0,0,0"
-                    Content="Xóa"/>
+                    Content="Xóa" Click="btnXoa1_Click"/>
 
-            <Button Style="{StaticResource childviewButton}" 
+            <Button x:Name="btnCapNhat1" Style="{StaticResource childviewButton}" 
                     Margin="52,0,0,0"
                     Content="Cập nhật"/>
 
-            <Button Style="{StaticResource childviewButton}" 
+            <Button x:Name="btnThem1" Style="{StaticResource childviewButton}" 
                     Margin="52,0,0,0"
                     Content="Thêm" Click="Button_Click_1"/>
         </StackPanel>

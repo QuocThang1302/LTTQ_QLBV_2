@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace QuanLyBenhVien.View
 {
@@ -50,7 +51,7 @@ namespace QuanLyBenhVien.View
             }
 
             // Chuỗi kết nối tới cơ sở dữ liệu
-            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+            string connectionString = "Data Source=QUOCTHANG\\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
 
             // Câu lệnh SQL để tìm kiếm thông tin đơn thuốc và chi tiết đơn thuốc
             string queryCongViec = "SELECT * FROM CongViec WHERE MaCongViec = @MaCongViec OR TenCongViec = @MaCongViec";
@@ -101,6 +102,105 @@ namespace QuanLyBenhVien.View
         {
             PhanCong phanCong = new PhanCong();
             phanCong.Show();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HienThiDanhSach();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error: {ex.Message}");
+            }
+        }
+        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+        SqlConnection sqlCon = null;
+        SqlDataAdapter adapter = null;
+        DataSet ds = null;
+        SqlDataAdapter adapter1 = null;
+        DataSet ds1 = null;
+        private void HienThiDanhSach()
+        {
+            if (sqlCon == null)
+            {
+                sqlCon = new SqlConnection(strCon);
+            }
+            string query = "  select MaCongViec, TenCongViec, MoTaCongViec, GhiChu from CongViec";
+            adapter = new SqlDataAdapter(query, sqlCon);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+
+            ds = new DataSet();
+            if (sqlCon.State == ConnectionState.Closed)
+            {
+                sqlCon.Open();
+            }
+            adapter.Fill(ds, "tblCongViec");
+            sqlCon.Close();
+
+            dgvCongViec.ItemsSource = ds.Tables["tblCongViec"].DefaultView;
+
+            string query1 = "select MaLichTruc, MaBacSi, NgayTruc, PhanCong, TrangThai from LichTruc join NhanVien on LichTruc.MaBacSi = NhanVien.MaNhanVien";
+            adapter1 = new SqlDataAdapter(query1, sqlCon);
+            SqlCommandBuilder builder1 = new SqlCommandBuilder(adapter1);
+
+            ds1 = new DataSet();
+            if (sqlCon.State == ConnectionState.Closed)
+            {
+                sqlCon.Open();
+            }
+            adapter1.Fill(ds1, "tblLichTruc");
+            sqlCon.Close();
+
+            dgvPhanCong.ItemsSource = ds1.Tables["tblLichTruc"].DefaultView;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (vitri == -1)
+            {
+                MessageBox.Show("Vui lòng chọn một dòng để xóa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            try
+            {
+                // Xác nhận từ người dùng trước khi xóa
+                var result = MessageBox.Show("Bạn có chắc chắn muốn xóa dòng này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    // Xóa dòng được chọn trong DataTable
+                    DataRow dataRow = ds1.Tables["tblLichTruc"].Rows[vitri];
+                    dataRow.Delete();
+
+                    // Cập nhật thay đổi vào cơ sở dữ liệu
+                    int kq = adapter.Update(ds1.Tables["tblLichTruc"]);
+
+                    if (kq > 0)
+                    {
+                        MessageBox.Show("Xóa dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        // Cập nhật giao diện DataGrid
+                        dgvPhanCong.ItemsSource = null;
+                        dgvPhanCong.ItemsSource = ds1.Tables["tblLichTruc"].DefaultView;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Xóa dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        private int vitri = -1;
+        private void dgvPhanCong_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            vitri = dgvPhanCong.SelectedIndex;
+            if (vitri == -1) return;
         }
     }
 }

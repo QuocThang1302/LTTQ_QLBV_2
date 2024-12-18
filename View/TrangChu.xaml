@@ -181,7 +181,7 @@
                     <TextBlock Text="Doanh thu bệnh viện" DockPanel.Dock="Top" Foreground="#FF03273E"
                                FontSize="16" FontFamily="Inter" FontWeight="Medium" Margin="10,5,0,0" Height="19"/>
                     <livechart:CartesianChart Series="{Binding SeriesCollectionColumn}"
-                                              LegendLocation="Top" Margin="5,0,5,0">
+                                              LegendLocation="Top" Margin="5,0,5,0" Loaded="CartesianChart_Loaded">
                         <livechart:CartesianChart.AxisX>
                             <livechart:Axis Title="Tháng" Labels="{Binding Labels}">
                                 <livechart:Axis.Separator>
