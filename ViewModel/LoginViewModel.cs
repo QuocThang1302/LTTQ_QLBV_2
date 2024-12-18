@@ -9,6 +9,7 @@ using System.Windows.Input;
 using QuanLyBenhVien.Repositories;
 using System.Net;
 using System.Security.Principal;
+using System.Windows;
 
 namespace QuanLyBenhVien.ViewModel
 {
@@ -25,11 +26,20 @@ namespace QuanLyBenhVien.ViewModel
         //properties
         public string? UserID
         {
-            get => _userID;
+            get
+            {
+                // Truy xuất giá trị UserID từ Application.Current.Properties
+                return Application.Current.Properties.Contains("UserID") ? Application.Current.Properties["UserID"] as string : null;
+            }
             set
             {
-                _userID = value;
-                OnPropertyChanged(nameof(UserID));
+                if (_userID != value)
+                {
+                    _userID = value;
+                    // Lưu giá trị UserID vào Application.Current.Properties
+                    Application.Current.Properties["UserID"] = value;
+                    OnPropertyChanged(nameof(UserID));
+                }
             }
         }
         public SecureString? Password

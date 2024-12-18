@@ -9,11 +9,34 @@ using System.Windows.Input;
 using QuanLyBenhVien.Model;
 using QuanLyBenhVien.Repositories;
 using QuanLyBenhVien.View;
+using System.Data.SqlClient;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace QuanLyBenhVien.ViewModel
 {
     internal class MainViewModel : ViewModelBase
     {
+
+        private string _userID;
+        private NhanVienViewModel _currentEmployee;
+
+        public string? UserID
+        {
+            get
+            {
+                // Truy xuất UserID từ Application.Current.Properties
+                return Application.Current.Properties.Contains("UserID") ? Application.Current.Properties["UserID"] as string : null;
+            }
+            set
+            {
+                if (value != UserID)
+                {
+                    // Cập nhật UserID vào Application.Current.Properties
+                    Application.Current.Properties["UserID"] = value;
+                    OnPropertyChanged(nameof(UserID));
+                }
+            }
+        }
         // Display name này để lưu trữ tên người dùng
         private string _displayName;
         public string DisplayName
@@ -122,10 +145,31 @@ namespace QuanLyBenhVien.ViewModel
                 };
             });
         }
-
+        
         private void ExecuteShowTTCaNhanViewCommand(object obj)
         {
-            CurrentChildView = new NhanVienViewModel();
+            var nhanVienData = _userRepository.GetNhanVienByID(UserID);
+            if (nhanVienData != null)
+            {
+                CurrentChildView = new NhanVienViewModel
+                {
+                    MaNhanVien = nhanVienData.MaNhanVien,
+                    Ho = nhanVienData.Ho,
+                    Ten = nhanVienData.Ten,
+                    ChuyenNganh = nhanVienData.ChuyenNganh,
+                    Email = nhanVienData.Email,
+                    ChucVu = nhanVienData.ChucVu,
+                    GioiTinh = nhanVienData.GioiTinh,
+                    CCCD = nhanVienData.CCCD,
+                    SoDienThoai = nhanVienData.SoDienThoai,
+                    DiaChi = nhanVienData.DiaChi,
+                    NgaySinh = nhanVienData.NgaySinh
+                };
+            }
+            else
+            {
+                MessageBox.Show("Không tìm thấy thông tin nhân viên!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
             Caption = "Nhân viên";
             Icon = IconChar.IdCard;
         }

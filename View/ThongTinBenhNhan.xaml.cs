@@ -37,6 +37,17 @@ namespace QuanLyBenhVien.View
         {
             // Logic khi nút X được nhấn
             HienThiDanhSach();
+            txtCCCD.Clear();
+            txtDiaChi.Clear();
+            txtEmail.Clear();
+            txtGioiTinh.Clear();
+            txtHo.Clear();
+            txtKhoa.Clear();
+            txtMaBenhNhan.Clear();
+            txtNgheNghiep.Clear();
+            txtSDT.Clear();
+            txtTen.Clear();
+            txtNgaySinh.Clear();
         }
         private void SearchControl_SearchButtonClicked(object sender, string searchText)
         {

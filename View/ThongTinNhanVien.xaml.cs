@@ -39,6 +39,7 @@ namespace QuanLyBenhVien.View
         {
             // Logic khi nút X được nhấn
             HienThiDanhSach();
+            ClearFields();
         }
         string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;

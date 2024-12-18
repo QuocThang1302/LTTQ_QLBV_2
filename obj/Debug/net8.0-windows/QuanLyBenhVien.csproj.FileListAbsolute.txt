@@ -868,3 +868,5 @@ D:\Dowload\LTTQ2\LTTQ_QLBV_2\obj\Debug\net8.0-windows\refint\QuanLyBenhVien.dll
 D:\Dowload\LTTQ2\LTTQ_QLBV_2\obj\Debug\net8.0-windows\QuanLyBenhVien.pdb
 D:\Dowload\LTTQ2\LTTQ_QLBV_2\obj\Debug\net8.0-windows\QuanLyBenhVien.genruntimeconfig.cache
 D:\Dowload\LTTQ2\LTTQ_QLBV_2\obj\Debug\net8.0-windows\ref\QuanLyBenhVien.dll
+D:\Dowload\LTTQ3\LTTQ_QLBV_2\bin\Debug\net8.0-windows\LiveCharts.dll
+D:\Dowload\LTTQ3\LTTQ_QLBV_2\bin\Debug\net8.0-windows\LiveCharts.Wpf.dll
