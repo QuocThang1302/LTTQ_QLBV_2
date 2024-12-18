@@ -37,6 +37,7 @@ namespace QuanLyBenhVien.View
         {
             // Logic khi nút X được nhấn
             HienThiDanhSach();
+            ClearFields();
         }
         private void SearchControl_SearchButtonClicked(object sender, string searchText)
         {
@@ -50,7 +51,7 @@ namespace QuanLyBenhVien.View
             }
 
             // Chuỗi kết nối tới cơ sở dữ liệu
-            string connectionString = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+            string connectionString = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
 
             // Câu lệnh SQL để tìm kiếm thông tin vật dụng
             string query = "SELECT * FROM VatDung WHERE MaVatDung = @MaVatDung OR TenVatDung = @MaVatDung";
@@ -109,7 +110,7 @@ namespace QuanLyBenhVien.View
             tbGiaTien.Text = "";
             tbQuanLy.Text = "";
         }
-        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;

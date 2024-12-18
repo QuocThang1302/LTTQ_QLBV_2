@@ -127,5 +127,10 @@ namespace QuanLyBenhVien.View
             var selectedSeries = (PieSeries)chartPoint.SeriesView;
             selectedSeries.PushOut = 8;
         }
+
+        private void CartesianChart_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

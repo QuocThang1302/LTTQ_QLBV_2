@@ -7,7 +7,7 @@
              xmlns:customControls="clr-namespace:QuanLyBenhVien.CustomControls"
              xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              mc:Ignorable="d" 
-             d:DesignHeight="628" d:DesignWidth="978">
+             d:DesignHeight="628" d:DesignWidth="978" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80"></RowDefinition>
@@ -22,7 +22,7 @@
               CanUserAddRows="False"
               CanUserDeleteRows="False"
               Margin="15,5,15,0"
-              Height="Auto">
+              Height="Auto" SelectionChanged="dgvHoaDon_SelectionChanged">
             <!-- Style cho header -->
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="DataGridColumnHeader">
@@ -81,7 +81,7 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal" FlowDirection="RightToLeft">
             <Button Style="{StaticResource childviewButton}" 
                     Margin="52,0,0,0"
-                    Content="Xóa"/>
+                    Content="Xóa" Click="Button_Click_1"/>
 
             <Button Style="{StaticResource childviewButton}" 
                     Margin="52,0,0,0"

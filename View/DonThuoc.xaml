@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:QuanLyBenhVien.View"
              mc:Ignorable="d" 
              xmlns:customControls="clr-namespace:QuanLyBenhVien.CustomControls"
-             d:DesignHeight="628" d:DesignWidth="978">
+             d:DesignHeight="628" d:DesignWidth="978" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"></RowDefinition>
@@ -83,6 +83,7 @@
                         <DataGridTextColumn Header="Bệnh nhân" Binding="{Binding MaBenhNhan}" Width="*"/>
                         <DataGridTextColumn Header="Bác sĩ" Binding="{Binding MaBacSi}" Width="*"/>
                         <DataGridTextColumn Header="Ngày lập đơn" Binding="{Binding NgayLapDon, StringFormat='dd/MM/yyyy'}" Width="1.1*"/>
+                        <DataGridTextColumn Header="Hóa đơn" Binding="{Binding MaHoaDon}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <StackPanel Orientation="Horizontal" >
@@ -106,7 +107,7 @@
                             CanUserAddRows="False"
                             CanUserDeleteRows="False"
                             Margin="30,5,30,0"
-                            Height="430">
+                            Height="430" SelectionChanged="dgvCTDonThuoc_SelectionChanged">
                     <!-- Style cho header -->
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
@@ -156,12 +157,13 @@
                         <DataGridTextColumn Header="Số lượng" Binding="{Binding SoLuong}" Width="*"/>
                         <DataGridTextColumn Header="Giá tiền" Binding="{Binding GiaTien}" Width="*"/>
                         <DataGridTextColumn Header="Hướng dẫn" Binding="{Binding HuongDanSuDung}" Width="*"/>
+
                     </DataGrid.Columns>
                 </DataGrid>
                 <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
                     <Button Style="{StaticResource childviewButton}" 
                             Margin="30,15,0,0"
-                            Content="Xóa"/>
+                            Content="Xóa" Click="Button_Click_2"/>
 
                     <Button Style="{StaticResource childviewButton}" 
                             Margin="30,15,0,0"

@@ -38,6 +38,7 @@ namespace QuanLyBenhVien.View
         {
             // Logic khi nút X được nhấn
             HienThiDanhSach();
+            ClearFields();
         }
         private void SearchControl_SearchButtonClicked(object sender, string searchText)
         {
