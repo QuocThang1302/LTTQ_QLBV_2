@@ -183,7 +183,7 @@ namespace QuanLyBenhVien.View {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/QuanLyBenhVien;V1.0.0.0;component/view/thongtinnhanvien.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/QuanLyBenhVien;component/view/thongtinnhanvien.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\View\ThongTinNhanVien.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

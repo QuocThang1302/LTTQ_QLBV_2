@@ -14,6 +14,33 @@ namespace QuanLyBenhVien.Repositories
 {
     public class UserRepository : RepositoryBase, IUserRepository
     {
+        
+        public bool AuthenticateUserAndCheckDoctor(NetworkCredential credential)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = @"
+            select RoleID 
+            from NhanVien 
+            where MaNhanVien = @userID and MatKhau = @password";
+                command.Parameters.Add("@userID", System.Data.SqlDbType.NVarChar).Value = credential.UserName;
+                command.Parameters.Add("@password", System.Data.SqlDbType.NVarChar).Value = credential.Password;
+
+                var roleIdObj = command.ExecuteScalar();
+                if (roleIdObj != null)
+                {
+                    string roleId = roleIdObj.ToString();
+                    return roleId.Equals("R02", StringComparison.OrdinalIgnoreCase); // True nếu là Doctor, False nếu là Admin
+                }
+            }
+
+            return false; // Không tìm thấy hoặc thông tin không chính xác
+        }
+
+        public bool PhanQuyen {  get; set; }
         public void Add(UserModel userModel)
         {
             throw new NotImplementedException();

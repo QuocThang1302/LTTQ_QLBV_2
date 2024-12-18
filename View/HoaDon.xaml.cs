@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -24,12 +25,54 @@ namespace QuanLyBenhVien.View
     /// </summary>
     public partial class HoaDon : UserControl
     {
+        string ID = Application.Current.Properties.Contains("UserID") ? Application.Current.Properties["UserID"] as string : null;
+        public string GetRoleIDByUserID()
+        {
+            string roleID = null; // Biến để lưu RoleID
+
+            // Chuỗi kết nối đến cơ sở dữ liệu
+            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+
+            // Câu lệnh SQL để lấy RoleID từ NhanVien theo MaNhanVien
+            string query = "SELECT RoleID FROM NhanVien WHERE MaNhanVien = @userID";
+
+            // Sử dụng SqlConnection để kết nối cơ sở dữ liệu
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open(); // Mở kết nối
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        // Thêm tham số vào câu lệnh SQL
+                        command.Parameters.AddWithValue("@userID", ID);
+
+                        // Thực thi câu lệnh và lấy giá trị RoleID
+                        var result = command.ExecuteScalar();
+
+                        if (result != null)
+                        {
+                            roleID = result.ToString(); // Gán giá trị RoleID nếu tìm thấy
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Xử lý lỗi nếu có
+                    MessageBox.Show("Lỗi: " + ex.Message, "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+
+            return roleID; // Trả về RoleID hoặc null nếu không tìm thấy
+        }
+        
         public HoaDon()
         {
             InitializeComponent();
             searchControl.Tmp = "Nhập số hóa đơn hoặc tên hóa đơn";
             // Đăng ký sự kiện SearchButtonClicked
             searchControl.SearchButtonClicked += SearchControl_SearchButtonClicked;
+            
         }
 
         private void SearchControl_SearchButtonClicked(object sender, string searchText)
@@ -85,6 +128,12 @@ namespace QuanLyBenhVien.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            string roleID = GetRoleIDByUserID();
+            if(roleID=="R02")
+            {
+                MessageBox.Show("Bạn không có quyền xuất hóa đơn!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }    
             CTHD cTHD = new CTHD();
             cTHD.Show();
         }
@@ -142,7 +191,7 @@ namespace QuanLyBenhVien.View
                 Debug.WriteLine($"Error: {ex.Message}");
             }
         }
-        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
