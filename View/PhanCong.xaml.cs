@@ -1,4 +1,5 @@
-﻿using QuanLyBenhVien.ViewModel;
+﻿using QuanLyBenhVien.Model;
+using QuanLyBenhVien.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,18 @@ namespace QuanLyBenhVien.View
         private void btnThoat_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(DSPhanCong.SelectedItem is PhanCongModel selectedItem)
+            {
+                TxB_MaLichTruc.Text = selectedItem.MaLichTruc;
+                TxB_MaBacSi.Text = selectedItem.MaBacSi;
+                TxB_NgayTruc.Text = selectedItem.NgayTruc.ToString("MM/dd/yyyy HH:mm:ss");
+                TxB_PhanCong.Text = selectedItem.PhanCong;
+                TxB_TrangThai.Text = selectedItem.TrangThai; 
+            }
         }
     }
 }

@@ -161,13 +161,7 @@
 
                     <Button Style="{StaticResource childviewButton}" 
                             Margin="30,15,0,0"
-                            Content="Cập nhật"/>
-
-                    <Button x:Name="btnThem"
-                            Style="{StaticResource childviewButton}" 
-                            Margin="30,15,0,0"
-                            Content="Thêm"
-                            Click="btnThem_Click"/>        
+                            Content="Cập nhật" Click="Button_Click_1"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
