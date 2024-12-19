@@ -34,39 +34,8 @@ namespace QuanLyBenhVien.Model
         void Remove(int id);
         UserModel GetByID(int id);
         UserModel GetByID(string? name);
-        public NhanVien GetNhanVienByID(string userID)
-        {
-            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
-            using (var connection = new SqlConnection(connectionString))
-            {
-                string query = "SELECT N.MaNhanVien, N.Ho, N.Ten, N.MaChuyenNganh, N.Email, \r\n                   R.TenRole AS ChucVu, N.GioiTinh, N.CCCD, N.SDT, N.DiaChi, N.NgaySinh\r\n            FROM NhanVien N\r\n            INNER JOIN Role R ON N.RoleID = R.RoleID\r\n            WHERE N.MaNhanVien = @UserID";
-                var command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@UserID", userID);
-
-                connection.Open();
-                using (var reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        return new NhanVien
-                        {
-                            MaNhanVien = reader["MaNhanVien"].ToString(),
-                            Ho = reader["Ho"].ToString(),
-                            Ten = reader["Ten"].ToString(),
-                            ChuyenNganh = reader["MaChuyenNganh"].ToString(),
-                            Email = reader["Email"].ToString(),
-                            ChucVu = reader["ChucVu"].ToString(),
-                            GioiTinh = reader["GioiTinh"].ToString(),
-                            CCCD = reader["CCCD"].ToString(),
-                            SoDienThoai = reader["SDT"].ToString(),
-                            DiaChi = reader["DiaChi"].ToString(),
-                            NgaySinh = DateTime.Parse(reader["NgaySinh"].ToString())
-                        };
-                    }
-                }
-            }
-            
-            return new NhanVien();
-        }
+        NhanVien GetNhanVienByID(string userID);
+        
     }
+    
 }

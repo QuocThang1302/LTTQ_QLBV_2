@@ -14,7 +14,41 @@ namespace QuanLyBenhVien.Repositories
 {
     public class UserRepository : RepositoryBase, IUserRepository
     {
-        
+        public NhanVien GetNhanVienByID(string userID)
+        {
+            
+            using (var connection = GetConnection())
+            {
+                string query = "SELECT N.MaNhanVien, N.Ho, N.Ten, N.MaChuyenNganh, N.Email, \r\n                   R.TenRole AS ChucVu, N.GioiTinh, N.CCCD, N.SDT, N.DiaChi, N.NgaySinh\r\n            FROM NhanVien N\r\n            INNER JOIN Role R ON N.RoleID = R.RoleID\r\n            WHERE N.MaNhanVien = @UserID";
+                var command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@UserID", userID);
+
+                connection.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new NhanVien
+                        {
+                            MaNhanVien = reader["MaNhanVien"].ToString(),
+                            Ho = reader["Ho"].ToString(),
+                            Ten = reader["Ten"].ToString(),
+                            ChuyenNganh = reader["MaChuyenNganh"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            ChucVu = reader["ChucVu"].ToString(),
+                            GioiTinh = reader["GioiTinh"].ToString(),
+                            CCCD = reader["CCCD"].ToString(),
+                            SoDienThoai = reader["SDT"].ToString(),
+                            DiaChi = reader["DiaChi"].ToString(),
+                            NgaySinh = DateTime.Parse(reader["NgaySinh"].ToString())
+                        };
+                    }
+                }
+            }
+
+            return new NhanVien();
+        }
+
         public bool AuthenticateUserAndCheckDoctor(NetworkCredential credential)
         {
             using (var connection = GetConnection())
