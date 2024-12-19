@@ -229,10 +229,10 @@ INSERT INTO Role (RoleID, TenRole) VALUES
 
 -- CongViec table
 INSERT INTO CongViec (MaCongViec, TenCongViec, MoTaCongViec, GhiChu) VALUES  
-('CN001', N'Trực khoa nội', N'Thăm khám, điều trị bệnh nhân', N'Trực cả ngày'),
-('CN002', N'Trực khoa ngoại', N'Thăm khám, điều trị bệnh nhân', N'Trực ca sáng '),
-('CN003', N'Trực khoa nhi', N'Thăm khám, điều trị bệnh nhân', N'Trực ca chiều'),
-('CN004', N'Trực khoa tim mạch', N'Thăm khám, điều trị bệnh nhân', N'Trực cả ngày');
+('CV001', N'Trực khoa nội', N'Thăm khám, điều trị bệnh nhân', N'Trực cả ngày'),
+('CV002', N'Trực khoa ngoại', N'Thăm khám, điều trị bệnh nhân', N'Trực ca sáng '),
+('CV003', N'Trực khoa nhi', N'Thăm khám, điều trị bệnh nhân', N'Trực ca chiều'),
+('CV004', N'Trực khoa tim mạch', N'Thăm khám, điều trị bệnh nhân', N'Trực cả ngày');
 
 -- Vô hiệu hóa tất cả ràng buộc khóa ngoại
 ALTER TABLE NhanVien NOCHECK CONSTRAINT ALL;
