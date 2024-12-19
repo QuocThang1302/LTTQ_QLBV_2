@@ -283,7 +283,6 @@ namespace QuanLyBenhVien.ViewModel
         public ICommand LogoutCommand { get; }
         private void LoadCurrentUserData()
         {
-            //var user = _userRepository.GetByID("abcxyz");
             var user = _userRepository.GetByID(Thread.CurrentPrincipal.Identity.Name);
             if (user != null)
             {
