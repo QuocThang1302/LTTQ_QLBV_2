@@ -176,18 +176,45 @@ namespace QuanLyBenhVien.ViewModel
             {
                 using (SqlConnection conn = GetConnection())
                 {
-                    string query = "INSERT INTO LichTruc (MaLichTruc, MaBacSi, NgayTruc, PhanCong, TrangThai) VALUES (@MaLichTruc, @MaBacSi, @NgayTruc, @PhanCong, @TrangThai)";
-                    SqlCommand cmd = new SqlCommand(query, conn);
+                    string CheckQuery = "SELECT COUNT(*) FROM LichTruc WHERE MaLichTruc=@MaLichTruc";
+                    SqlCommand cmd = new SqlCommand(CheckQuery, conn);
                     cmd.Parameters.AddWithValue("@MaLichTruc", newPhanCong.MaLichTruc);
-                    cmd.Parameters.AddWithValue("@MaBacSi", newPhanCong.MaBacSi);
-                    cmd.Parameters.AddWithValue("@NgayTruc", newPhanCong.NgayTruc);
-                    cmd.Parameters.AddWithValue("@PhanCong", newPhanCong.PhanCong);
-                    cmd.Parameters.AddWithValue("@TrangThai", newPhanCong.TrangThai);
-                    conn.Open();
-                    cmd.ExecuteNonQuery();
-                }
 
-                DSPhanCong.Add(newPhanCong);
+                    conn.Open();
+                    int count = (int)cmd.ExecuteScalar();
+                    conn.Close();
+
+                    if (count > 0)
+                    {
+                        string updatedQuery = @"UPDATE LichTruc 
+                                                SET MaBacSi = @MaBacSi, NgayTruc = @NgayTruc, PhanCong = @PhanCong, TrangThai = @TrangThai
+                                                WHERE MaLichTruc = @MaLichTruc";
+                        SqlCommand updatedCommand = new SqlCommand(updatedQuery, conn);
+                        updatedCommand.Parameters.AddWithValue("@MaLichTruc", newPhanCong.MaLichTruc);
+                        updatedCommand.Parameters.AddWithValue("@MaBacSi", newPhanCong.MaBacSi);
+                        updatedCommand.Parameters.AddWithValue("@NgayTruc", newPhanCong.NgayTruc);
+                        updatedCommand.Parameters.AddWithValue("@PhanCong", newPhanCong.PhanCong);
+                        updatedCommand.Parameters.AddWithValue("@TrangThai", newPhanCong.TrangThai);
+
+                        conn.Open();
+                        updatedCommand.ExecuteNonQuery();
+                        MessageBox.Show("Cập nhật dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        string query = "INSERT INTO LichTruc (MaLichTruc, MaBacSi, NgayTruc, PhanCong, TrangThai) VALUES (@MaLichTruc, @MaBacSi, @NgayTruc, @PhanCong, @TrangThai)";
+                        SqlCommand insertedcmd = new SqlCommand(query, conn);
+                        insertedcmd.Parameters.AddWithValue("@MaLichTruc", newPhanCong.MaLichTruc);
+                        insertedcmd.Parameters.AddWithValue("@MaBacSi", newPhanCong.MaBacSi);
+                        insertedcmd.Parameters.AddWithValue("@NgayTruc", newPhanCong.NgayTruc);
+                        insertedcmd.Parameters.AddWithValue("@PhanCong", newPhanCong.PhanCong);
+                        insertedcmd.Parameters.AddWithValue("@TrangThai", newPhanCong.TrangThai);
+
+                        conn.Open();
+                        insertedcmd.ExecuteNonQuery();
+                        MessageBox.Show("Thêm dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
             });
         }
     }

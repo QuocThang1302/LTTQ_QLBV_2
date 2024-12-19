@@ -136,6 +136,10 @@
                 <DataGrid x:Name="dgDanhSachVatDung" AutoGenerateColumns="False" 
                           CanUserAddRows="False"
                           CanUserDeleteRows="False"
+                          HeadersVisibility="Column" 
+                          Background="White" 
+                          RowBackground="White" 
+                          AlternatingRowBackground="#e8f1ff"
                           Margin="0,5,0,0"
                           Height="180" SelectionChanged="dgDanhSachVatDung_SelectionChanged">
                     <!-- Style cho header -->

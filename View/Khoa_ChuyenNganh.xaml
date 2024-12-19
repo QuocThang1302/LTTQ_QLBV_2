@@ -55,6 +55,10 @@
                           AutoGenerateColumns="False" 
                           CanUserAddRows="False"
                           CanUserDeleteRows="False"
+                          HeadersVisibility="Column" 
+                          Background="White" 
+                          RowBackground="White" 
+                          AlternatingRowBackground="#e8f1ff"
                           Margin="40,5,10,0"
                           Height="Auto" SelectionChanged="dgvKhoa_SelectionChanged">
                     <!-- Style cho header -->
@@ -112,6 +116,10 @@
                           AutoGenerateColumns="False" 
                           CanUserAddRows="False"
                           CanUserDeleteRows="False"
+                          HeadersVisibility="Column" 
+                          Background="White" 
+                          RowBackground="White" 
+                          AlternatingRowBackground="#e8f1ff"
                           Margin="10,5,40,0"
                           Height="Auto" SelectionChanged="dgvChuyenNganh_SelectionChanged">
                     <!-- Style cho header -->

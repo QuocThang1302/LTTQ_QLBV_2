@@ -98,12 +98,6 @@ namespace QuanLyBenhVien.View
             }
         }
 
-        private void btnThem_Click(object sender, RoutedEventArgs e)
-        {
-            PhanCong phanCong = new PhanCong();
-            phanCong.Show();
-        }
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -115,7 +109,7 @@ namespace QuanLyBenhVien.View
                 Debug.WriteLine($"Error: {ex.Message}");
             }
         }
-        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+        string strCon = @"Data Source=DESKTOP-U5DJ7HG\SQLEXPRESS01;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
@@ -201,6 +195,12 @@ namespace QuanLyBenhVien.View
         {
             vitri = dgvPhanCong.SelectedIndex;
             if (vitri == -1) return;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            PhanCong phanCong = new PhanCong();
+            phanCong.Show();
         }
     }
 }

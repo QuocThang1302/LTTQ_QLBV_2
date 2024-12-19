@@ -32,6 +32,10 @@
                 <DataGrid x:Name="dgvDonThuoc" AutoGenerateColumns="False" 
                             CanUserAddRows="False"
                             CanUserDeleteRows="False"
+                            HeadersVisibility="Column" 
+                            Background="White" 
+                            RowBackground="White" 
+                            AlternatingRowBackground="#e8f1ff"
                             Margin="30,5,30,0"
                             Height="430">
                     <!-- Style cho header -->
@@ -106,6 +110,10 @@
                 <DataGrid x:Name="dgvCTDonThuoc" AutoGenerateColumns="False" 
                             CanUserAddRows="False"
                             CanUserDeleteRows="False"
+                            HeadersVisibility="Column" 
+                            Background="White" 
+                            RowBackground="White" 
+                            AlternatingRowBackground="#e8f1ff"
                             Margin="30,5,30,0"
                             Height="430" SelectionChanged="dgvCTDonThuoc_SelectionChanged">
                     <!-- Style cho header -->

@@ -112,10 +112,14 @@
 
 
                 <DataGrid x:Name="dgDanhSachBenhAn" AutoGenerateColumns="False" 
-                CanUserAddRows="False"
-                CanUserDeleteRows="False"
-                Margin="0,5,0,0"
-                Height="170" SelectionChanged="dgDanhSachBenhAn_SelectionChanged">
+                          HeadersVisibility="Column" 
+                          Background="White" 
+                          RowBackground="White" 
+                          AlternatingRowBackground="#e8f1ff"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          Margin="0,5,0,0"
+                          Height="170" SelectionChanged="dgDanhSachBenhAn_SelectionChanged">
 
                     <!-- Style cho header -->
                     <DataGrid.ColumnHeaderStyle>

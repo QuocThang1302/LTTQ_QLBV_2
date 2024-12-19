@@ -21,6 +21,10 @@
               AutoGenerateColumns="False" 
               CanUserAddRows="False"
               CanUserDeleteRows="False"
+              HeadersVisibility="Column" 
+              Background="White" 
+              RowBackground="White" 
+              AlternatingRowBackground="#e8f1ff"
               Margin="15,5,15,0"
               Height="Auto" SelectionChanged="dgvHoaDon_SelectionChanged">
             <!-- Style cho header -->

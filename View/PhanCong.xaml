@@ -192,6 +192,10 @@
                             <DataGrid Grid.Column="0" ItemsSource="{Binding DSNhanVien}"
                                       AutoGenerateColumns="False" 
                                       CanUserAddRows="False"
+                                      HeadersVisibility="Column" 
+                                      Background="White" 
+                                      RowBackground="White" 
+                                      AlternatingRowBackground="#e8f1ff"
                                       CanUserDeleteRows="False"
                                       Margin="30,5,10,0"
                                       Height="Auto">
@@ -246,13 +250,17 @@
                                 </DataGrid.Columns>
                             </DataGrid>
 
-                            <DataGrid Grid.Column="1"
+                            <DataGrid Grid.Column="1" x:Name="DSPhanCong"
                                       AutoGenerateColumns="False" 
                                       CanUserAddRows="False"
                                       CanUserDeleteRows="False"
                                       ItemsSource="{Binding DSPhanCong}"
+                                      HeadersVisibility="Column" 
+                                      Background="White" 
+                                      RowBackground="White" 
+                                      AlternatingRowBackground="#e8f1ff"
                                       Margin="10,5,30,0"
-                                      Height="Auto">
+                                      Height="Auto" SelectionChanged="DataGrid_SelectionChanged">
                                 <!-- Style cho header -->
                                 <DataGrid.ColumnHeaderStyle>
                                     <Style TargetType="DataGridColumnHeader">
