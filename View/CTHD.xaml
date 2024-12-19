@@ -110,7 +110,11 @@
                             <Button Grid.Row="3" Grid.Column="0" Margin="24,0,25,5" Click="btnThem_Click" Style= "{StaticResource childviewButton}" Content="Thêm"  VerticalAlignment="Bottom"/>
                             <Button Grid.Row="3" Grid.Column="1" Content="Xóa" Margin="5" Click="btnXoa_Click" Style= "{StaticResource childviewButton}" />
                             <!-- DataGrid để hiển thị danh sách thuốc -->
-                            <DataGrid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Name="dgThuoc" Margin="5" AutoGenerateColumns="False" CanUserAddRows="False">
+                            <DataGrid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Name="dgThuoc" Margin="5" AutoGenerateColumns="False" CanUserAddRows="False"
+                                      HeadersVisibility="Column" 
+                                      Background="White" 
+                                      RowBackground="White" 
+                                      AlternatingRowBackground="#e8f1ff">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Tên thuốc" Binding="{Binding TenThuoc}" Width="100"/>
                                     <DataGridTextColumn Header="Số lượng" Binding="{Binding SoLuong}" Width="80"/>
@@ -184,7 +188,11 @@
                             <Button Grid.Row="3" Grid.Column="0" Content="Thêm" Margin="5" Click="btnThem2_Click" Style= "{StaticResource childviewButton}"/>
                             <Button Grid.Row="3" Grid.Column="1" Content="Xóa" Margin="5" Click="btnXoa2_Click" Style= "{StaticResource childviewButton}"/>
                             <!-- DataGrid để hiển thị danh sách vật dụng -->
-                            <DataGrid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Name="dgVatDung" Margin="5" AutoGenerateColumns="False" CanUserAddRows="False">
+                            <DataGrid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Name="dgVatDung" Margin="5" AutoGenerateColumns="False" CanUserAddRows="False"
+                                      HeadersVisibility="Column" 
+                                      Background="White" 
+                                      RowBackground="White" 
+                                      AlternatingRowBackground="#e8f1ff">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Tên vật dụng" Binding="{Binding TenVatDung}" Width="110"/>
                                     <DataGridTextColumn Header="Số lượng" Binding="{Binding SoLuong}" Width="80"/>
