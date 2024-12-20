@@ -1,32 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Data.SqlClient;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Data.SqlClient;
-using System.Data;
+using Microsoft.Data.SqlClient;
+using QuanLyBenhVien.Repositories;
 
 namespace QuanLyBenhVien.View
 {
-    /// <summary>
-    /// Interaction logic for ThongTinNhanVien.xaml
-    /// </summary>
     public partial class ThongTinNhanVien : UserControl
     {
+        private readonly RepositoryBase _userRepository;
         public ThongTinNhanVien()
         {
+            _userRepository = new UserRepository();
             InitializeComponent();
             searchControl.Tmp = "Nhập mã nhân viên hoặc tên nhân viên";
             // Đăng ký sự kiện SearchButtonClicked
@@ -41,7 +27,7 @@ namespace QuanLyBenhVien.View
             HienThiDanhSach();
             ClearFields();
         }
-        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
@@ -90,7 +76,7 @@ namespace QuanLyBenhVien.View
         {
             if (sqlCon == null)
             {
-                sqlCon = new SqlConnection(strCon);
+                sqlCon = _userRepository.GetConnection();
             }
             string query = " select MaNhanVien, Ho, Ten, LoaiNhanVien, MaChuyenNganh, GioiTinh, CCCD, SDT, NgaySinh, Email, DiaChi  from NhanVien";
             adapter = new SqlDataAdapter(query, sqlCon);
@@ -135,10 +121,8 @@ namespace QuanLyBenhVien.View
                 MessageBox.Show("Vui lòng chọn một dòng để xóa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
-
             try
             {
-
                 var result = MessageBox.Show("Bạn có chắc chắn muốn xóa bệnh nhân này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
@@ -243,7 +227,7 @@ namespace QuanLyBenhVien.View
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(strCon))
+                using (SqlConnection connection = _userRepository.GetConnection())
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(query, connection);

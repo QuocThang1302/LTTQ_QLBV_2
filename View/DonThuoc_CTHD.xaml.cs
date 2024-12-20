@@ -1,30 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Data;
+using QuanLyBenhVien.Repositories;
 
 
 namespace QuanLyBenhVien.View
 {
-    /// <summary>
-    /// Interaction logic for DonThuoc_CTHD.xaml
-    /// </summary>
     public partial class DonThuoc_CTDT : Window
     {
-        private string connectionString = @"Server=LAPTOP-702RPVLR;Database=BV;Trusted_Connection=True;";
+        private readonly RepositoryBase _userRepository;
         public DonThuoc_CTDT()
         {
+            _userRepository = new UserRepository();
             InitializeComponent();
         }
 
@@ -52,7 +40,7 @@ namespace QuanLyBenhVien.View
             }
 
             
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = _userRepository.GetConnection())
             {
                 // Kiểm tra các ô không được trống
                 if (string.IsNullOrWhiteSpace(TxB_MaDonThuoc.Text) || string.IsNullOrWhiteSpace(TxB_TenThuoc.Text) ||
@@ -61,9 +49,6 @@ namespace QuanLyBenhVien.View
                     MessageBox.Show("Mã đơn thuốc và Tên thuốc không được để trống!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-
-                
-                
                     try
                     {
                         conn.Open();
@@ -181,7 +166,7 @@ namespace QuanLyBenhVien.View
         // Hàm thực thi câu lệnh truy vấn trả về DataTable
         private DataTable GetDataTable(string query, params SqlParameter[] parameters)
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = _userRepository.GetConnection())
             {
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
@@ -199,7 +184,7 @@ namespace QuanLyBenhVien.View
         // Hàm thực thi câu lệnh truy vấn không trả về
         private int ExecuteNonQuery(string query, params SqlParameter[] parameters)
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = _userRepository.GetConnection())
             {
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(query, conn))
@@ -212,7 +197,7 @@ namespace QuanLyBenhVien.View
 
         private int ExecuteCountQuery(string query, params SqlParameter[] parameters)
         {
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = _userRepository.GetConnection())
             {
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(query, conn))

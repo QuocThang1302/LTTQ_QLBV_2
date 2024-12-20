@@ -1,30 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Data.SqlClient;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Microsoft.Data.SqlClient;
 using System.Data;
+using QuanLyBenhVien.Repositories;
 
 namespace QuanLyBenhVien.View
 {
-    /// <summary>
-    /// Interaction logic for LichHenKham.xaml
-    /// </summary>
     public partial class LichHenKham : UserControl
     {
-        private string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+        private readonly RepositoryBase _userRepository;
         public LichHenKham()
         {
+            _userRepository = new UserRepository();
             InitializeComponent();
             searchControl.Tmp = "Nhập mã lịch hẹn hoặc mã bác sĩ";
             // Đăng ký sự kiện SearchButtonClicked
@@ -41,8 +28,6 @@ namespace QuanLyBenhVien.View
         }
         private void SearchControl_SearchButtonClicked(object sender, string searchText)
         {
-
-
             string maLichHen = searchText.Trim();
 
             if (string.IsNullOrEmpty(maLichHen))
@@ -51,13 +36,12 @@ namespace QuanLyBenhVien.View
                 
                 return;
             }
-
             
             string query = "SELECT * FROM LichHenKham WHERE MaLichHen=@MaLichHen OR MaBacSi=@MaLichHen";
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = _userRepository.GetConnection())
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(query, connection);

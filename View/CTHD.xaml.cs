@@ -1,31 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Data;
+using QuanLyBenhVien.Repositories;
 
 namespace QuanLyBenhVien.View
 {
-    /// <summary>
-    /// Interaction logic for CTHD.xaml
-    /// </summary>
     public partial class CTHD : Window
     {
+        private readonly RepositoryBase _userRepository;
         public CTHD()
         {
+            _userRepository = new UserRepository();
             InitializeComponent();
         }
-        string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         private void btnThem_Click(object sender, RoutedEventArgs e)
         {
             // Kiểm tra mã hóa đơn có trống không
@@ -41,7 +29,7 @@ namespace QuanLyBenhVien.View
             string maNhanVien = txtMaNhanVien.Text.Trim();
             string ngayLapHoaDon = txtNgayLap.Text.Trim();
             
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = _userRepository.GetConnection())
             {
                 conn.Open();
 
@@ -63,7 +51,7 @@ namespace QuanLyBenhVien.View
                         }
                         // Truy vấn tên bệnh nhân từ bảng BenhNhan
                         string getTenBenhNhanQuery = "SELECT Ho + ' ' + Ten AS TenBenhNhan FROM BenhNhan WHERE MaBenhNhan = @MaBenhNhan";
-                        using (SqlConnection connBenhNhan = new SqlConnection(connectionString))
+                        using (SqlConnection connBenhNhan = _userRepository.GetConnection())
                         {
                             connBenhNhan.Open();
                             using (SqlCommand getTenBenhNhanCmd = new SqlCommand(getTenBenhNhanQuery, connBenhNhan))
@@ -83,7 +71,7 @@ namespace QuanLyBenhVien.View
 
                         // Truy vấn tên bác sĩ từ bảng NhanVien
                         string getTenNhanVienQuery = "SELECT Ho + ' ' + Ten AS TenNhanVien FROM NhanVien WHERE MaNhanVien = @MaNhanVien";
-                        using (SqlConnection connNhanVien = new SqlConnection(connectionString))
+                        using (SqlConnection connNhanVien = _userRepository.GetConnection())
                         {
                             connNhanVien.Open();
                             using (SqlCommand getTenNhanVienCmd = new SqlCommand(getTenNhanVienQuery, connNhanVien))
@@ -136,7 +124,7 @@ namespace QuanLyBenhVien.View
                                     txtNgayLap.Text = Convert.ToDateTime(reader["NgayLapHoaDon"]).ToString("yyyy-MM-dd");
                                     // Truy vấn tên bệnh nhân từ bảng BenhNhan
                                     string getTenBenhNhanQuery = "SELECT Ho + ' ' + Ten AS TenBenhNhan FROM BenhNhan WHERE MaBenhNhan = @MaBenhNhan";
-                                    using (SqlConnection connBenhNhan = new SqlConnection(connectionString))
+                                    using (SqlConnection connBenhNhan = _userRepository.GetConnection())
                                     {
                                         connBenhNhan.Open();
                                         using (SqlCommand getTenBenhNhanCmd = new SqlCommand(getTenBenhNhanQuery, connBenhNhan))
@@ -156,7 +144,7 @@ namespace QuanLyBenhVien.View
 
                                     // Truy vấn tên bác sĩ từ bảng NhanVien
                                     string getTenNhanVienQuery = "SELECT Ho + ' ' + Ten AS TenNhanVien FROM NhanVien WHERE MaNhanVien = @MaNhanVien";
-                                    using (SqlConnection connNhanVien = new SqlConnection(connectionString))
+                                    using (SqlConnection connNhanVien = _userRepository.GetConnection())
                                     {
                                         connNhanVien.Open();
                                         using (SqlCommand getTenNhanVienCmd = new SqlCommand(getTenNhanVienQuery, connNhanVien))

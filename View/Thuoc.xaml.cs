@@ -1,32 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Diagnostics;
+using QuanLyBenhVien.Repositories;
 
 
 
 namespace QuanLyBenhVien.View
 {
-    /// <summary>
-    /// Interaction logic for Thuoc.xaml
-    /// </summary>
     public partial class Thuoc : UserControl
     {
+        private readonly RepositoryBase _userRepository;
         public Thuoc()
         {
+            _userRepository = new UserRepository();
             InitializeComponent();
             searchControl.Tmp = "Nhập mã thuốc hoặc tên thuốc";
             // Đăng ký sự kiện SearchButtonClicked
@@ -51,16 +39,13 @@ namespace QuanLyBenhVien.View
                 
                 return;
             }
-
-            // Chuỗi kết nối tới cơ sở dữ liệu
             
-
             // Câu lệnh SQL để tìm kiếm thông tin thuốc
             string query = "SELECT * FROM Thuoc WHERE MaThuoc = @MaThuoc OR TenThuoc=@MaThuoc";
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(strCon))
+                using (SqlConnection connection = _userRepository.GetConnection())
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(query, connection);
@@ -112,7 +97,7 @@ namespace QuanLyBenhVien.View
             tbGiaTien.Text = "";
             tbHSD.Text = "";
         }
-        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
@@ -132,7 +117,7 @@ namespace QuanLyBenhVien.View
         {
             if (sqlCon == null)
             {
-                sqlCon = new SqlConnection(strCon);
+                sqlCon = _userRepository.GetConnection();
             }
             string query = "select MaThuoc, TenThuoc, CongDung, SoLuong, GiaTien, HanSuDung from Thuoc";
             adapter = new SqlDataAdapter(query, sqlCon);

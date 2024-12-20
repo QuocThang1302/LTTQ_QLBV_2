@@ -1,31 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using QuanLyBenhVien.Repositories;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace QuanLyBenhVien.View
 {
-    /// <summary>
-    /// Interaction logic for Khoa_ChuyenNganh.xaml
-    /// </summary>
     public partial class Khoa_ChuyenNganh : UserControl
     {
-        private string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+        private readonly RepositoryBase _userRepository;
         public Khoa_ChuyenNganh()
         {
+            _userRepository = new UserRepository();
             InitializeComponent();
             searchControl.Tmp = "Nhập mã khoa hoặc tên khoa";
             // Đăng ký sự kiện SearchButtonClicked
@@ -42,14 +29,11 @@ namespace QuanLyBenhVien.View
                 return;
             }
 
-            // Chuỗi kết nối tới cơ sở dữ liệu
-            
-
             // Câu lệnh SQL để tìm kiếm thông tin đơn thuốc và chi tiết đơn thuốc
             string queryKhoa = "SELECT * FROM Khoa WHERE MaKhoa = @MaKhoa OR TenKhoa = @MaKhoa";
             string queryChuyenNganh = "SELECT * FROM ChuyenNganh WHERE Khoa IN (SELECT MaKhoa From Khoa WHERE MaKhoa = @MaKhoa OR TenKhoa = @MaKhoa)";
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = _userRepository.GetConnection())
             {
                 try
                 {
@@ -124,7 +108,7 @@ namespace QuanLyBenhVien.View
         {
             if (sqlCon == null)
             {
-                sqlCon = new SqlConnection(connectionString);
+                sqlCon = _userRepository.GetConnection();
             }
             string query = "select MaKhoa, TenKhoa, TruongKhoa  From Khoa   join NhanVien   on Khoa.TruongKhoa = NhanVien.MaNhanVien";
             adapter = new SqlDataAdapter(query, sqlCon);

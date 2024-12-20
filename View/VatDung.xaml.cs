@@ -1,30 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Diagnostics;
+using QuanLyBenhVien.Repositories;
 
 namespace QuanLyBenhVien.View
 {
-    /// <summary>
-    /// Interaction logic for VatDung.xaml
-    /// </summary>
     public partial class VatDung : UserControl
     {
+        private readonly RepositoryBase _userRepository;
         public VatDung()
         {
+            _userRepository = new UserRepository();
             InitializeComponent();
         searchControl.Tmp = "Nhập mã vật dụng hoặc tên vật dụng";
             // Đăng ký sự kiện SearchButtonClicked
@@ -58,7 +46,7 @@ namespace QuanLyBenhVien.View
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(strCon))
+                using (SqlConnection connection = _userRepository.GetConnection())
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(query, connection);
@@ -110,7 +98,7 @@ namespace QuanLyBenhVien.View
             tbGiaTien.Text = "";
             tbQuanLy.Text = "";
         }
-        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
@@ -130,7 +118,7 @@ namespace QuanLyBenhVien.View
         {
             if (sqlCon == null)
             {
-                sqlCon = new SqlConnection(strCon);
+                sqlCon = _userRepository.GetConnection();
             }
             string query = "select MaVatDung, TenVatDung, MoTa, SoLuong, Gia, MaQuanLy from VatDung";
             adapter = new SqlDataAdapter(query, sqlCon);

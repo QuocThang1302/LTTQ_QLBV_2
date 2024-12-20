@@ -1,31 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Data.SqlClient;
-using System.Windows.Shapes;
+using Microsoft.Data.SqlClient;
 using System.Diagnostics;
+using QuanLyBenhVien.Repositories;
 
 namespace QuanLyBenhVien.View
 {
-    /// <summary>
-    /// Interaction logic for ThongTinBenhNhan.xaml
-    /// </summary>
     public partial class ThongTinBenhNhan : UserControl
     {
-        private string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+        private readonly RepositoryBase _userRepository;
         public ThongTinBenhNhan()
         {
+            _userRepository = new UserRepository();
             InitializeComponent();
             searchControl.Tmp = "Nhập mã bệnh nhân hoặc tên bệnh nhân";
             // Đăng ký sự kiện SearchButtonClicked
@@ -61,15 +48,12 @@ namespace QuanLyBenhVien.View
                 return;
             }
 
-            // Chuỗi kết nối tới cơ sở dữ liệu
-            
-
             // Câu lệnh SQL để tìm kiếm thông tin bệnh nhân
             string query = "SELECT * FROM BenhNhan WHERE MaBenhNhan=@MaBenhNhan OR Ten=@MaBenhNhan";
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = _userRepository.GetConnection())
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(query, connection);
@@ -177,7 +161,7 @@ namespace QuanLyBenhVien.View
         {
             if (sqlCon == null)
             {
-                sqlCon = new SqlConnection(connectionString);
+                sqlCon = _userRepository.GetConnection();
             }
             string query = "  select MaBenhNhan, Ho, Ten, NgaySinh, GioiTinh, NgheNghiep, CCCD, SDT, MaKhoa, Email, DiaChi from BenhNhan";
             adapter = new SqlDataAdapter(query, sqlCon);

@@ -1,32 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Data.SqlClient;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Microsoft.Data.SqlClient;
 using System.Data;
-using System.Collections;
 using System.Diagnostics;
+using QuanLyBenhVien.Repositories;
 
 namespace QuanLyBenhVien.View
 {
-    /// <summary>
-    /// Interaction logic for PhieuKhamBenh.xaml
-    /// </summary>
     public partial class PhieuKhamBenh : UserControl
     {
-        private string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+        private readonly RepositoryBase _userRepository;
         public PhieuKhamBenh()
         {
+            _userRepository = new UserRepository();
             InitializeComponent();
             searchControl.Tmp = "Nhập mã phiếu khám hoặc mã bác sĩ";
             // Đăng ký sự kiện SearchButtonClicked
@@ -54,8 +40,6 @@ namespace QuanLyBenhVien.View
                 return;
             }
 
-           
-
             // Câu lệnh SQL để tìm kiếm thông tin phiếu khám bệnh và chi tiết phiếu khám bệnh
             string query = @"
     SELECT 
@@ -81,7 +65,7 @@ namespace QuanLyBenhVien.View
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = _userRepository.GetConnection())
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(query, connection);
@@ -164,7 +148,7 @@ namespace QuanLyBenhVien.View
         {
             if (sqlCon == null)
             {
-                sqlCon = new SqlConnection(connectionString);
+                sqlCon = _userRepository.GetConnection();
             }
             string query = "SELECT \r\nBN.Ten AS TEN_BENHNHAN, \r\nNV.Ten AS TEN_BACSI, \r\nMaPhieuKham, \r\nPK.MaBenhNhan, \r\nNgayKham, \r\nLyDoKhamBenh, \r\n KhamLamSang, \r\n ChanDoan, \r\n KetQuaKham, \r\n DieuTri, \r\n MaBacSi\r\n FROM \r\n BenhNhan BN \r\n JOIN \r\n PhieuKhamBenh PK ON PK.MaBenhNhan = BN.MaBenhNhan\r\n JOIN \r\n NhanVien NV ON NV.MaNhanVien = PK.MaBacSi";
             adapter = new SqlDataAdapter(query, sqlCon);

@@ -18,14 +18,71 @@ namespace QuanLyBenhVien.ViewModel
         public string[] Labels { get; set; }
         public string[] LabelsLine { get; set; }
         public Func<double, string> Values { get; set; }
+        public int SLBS { get; set; }
+        public int SLBN { get; set; }
+        public int SLK { get; set; }
+        public int SLCN { get; set; }
 
         public TrangChuViewModel()
         {
             _userRepository = new UserRepository();
 
+            thongke();
             piechart();
             cartesian();
             column();
+        }
+
+        private void thongke()
+        {
+            using (SqlConnection conn = _userRepository.GetConnection())
+            {
+                string query = "SELECT COUNT(*) AS SoLuongBacSi FROM NhanVien WHERE RoleID = 'R02'";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    SLBS = Convert.ToInt32(reader["SoLuongBacSi"]);
+                }
+                conn.Close();
+            }
+            using (SqlConnection conn = _userRepository.GetConnection())
+            {
+                string query = "SELECT COUNT(*) AS SoLuongBenhNhan FROM BenhNhan";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    SLBN = Convert.ToInt32(reader["SoLuongBenhNhan"]);
+                }
+                conn.Close();
+            }
+            using (SqlConnection conn = _userRepository.GetConnection())
+            {
+                string query = "SELECT COUNT(*) AS SoLuongKhoa FROM Khoa";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    SLK = Convert.ToInt32(reader["SoLuongKhoa"]);
+                }
+                conn.Close();
+            }
+            using (SqlConnection conn = _userRepository.GetConnection())
+            {
+                string query = "SELECT COUNT(*) AS SoLuongChuyenNganh FROM ChuyenNganh";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    SLCN = Convert.ToInt32(reader["SoLuongChuyenNganh"]);
+                }
+                conn.Close();
+            }
         }
 
         public void piechart()
@@ -36,7 +93,7 @@ namespace QuanLyBenhVien.ViewModel
 
             using (SqlConnection conn = _userRepository.GetConnection())
             {
-                string query = "SELECT TenThuoc, CTDonThuoc.SoLuong FROM Thuoc, CTDonThuoc WHERE Thuoc.MaThuoc = CTDonThuoc.MaThuoc";
+                string query = "SELECT COUNT(*) AS SoLuong, TenKhoa FROM Khoa, BenhNhan WHERE BenhNhan.MaKhoa = Khoa.MaKhoa\r\nGROUP BY TenKhoa";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -44,7 +101,7 @@ namespace QuanLyBenhVien.ViewModel
                 {
                     SeriesCollectionPie.Add(new PieSeries
                     {
-                        Title = reader["TenThuoc"].ToString(),
+                        Title = reader["TenKhoa"].ToString(),
                         Values = new ChartValues<ObservableValue> { new ObservableValue(Convert.ToDouble(reader["SoLuong"])) },
                         Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString(colorpie[index])),
                         DataLabels = true
@@ -61,7 +118,6 @@ namespace QuanLyBenhVien.ViewModel
                 new LineSeries
                 {
                    Title = "Lượt khám:",
-                   //Values = new ChartValues<double> { 12, 26, 21, 13, 9, 5, 15},
                    PointGeometry = DefaultGeometries.Circle,
                    PointGeometrySize = 10
                 }
@@ -92,22 +148,43 @@ namespace QuanLyBenhVien.ViewModel
                 new StackedColumnSeries
                 {
                     Title = "Thuốc",
-                    Values = new ChartValues<double> {6,4,7,5,8},
                     StackMode = StackMode.Values,
                     Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#DBBDE2")),
                     DataLabels = true
                 },
                  new StackedColumnSeries
                  {
-                     Title = "Dịch vụ",
-                     Values = new ChartValues<double> {1,2,3,4,3},
+                     Title = "Vật dụng",
                      StackMode = StackMode.Values,
                      Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#78C7D9")),
                      DataLabels = true
-                 }};
+                 }       
+            };
 
-            Labels = new[] { "1", "2", "3", "4", "5" };
-            Values = value => value.ToString("N0") + "M";
+            Labels = new string[5];
+            int index = 0;
+            var dataVD = new ChartValues<double> { };
+            var dataT = new ChartValues<double> { };
+
+            using (SqlConnection conn = _userRepository.GetConnection())
+            {
+                string query = "WITH DoanhThuThuoc AS\r\n(\r\n    SELECT \r\n        FORMAT(HD.NgayLapHoaDon, 'MM/yyyy') AS Thang,\r\n        SUM(CT.GiaTien) AS TongDoanhThuThuoc\r\n    FROM \r\n        CTDonThuoc CT\r\n    JOIN \r\n        DonThuoc DT ON CT.MaDonThuoc = DT.MaDonThuoc\r\n\tJOIN\r\n\t\tHoaDon HD ON HD.MaHoaDon = DT.MaHoaDon\r\n    WHERE \r\n        HD.NgayLapHoaDon >= DATEADD(MONTH, -5, GETDATE()) -- Lọc 5 tháng gần đây\r\n    GROUP BY \r\n        FORMAT(HD.NgayLapHoaDon, 'MM/yyyy')\r\n),\r\nDoanhThuVatDung AS\r\n(\r\n    SELECT \r\n        FORMAT(HD.NgayLapHoaDon, 'MM/yyyy') AS Thang,\r\n        SUM(CT.ThanhTien) AS TongDoanhThuVatDung\r\n    FROM \r\n        CTHDVatDung CT\r\n    JOIN \r\n        HoaDon HD ON CT.MaHoaDon = HD.MaHoaDon\r\n    WHERE \r\n        HD.NgayLapHoaDon >= DATEADD(MONTH, -5, GETDATE()) -- Lọc 5 tháng gần đây\r\n    GROUP BY \r\n        FORMAT(HD.NgayLapHoaDon, 'MM/yyyy')\r\n)\r\nSELECT \r\n    ISNULL(TT.Thang, TV.Thang) AS Thang,\r\n    ISNULL(TT.TongDoanhThuThuoc, 0) AS DoanhThuThuoc,\r\n    ISNULL(TV.TongDoanhThuVatDung, 0) AS DoanhThuVatDung,\r\n    ISNULL(TT.TongDoanhThuThuoc, 0) + ISNULL(TV.TongDoanhThuVatDung, 0) AS TongDoanhThu\r\nFROM \r\n    DoanhThuThuoc TT\r\nFULL OUTER JOIN \r\n    DoanhThuVatDung TV ON TT.Thang = TV.Thang\r\nORDER BY \r\n    Thang;";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    dataVD.Add(Convert.ToDouble(reader["DoanhThuVatDung"]));
+                    dataT.Add(Convert.ToDouble(reader["DoanhThuThuoc"]));
+                    Labels[index] = reader["Thang"].ToString();
+                }
+                index++;
+            }
+
+            SeriesCollectionColumn[0].Values = dataT;
+            SeriesCollectionColumn[1].Values = dataVD;
+
+            Values = value => value.ToString("N0") + "VNĐ";
         }
     }
 }

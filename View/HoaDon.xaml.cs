@@ -1,44 +1,25 @@
-﻿using Microsoft.VisualBasic.ApplicationServices;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
+﻿using System.Data;
+using Microsoft.Data.SqlClient;
 using System.Diagnostics;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using QuanLyBenhVien.Repositories;
 
 namespace QuanLyBenhVien.View
 {
-    /// <summary>
-    /// Interaction logic for HoaDon.xaml
-    /// </summary>
     public partial class HoaDon : UserControl
     {
-        private string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+        private readonly RepositoryBase _userRepository;
         string ID = Application.Current.Properties.Contains("UserID") ? Application.Current.Properties["UserID"] as string : null;
         public string GetRoleIDByUserID()
         {
             string roleID = null; // Biến để lưu RoleID
-
-            // Chuỗi kết nối đến cơ sở dữ liệu
             
-
             // Câu lệnh SQL để lấy RoleID từ NhanVien theo MaNhanVien
             string query = "SELECT RoleID FROM NhanVien WHERE MaNhanVien = @userID";
 
             // Sử dụng SqlConnection để kết nối cơ sở dữ liệu
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = _userRepository.GetConnection())
             {
                 try
                 {
@@ -69,6 +50,7 @@ namespace QuanLyBenhVien.View
         
         public HoaDon()
         {
+            _userRepository = new UserRepository();
             InitializeComponent();
             searchControl.Tmp = "Nhập số hóa đơn hoặc tên hóa đơn";
             // Đăng ký sự kiện SearchButtonClicked
@@ -93,7 +75,7 @@ namespace QuanLyBenhVien.View
             string queryHoaDon = "SELECT * FROM HoaDon WHERE MaHoaDon = @MaHoaDon OR TenHoaDon = @MaHoaDon";
 
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = _userRepository.GetConnection())
             {
                 try
                 {
@@ -199,7 +181,7 @@ namespace QuanLyBenhVien.View
         {
             if (sqlCon == null)
             {
-                sqlCon = new SqlConnection(connectionString);
+                sqlCon = _userRepository.GetConnection();
             }
             string query = "SELECT \r\n    HD.MaHoaDon, \r\n    HD.TenHoaDon, \r\n    BN.MaBenhNhan, \r\n    NV.MaNhanVien, \r\n    HD.NgayLapHoaDon, \r\n    HD.GiaTien, \r\n    HD.TrangThai\r\nFROM HoaDon HD\r\nJOIN BenhNhan BN ON HD.MaBenhNhan = BN.MaBenhNhan\r\nJOIN NhanVien NV ON HD.MaNhanVien = NV.MaNhanVien;";
             adapter = new SqlDataAdapter(query, sqlCon);

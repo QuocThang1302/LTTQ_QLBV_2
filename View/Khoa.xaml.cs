@@ -1,27 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
+using QuanLyBenhVien.Repositories;
 
 namespace QuanLyBenhVien.View
 {
-    /// <summary>
-    /// Interaction logic for Khoa.xaml
-    /// </summary>
     public partial class Khoa : Window
     {
+        private readonly RepositoryBase _userRepository;
         public Khoa()
         {
+            _userRepository = new UserRepository();
             InitializeComponent();
         }
 
@@ -55,7 +44,7 @@ namespace QuanLyBenhVien.View
             // Kết nối đến cơ sở dữ liệu và xử lý
             try
             {
-                using (SqlConnection conn = new SqlConnection("Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True"))
+                using (SqlConnection conn = _userRepository.GetConnection())
                 {
                     conn.Open();
 
