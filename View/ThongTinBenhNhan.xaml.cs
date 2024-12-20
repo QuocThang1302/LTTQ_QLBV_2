@@ -23,7 +23,7 @@ namespace QuanLyBenhVien.View
     /// </summary>
     public partial class ThongTinBenhNhan : UserControl
     {
-        private string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+        private string connectionString = "Data Source=QUOCTHANG\\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
         public ThongTinBenhNhan()
         {
             InitializeComponent();
@@ -140,7 +140,7 @@ namespace QuanLyBenhVien.View
             dataRow["MaBenhNhan"] = txtMaBenhNhan.Text.Trim();
             dataRow["Ho"] = txtHo.Text.Trim();
             dataRow["Ten"] = txtTen.Text.Trim();
-            dataRow["NgaySinh"] = Convert.ToDateTime(dataRow["NgaySinh"]).ToString("yyyy-MM-dd");
+            dataRow["NgaySinh"] = DateTime.TryParse(txtNgaySinh.Text.Trim(), out DateTime ngaySinh) ? ngaySinh.ToString("yyyy-MM-dd") : throw new FormatException("Invalid date format");
             dataRow["GioiTinh"] = txtGioiTinh.Text.Trim();
             dataRow["NgheNghiep"] = txtNgheNghiep.Text.Trim();
             dataRow["CCCD"] = txtCCCD.Text.Trim();
@@ -276,7 +276,7 @@ namespace QuanLyBenhVien.View
                 dataRow["MaBenhNhan"] = txtMaBenhNhan.Text.Trim();
                 dataRow["Ho"] = txtHo.Text.Trim();
                 dataRow["Ten"] = txtTen.Text.Trim();
-                dataRow["NgaySinh"] = Convert.ToDateTime(dataRow["NgaySinh"]).ToString("yyyy-MM-dd");
+                dataRow["NgaySinh"] = DateTime.TryParse(txtNgaySinh.Text.Trim(), out DateTime ngaySinh) ? ngaySinh.ToString("yyyy-MM-dd") : throw new FormatException("Invalid date format");
                 dataRow["GioiTinh"] = txtGioiTinh.Text.Trim();
                 dataRow["NgheNghiep"] = txtNgheNghiep.Text.Trim();
                 dataRow["CCCD"] = txtCCCD.Text.Trim();
