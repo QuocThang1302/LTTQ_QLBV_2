@@ -23,6 +23,7 @@ namespace QuanLyBenhVien.View
     /// </summary>
     public partial class Khoa_ChuyenNganh : UserControl
     {
+        private string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         public Khoa_ChuyenNganh()
         {
             InitializeComponent();
@@ -42,7 +43,7 @@ namespace QuanLyBenhVien.View
             }
 
             // Chuỗi kết nối tới cơ sở dữ liệu
-            string connectionString = "Data Source=QUOCTHANG\\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+            
 
             // Câu lệnh SQL để tìm kiếm thông tin đơn thuốc và chi tiết đơn thuốc
             string queryKhoa = "SELECT * FROM Khoa WHERE MaKhoa = @MaKhoa OR TenKhoa = @MaKhoa";
@@ -113,7 +114,7 @@ namespace QuanLyBenhVien.View
                 Debug.WriteLine($"Error: {ex.Message}");
             }
         }
-        string strCon = @"Data Source=QUOCTHANG\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+        
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
@@ -123,7 +124,7 @@ namespace QuanLyBenhVien.View
         {
             if (sqlCon == null)
             {
-                sqlCon = new SqlConnection(strCon);
+                sqlCon = new SqlConnection(connectionString);
             }
             string query = "select MaKhoa, TenKhoa, TruongKhoa  From Khoa   join NhanVien   on Khoa.TruongKhoa = NhanVien.MaNhanVien";
             adapter = new SqlDataAdapter(query, sqlCon);

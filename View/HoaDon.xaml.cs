@@ -25,13 +25,14 @@ namespace QuanLyBenhVien.View
     /// </summary>
     public partial class HoaDon : UserControl
     {
+        private string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         string ID = Application.Current.Properties.Contains("UserID") ? Application.Current.Properties["UserID"] as string : null;
         public string GetRoleIDByUserID()
         {
             string roleID = null; // Biến để lưu RoleID
 
             // Chuỗi kết nối đến cơ sở dữ liệu
-            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+            
 
             // Câu lệnh SQL để lấy RoleID từ NhanVien theo MaNhanVien
             string query = "SELECT RoleID FROM NhanVien WHERE MaNhanVien = @userID";
@@ -86,8 +87,7 @@ namespace QuanLyBenhVien.View
                 return;
             }
 
-            // Chuỗi kết nối tới cơ sở dữ liệu
-            string connectionString = "Data Source=QUOCTHANG\\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
+            
 
             // Câu lệnh SQL để tìm kiếm thông tin đơn thuốc và chi tiết đơn thuốc
             string queryHoaDon = "SELECT * FROM HoaDon WHERE MaHoaDon = @MaHoaDon OR TenHoaDon = @MaHoaDon";
@@ -191,7 +191,7 @@ namespace QuanLyBenhVien.View
                 Debug.WriteLine($"Error: {ex.Message}");
             }
         }
-        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+        
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
@@ -199,7 +199,7 @@ namespace QuanLyBenhVien.View
         {
             if (sqlCon == null)
             {
-                sqlCon = new SqlConnection(strCon);
+                sqlCon = new SqlConnection(connectionString);
             }
             string query = "SELECT \r\n    HD.MaHoaDon, \r\n    HD.TenHoaDon, \r\n    BN.MaBenhNhan, \r\n    NV.MaNhanVien, \r\n    HD.NgayLapHoaDon, \r\n    HD.GiaTien, \r\n    HD.TrangThai\r\nFROM HoaDon HD\r\nJOIN BenhNhan BN ON HD.MaBenhNhan = BN.MaBenhNhan\r\nJOIN NhanVien NV ON HD.MaNhanVien = NV.MaNhanVien;";
             adapter = new SqlDataAdapter(query, sqlCon);

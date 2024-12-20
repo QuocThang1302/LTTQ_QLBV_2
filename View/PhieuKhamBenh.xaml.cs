@@ -24,6 +24,7 @@ namespace QuanLyBenhVien.View
     /// </summary>
     public partial class PhieuKhamBenh : UserControl
     {
+        private string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         public PhieuKhamBenh()
         {
             InitializeComponent();
@@ -53,7 +54,7 @@ namespace QuanLyBenhVien.View
                 return;
             }
 
-            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+           
 
             // Câu lệnh SQL để tìm kiếm thông tin phiếu khám bệnh và chi tiết phiếu khám bệnh
             string query = @"
@@ -127,7 +128,7 @@ namespace QuanLyBenhVien.View
                 MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+        
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
@@ -163,7 +164,7 @@ namespace QuanLyBenhVien.View
         {
             if (sqlCon == null)
             {
-                sqlCon = new SqlConnection(strCon);
+                sqlCon = new SqlConnection(connectionString);
             }
             string query = "SELECT \r\nBN.Ten AS TEN_BENHNHAN, \r\nNV.Ten AS TEN_BACSI, \r\nMaPhieuKham, \r\nPK.MaBenhNhan, \r\nNgayKham, \r\nLyDoKhamBenh, \r\n KhamLamSang, \r\n ChanDoan, \r\n KetQuaKham, \r\n DieuTri, \r\n MaBacSi\r\n FROM \r\n BenhNhan BN \r\n JOIN \r\n PhieuKhamBenh PK ON PK.MaBenhNhan = BN.MaBenhNhan\r\n JOIN \r\n NhanVien NV ON NV.MaNhanVien = PK.MaBacSi";
             adapter = new SqlDataAdapter(query, sqlCon);

@@ -23,7 +23,7 @@ namespace QuanLyBenhVien.ViewModel
 
         private string _MaLichTruc;
         private string _MaBacSi;
-        private DateTime _NgayTruc;
+        private DateTime? _NgayTruc;
         private string _PhanCong;
         private string _TrangThai;
         public ObservableCollection<PhanCongModel> DSPhanCong {  get; set; }
@@ -48,7 +48,7 @@ namespace QuanLyBenhVien.ViewModel
             }
         }
 
-        public DateTime NgayTruc
+        public DateTime? NgayTruc
         {
             get => _NgayTruc;
             set
@@ -167,7 +167,7 @@ namespace QuanLyBenhVien.ViewModel
             {
                 MaLichTruc = MaLichTruc,
                 MaBacSi = MaBacSi,
-                NgayTruc = NgayTruc,
+                NgayTruc = NgayTruc ?? DateTime.MinValue,
                 PhanCong = PhanCong,
                 TrangThai = TrangThai
             };

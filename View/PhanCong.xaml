@@ -116,7 +116,7 @@
                                  Width="340"/>
 
                         <TextBox Name="TxB_NgayTruc" Grid.Column="1" Grid.Row="2"
-                                 Text="{Binding NgayTruc}"
+                                 Text="{Binding NgayTruc, StringFormat=d, TargetNullValue=''}"
                                  Style="{StaticResource TextBoxStyles}"
                                  VerticalAlignment="Center"
                                  HorizontalAlignment="Left"

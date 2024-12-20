@@ -23,6 +23,7 @@ namespace QuanLyBenhVien.View
     /// </summary>
     public partial class ThongTinBenhNhan : UserControl
     {
+        private string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         public ThongTinBenhNhan()
         {
             InitializeComponent();
@@ -61,7 +62,7 @@ namespace QuanLyBenhVien.View
             }
 
             // Chuỗi kết nối tới cơ sở dữ liệu
-            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+            
 
             // Câu lệnh SQL để tìm kiếm thông tin bệnh nhân
             string query = "SELECT * FROM BenhNhan WHERE MaBenhNhan=@MaBenhNhan OR Ten=@MaBenhNhan";
@@ -129,7 +130,7 @@ namespace QuanLyBenhVien.View
             txtTen.Clear();
             txtNgaySinh.Clear();
         }
-        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+        
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
@@ -176,7 +177,7 @@ namespace QuanLyBenhVien.View
         {
             if (sqlCon == null)
             {
-                sqlCon = new SqlConnection(strCon);
+                sqlCon = new SqlConnection(connectionString);
             }
             string query = "  select MaBenhNhan, Ho, Ten, NgaySinh, GioiTinh, NgheNghiep, CCCD, SDT, MaKhoa, Email, DiaChi from BenhNhan";
             adapter = new SqlDataAdapter(query, sqlCon);

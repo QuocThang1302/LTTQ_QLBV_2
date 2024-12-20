@@ -22,6 +22,7 @@ namespace QuanLyBenhVien.View
     /// </summary>
     public partial class LichHenKham : UserControl
     {
+        private string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         public LichHenKham()
         {
             InitializeComponent();
@@ -51,7 +52,7 @@ namespace QuanLyBenhVien.View
                 return;
             }
 
-            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+            
             string query = "SELECT * FROM LichHenKham WHERE MaLichHen=@MaLichHen OR MaBacSi=@MaLichHen";
 
             try

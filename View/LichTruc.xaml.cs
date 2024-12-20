@@ -23,6 +23,7 @@ namespace QuanLyBenhVien.View
     /// </summary>
     public partial class LichTruc : UserControl
     {
+        private string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         public LichTruc()
         {
             InitializeComponent();
@@ -51,7 +52,7 @@ namespace QuanLyBenhVien.View
             }
 
             // Chuỗi kết nối tới cơ sở dữ liệu
-            string connectionString = "Data Source=DESKTOP-U5DJ7HG\\SQLEXPRESS01;Initial Catalog=BV;Integrated Security=True";
+            
 
             // Câu lệnh SQL để tìm kiếm thông tin đơn thuốc và chi tiết đơn thuốc
             string queryCongViec = "SELECT * FROM CongViec WHERE MaCongViec = @MaCongViec OR TenCongViec = @MaCongViec";
@@ -109,7 +110,7 @@ namespace QuanLyBenhVien.View
                 Debug.WriteLine($"Error: {ex.Message}");
             }
         }
-        string strCon = @"Data Source=DESKTOP-U5DJ7HG\SQLEXPRESS01;Initial Catalog=BV;Integrated Security=True";
+        //string strCon = @"Data Source=DESKTOP-U5DJ7HG\SQLEXPRESS01;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
@@ -119,7 +120,7 @@ namespace QuanLyBenhVien.View
         {
             if (sqlCon == null)
             {
-                sqlCon = new SqlConnection(strCon);
+                sqlCon = new SqlConnection(connectionString);
             }
             string query = "  select MaCongViec, TenCongViec, MoTaCongViec, GhiChu from CongViec";
             adapter = new SqlDataAdapter(query, sqlCon);

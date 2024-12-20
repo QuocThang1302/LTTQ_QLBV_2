@@ -53,14 +53,14 @@ namespace QuanLyBenhVien.View
             }
 
             // Chuỗi kết nối tới cơ sở dữ liệu
-            string connectionString = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+            
 
             // Câu lệnh SQL để tìm kiếm thông tin thuốc
             string query = "SELECT * FROM Thuoc WHERE MaThuoc = @MaThuoc OR TenThuoc=@MaThuoc";
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(strCon))
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(query, connection);

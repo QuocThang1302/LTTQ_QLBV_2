@@ -236,15 +236,14 @@ namespace QuanLyBenhVien.View
                 return;
             }
 
-            // Chuỗi kết nối tới cơ sở dữ liệu
-            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+            
 
             // Câu lệnh SQL để tìm kiếm thông tin nhân viên
             string query = "SELECT * FROM NhanVien WHERE MaNhanVien = @MaNhanVien OR Ten = @MaNhanVien";
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(strCon))
                 {
                     connection.Open();
                     SqlCommand command = new SqlCommand(query, connection);

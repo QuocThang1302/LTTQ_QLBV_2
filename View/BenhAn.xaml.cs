@@ -23,6 +23,7 @@ namespace QuanLyBenhVien.View
     /// </summary>
     public partial class BenhAn : UserControl
     {
+        private string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
         public BenhAn()
         {
             InitializeComponent();
@@ -52,7 +53,7 @@ namespace QuanLyBenhVien.View
                 return;
             }
 
-            string connectionString = "Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+           
             string query = "SELECT * FROM BenhAn JOIN BenhNhan ON BenhAn.MaBenhNhan=BenhNhan.MaBenhNhan WHERE MaBenhAn=@MaBenhAn OR BenhNhan.MaBenhNhan=@MaBenhAn";
 
             try
@@ -112,7 +113,7 @@ namespace QuanLyBenhVien.View
             txtBenh.Text = "";
             txtHuongDieuTri.Text = "";
         }
-        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+        
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
@@ -132,7 +133,7 @@ namespace QuanLyBenhVien.View
         {
             if (sqlCon == null)
             {
-                sqlCon = new SqlConnection(strCon);
+                sqlCon = new SqlConnection(connectionString);
             }
             string query = " select MaBenhAn, MaBenhNhan, NgayTaoLap, TinhTrang, Benh, DieuTri from BenhAn";
             adapter = new SqlDataAdapter(query, sqlCon);
