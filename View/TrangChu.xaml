@@ -244,7 +244,11 @@
                         </livechart:CartesianChart.AxisX>
 
                         <livechart:CartesianChart.AxisY>
-                            <livechart:Axis Title="Lượt khám" MinValue="0"/>
+                            <livechart:Axis Title="Lượt khám" MinValue="0">
+                                <livechart:Axis.Separator>
+                                    <livechart:Separator Step="1"/>
+                                </livechart:Axis.Separator>
+                            </livechart:Axis>
                         </livechart:CartesianChart.AxisY>
                     </livechart:CartesianChart>
                 </DockPanel>

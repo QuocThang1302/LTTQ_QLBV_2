@@ -9,16 +9,8 @@ using System.Windows.Input;
 
 namespace QuanLyBenhVien.ViewModel
 {
-    public class PhanCongViewModel : RepositoryBase, INotifyPropertyChanged
+    public class PhanCongViewModel : ViewModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-
         private readonly RepositoryBase _userRepository;
 
         private string _MaLichTruc;
@@ -121,7 +113,7 @@ namespace QuanLyBenhVien.ViewModel
 
         private void LoadDSPhanCong()
         {
-            using (SqlConnection conn = GetConnection())
+            using (SqlConnection conn = _userRepository.GetConnection())
             {
                 string query = "SELECT Ho + ' ' + Ten As HoTen, MaLichTruc, NgayTruc, PhanCong, TrangThai FROM LichTruc, NhanVien WHERE MaBacSi = MaNhanVien";
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -143,7 +135,7 @@ namespace QuanLyBenhVien.ViewModel
 
         private void LoadDSNhanVien()
         {
-            using (SqlConnection conn = GetConnection())
+            using (SqlConnection conn = _userRepository.GetConnection())
             {
                 string query = "SELECT Ho + ' ' + Ten As HoTen, MaNhanVien, MaChuyenNganh FROM NhanVien";
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -174,7 +166,7 @@ namespace QuanLyBenhVien.ViewModel
 
             ExecuteQuery(() =>
             {
-                using (SqlConnection conn = GetConnection())
+                using (SqlConnection conn = _userRepository.GetConnection())
                 {
                     string CheckQuery = "SELECT COUNT(*) FROM LichTruc WHERE MaLichTruc=@MaLichTruc";
                     SqlCommand cmd = new SqlCommand(CheckQuery, conn);
