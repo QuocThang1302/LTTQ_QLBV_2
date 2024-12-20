@@ -22,10 +22,7 @@ namespace QuanLyBenhVien.Model
         public string DiaChi { get; set; }
         public DateTime? NgaySinh { get; set; }
     }
-    public interface IUserRepositoryExtended : IUserRepository
-    {
-        UserModel GetNhanVienByID(int userID);
-    }
+
     public interface IUserRepository
     {
         bool AuthenticateUser(NetworkCredential credential);
