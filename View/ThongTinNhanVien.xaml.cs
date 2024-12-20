@@ -41,7 +41,7 @@ namespace QuanLyBenhVien.View
             HienThiDanhSach();
             ClearFields();
         }
-        string strCon = @"Data Source=LAPTOP-702RPVLR;Initial Catalog=BV;Integrated Security=True";
+        string strCon = @"Data Source=QUOCTHANG\\SQLEXPRESS;Initial Catalog=BV;Integrated Security=True";
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
@@ -56,7 +56,7 @@ namespace QuanLyBenhVien.View
             dataRow["GioiTinh"] = txtGioiTinh.Text.Trim();
             dataRow["CCCD"] = txtCCCD.Text.Trim();
             dataRow["SDT"] = txtSDT.Text.Trim();
-            dataRow["NgaySinh"] = Convert.ToDateTime(dataRow["NgaySinh"]).ToString("yyyy-MM-dd");
+            dataRow["NgaySinh"] = DateTime.TryParse(txtNgaySinh.Text.Trim(), out DateTime ngaySinh) ? ngaySinh.ToString("yyyy-MM-dd") : throw new FormatException("Invalid date format");
             dataRow["Email"] = txtEmail.Text.Trim();
             dataRow["DiaChi"] = txtDiaChi.Text.Trim();
             
@@ -67,6 +67,7 @@ namespace QuanLyBenhVien.View
             if (kq > 0)
             {
                 MessageBox.Show("Thêm dữ liệu thành công!!!");
+                ClearFields();
             }
             else
             {
@@ -158,7 +159,7 @@ namespace QuanLyBenhVien.View
                         dgDanhSachNhanVien.ItemsSource = ds.Tables["tblNhanVien"].DefaultView;
 
                         // Xóa dữ liệu trong TextBox
-                        //ClearTextBoxes();
+                       ClearFields();
                     }
                     else
                     {
@@ -194,7 +195,7 @@ namespace QuanLyBenhVien.View
                 dataRow["GioiTinh"] = txtGioiTinh.Text.Trim();
                 dataRow["CCCD"] = txtCCCD.Text.Trim();
                 dataRow["SDT"] = txtSDT.Text.Trim();
-                dataRow["NgaySinh"] = Convert.ToDateTime(dataRow["NgaySinh"]).ToString("yyyy-MM-dd");
+                dataRow["NgaySinh"] = DateTime.TryParse(txtNgaySinh.Text.Trim(), out DateTime ngaySinh) ? ngaySinh.ToString("yyyy-MM-dd") : throw new FormatException("Invalid date format");
                 dataRow["Email"] = txtEmail.Text.Trim();
                 dataRow["DiaChi"] = txtDiaChi.Text.Trim();
                 
@@ -212,6 +213,7 @@ namespace QuanLyBenhVien.View
 
                     // Đặt lại vị trí dòng đã chọn
                     dgDanhSachNhanVien.SelectedIndex = vitri;
+                    ClearFields();
                 }
                 else
                 {
