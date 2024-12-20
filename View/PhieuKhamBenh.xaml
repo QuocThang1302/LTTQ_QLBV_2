@@ -105,15 +105,15 @@
                 <StackPanel  Grid.Row="1" Orientation="Horizontal" FlowDirection="RightToLeft">
                     <Button x:Name="btnXoa" Style="{StaticResource childviewButton}" 
                   Margin="52,0,0,0"
-                  Content="Xóa"/>
+                  Content="Xóa" Click="btnXoa_Click"/>
 
                     <Button x:Name="btnCapNhat" Style="{StaticResource childviewButton}" 
                   Margin="52,0,0,0"
-                  Content="Cập nhật"/>
+                  Content="Cập nhật" Click="btnCapNhat_Click"/>
 
                     <Button x:Name="btnThem" Style="{StaticResource childviewButton}" 
                   Margin="52,0,0,0"
-                  Content="Thêm"/>
+                  Content="Thêm" Click="btnThem_Click"/>
                 </StackPanel>
             </Grid>
         </Border>
@@ -135,7 +135,7 @@
                           RowBackground="White" 
                           AlternatingRowBackground="#e8f1ff"
                           Margin="0,5,0,0"
-                          Height="170">
+                          Height="170" SelectionChanged="dgDanhSach_SelectionChanged">
 
                     <!-- Style cho header -->
                     <DataGrid.ColumnHeaderStyle>

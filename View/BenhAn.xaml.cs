@@ -125,7 +125,7 @@ namespace QuanLyBenhVien.View
             {
                 sqlCon = _userRepository.GetConnection();
             }
-            string query = " select MaBenhAn, MaBenhNhan, NgayTaoLap, TinhTrang, Benh, DieuTri from BenhAn";
+            string query = "  select MaBenhAn, BenhAn.MaBenhNhan, Ten,  NgayTaoLap, TinhTrang, Benh, DieuTri from BenhAn join BenhNhan on BenhAn.MaBenhNhan = BenhNhan.MaBenhNhan";
             adapter = new SqlDataAdapter(query, sqlCon);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
 
@@ -146,7 +146,9 @@ namespace QuanLyBenhVien.View
             if (vitri == -1) return;
 
             DataRow dataRow = ds.Tables["tblBenhAn"].Rows[vitri];
+            txtBenhNhan.Text = dataRow["Ten"].ToString();
             txtMaBenhAn.Text = dataRow["MaBenhAn"].ToString();
+           
             txtMaBenhNhan.Text = dataRow["MaBenhNhan"].ToString();
             txtNgayTaoLap.Text = dataRow["NgayTaoLap"].ToString();
             txtBenh.Text = dataRow["Benh"].ToString();
@@ -158,8 +160,11 @@ namespace QuanLyBenhVien.View
         {
             DataRow dataRow = ds.Tables["tblBenhAn"].NewRow();
             dataRow["MaBenhAn"] = txtMaBenhAn.Text.Trim();
+            dataRow["Ten"] = txtBenhNhan.Text.Trim();
             dataRow["MaBenhNhan"] = txtMaBenhNhan.Text.Trim();
-            dataRow["NgayTaoLap"] = txtNgayTaoLap.Text.Trim();
+            dataRow["NgayTaoLap"] = DateTime.TryParse(txtNgayTaoLap.Text.Trim(), out DateTime ngaySinh)
+? ngaySinh.ToString("yyyy-MM-dd")
+: throw new FormatException("Invalid date format");
             dataRow["Benh"] = txtBenh.Text.Trim();
             dataRow["TinhTrang"] = txtTinhTrang.Text.Trim();
             dataRow["DieuTri"] = txtHuongDieuTri.Text.Trim();
@@ -194,8 +199,11 @@ namespace QuanLyBenhVien.View
 
                 // Cập nhật dữ liệu từ các TextBox vào DataRow
                 dataRow["MaBenhAn"] = txtMaBenhAn.Text.Trim();
+                dataRow["Ten"] = txtBenhNhan.Text.Trim();
                 dataRow["MaBenhNhan"] = txtMaBenhNhan.Text.Trim();
-                dataRow["NgayTaoLap"] = Convert.ToDateTime(dataRow["NgayTaoLap"]).ToString("yyyy-MM-dd");
+                dataRow["NgayTaoLap"] = DateTime.TryParse(txtNgayTaoLap.Text.Trim(), out DateTime ngaySinh)
+? ngaySinh.ToString("yyyy-MM-dd")
+: throw new FormatException("Invalid date format");
                 dataRow["Benh"] = txtBenh.Text.Trim();
                 dataRow["TinhTrang"] = txtTinhTrang.Text.Trim();
                 dataRow["DieuTri"] = txtHuongDieuTri.Text.Trim();
