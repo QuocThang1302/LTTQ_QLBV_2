@@ -179,15 +179,15 @@
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
-                       <DataGridTextColumn Header="Mã bệnh nhân" Width="1.5*" Binding="{Binding MaBenhNhan}"/>
-                        <DataGridTextColumn Header="Họ, tên đệm" Width="1.2*" Binding="{Binding Ho}"/>
-                        <DataGridTextColumn Header="Tên" Width="0.5*" Binding="{Binding Ten}"/>
+                       <DataGridTextColumn Header="Mã BN" Width="0.8*" Binding="{Binding MaBenhNhan}"/>
+                        <DataGridTextColumn Header="Họ" Width="0.8*" Binding="{Binding Ho}"/>
+                        <DataGridTextColumn Header="Tên" Width="0.8*" Binding="{Binding Ten}"/>
                         <DataGridTextColumn Header="Ngày sinh" Width="*" Binding="{Binding NgaySinh}"/>
-                        <DataGridTextColumn Header="Giới tính" Width="*" Binding="{Binding GioiTinh}"/>
+                        <DataGridTextColumn Header="GT" Width="0.5*" Binding="{Binding GioiTinh}"/>
                         <DataGridTextColumn Header="Nghề" Width="*" Binding="{Binding NgheNghiep}"/>
                         <DataGridTextColumn Header="CCCD" Width="*" Binding="{Binding CCCD}"/>
-                        <DataGridTextColumn Header="SDT" Width="0.6*" Binding="{Binding SDT}"/>
-                        <DataGridTextColumn Header="Khoa" Width="*" Binding="{Binding MaKhoa}"/>
+                        <DataGridTextColumn Header="SDT" Width="1*" Binding="{Binding SDT}"/>
+                        <DataGridTextColumn Header="Khoa" Width="0.6*" Binding="{Binding MaKhoa}"/>
                         <DataGridTextColumn Header="Email" Width="*" Binding="{Binding Email}"/>
                         <DataGridTextColumn Header="Địa chỉ" Width="*" Binding="{Binding DiaChi}"/>
                     </DataGrid.Columns>
