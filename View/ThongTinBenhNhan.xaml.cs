@@ -306,14 +306,20 @@ namespace QuanLyBenhVien.View
 
             try
             {
+                // Kiểm tra dữ liệu đầu vào trước
+                if (!DateTime.TryParse(txtNgaySinh.Text.Trim(), out DateTime ngaySinh))
+                    throw new FormatException("Định dạng ngày không hợp lệ.");
+
                 // Lấy dòng dữ liệu được chọn trong DataSet
                 DataRow dataRow = ds.Tables["tblBenhNhan"].Rows[vitri];
+
+                dataRow.BeginEdit(); // Bắt đầu chỉnh sửa dữ liệu
 
                 // Cập nhật dữ liệu từ các TextBox vào DataRow
                 dataRow["MaBenhNhan"] = txtMaBenhNhan.Text.Trim();
                 dataRow["Ho"] = txtHo.Text.Trim();
                 dataRow["Ten"] = txtTen.Text.Trim();
-                dataRow["NgaySinh"] = DateTime.TryParse(txtNgaySinh.Text.Trim(), out DateTime ngaySinh) ? ngaySinh.ToString("yyyy-MM-dd") : throw new FormatException("Invalid date format");
+                dataRow["NgaySinh"] = ngaySinh.ToString("yyyy-MM-dd");
                 dataRow["GioiTinh"] = txtGioiTinh.Text.Trim();
                 dataRow["NgheNghiep"] = txtNgheNghiep.Text.Trim();
                 dataRow["CCCD"] = txtCCCD.Text.Trim();
@@ -321,6 +327,8 @@ namespace QuanLyBenhVien.View
                 dataRow["MaKhoa"] = txtKhoa.Text.Trim();
                 dataRow["Email"] = txtEmail.Text.Trim();
                 dataRow["DiaChi"] = txtDiaChi.Text.Trim();
+
+                dataRow.EndEdit(); // Kết thúc chỉnh sửa
 
                 // Cập nhật thay đổi vào cơ sở dữ liệu
                 int kq = adapter.Update(ds.Tables["tblBenhNhan"]);
@@ -335,18 +343,46 @@ namespace QuanLyBenhVien.View
 
                     // Đặt lại vị trí dòng đã chọn
                     dgDanhSachBenhNhan.SelectedIndex = vitri;
-                    CLearTextBoxes();
 
+                    CLearTextBoxes(); // Xóa các trường nhập liệu
                 }
                 else
                 {
                     MessageBox.Show("Cập nhật dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+            catch (FormatException ex)
+            {
+                MessageBox.Show($"Định dạng ngày không hợp lệ: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                ds.Tables["tblBenhNhan"].RejectChanges(); // Hủy thay đổi trên DataRow
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Number == 2627) // Lỗi vi phạm PRIMARY KEY
+                {
+                    MessageBox.Show("Khóa chính đã tồn tại! Không thể cập nhật dữ liệu trùng lặp.", "Lỗi khóa chính", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (ex.Number == 547) // Lỗi vi phạm FOREIGN KEY
+                {
+                    MessageBox.Show("Dữ liệu không hợp lệ! Mã khoa hoặc mã bệnh nhân không tồn tại trong hệ thống.", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                ds.Tables["tblBenhNhan"].RejectChanges(); // Hủy thay đổi trên DataRow
+            }
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                ds.Tables["tblBenhNhan"].RejectChanges(); // Hủy thay đổi trên DataRow
             }
+            finally
+            {
+                // Đảm bảo giao diện không bị thay đổi nếu có lỗi
+                dgDanhSachBenhNhan.ItemsSource = ds.Tables["tblBenhNhan"].DefaultView;
+            }
+
         }
     }
 }

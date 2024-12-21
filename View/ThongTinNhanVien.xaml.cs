@@ -220,8 +220,14 @@ namespace QuanLyBenhVien.View
 
             try
             {
+                // Kiểm tra dữ liệu đầu vào trước
+                if (!DateTime.TryParse(txtNgaySinh.Text.Trim(), out DateTime ngaySinh))
+                    throw new FormatException("Định dạng ngày không hợp lệ.");
+
                 // Lấy dòng dữ liệu được chọn trong DataSet
                 DataRow dataRow = ds.Tables["tblNhanVien"].Rows[vitri];
+
+                dataRow.BeginEdit(); // Bắt đầu chỉnh sửa dữ liệu
 
                 // Cập nhật dữ liệu từ các TextBox vào DataRow
                 dataRow["MaNhanVien"] = txtMaNhanVien.Text.Trim();
@@ -232,9 +238,11 @@ namespace QuanLyBenhVien.View
                 dataRow["GioiTinh"] = txtGioiTinh.Text.Trim();
                 dataRow["CCCD"] = txtCCCD.Text.Trim();
                 dataRow["SDT"] = txtSDT.Text.Trim();
-                dataRow["NgaySinh"] = DateTime.TryParse(txtNgaySinh.Text.Trim(), out DateTime ngaySinh) ? ngaySinh.ToString("yyyy-MM-dd") : throw new FormatException("Invalid date format");
+                dataRow["NgaySinh"] = ngaySinh.ToString("yyyy-MM-dd");
                 dataRow["Email"] = txtEmail.Text.Trim();
                 dataRow["DiaChi"] = txtDiaChi.Text.Trim();
+
+                dataRow.EndEdit(); // Kết thúc chỉnh sửa
 
                 // Cập nhật thay đổi vào cơ sở dữ liệu
                 int kq = adapter.Update(ds.Tables["tblNhanVien"]);
@@ -243,9 +251,9 @@ namespace QuanLyBenhVien.View
                 {
                     MessageBox.Show("Cập nhật dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    // Cập nhật giao diện DataGrid chỉ khi thành công
-                    dgDanhSachNhanVien.ItemsSource = null; // Xóa nguồn dữ liệu cũ
-                    dgDanhSachNhanVien.ItemsSource = ds.Tables["tblNhanVien"].DefaultView; // Đặt lại nguồn dữ liệu mới
+                    // Cập nhật giao diện DataGrid
+                    dgDanhSachNhanVien.ItemsSource = null;
+                    dgDanhSachNhanVien.ItemsSource = ds.Tables["tblNhanVien"].DefaultView;
 
                     // Đặt lại vị trí dòng đã chọn
                     dgDanhSachNhanVien.SelectedIndex = vitri;
@@ -256,9 +264,13 @@ namespace QuanLyBenhVien.View
                     MessageBox.Show("Cập nhật dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+            catch (FormatException ex)
+            {
+                MessageBox.Show($"Lỗi định dạng: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                ds.Tables["tblNhanVien"].RejectChanges(); // Hủy thay đổi
+            }
             catch (SqlException ex)
             {
-                // Xử lý lỗi SQL (khóa chính và khóa ngoại)
                 if (ex.Number == 2627) // Lỗi vi phạm PRIMARY KEY
                 {
                     MessageBox.Show("Khóa chính đã tồn tại! Không thể cập nhật dữ liệu trùng lặp.", "Lỗi khóa chính", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -271,19 +283,18 @@ namespace QuanLyBenhVien.View
                 {
                     MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-
-                // Nếu có lỗi, không cập nhật DataGrid, không thay đổi dữ liệu
-            }
-            catch (FormatException ex)
-            {
-                MessageBox.Show($"Định dạng ngày không hợp lệ: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                ds.Tables["tblNhanVien"].RejectChanges(); // Hủy thay đổi
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                ds.Tables["tblNhanVien"].RejectChanges(); // Hủy thay đổi
             }
-
-            ClearFields(); // Làm sạch các trường nhập liệu sau khi xử lý
+            finally
+            {
+                // Đảm bảo giao diện không bị thay đổi nếu có lỗi
+                dgDanhSachNhanVien.ItemsSource = ds.Tables["tblNhanVien"].DefaultView;
+            }
 
 
         }
