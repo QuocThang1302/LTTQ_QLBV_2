@@ -162,26 +162,71 @@ namespace QuanLyBenhVien.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            DataRow dataRow = ds.Tables["tblVatDung"].NewRow();
-            dataRow["MaVatDung"] = tbMaVatDung.Text.Trim();
-            dataRow["TenVatDung"] = tbVatDung.Text.Trim();
-            dataRow["MoTa"] = tbMoTa.Text.Trim();
-            dataRow["SoLuong"] = tbSoLuong.Text.Trim();
-            dataRow["Gia"] = tbGiaTien.Text.Trim();
-            dataRow["MaQuanLy"] = tbQuanLy.Text.Trim();
-
-            ds.Tables["tblVatDung"].Rows.Add(dataRow);
-
-            int kq = adapter.Update(ds.Tables["tblVatDung"]);
-            if (kq > 0)
+            try
             {
-                MessageBox.Show("Thêm dữ liệu thành công!!!");
+                // Tạo một DataRow mới nhưng không thêm ngay vào DataTable
+                DataRow dataRow = ds.Tables["tblVatDung"].NewRow();
+                dataRow["MaVatDung"] = tbMaVatDung.Text.Trim();
+                dataRow["TenVatDung"] = tbVatDung.Text.Trim();
+                dataRow["MoTa"] = tbMoTa.Text.Trim();
+                dataRow["SoLuong"] = tbSoLuong.Text.Trim();
+                dataRow["Gia"] = tbGiaTien.Text.Trim();
+                dataRow["MaQuanLy"] = tbQuanLy.Text.Trim();
+
+                // Tạm thời thêm DataRow (chỉ khi không có lỗi xảy ra)
+                ds.Tables["tblVatDung"].Rows.Add(dataRow);
+
+                // Cập nhật dữ liệu vào cơ sở dữ liệu
+                int kq = adapter.Update(ds.Tables["tblVatDung"]);
+                if (kq > 0)
+                {
+                    MessageBox.Show("Thêm dữ liệu thành công!!!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Thêm dữ liệu thất bại!!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+                // Dọn sạch các ô nhập liệu sau khi thành công
+                ClearTextBoxes();
             }
-            else
+            catch (SqlException ex)
             {
-                MessageBox.Show("Thêm dữ liệu thất bại!!");
+                // Xóa DataRow vừa thêm nếu gặp lỗi SQL
+                if (ds.Tables["tblVatDung"].Rows.Count > 0 && ds.Tables["tblVatDung"].Rows[ds.Tables["tblVatDung"].Rows.Count - 1].RowState == DataRowState.Added)
+                {
+                    ds.Tables["tblVatDung"].Rows[ds.Tables["tblVatDung"].Rows.Count - 1].Delete();
+                }
+
+                // Kiểm tra lỗi SQL dựa trên mã lỗi
+                switch (ex.Number)
+                {
+                    case 2627: // Lỗi vi phạm PRIMARY KEY
+                        MessageBox.Show("Khóa chính đã tồn tại trong cơ sở dữ liệu! Không thể thêm dữ liệu trùng lặp.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+
+                    case 547: // Lỗi vi phạm FOREIGN KEY
+                        MessageBox.Show("Dữ liệu không hợp lệ! Mã quản lý không tồn tại trong hệ thống.", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+
+                    default:
+                        MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+                }
             }
-            ClearTextBoxes();
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi không xác định: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                // Nếu có lỗi và DataRow đã được thêm, xóa DataRow khỏi DataSet
+                if (ds.Tables["tblVatDung"].Rows.Count > 0 && ds.Tables["tblVatDung"].Rows[ds.Tables["tblVatDung"].Rows.Count - 1].RowState == DataRowState.Added)
+                {
+                    ds.Tables["tblVatDung"].Rows[ds.Tables["tblVatDung"].Rows.Count - 1].Delete();
+                }
+            }
+
         }
 
         private void btnCapNhat_Click(object sender, RoutedEventArgs e)

@@ -263,11 +263,9 @@ namespace QuanLyBenhVien.View
                 DataRow dataRow = ds.Tables["tblThuoc"].Rows[vitri];
 
                 // Cập nhật dữ liệu từ các TextBox vào DataRow
-
                 dataRow["MaThuoc"] = tbMaThuoc.Text.Trim();
                 dataRow["TenThuoc"] = tbThuoc.Text.Trim();
                 dataRow["CongDung"] = tbCongDung.Text.Trim();
-
                 dataRow["SoLuong"] = tbSoLuong.Text.Trim();
                 dataRow["GiaTien"] = tbGiaTien.Text.Trim();
                 dataRow["HanSuDung"] = tbHSD.Text.Trim();
@@ -291,11 +289,31 @@ namespace QuanLyBenhVien.View
                     MessageBox.Show("Cập nhật dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+            catch (SqlException ex)
+            {
+                // Xử lý lỗi SQL (khóa chính và khóa ngoại)
+                if (ex.Number == 2627) // Lỗi vi phạm PRIMARY KEY
+                {
+                    MessageBox.Show("Khóa chính đã tồn tại! Không thể cập nhật dữ liệu trùng lặp.", "Lỗi khóa chính", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (ex.Number == 547) // Lỗi vi phạm FOREIGN KEY
+                {
+                    MessageBox.Show("Dữ liệu không hợp lệ! Mã thuốc hoặc mã bệnh nhân không tồn tại trong hệ thống.", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+                // Nếu có lỗi, không cập nhật DataGrid
+            }
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
             ClearTextBoxes();
+
         }
 
         private void btnXoa_Click_1(object sender, RoutedEventArgs e)
