@@ -167,30 +167,89 @@ namespace QuanLyBenhVien.View
         }
         private void btnThem_Click(object sender, RoutedEventArgs e)
         {
-            DataRow dataRow = ds.Tables["tblThuoc"].NewRow();
-            dataRow["MaThuoc"] = tbMaThuoc.Text.Trim();
-            dataRow["TenThuoc"] = tbThuoc.Text.Trim();
-            dataRow["CongDung"] = tbCongDung.Text.Trim();
-          
-            dataRow["SoLuong"] = tbSoLuong.Text.Trim();
-            dataRow["GiaTien"] = tbGiaTien.Text.Trim();
-            dataRow["HanSuDung"] = tbHSD.Text.Trim();
-           
-            ds.Tables["tblThuoc"].Rows.Add(dataRow);
+            
 
-            int kq = adapter.Update(ds.Tables["tblThuoc"]);
-            if (kq > 0)
-            {
-                MessageBox.Show("Thêm dữ liệu thành công!!!");
-            }
-            else
-            {
-                MessageBox.Show("Thêm dữ liệu thất bại!!");
-            }
-            ClearTextBoxes();
         }
 
         private void btnCapNhat_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void btnXoa_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void btnThem_Click_1(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Tạo một DataRow mới nhưng không thêm ngay vào DataTable
+                DataRow dataRow = ds.Tables["tblThuoc"].NewRow();
+                dataRow["MaThuoc"] = tbMaThuoc.Text.Trim();
+                dataRow["TenThuoc"] = tbThuoc.Text.Trim();
+                dataRow["CongDung"] = tbCongDung.Text.Trim();
+                dataRow["SoLuong"] = tbSoLuong.Text.Trim();
+                dataRow["GiaTien"] = tbGiaTien.Text.Trim();
+                dataRow["HanSuDung"] = tbHSD.Text.Trim();
+
+                // Tạm thời thêm DataRow (chỉ khi không có lỗi xảy ra)
+                ds.Tables["tblThuoc"].Rows.Add(dataRow);
+
+                // Cập nhật dữ liệu vào cơ sở dữ liệu
+                int kq = adapter.Update(ds.Tables["tblThuoc"]);
+                if (kq > 0)
+                {
+                    MessageBox.Show("Thêm dữ liệu thành công!!!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Thêm dữ liệu thất bại!!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+                // Dọn sạch các ô nhập liệu sau khi thành công
+                ClearTextBoxes();
+            }
+            catch (SqlException ex)
+            {
+                // Xóa DataRow vừa thêm nếu gặp lỗi SQL
+                if (ds.Tables["tblThuoc"].Rows.Count > 0 && ds.Tables["tblThuoc"].Rows[ds.Tables["tblThuoc"].Rows.Count - 1].RowState == DataRowState.Added)
+                {
+                    ds.Tables["tblThuoc"].Rows[ds.Tables["tblThuoc"].Rows.Count - 1].Delete();
+                }
+
+                // Kiểm tra lỗi SQL dựa trên mã lỗi
+                switch (ex.Number)
+                {
+                    case 2627: // Lỗi vi phạm PRIMARY KEY
+                        MessageBox.Show("Khóa chính đã tồn tại trong cơ sở dữ liệu! Không thể thêm dữ liệu trùng lặp.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+
+                    case 547: // Lỗi vi phạm FOREIGN KEY
+                        MessageBox.Show("Dữ liệu không hợp lệ! Mã thuốc không tồn tại trong hệ thống.", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+
+                    default:
+                        MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi không xác định: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                // Nếu có lỗi và DataRow đã được thêm, xóa DataRow khỏi DataSet
+                if (ds.Tables["tblThuoc"].Rows.Count > 0 && ds.Tables["tblThuoc"].Rows[ds.Tables["tblThuoc"].Rows.Count - 1].RowState == DataRowState.Added)
+                {
+                    ds.Tables["tblThuoc"].Rows[ds.Tables["tblThuoc"].Rows.Count - 1].Delete();
+                }
+            }
+        }
+
+        private void btnCapNhat_Click_1(object sender, RoutedEventArgs e)
         {
             if (vitri == -1)
             {
@@ -204,7 +263,7 @@ namespace QuanLyBenhVien.View
                 DataRow dataRow = ds.Tables["tblThuoc"].Rows[vitri];
 
                 // Cập nhật dữ liệu từ các TextBox vào DataRow
-               
+
                 dataRow["MaThuoc"] = tbMaThuoc.Text.Trim();
                 dataRow["TenThuoc"] = tbThuoc.Text.Trim();
                 dataRow["CongDung"] = tbCongDung.Text.Trim();
@@ -239,7 +298,7 @@ namespace QuanLyBenhVien.View
             ClearTextBoxes();
         }
 
-        private void btnXoa_Click(object sender, RoutedEventArgs e)
+        private void btnXoa_Click_1(object sender, RoutedEventArgs e)
         {
             if (vitri == -1)
             {
@@ -282,7 +341,6 @@ namespace QuanLyBenhVien.View
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
     }
 
 }

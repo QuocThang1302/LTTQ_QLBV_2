@@ -205,35 +205,85 @@ namespace QuanLyBenhVien.View
 
         private void btnThem_Click(object sender, RoutedEventArgs e)
         {
-            DataRow dataRow = ds.Tables["tblPhieuKhamBenh"].NewRow();
-            dataRow["MaPhieuKham"] = txtMaPhieu.Text.Trim();
-            dataRow["TEN_BENHNHAN"] = txtBenhNhan.Text.Trim();
-
-            dataRow["TEN_BACSI"] =txtBacSi.Text.Trim();
-            dataRow["MaBenhNhan"] = txtBenhNhan.Text.Trim();
-            dataRow["NgayKham"] = DateTime.TryParse(txtNgayKham.Text.Trim(), out DateTime ngaySinh) ? ngaySinh.ToString("yyyy-MM-dd") : throw new FormatException("Invalid date format");
-
-            dataRow["LyDoKhamBenh"] = txtLyDoKham.Text.Trim();
-            dataRow["KhamLamSang"] = txtKhamLamSan.Text.Trim();
-            dataRow["DieuTri"] = txtDieuTri.Text.Trim();
-            dataRow["ChanDoan"] = txtChuanDoan.Text.Trim();
-            dataRow["KetQuaKham"] = txtKetQua.Text.Trim();
-            dataRow["MaBacSi"] = txtMaBacSi.Text.Trim();
-
-
-            ds.Tables["tblPhieuKhamBenh"].Rows.Add(dataRow);
-
-            int kq = adapter.Update(ds.Tables["tblPhieuKhamBenh"]);
-            if (kq > 0)
+            try
             {
-                MessageBox.Show("Thêm dữ liệu thành công!!!");
-                ClearFields();
+                // Tạo một DataRow mới nhưng không thêm ngay vào DataTable
+                DataRow dataRow = ds.Tables["tblPhieuKhamBenh"].NewRow();
+                dataRow["MaPhieuKham"] = txtMaPhieu.Text.Trim();
+                dataRow["TEN_BENHNHAN"] = txtBenhNhan.Text.Trim();
+                dataRow["TEN_BACSI"] = txtBacSi.Text.Trim();
+                dataRow["MaBenhNhan"] = txtBenhNhan.Text.Trim();
+
+                // Xử lý định dạng ngày
+                dataRow["NgayKham"] = DateTime.TryParse(txtNgayKham.Text.Trim(), out DateTime ngaySinh)
+                    ? ngaySinh.ToString("yyyy-MM-dd")
+                    : throw new FormatException("Invalid date format");
+
+                dataRow["LyDoKhamBenh"] = txtLyDoKham.Text.Trim();
+                dataRow["KhamLamSang"] = txtKhamLamSan.Text.Trim();
+                dataRow["DieuTri"] = txtDieuTri.Text.Trim();
+                dataRow["ChanDoan"] = txtChuanDoan.Text.Trim();
+                dataRow["KetQuaKham"] = txtKetQua.Text.Trim();
+                dataRow["MaBacSi"] = txtMaBacSi.Text.Trim();
+
+                // Tạm thời thêm DataRow (chỉ khi không có lỗi xảy ra)
+                ds.Tables["tblPhieuKhamBenh"].Rows.Add(dataRow);
+
+                // Cập nhật dữ liệu vào cơ sở dữ liệu
+                int kq = adapter.Update(ds.Tables["tblPhieuKhamBenh"]);
+                if (kq > 0)
+                {
+                    MessageBox.Show("Thêm dữ liệu thành công!!!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    ClearFields();
+                }
+                else
+                {
+                    // Nếu không cập nhật được, xóa DataRow vừa thêm
+                    ds.Tables["tblPhieuKhamBenh"].Rows.Remove(dataRow);
+                    MessageBox.Show("Thêm dữ liệu thất bại!!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
-            else
+            catch (SqlException ex)
             {
-                MessageBox.Show("Thêm dữ liệu thất bại!!");
+                // Xóa DataRow vừa thêm nếu gặp lỗi SQL
+                if (ds.Tables["tblPhieuKhamBenh"].Rows.Count > 0 && ds.Tables["tblPhieuKhamBenh"].Rows[ds.Tables["tblPhieuKhamBenh"].Rows.Count - 1].RowState == DataRowState.Added)
+                {
+                    ds.Tables["tblPhieuKhamBenh"].Rows[ds.Tables["tblPhieuKhamBenh"].Rows.Count - 1].Delete();
+                }
+
+                // Kiểm tra lỗi SQL dựa trên mã lỗi
+                switch (ex.Number)
+                {
+                    case 2627: // Lỗi vi phạm PRIMARY KEY
+                        MessageBox.Show("Khóa chính đã tồn tại trong cơ sở dữ liệu! Không thể thêm dữ liệu trùng lặp.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+
+                    case 547: // Lỗi vi phạm FOREIGN KEY
+                        MessageBox.Show("Dữ liệu không hợp lệ! Mã bệnh nhân hoặc mã bác sĩ không tồn tại trong hệ thống.", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+
+                    default:
+                        MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+                }
             }
-            ClearFields();
+            catch (FormatException ex)
+            {
+                MessageBox.Show($"Định dạng ngày không hợp lệ: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi không xác định: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                // Nếu có lỗi và DataRow đã được thêm, xóa DataRow khỏi DataSet
+                if (ds.Tables["tblPhieuKhamBenh"].Rows.Count > 0 && ds.Tables["tblPhieuKhamBenh"].Rows[ds.Tables["tblPhieuKhamBenh"].Rows.Count - 1].RowState == DataRowState.Added)
+                {
+                    ds.Tables["tblPhieuKhamBenh"].Rows[ds.Tables["tblPhieuKhamBenh"].Rows.Count - 1].Delete();
+                }
+            }
+
         }
 
         private int vitri = -1;
@@ -274,7 +324,7 @@ namespace QuanLyBenhVien.View
 
                     // Cập nhật giao diện DataGrid
                     dgDanhSach.ItemsSource = null;
-                    dgDanhSach.ItemsSource = ds.Tables["tblNhanVien"].DefaultView;
+                    dgDanhSach.ItemsSource = ds.Tables["tblPhieuKhamBenh"].DefaultView;
 
                     // Đặt lại vị trí dòng đã chọn
                     dgDanhSach.SelectedIndex = vitri;

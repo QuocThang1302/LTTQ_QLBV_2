@@ -3,6 +3,7 @@ using System.Windows.Controls;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using QuanLyBenhVien.Repositories;
+using System.Diagnostics;
 
 namespace QuanLyBenhVien.View
 {
@@ -88,6 +89,225 @@ namespace QuanLyBenhVien.View
             tbMaBenhNhan.Text = "";
             tbNgayHenKham.Text = "";
             tbMaBacSi.Text = "";
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HienThiDanhSach();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error: {ex.Message}");
+            }
+        }
+        SqlConnection sqlCon = null;
+        SqlDataAdapter adapter = null;
+        DataSet ds = null;
+        private void HienThiDanhSach()
+        {
+            if (sqlCon == null)
+            {
+                sqlCon = _userRepository.GetConnection();
+            }
+            string query = @"select MaLichHen, MaBenhNhan, NgayHenKham, MaBacSi from LichHenKham";
+            adapter = new SqlDataAdapter(query, sqlCon);
+            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+
+            ds = new DataSet();
+            if (sqlCon.State == ConnectionState.Closed)
+            {
+                sqlCon.Open();
+            }
+            adapter.Fill(ds, "tblLichHenKham");
+            sqlCon.Close();
+
+            dgvLichHen.ItemsSource = ds.Tables["tblLichHenKham"].DefaultView;
+        }
+
+        
+
+        private int vitri = -1;
+        private void dgvLichHen_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            vitri = dgvLichHen.SelectedIndex;
+            if (vitri == -1) return;
+
+            DataRow dataRow = ds.Tables["tblLichHenKham"].Rows[vitri];
+
+            tbMaLichHen.Text = dataRow["MaLichHen"].ToString();
+            tbMaBenhNhan.Text = dataRow["MaBenhNhan"].ToString();
+            tbNgayHenKham.Text = dataRow["NgayHenKham"].ToString();
+            tbMaBacSi.Text = dataRow["MaBacSi"].ToString();
+            
+        }
+
+        private void btnCapNhat_Click(object sender, RoutedEventArgs e)
+        {
+            if (vitri == -1)
+            {
+                MessageBox.Show("Vui lòng chọn một dòng để cập nhật!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            try
+            {
+                // Lấy dòng dữ liệu được chọn trong DataSet
+                DataRow dataRow = ds.Tables["tblLichHenKham"].Rows[vitri];
+
+                // Cập nhật dữ liệu từ các TextBox vào DataRow
+                dataRow["MaLichHen"] = tbMaLichHen.Text.Trim();
+                dataRow["MaBenhNhan"] = tbMaBenhNhan.Text.Trim();
+
+                dataRow["MaBacSi"] = tbMaBacSi.Text.Trim();
+                dataRow["NgayHenKham"] = DateTime.TryParse(tbNgayHenKham.Text.Trim(), out DateTime ngaySinh) ? ngaySinh.ToString("yyyy-MM-dd") : throw new FormatException("Invalid date format");
+                
+
+                // Cập nhật thay đổi vào cơ sở dữ liệu
+                int kq = adapter.Update(ds.Tables["tblLichHenKham"]);
+
+                if (kq > 0)
+                {
+                    MessageBox.Show("Cập nhật dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    // Cập nhật giao diện DataGrid
+                    dgvLichHen.ItemsSource = null;
+                    dgvLichHen.ItemsSource = ds.Tables["tblLichHenKham"].DefaultView;
+
+                    // Đặt lại vị trí dòng đã chọn
+                    dgvLichHen.SelectedIndex = vitri;
+                    ClearFields();
+                }
+                else
+                {
+                    MessageBox.Show("Cập nhật dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void btnXoa_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (vitri == -1)
+            {
+                MessageBox.Show("Vui lòng chọn một dòng để xóa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            try
+            {
+
+                var result = MessageBox.Show("Bạn có chắc chắn muốn xóa dòng này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+
+                    DataRow dataRow = ds.Tables["tblLichHenKham"].Rows[vitri];
+                    dataRow.Delete();
+
+                    // Cập nhật thay đổi vào cơ sở dữ liệu
+                    int kq = adapter.Update(ds.Tables["tblLichHenKham"]);
+
+                    if (kq > 0)
+                    {
+                        MessageBox.Show("Xóa dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        // Cập nhật giao diện DataGrid
+                        dgvLichHen.ItemsSource = null;
+                        dgvLichHen.ItemsSource = ds.Tables["tblLichHenKham"].DefaultView;
+                        ClearFields();
+                        // Xóa dữ liệu trong TextBox
+                        //ClearTextBoxes();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Xóa dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void btnDangKi_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Tạo một DataRow mới nhưng không thêm ngay vào DataTable
+                DataRow dataRow = ds.Tables["tblLichHenKham"].NewRow();
+                dataRow["MaLichHen"] = tbMaLichHen.Text.Trim();
+                dataRow["MaBenhNhan"] = tbMaBenhNhan.Text.Trim();
+                dataRow["MaBacSi"] = tbMaBacSi.Text.Trim();
+
+                // Xử lý định dạng ngày
+                dataRow["NgayHenKham"] = DateTime.TryParse(tbNgayHenKham.Text.Trim(), out DateTime ngaySinh)
+                    ? ngaySinh.ToString("yyyy-MM-dd")
+                    : throw new FormatException("Invalid date format");
+
+                // Tạm thời thêm DataRow (chỉ khi không có lỗi xảy ra)
+                ds.Tables["tblLichHenKham"].Rows.Add(dataRow);
+
+                // Cập nhật dữ liệu vào cơ sở dữ liệu
+                int kq = adapter.Update(ds.Tables["tblLichHenKham"]);
+                if (kq > 0)
+                {
+                    MessageBox.Show("Thêm dữ liệu thành công!!!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    ClearFields();
+                }
+                else
+                {
+                    // Nếu không cập nhật được, xóa DataRow vừa thêm
+                    ds.Tables["tblLichHenKham"].Rows.Remove(dataRow);
+                    MessageBox.Show("Thêm dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (SqlException ex)
+            {
+                // Xóa DataRow vừa thêm nếu gặp lỗi SQL
+                if (ds.Tables["tblLichHenKham"].Rows.Count > 0 && ds.Tables["tblLichHenKham"].Rows[ds.Tables["tblLichHenKham"].Rows.Count - 1].RowState == DataRowState.Added)
+                {
+                    ds.Tables["tblLichHenKham"].Rows[ds.Tables["tblLichHenKham"].Rows.Count - 1].Delete();
+                }
+
+                // Kiểm tra lỗi SQL dựa trên mã lỗi
+                switch (ex.Number)
+                {
+                    case 2627: // Lỗi vi phạm PRIMARY KEY
+                        MessageBox.Show("Khóa chính đã tồn tại trong cơ sở dữ liệu! Không thể thêm dữ liệu trùng lặp.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+
+                    case 547: // Lỗi vi phạm FOREIGN KEY
+                        MessageBox.Show("Dữ liệu không hợp lệ! Mã bệnh nhân hoặc mã bác sĩ không tồn tại trong hệ thống.", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+
+                    default:
+                        MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+                }
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show($"Định dạng ngày không hợp lệ: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi không xác định: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                // Nếu có lỗi và DataRow đã được thêm, xóa DataRow khỏi DataSet
+                if (ds.Tables["tblLichHenKham"].Rows.Count > 0 && ds.Tables["tblLichHenKham"].Rows[ds.Tables["tblLichHenKham"].Rows.Count - 1].RowState == DataRowState.Added)
+                {
+                    ds.Tables["tblLichHenKham"].Rows[ds.Tables["tblLichHenKham"].Rows.Count - 1].Delete();
+                }
+            }
+
+
         }
     }
 }
