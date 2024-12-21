@@ -102,6 +102,7 @@ namespace QuanLyBenhVien.View
             txtNgayTaoLap.Text = "";
             txtBenh.Text = "";
             txtHuongDieuTri.Text = "";
+            txtBenhNhan.Clear();
         }
         
         SqlConnection sqlCon = null;
@@ -253,8 +254,8 @@ namespace QuanLyBenhVien.View
                 dataRow["Ten"] = txtBenhNhan.Text.Trim();
                 dataRow["MaBenhNhan"] = txtMaBenhNhan.Text.Trim();
                 dataRow["NgayTaoLap"] = DateTime.TryParse(txtNgayTaoLap.Text.Trim(), out DateTime ngaySinh)
-? ngaySinh.ToString("yyyy-MM-dd")
-: throw new FormatException("Invalid date format");
+                    ? ngaySinh.ToString("yyyy-MM-dd")
+                    : throw new FormatException("Invalid date format");
                 dataRow["Benh"] = txtBenh.Text.Trim();
                 dataRow["TinhTrang"] = txtTinhTrang.Text.Trim();
                 dataRow["DieuTri"] = txtHuongDieuTri.Text.Trim();
@@ -266,9 +267,9 @@ namespace QuanLyBenhVien.View
                 {
                     MessageBox.Show("Cập nhật dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    // Cập nhật giao diện DataGrid
-                    dgDanhSachBenhAn.ItemsSource = null;
-                    dgDanhSachBenhAn.ItemsSource = ds.Tables["tblBenhAn"].DefaultView;
+                    // Cập nhật giao diện DataGrid chỉ khi thành công
+                    dgDanhSachBenhAn.ItemsSource = null; // Xóa nguồn dữ liệu cũ
+                    dgDanhSachBenhAn.ItemsSource = ds.Tables["tblBenhAn"].DefaultView; // Đặt lại nguồn dữ liệu mới
 
                     // Đặt lại vị trí dòng đã chọn
                     dgDanhSachBenhAn.SelectedIndex = vitri;
@@ -278,10 +279,35 @@ namespace QuanLyBenhVien.View
                     MessageBox.Show("Cập nhật dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+            catch (SqlException ex)
+            {
+                // Xử lý lỗi SQL (khóa chính và khóa ngoại)
+                if (ex.Number == 2627) // Lỗi vi phạm PRIMARY KEY
+                {
+                    MessageBox.Show("Khóa chính đã tồn tại! Không thể cập nhật dữ liệu trùng lặp.", "Lỗi khóa chính", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (ex.Number == 547) // Lỗi vi phạm FOREIGN KEY
+                {
+                    MessageBox.Show("Dữ liệu không hợp lệ! Mã bệnh nhân không tồn tại trong hệ thống.", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+                // Nếu có lỗi, không cập nhật DataGrid, không thay đổi dữ liệu
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show($"Định dạng ngày không hợp lệ: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            ClearFields(); // Làm sạch các trường nhập liệu sau khi xử lý
+
         }
         private void ClearTextBoxes()
         {
@@ -291,6 +317,7 @@ namespace QuanLyBenhVien.View
             txtBenh.Clear();
             txtTinhTrang.Clear();
             txtHuongDieuTri.Clear();
+            txtBenhNhan.Clear();
         }
         private void btnXoa_Click(object sender, RoutedEventArgs e)
         {
