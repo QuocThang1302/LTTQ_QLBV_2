@@ -293,6 +293,22 @@ INSERT INTO HoaDon (MaHoaDon, TenHoaDon, MaBenhNhan, MaNhanVien, NgayLapHoaDon, 
 ('HD003', N'Thanh toán thuốc', 'BN003', 'NV003', '2024-01-03', 400000.00, N'Đã thanh toán'),
 ('HD004', N'Thanh toán dịch vụ', 'BN004', 'NV004', '2024-01-04', 600000.00, N'Chưa thanh toán');
 
+UPDATE HoaDon
+SET NgayLapHoaDon = '2024-10-01'
+WHERE MaHoaDon='HD001'
+
+UPDATE HoaDon
+SET NgayLapHoaDon = '2024-11-01'
+WHERE MaHoaDon='HD002'
+
+UPDATE HoaDon
+SET NgayLapHoaDon = '2024-12-01'
+WHERE MaHoaDon='HD003'
+
+UPDATE HoaDon
+SET NgayLapHoaDon = '2024-09-01'
+WHERE MaHoaDon='HD004'
+
 -- Thuoc table
 INSERT INTO Thuoc (MaThuoc, TenThuoc, CongDung, SoLuong, GiaTien, HanSuDung) VALUES
 ('T001', N'Paracetamol', N'Giảm đau, hạ sốt', 200, 2000.00, '2025-01-01'),
