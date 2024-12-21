@@ -22,14 +22,12 @@ namespace QuanLyBenhVien.View
             searchControl.SearchButtonClicked += SearchControl_SearchButtonClicked;
             // Đăng ký sự kiện ClearButtonClicked cho nút X
             searchControl.ClearButtonClicked += SearchControl_ClearButtonClicked;
-
         }
         private void SearchControl_ClearButtonClicked(object sender, EventArgs e)
         {
             // Logic khi nút X được nhấn
             ClearFields();
             HienThiDanhSach();
-
         }
         private void SearchControl_SearchButtonClicked(object sender, string searchText)
         {
@@ -370,7 +368,6 @@ namespace QuanLyBenhVien.View
         {
             // Lấy hàng được chọn từ DataGrid
             var selectedRow = dgDanhSachBenhAn.SelectedItem as DataRowView;
-
             if (selectedRow == null)
             {
                 MessageBox.Show("Vui lòng chọn một dòng để xóa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -379,7 +376,7 @@ namespace QuanLyBenhVien.View
 
             try
             {
-                var result = MessageBox.Show("Bạn có chắc chắn muốn xóa bệnh nhân này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var result = MessageBox.Show("Bạn có chắc chắn muốn xóa bệnh án này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     // Lấy DataRow từ DataRowView
@@ -404,14 +401,37 @@ namespace QuanLyBenhVien.View
                     }
                     else
                     {
-                        MessageBox.Show("Xóa dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Xóa dữ liệu thất bại! Không có thay đổi nào được thực hiện.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+                }
+            }
+            catch (SqlException ex)
+            {
+                // Kiểm tra lỗi SQL (vi phạm khóa ngoại, khóa chính...)
+                if (ex.Number == 547) // Lỗi vi phạm khóa ngoại (foreign key)
+                {
+                    MessageBox.Show("Không thể xóa bệnh án này vì dữ liệu bị ràng buộc với các bảng khác.", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (ex.Number == 2627) // Lỗi vi phạm khóa chính (primary key)
+                {
+                    MessageBox.Show("Không thể xóa bệnh án này vì có dữ liệu trùng lặp trong hệ thống.", "Lỗi khóa chính", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (ex.Number == 4060) // Lỗi kết nối tới cơ sở dữ liệu
+                {
+                    MessageBox.Show("Lỗi kết nối tới cơ sở dữ liệu. Vui lòng kiểm tra kết nối và thử lại.", "Lỗi kết nối", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    // Lỗi SQL chung
+                    MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi cơ sở dữ liệu", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
             {
+                // Lỗi tổng quát (ví dụ: lỗi bất ngờ)
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
     }
 }

@@ -147,10 +147,12 @@ namespace QuanLyBenhVien.View
         }
         private void dgDanhSachVatDung_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            vitri = dgDanhSachVatDung.SelectedIndex;
-            if (vitri == -1) return;
+            var selectedRow = dgDanhSachVatDung.SelectedItem as DataRowView;
 
-            DataRow dataRow = ds.Tables["tblVatDung"].Rows[vitri];
+            if (selectedRow == null) return;
+
+            // Lấy dữ liệu từ DataRowView
+            DataRow dataRow = selectedRow.Row;
 
             tbMaVatDung.Text = dataRow["MaVatDung"].ToString();
             tbVatDung.Text = dataRow["TenVatDung"].ToString();
@@ -231,7 +233,9 @@ namespace QuanLyBenhVien.View
 
         private void btnCapNhat_Click(object sender, RoutedEventArgs e)
         {
-            if (vitri == -1)
+            var selectedRow = dgDanhSachVatDung.SelectedItem as DataRowView;
+
+            if (selectedRow == null)
             {
                 MessageBox.Show("Vui lòng chọn một dòng để cập nhật!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -239,11 +243,10 @@ namespace QuanLyBenhVien.View
 
             try
             {
-                // Lấy dòng dữ liệu được chọn trong DataSet
-                DataRow dataRow = ds.Tables["tblVatDung"].Rows[vitri];
+                // Lấy DataRow từ DataRowView
+                DataRow dataRow = selectedRow.Row;
 
                 // Cập nhật dữ liệu từ các TextBox vào DataRow
-
                 dataRow["MaVatDung"] = tbMaVatDung.Text.Trim();
                 dataRow["TenVatDung"] = tbVatDung.Text.Trim();
                 dataRow["MoTa"] = tbMoTa.Text.Trim();
@@ -262,8 +265,8 @@ namespace QuanLyBenhVien.View
                     dgDanhSachVatDung.ItemsSource = null;
                     dgDanhSachVatDung.ItemsSource = ds.Tables["tblVatDung"].DefaultView;
 
-                    // Đặt lại vị trí dòng đã chọn
-                    dgDanhSachVatDung.SelectedIndex = vitri;
+                    // Giữ lại dòng đã chọn
+                    dgDanhSachVatDung.SelectedItem = selectedRow;
                 }
                 else
                 {
@@ -274,12 +277,19 @@ namespace QuanLyBenhVien.View
             {
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            ClearTextBoxes();
+            finally
+            {
+                ClearTextBoxes(); // Xóa các trường sau khi xử lý
+            }
+
         }
 
         private void btnXoa_Click(object sender, RoutedEventArgs e)
         {
-            if (vitri == -1)
+            // Lấy hàng được chọn từ DataGrid
+            var selectedRow = dgDanhSachVatDung.SelectedItem as DataRowView;
+
+            if (selectedRow == null)
             {
                 MessageBox.Show("Vui lòng chọn một dòng để xóa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -287,12 +297,14 @@ namespace QuanLyBenhVien.View
 
             try
             {
-
-                var result = MessageBox.Show("Bạn có chắc chắn muốn xóa bệnh nhân này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                // Hiển thị hộp thoại xác nhận xóa
+                var result = MessageBox.Show("Bạn có chắc chắn muốn xóa vật dụng này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
+                    // Lấy DataRow từ DataRowView
+                    DataRow dataRow = selectedRow.Row;
 
-                    DataRow dataRow = ds.Tables["tblVatDung"].Rows[vitri];
+                    // Xóa dòng khỏi DataTable
                     dataRow.Delete();
 
                     // Cập nhật thay đổi vào cơ sở dữ liệu
@@ -302,7 +314,7 @@ namespace QuanLyBenhVien.View
                     {
                         MessageBox.Show("Xóa dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        // Cập nhật giao diện DataGrid
+                        // Cập nhật lại giao diện DataGrid
                         dgDanhSachVatDung.ItemsSource = null;
                         dgDanhSachVatDung.ItemsSource = ds.Tables["tblVatDung"].DefaultView;
 
@@ -311,14 +323,33 @@ namespace QuanLyBenhVien.View
                     }
                     else
                     {
-                        MessageBox.Show("Xóa dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Xóa dữ liệu thất bại! Không có thay đổi nào được thực hiện.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+                }
+            }
+            catch (SqlException ex)
+            {
+                // Kiểm tra lỗi SQL, ví dụ vi phạm khóa ngoại hoặc khóa chính
+                if (ex.Number == 547) // Lỗi vi phạm khóa ngoại (foreign key)
+                {
+                    MessageBox.Show("Không thể xóa vật dụng này vì dữ liệu bị ràng buộc với các bảng khác.", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (ex.Number == 2627) // Lỗi vi phạm khóa chính (primary key)
+                {
+                    MessageBox.Show("Không thể xóa vật dụng này vì có dữ liệu trùng lặp trong hệ thống.", "Lỗi khóa chính", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    // Lỗi SQL chung
+                    MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi cơ sở dữ liệu", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
             {
+                // Lỗi tổng quát (ví dụ: lỗi bất ngờ)
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
     }
 }
