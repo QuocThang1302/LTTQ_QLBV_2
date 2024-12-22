@@ -10,6 +10,44 @@ namespace QuanLyBenhVien.View
     public partial class ThongTinNhanVien : UserControl
     {
         private readonly RepositoryBase _userRepository;
+        string ID = Application.Current.Properties.Contains("UserID") ? Application.Current.Properties["UserID"] as string : null;
+        public string GetRoleIDByUserID()
+        {
+            string roleID = null; // Biến để lưu RoleID
+
+            // Câu lệnh SQL để lấy RoleID từ NhanVien theo MaNhanVien
+            string query = "SELECT RoleID FROM NhanVien WHERE MaNhanVien = @userID";
+
+            // Sử dụng SqlConnection để kết nối cơ sở dữ liệu
+            using (SqlConnection connection = _userRepository.GetConnection())
+            {
+                try
+                {
+                    connection.Open(); // Mở kết nối
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        // Thêm tham số vào câu lệnh SQL
+                        command.Parameters.AddWithValue("@userID", ID);
+
+                        // Thực thi câu lệnh và lấy giá trị RoleID
+                        var result = command.ExecuteScalar();
+
+                        if (result != null)
+                        {
+                            roleID = result.ToString(); // Gán giá trị RoleID nếu tìm thấy
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Xử lý lỗi nếu có
+                    MessageBox.Show("Lỗi: " + ex.Message, "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+
+            return roleID; // Trả về RoleID hoặc null nếu không tìm thấy
+        }
+
         public ThongTinNhanVien()
         {
             _userRepository = new UserRepository();
@@ -19,13 +57,37 @@ namespace QuanLyBenhVien.View
             searchControl.SearchButtonClicked += SearchControl_SearchButtonClicked;
             // Đăng ký sự kiện ClearButtonClicked cho nút X
             searchControl.ClearButtonClicked += SearchControl_ClearButtonClicked;
+            Role();
 
         }
+
+        private void Role()
+        {
+            string roleID = GetRoleIDByUserID();
+            if (roleID == "R02")
+            {
+                txtDiaChi.Width = 712;
+                btnCapNhat.Visibility = Visibility.Collapsed;
+                btnThem.Visibility = Visibility.Collapsed;
+                btnXoa.Visibility = Visibility.Collapsed;
+                btnMatKhau.Margin = new Thickness(52, 0, 0, 0);
+            }
+            if (roleID == "R01")
+            {
+                txtDiaChi.Width = 250;
+                tbMatKhau.Visibility = Visibility.Visible;
+                txtMatKhau.Visibility = Visibility.Visible;
+            }
+            return;
+        }
+
         private void SearchControl_ClearButtonClicked(object sender, EventArgs e)
         {
             // Logic khi nút X được nhấn
             HienThiDanhSach();
             ClearFields();
+            Role();
+            btnMatKhau.Visibility = Visibility.Hidden;
         }
 
         SqlConnection sqlCon = null;
@@ -53,6 +115,7 @@ namespace QuanLyBenhVien.View
 
                 dataRow["Email"] = txtEmail.Text.Trim();
                 dataRow["DiaChi"] = txtDiaChi.Text.Trim();
+                dataRow["MatKhau"] = txtMatKhau.Text.Trim();
 
                 // Tạm thời thêm DataRow (chỉ khi không có lỗi xảy ra)
                 ds.Tables["tblNhanVien"].Rows.Add(dataRow);
@@ -170,8 +233,20 @@ namespace QuanLyBenhVien.View
             txtNgaySinh.Text = dataRow["NgaySinh"]?.ToString() ?? string.Empty;
             txtEmail.Text = dataRow["Email"]?.ToString() ?? string.Empty;
             txtDiaChi.Text = dataRow["DiaChi"]?.ToString() ?? string.Empty;
-
-
+            if (ID == txtMaNhanVien.Text)
+            {
+                txtDiaChi.Width = 250;
+                tbMatKhau.Visibility = Visibility.Visible;
+                txtMatKhau.Visibility = Visibility.Visible;
+                btnMatKhau.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                btnMatKhau.Visibility= Visibility.Hidden;
+                tbMatKhau.Visibility = Visibility.Hidden;
+                txtMatKhau.Visibility = Visibility.Hidden;
+                Role();
+            }
         }
 
         private void btnXoa_Click(object sender, RoutedEventArgs e)
@@ -345,11 +420,8 @@ namespace QuanLyBenhVien.View
             if (string.IsNullOrEmpty(maNhanVien))
             {
                 MessageBox.Show("Vui lòng nhập dữ liệu!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-               
                 return;
             }
-
-            
 
             // Câu lệnh SQL để tìm kiếm thông tin nhân viên
             string query = "SELECT * FROM NhanVien WHERE MaNhanVien = @MaNhanVien OR Ten = @MaNhanVien";
@@ -404,6 +476,20 @@ namespace QuanLyBenhVien.View
             {
                 MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            if (ID == txtMaNhanVien.Text)
+            {
+                txtDiaChi.Width = 250;
+                tbMatKhau.Visibility = Visibility.Visible;
+                txtMatKhau.Visibility = Visibility.Visible;
+                btnMatKhau.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                btnMatKhau.Visibility = Visibility.Hidden;
+                tbMatKhau.Visibility = Visibility.Hidden;
+                txtMatKhau.Visibility = Visibility.Hidden;
+                Role();
+            }
         }
 
         private void ClearFields()
@@ -419,6 +505,23 @@ namespace QuanLyBenhVien.View
             txtSDT.Text = "";
             txtEmail.Text = "";
             txtCCCD.Text = "";
+            txtMatKhau.Text = "";
+        }
+
+        private void btnMatKhau_Click(object sender, RoutedEventArgs e)
+        {
+            using (SqlConnection conn = _userRepository.GetConnection())
+            {
+                string query = "UPDATE NhanVien SET MatKhau = @MatKhau WHERE MaNhanVien = @ID";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@ID", ID);
+                cmd.Parameters.AddWithValue("@MatKhau", txtMatKhau.Text);
+
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                MessageBox.Show("Cập nhật mật khẩu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
     }
 }

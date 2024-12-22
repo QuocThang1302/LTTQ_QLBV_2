@@ -91,7 +91,8 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <StackPanel Orientation="Horizontal" >
-                    <Button Style="{StaticResource childviewButton}" 
+                    <Button x:Name="btnXuatHoaDon"
+                            Style="{StaticResource childviewButton}" 
                             Margin="30,15,0,0"
                             Width="130"
                             Content="Xuất hóa đơn" Click="Button_Click_1"/>
