@@ -148,7 +148,7 @@
 
                     <Image Source="/Images/hospital_logo.png"
                            Width="120" Height="120" Stretch="Fill"
-                           Margin="0,5,0,0"/>
+                           Margin="0,5,0,5"/>
 
                     <TextBlock Text="Spring Aroma Hopital"
                                FontWeight="Bold"
@@ -216,7 +216,7 @@
                             FontFamily="Montserrat"
                             FontSize="16"
                             Cursor="Hand"
-                            Margin="0,25,0,0">
+                            Margin="0,20,0,0">
                         <Bold>ĐĂNG NHẬP</Bold>
 
                         <Button.Style>
