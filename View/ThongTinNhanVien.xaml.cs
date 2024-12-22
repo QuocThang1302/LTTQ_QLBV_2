@@ -117,6 +117,24 @@ namespace QuanLyBenhVien.View
                 dataRow["DiaChi"] = txtDiaChi.Text.Trim();
                 dataRow["MatKhau"] = txtMatKhau.Text.Trim();
 
+                // Gán RoleID dựa trên LoaiNhanVien
+                string loaiNhanVien = txtChucVu.Text.Trim().ToLower();
+                // loaiNhanVien = loaiNhanVien.Replace(" ", ""); // Loại bỏ tất cả khoảng trắng
+                //Debug.WriteLine("Chức vụ nhập vào: " + loaiNhanVien);
+
+                if (loaiNhanVien.Contains("quản lý"))
+                {
+                    dataRow["RoleID"] = "R01"; // RoleID cho Nhân Viên
+                }
+                else if (loaiNhanVien.Contains("bác sĩ"))
+                {
+                    dataRow["RoleID"] = "R02"; // RoleID cho Bác Sĩ
+                }
+                else
+                {
+                    throw new Exception("Chức vụ không hợp lệ! Vui lòng nhập 'Quản lý' hoặc 'Bác sĩ'.");
+                }
+
                 // Tạm thời thêm DataRow (chỉ khi không có lỗi xảy ra)
                 ds.Tables["tblNhanVien"].Rows.Add(dataRow);
 
@@ -126,6 +144,10 @@ namespace QuanLyBenhVien.View
                 {
                     MessageBox.Show("Thêm dữ liệu thành công!!!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                     ClearFields();
+                    SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                    adapter.UpdateCommand = builder.GetUpdateCommand();
+                    adapter.InsertCommand = builder.GetInsertCommand();
+                    adapter.DeleteCommand = builder.GetDeleteCommand();
                 }
                 else
                 {
@@ -195,7 +217,7 @@ namespace QuanLyBenhVien.View
             {
                 sqlCon = _userRepository.GetConnection();
             }
-            string query = " select MaNhanVien, Ho, Ten, LoaiNhanVien, MaChuyenNganh, GioiTinh, CCCD, SDT, NgaySinh, Email, DiaChi  from NhanVien";
+            string query = " select MaNhanVien, Ho, Ten, LoaiNhanVien, MaChuyenNganh, GioiTinh, CCCD, SDT, NgaySinh, Email, DiaChi, MatKhau  from NhanVien";
             adapter = new SqlDataAdapter(query, sqlCon);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
 

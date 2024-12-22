@@ -201,6 +201,7 @@
                         <DataGridTextColumn Header="Ngày sinh" Width="*" Binding="{Binding NgaySinh}"/>
                         <DataGridTextColumn Header="Email" Width="*" Binding="{Binding Email}"/>
                         <DataGridTextColumn Header="Địa chỉ" Width="*" Binding="{Binding DiaChi}"/>
+                        <DataGridTextColumn Header="Mật khẩu" Width="*" Binding="{Binding MatKhau}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
