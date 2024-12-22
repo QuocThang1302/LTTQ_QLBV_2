@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:QuanLyBenhVien.View"
              xmlns:customControls="clr-namespace:QuanLyBenhVien.CustomControls"
              mc:Ignorable="d" 
-             d:DesignHeight="628" d:DesignWidth="978">
+             d:DesignHeight="628" d:DesignWidth="978" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -56,7 +56,8 @@
                     <TextBox  x:Name="tbNgayHenKham"
                               Margin="20,0,0,0"
                               Width="211.5"
-                              Style="{StaticResource TextBoxStyles}">
+                              Style="{StaticResource TextBoxStyles}"
+                              >
                     </TextBox>
                 </StackPanel>
 
@@ -84,17 +85,17 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="3" Orientation="Horizontal" FlowDirection="RightToLeft">
-                    <Button Style="{StaticResource childviewButton}" 
+                    <Button x:Name="btnXoa" Style="{StaticResource childviewButton}" 
                             Margin="52,0,0,0"
-                            Content="Xóa"/>
+                            Content="Xóa" Click="btnXoa_Click_1"/>
 
-                    <Button Style="{StaticResource childviewButton}" 
+                    <Button x:Name="btnCapNhat" Style="{StaticResource childviewButton}" 
                             Margin="52,0,0,0"
-                            Content="Cập nhật"/>
+                            Content="Cập nhật" Click="btnCapNhat_Click"/>
 
-                    <Button Style="{StaticResource childviewButton}" 
+                    <Button x:Name="btnDangKi" Style="{StaticResource childviewButton}" 
                             Margin="52,0,0,0"
-                            Content="Đăng kí"/>
+                            Content="Đăng kí" Click="btnDangKi_Click"/>
                 </StackPanel>
             </Grid>
         </Border>
@@ -116,7 +117,7 @@
                           RowBackground="White" 
                           AlternatingRowBackground="#e8f1ff"
                           Margin="0,5,0,0"
-                          Height="190">
+                          Height="190" SelectionChanged="dgvLichHen_SelectionChanged">
                     <!-- Style cho header -->
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">

@@ -24,7 +24,7 @@ namespace QuanLyBenhVien.View
         private void SearchControl_ClearButtonClicked(object sender, EventArgs e)
         {
             // Logic khi nút X được nhấn
-            //HienThiDanhSach();
+            HienThiDanhSach();
         }
 
         private void SearchControl_SearchButtonClicked(object sender, string searchText)
