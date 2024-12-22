@@ -6,7 +6,6 @@
              xmlns:customControls="clr-namespace:QuanLyBenhVien.CustomControls"
              xmlns:local="clr-namespace:QuanLyBenhVien.View"
              mc:Ignorable="d" 
-            
              d:DesignHeight="628" d:DesignWidth="978" Loaded="UserControl_Loaded">
     
     <Grid>
@@ -96,9 +95,12 @@
                     <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Địa chỉ:" Width="160" VerticalAlignment="Center" FontSize="20"/>
+                            <TextBox Text="{Binding DiaChi, Mode=OneWay}" Name="txtDiaChi" Height="30" Width="712" Style="{StaticResource TextBoxStyles}"/>
 
-                            <TextBox Text="{Binding DiaChi, Mode=TwoWay}" Name="txtDiaChi" Height="40" Width="707" Style="{StaticResource TextBoxStyles}"/>
-
+                            <TextBlock x:Name="tbMatKhau" FontWeight="Bold" FontFamily="Inter" Text="Mật khẩu:" Margin="52,0,0,0"
+                                       Width="160" VerticalAlignment="Center" FontSize="20" Visibility="Hidden"/>
+                            <TextBox Text="{Binding MatKhau, Mode=OneWay}" Name="txtMatKhau" Visibility="Hidden"
+                                     Height="30" Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                     </StackPanel>
                 </Grid>
@@ -117,6 +119,9 @@
                             Margin="52,0,0,0"
                             Content="Thêm" Click="Button_Click"/>
 
+                    <Button x:Name="btnMatKhau"  Style="{StaticResource childviewButton}" 
+                            Margin="52,0,0,0" Width="200" Visibility="Hidden"
+                            Content="Cập nhật mật khẩu" Click="btnMatKhau_Click"/> 
                 </StackPanel>
             </Grid>
         </Border>

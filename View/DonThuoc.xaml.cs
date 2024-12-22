@@ -10,6 +10,43 @@ namespace QuanLyBenhVien.View
     public partial class DonThuoc : UserControl
     {
         private readonly RepositoryBase _userRepository;
+        string ID = Application.Current.Properties.Contains("UserID") ? Application.Current.Properties["UserID"] as string : null;
+        public string GetRoleIDByUserID()
+        {
+            string roleID = null; // Biến để lưu RoleID
+
+            // Câu lệnh SQL để lấy RoleID từ NhanVien theo MaNhanVien
+            string query = "SELECT RoleID FROM NhanVien WHERE MaNhanVien = @userID";
+
+            // Sử dụng SqlConnection để kết nối cơ sở dữ liệu
+            using (SqlConnection connection = _userRepository.GetConnection())
+            {
+                try
+                {
+                    connection.Open(); // Mở kết nối
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        // Thêm tham số vào câu lệnh SQL
+                        command.Parameters.AddWithValue("@userID", ID);
+
+                        // Thực thi câu lệnh và lấy giá trị RoleID
+                        var result = command.ExecuteScalar();
+
+                        if (result != null)
+                        {
+                            roleID = result.ToString(); // Gán giá trị RoleID nếu tìm thấy
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Xử lý lỗi nếu có
+                    MessageBox.Show("Lỗi: " + ex.Message, "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+
+            return roleID; // Trả về RoleID hoặc null nếu không tìm thấy
+        }
         public DonThuoc()
         {
             _userRepository = new UserRepository();
@@ -19,8 +56,20 @@ namespace QuanLyBenhVien.View
             searchControl.SearchButtonClicked += SearchControl_SearchButtonClicked;
             // Đăng ký sự kiện ClearButtonClicked cho nút X
             searchControl.ClearButtonClicked += SearchControl_ClearButtonClicked;
+            BacSi();
 
         }
+
+        private void BacSi()
+        {
+            string roleID = GetRoleIDByUserID();
+            if (roleID == "R02")
+            {
+                btnXuatHoaDon.Visibility = Visibility.Hidden;
+            }
+            return;
+        }
+
         private void SearchControl_ClearButtonClicked(object sender, EventArgs e)
         {
             // Logic khi nút X được nhấn

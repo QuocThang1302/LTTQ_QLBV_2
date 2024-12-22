@@ -57,8 +57,21 @@ namespace QuanLyBenhVien.View
             searchControl.SearchButtonClicked += SearchControl_SearchButtonClicked;
             // Đăng ký sự kiện ClearButtonClicked cho nút X
             searchControl.ClearButtonClicked += SearchControl_ClearButtonClicked;
-
+            BacSi();
         }
+
+        private void BacSi()
+        {
+            string roleID = GetRoleIDByUserID();
+            if (roleID == "R02")
+            {
+                btn_CapNhat.Visibility = Visibility.Hidden;
+                btn_Them.Visibility = Visibility.Hidden;
+                btn_Xoa.Visibility = Visibility.Hidden;
+            }
+            return;
+        }
+            
         private void SearchControl_ClearButtonClicked(object sender, EventArgs e)
         {
             // Logic khi nút X được nhấn
@@ -122,13 +135,6 @@ namespace QuanLyBenhVien.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string roleID = GetRoleIDByUserID();
-            if(roleID=="R02")
-            {
-                MessageBox.Show("Bạn không có quyền xuất hóa đơn!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-
-                return;
-            }    
             CTHD cTHD = new CTHD();
             cTHD.Show();
         }
