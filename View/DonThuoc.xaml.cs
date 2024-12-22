@@ -90,40 +90,47 @@ namespace QuanLyBenhVien.View
             string queryDonThuoc = "SELECT * FROM DonThuoc WHERE MaDonThuoc = @MaDonThuoc OR MaBacSi=@MaDonThuoc";
             string queryCTDonThuoc = "SELECT * FROM CTDonThuoc JOIN Thuoc ON CTDonThuoc.MaThuoc = Thuoc.MaThuoc\r\nWHERE MaDonThuoc IN (SELECT MaDonThuoc FROM DonThuoc WHERE MaBacSi = @MaDonThuoc OR MaDonThuoc = @MaDonThuoc)";
 
-            using (SqlConnection connection = _userRepository.GetConnection())
+            try
             {
-                try
+                // Mở kết nối SQL
+                sqlCon = _userRepository.GetConnection();
+                sqlCon.Open();
+
+                // Hiển thị thông tin của DonThuoc
+                adapter = new SqlDataAdapter(queryDonThuoc, sqlCon);
+                adapter.SelectCommand.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
+                ds = new DataSet();
+                adapter.Fill(ds, "DonThuoc");
+                DataTable dataTableDonThuoc = ds.Tables["DonThuoc"];
+
+                // Gắn dữ liệu vào dgvDonThuoc
+                dgvDonThuoc.ItemsSource = dataTableDonThuoc.DefaultView;
+
+                // Kiểm tra nếu không tìm thấy đơn thuốc
+                if (dataTableDonThuoc.Rows.Count == 0)
                 {
-                    connection.Open();
-
-                    // Hiển thị thông tin của DonThuoc
-                    SqlDataAdapter adapterDonThuoc = new SqlDataAdapter(queryDonThuoc, connection);
-                    adapterDonThuoc.SelectCommand.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
-                    DataTable dataTableDonThuoc = new DataTable();
-                    adapterDonThuoc.Fill(dataTableDonThuoc);
-
-                    // Gắn dữ liệu vào dgvDonThuoc
-                    dgvDonThuoc.ItemsSource = dataTableDonThuoc.DefaultView;
-
-                    // Kiểm tra nếu không tìm thấy đơn thuốc
-                    if (dataTableDonThuoc.Rows.Count == 0)
-                    {
-                        MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                    }
-
-                    // Hiển thị thông tin của CTDonThuoc
-                    SqlDataAdapter adapterCTDonThuoc = new SqlDataAdapter(queryCTDonThuoc, connection);
-                    adapterCTDonThuoc.SelectCommand.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
-                    DataTable dataTableCTDonThuoc = new DataTable();
-                    adapterCTDonThuoc.Fill(dataTableCTDonThuoc);
-
-                    // Gắn dữ liệu vào dgvCTDonThuoc
-                    dgvCTDonThuoc.ItemsSource = dataTableCTDonThuoc.DefaultView;
+                    MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-                catch (Exception ex)
+
+                // Hiển thị thông tin của CTDonThuoc
+                adapter = new SqlDataAdapter(queryCTDonThuoc, sqlCon);
+                adapter.SelectCommand.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
+                adapter.Fill(ds, "CTDonThuoc");
+                DataTable dataTableCTDonThuoc = ds.Tables["CTDonThuoc"];
+
+                // Gắn dữ liệu vào dgvCTDonThuoc
+                dgvCTDonThuoc.ItemsSource = dataTableCTDonThuoc.DefaultView;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                // Đảm bảo đóng kết nối SQL
+                if (sqlCon != null && sqlCon.State == ConnectionState.Open)
                 {
-                    MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    sqlCon.Close();
                 }
             }
         }

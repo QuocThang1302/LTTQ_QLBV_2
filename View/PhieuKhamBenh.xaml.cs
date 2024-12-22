@@ -65,51 +65,55 @@ namespace QuanLyBenhVien.View
 
             try
             {
-                using (SqlConnection connection = _userRepository.GetConnection())
+                sqlCon = _userRepository.GetConnection();
+                adapter = new SqlDataAdapter(query, sqlCon);
+                adapter.SelectCommand.Parameters.AddWithValue("@MaPhieuKham", maPhieuKham);
+
+                ds = new DataSet();
+                adapter.Fill(ds);
+
+                DataTable dataTable = ds.Tables[0];
+
+                if (dataTable.Rows.Count == 0)
                 {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@MaPhieuKham", maPhieuKham);
+                    MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else if (dataTable.Rows.Count == 1)
+                {
+                    // Hiển thị thông tin lên TextBox
+                    DataRow row = dataTable.Rows[0];
+                    txtMaPhieu.Text = row["MaPhieuKham"].ToString();
+                    txtMaBenhNhan.Text = row["MaBenhNhan"].ToString();
+                    txtBenhNhan.Text = row["TEN_BENHNHAN"].ToString();
+                    txtBacSi.Text = row["TEN_BACSI"].ToString();
+                    txtNgayKham.Text = Convert.ToDateTime(row["NgayKham"]).ToString("yyyy-MM-dd");
+                    txtLyDoKham.Text = row["LyDoKhamBenh"].ToString();
+                    txtKhamLamSan.Text = row["KhamLamSang"].ToString();
+                    txtChuanDoan.Text = row["ChanDoan"].ToString();
+                    txtKetQua.Text = row["KetQuaKham"].ToString(); // Dữ liệu ban đầu
+                    txtDieuTri.Text = row["DieuTri"].ToString();
+                    txtMaBacSi.Text = row["MaBacSi"].ToString();
 
-                    SqlDataAdapter adapter = new SqlDataAdapter(command);
-                    DataTable dataTable = new DataTable();
-                    adapter.Fill(dataTable);
-
-                    if (dataTable.Rows.Count == 0)
-                    {
-                        MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                        
-                    }
-                    else if (dataTable.Rows.Count == 1)
-                    {
-                        // Hiển thị thông tin lên TextBox
-                        DataRow row = dataTable.Rows[0];
-                        txtMaPhieu.Text = row["MaPhieuKham"].ToString();
-                        txtMaBenhNhan.Text = row["MaBenhNhan"].ToString();
-                        txtBenhNhan.Text = row["TEN_BENHNHAN"].ToString();
-                        txtBacSi.Text = row["TEN_BACSI"].ToString();
-                        txtNgayKham.Text = Convert.ToDateTime(row["NgayKham"]).ToString("yyyy-MM-dd");
-                        txtLyDoKham.Text = row["LyDoKhamBenh"].ToString();
-                        txtKhamLamSan.Text = row["KhamLamSang"].ToString();
-                        txtChuanDoan.Text = row["ChanDoan"].ToString();
-                        txtKetQua.Text = row["KetQuaKham"].ToString();
-                        txtDieuTri.Text = row["DieuTri"].ToString();
-                        txtMaBacSi.Text = row["MaBacSi"].ToString();
-
-                        // Hiển thị dữ liệu vào DataGrid
-                        dgDanhSach.ItemsSource = dataTable.DefaultView;
-                    }
-                    else
-                    {
-                        // Nếu có nhiều kết quả, chỉ hiển thị vào DataGrid
-                        ClearFields(); // Xóa TextBox
-                        dgDanhSach.ItemsSource = dataTable.DefaultView;
-                    }
+                    // Hiển thị dữ liệu vào DataGrid
+                    dgDanhSach.ItemsSource = dataTable.DefaultView;
+                }
+                else
+                {
+                    // Nếu có nhiều kết quả, chỉ hiển thị vào DataGrid
+                    ClearFields(); // Xóa TextBox
+                    dgDanhSach.ItemsSource = dataTable.DefaultView;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                if (sqlCon != null && sqlCon.State == ConnectionState.Open)
+                {
+                    sqlCon.Close();
+                }
             }
         }
         
@@ -150,7 +154,9 @@ namespace QuanLyBenhVien.View
             {
                 sqlCon = _userRepository.GetConnection();
             }
-            string query = @"
+
+            // Câu lệnh SELECT cho bảng PhieuKhamBenh
+            string selectQuery = @"
     SELECT 
         BN.Ten AS TEN_BENHNHAN, 
         NV.Ten AS TEN_BACSI, 
@@ -169,26 +175,73 @@ namespace QuanLyBenhVien.View
         PhieuKhamBenh PK ON PK.MaBenhNhan = BN.MaBenhNhan
     JOIN 
         NhanVien NV ON NV.MaNhanVien = PK.MaBacSi";
-            adapter = new SqlDataAdapter(query, sqlCon);
-            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+
+            // Khởi tạo SqlDataAdapter
+            adapter = new SqlDataAdapter(selectQuery, sqlCon);
+
+            // Thêm lệnh INSERT
+            adapter.InsertCommand = new SqlCommand(
+                "INSERT INTO PhieuKhamBenh (MaPhieuKham, MaBenhNhan, NgayKham, LyDoKhamBenh, KhamLamSang, ChanDoan, KetQuaKham, DieuTri, MaBacSi) " +
+                "VALUES (@MaPhieuKham, @MaBenhNhan, @NgayKham, @LyDoKhamBenh, @KhamLamSang, @ChanDoan, @KetQuaKham, @DieuTri, @MaBacSi)", sqlCon);
+            adapter.InsertCommand.Parameters.Add("@MaPhieuKham", SqlDbType.NVarChar, 50, "MaPhieuKham");
+            adapter.InsertCommand.Parameters.Add("@MaBenhNhan", SqlDbType.NVarChar, 50, "MaBenhNhan");
+            adapter.InsertCommand.Parameters.Add("@NgayKham", SqlDbType.Date, 0, "NgayKham");
+            adapter.InsertCommand.Parameters.Add("@LyDoKhamBenh", SqlDbType.NVarChar, 255, "LyDoKhamBenh");
+            adapter.InsertCommand.Parameters.Add("@KhamLamSang", SqlDbType.NVarChar, 255, "KhamLamSang");
+            adapter.InsertCommand.Parameters.Add("@ChanDoan", SqlDbType.NVarChar, 255, "ChanDoan");
+            adapter.InsertCommand.Parameters.Add("@KetQuaKham", SqlDbType.NVarChar, 255, "KetQuaKham");
+            adapter.InsertCommand.Parameters.Add("@DieuTri", SqlDbType.NVarChar, 255, "DieuTri");
+            adapter.InsertCommand.Parameters.Add("@MaBacSi", SqlDbType.NVarChar, 50, "MaBacSi");
+
+            // Thêm lệnh UPDATE
+            adapter.UpdateCommand = new SqlCommand(
+                "UPDATE PhieuKhamBenh " +
+                "SET MaBenhNhan=@MaBenhNhan, NgayKham=@NgayKham, LyDoKhamBenh=@LyDoKhamBenh, KhamLamSang=@KhamLamSang, ChanDoan=@ChanDoan, " +
+                "KetQuaKham=@KetQuaKham, DieuTri=@DieuTri, MaBacSi=@MaBacSi " +
+                "WHERE MaPhieuKham=@MaPhieuKham", sqlCon);
+            adapter.UpdateCommand.Parameters.Add("@MaPhieuKham", SqlDbType.NVarChar, 50, "MaPhieuKham");
+            adapter.UpdateCommand.Parameters.Add("@MaBenhNhan", SqlDbType.NVarChar, 50, "MaBenhNhan");
+            adapter.UpdateCommand.Parameters.Add("@NgayKham", SqlDbType.Date, 0, "NgayKham");
+            adapter.UpdateCommand.Parameters.Add("@LyDoKhamBenh", SqlDbType.NVarChar, 255, "LyDoKhamBenh");
+            adapter.UpdateCommand.Parameters.Add("@KhamLamSang", SqlDbType.NVarChar, 255, "KhamLamSang");
+            adapter.UpdateCommand.Parameters.Add("@ChanDoan", SqlDbType.NVarChar, 255, "ChanDoan");
+            adapter.UpdateCommand.Parameters.Add("@KetQuaKham", SqlDbType.NVarChar, 255, "KetQuaKham");
+            adapter.UpdateCommand.Parameters.Add("@DieuTri", SqlDbType.NVarChar, 255, "DieuTri");
+            adapter.UpdateCommand.Parameters.Add("@MaBacSi", SqlDbType.NVarChar, 50, "MaBacSi");
+
+            // Thêm lệnh DELETE
+            adapter.DeleteCommand = new SqlCommand(
+                "DELETE FROM PhieuKhamBenh WHERE MaPhieuKham=@MaPhieuKham", sqlCon);
+            adapter.DeleteCommand.Parameters.Add("@MaPhieuKham", SqlDbType.NVarChar, 50, "MaPhieuKham");
 
             ds = new DataSet();
+
+            // Mở kết nối nếu chưa mở
             if (sqlCon.State == ConnectionState.Closed)
             {
                 sqlCon.Open();
             }
+
+            // Đổ dữ liệu vào DataSet
             adapter.Fill(ds, "tblPhieuKhamBenh");
+
+            // Đóng kết nối
             sqlCon.Close();
 
+            // Gán nguồn dữ liệu cho DataGrid
             dgDanhSach.ItemsSource = ds.Tables["tblPhieuKhamBenh"].DefaultView;
         }
 
+
         private void dgDanhSach_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            vitri = dgDanhSach.SelectedIndex;
-            if (vitri == -1) return;
+            // Lấy hàng được chọn từ DataGrid
+            var selectedRow = dgDanhSach.SelectedItem as DataRowView;
 
-            DataRow dataRow = ds.Tables["tblPhieuKhamBenh"].Rows[vitri];
+            if (selectedRow == null) return;
+
+            // Lấy dữ liệu từ DataRowView
+            DataRow dataRow = selectedRow.Row;
 
             txtMaPhieu.Text = dataRow["MaPhieuKham"].ToString();
             txtMaBenhNhan.Text = dataRow["MaBenhNhan"].ToString();
@@ -286,10 +339,13 @@ namespace QuanLyBenhVien.View
 
         }
 
-        private int vitri = -1;
+       // private int vitri = -1;
         private void btnCapNhat_Click(object sender, RoutedEventArgs e)
         {
-            if (vitri == -1)
+            // Kiểm tra xem người dùng đã chọn dòng nào trong DataGrid chưa
+            var selectedRow = dgDanhSach.SelectedItem as DataRowView;
+
+            if (selectedRow == null)
             {
                 MessageBox.Show("Vui lòng chọn một dòng để cập nhật!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -297,16 +353,25 @@ namespace QuanLyBenhVien.View
 
             try
             {
-                // Lấy dòng dữ liệu được chọn trong DataSet
-                DataRow dataRow = ds.Tables["tblPhieuKhamBenh"].Rows[vitri];
+                // Lấy DataRow từ DataRowView đã chọn
+                DataRow dataRow = selectedRow.Row;
 
                 // Cập nhật dữ liệu từ các TextBox vào DataRow
                 dataRow["MaPhieuKham"] = txtMaPhieu.Text.Trim();
                 dataRow["TEN_BENHNHAN"] = txtBenhNhan.Text.Trim();
-
                 dataRow["TEN_BACSI"] = txtBacSi.Text.Trim();
-                dataRow["MaBenhNhan"] = txtBenhNhan.Text.Trim();
-                dataRow["NgayKham"] = DateTime.TryParse(txtNgayKham.Text.Trim(), out DateTime ngaySinh) ? ngaySinh.ToString("yyyy-MM-dd") : throw new FormatException("Invalid date format");
+                dataRow["MaBenhNhan"] = txtMaBenhNhan.Text.Trim();
+
+                // Kiểm tra và cập nhật định dạng ngày
+                if (DateTime.TryParse(txtNgayKham.Text.Trim(), out DateTime ngayKham))
+                {
+                    dataRow["NgayKham"] = ngayKham.ToString("yyyy-MM-dd");
+                }
+                else
+                {
+                    throw new FormatException("Định dạng ngày không hợp lệ!");
+                }
+
                 dataRow["LyDoKhamBenh"] = txtLyDoKham.Text.Trim();
                 dataRow["KhamLamSang"] = txtKhamLamSan.Text.Trim();
                 dataRow["DieuTri"] = txtDieuTri.Text.Trim();
@@ -314,9 +379,8 @@ namespace QuanLyBenhVien.View
                 dataRow["KetQuaKham"] = txtKetQua.Text.Trim();
                 dataRow["MaBacSi"] = txtMaBacSi.Text.Trim();
 
-
                 // Cập nhật thay đổi vào cơ sở dữ liệu
-                int kq = adapter.Update(ds.Tables["tblNhanVien"]);
+                int kq = adapter.Update(ds.Tables["tblPhieuKhamBenh"]);
 
                 if (kq > 0)
                 {
@@ -327,23 +391,49 @@ namespace QuanLyBenhVien.View
                     dgDanhSach.ItemsSource = ds.Tables["tblPhieuKhamBenh"].DefaultView;
 
                     // Đặt lại vị trí dòng đã chọn
-                    dgDanhSach.SelectedIndex = vitri;
-                    ClearFields();
+                    dgDanhSach.SelectedItem = selectedRow;  // Giữ lại dòng đã chọn
+                    ClearFields();  // Xóa các trường sau khi xử lý
                 }
                 else
                 {
                     MessageBox.Show("Cập nhật dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+            catch (SqlException ex)
+            {
+                // Xử lý lỗi SQL (khóa chính và khóa ngoại)
+                if (ex.Number == 2627) // Lỗi vi phạm PRIMARY KEY
+                {
+                    MessageBox.Show("Khóa chính đã tồn tại! Không thể cập nhật dữ liệu trùng lặp.", "Lỗi khóa chính", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (ex.Number == 547) // Lỗi vi phạm FOREIGN KEY
+                {
+                    MessageBox.Show("Dữ liệu không hợp lệ! Mã bệnh nhân hoặc mã bác sĩ không tồn tại trong hệ thống.", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show($"Lỗi định dạng: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Lỗi không xác định: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
+            ClearFields(); // Xóa các trường sau khi xử lý
+
         }
 
         private void btnXoa_Click(object sender, RoutedEventArgs e)
         {
-            if (vitri == -1)
+            // Lấy dòng được chọn từ DataGrid
+            var selectedRow = dgDanhSach.SelectedItem as DataRowView;
+
+            if (selectedRow == null)
             {
                 MessageBox.Show("Vui lòng chọn một dòng để xóa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -351,27 +441,29 @@ namespace QuanLyBenhVien.View
 
             try
             {
-
+                // Hiển thị hộp thoại xác nhận xóa
                 var result = MessageBox.Show("Bạn có chắc chắn muốn xóa bệnh nhân này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
+                    // Lấy DataRow từ DataRowView
+                    DataRow dataRow = selectedRow.Row;
 
-                    DataRow dataRow = ds.Tables["tblPhieuKhamBenh"].Rows[vitri];
+                    // Xóa dòng khỏi DataTable
                     dataRow.Delete();
 
                     // Cập nhật thay đổi vào cơ sở dữ liệu
-                    int kq = adapter.Update(ds.Tables["tblNhanVien"]);
+                    int kq = adapter.Update(ds.Tables["tblPhieuKhamBenh"]);
 
                     if (kq > 0)
                     {
                         MessageBox.Show("Xóa dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        // Cập nhật giao diện DataGrid
+                        // Cập nhật lại giao diện DataGrid
                         dgDanhSach.ItemsSource = null;
-                        dgDanhSach.ItemsSource = ds.Tables["tblNhanVien"].DefaultView;
-                        ClearFields();
+                        dgDanhSach.ItemsSource = ds.Tables["tblPhieuKhamBenh"].DefaultView;
+
                         // Xóa dữ liệu trong TextBox
-                        //ClearTextBoxes();
+                        ClearFields();
                     }
                     else
                     {
@@ -379,10 +471,29 @@ namespace QuanLyBenhVien.View
                     }
                 }
             }
+            catch (SqlException ex)
+            {
+                // Kiểm tra lỗi SQL, ví dụ vi phạm khóa ngoại hoặc khóa chính
+                if (ex.Number == 547) // Lỗi vi phạm khóa ngoại (foreign key)
+                {
+                    MessageBox.Show("Không thể xóa dữ liệu này vì dữ liệu bị ràng buộc với các bảng khác.", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (ex.Number == 2627) // Lỗi vi phạm khóa chính (primary key)
+                {
+                    MessageBox.Show("Không thể xóa dữ liệu này vì có dữ liệu trùng lặp trong hệ thống.", "Lỗi khóa chính", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    // Lỗi SQL chung
+                    MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi cơ sở dữ liệu", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
             catch (Exception ex)
             {
+                // Lỗi tổng quát (ví dụ: lỗi bất ngờ)
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
     }
 }

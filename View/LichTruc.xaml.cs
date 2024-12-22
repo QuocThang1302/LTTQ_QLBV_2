@@ -91,43 +91,50 @@ namespace QuanLyBenhVien.View
             string queryCongViec = "SELECT * FROM CongViec WHERE MaCongViec = @MaCongViec OR TenCongViec = @MaCongViec";
             string queryPhanCong = "SELECT * FROM LichTruc WHERE PhanCong IN (SELECT MaCongViec FROM CongViec WHERE MaCongViec = @MaCongViec OR TenCongViec = @MaCongViec)";
 
-            using (SqlConnection connection = _userRepository.GetConnection())
+            try
             {
-                try
+                // Mở kết nối SQL
+                sqlCon = _userRepository.GetConnection();
+                sqlCon.Open();
+
+                // Hiển thị thông tin của Công Việc
+                adapter = new SqlDataAdapter(queryCongViec, sqlCon);
+                adapter.SelectCommand.Parameters.AddWithValue("@MaCongViec", maCongViec);
+                ds = new DataSet();
+                adapter.Fill(ds, "CongViec");
+                DataTable dataTableCongViec = ds.Tables["CongViec"];
+
+                // Gắn dữ liệu vào dgvCongViec
+                dgvCongViec.ItemsSource = dataTableCongViec.DefaultView;
+
+                // Kiểm tra nếu không tìm thấy dữ liệu
+                if (dataTableCongViec.Rows.Count == 0)
                 {
-                    connection.Open();
-
-                    // Hiển thị thông tin của
-                    SqlDataAdapter adapterCongViec = new SqlDataAdapter(queryCongViec, connection);
-                    adapterCongViec.SelectCommand.Parameters.AddWithValue("@MaCongViec", maCongViec);
-                    DataTable dataTableCongViec = new DataTable();
-                    adapterCongViec.Fill(dataTableCongViec);
-
-                    // Gắn dữ liệu vào 
-                    dgvCongViec.ItemsSource = dataTableCongViec.DefaultView;
-
-                    // Kiểm tra nếu không tìm thấy 
-                    if (dataTableCongViec.Rows.Count == 0)
-                    {
-                        MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                        // Xóa dữ liệu của DataGridView nếu không có kết quả
-                        
-                        return;
-                    }
-
-                    // Hiển thị thông tin của PhanCong
-                    SqlDataAdapter adapterPhanCong = new SqlDataAdapter(queryPhanCong, connection);
-                    adapterPhanCong.SelectCommand.Parameters.AddWithValue("@MaCongViec", maCongViec);
-                    DataTable dataTablePhanCong = new DataTable();
-                    adapterPhanCong.Fill(dataTablePhanCong);
-
-                    // Gắn dữ liệu vào dgvPhanCong
-                    dgvPhanCong.ItemsSource = dataTablePhanCong.DefaultView;
+                    MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    dgvCongViec.ItemsSource = null;
+                    dgvPhanCong.ItemsSource = null;
+                    return;
                 }
-                catch (Exception ex)
+
+                // Hiển thị thông tin của Phân Công
+                adapter = new SqlDataAdapter(queryPhanCong, sqlCon);
+                adapter.SelectCommand.Parameters.AddWithValue("@MaCongViec", maCongViec);
+                adapter.Fill(ds, "PhanCong");
+                DataTable dataTablePhanCong = ds.Tables["PhanCong"];
+
+                // Gắn dữ liệu vào dgvPhanCong
+                dgvPhanCong.ItemsSource = dataTablePhanCong.DefaultView;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                // Đảm bảo đóng kết nối SQL
+                if (sqlCon != null && sqlCon.State == ConnectionState.Open)
                 {
-                    MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    sqlCon.Close();
                 }
             }
         }
