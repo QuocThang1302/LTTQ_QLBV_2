@@ -141,7 +141,7 @@
                 <StackPanel Width="280"
                             Grid.Row="2"
                             Orientation="Vertical"
-                            Margin="0, 35, 0, 80">
+                            Margin="0, 35, 0, 60">
                     <StackPanel.Background>
                         <SolidColorBrush Color="White" Opacity="0.7"/>
                     </StackPanel.Background>
@@ -150,12 +150,20 @@
                            Width="120" Height="120" Stretch="Fill"
                            Margin="0,5,0,0"/>
 
+                    <TextBlock Text="Spring Aroma Hopital"
+                               FontWeight="Bold"
+                               FontSize="23"
+                               Foreground="#00416a"
+                               FontFamily="Calibri"
+                               TextAlignment="Center"
+                               Margin="0"/>
+
                     <TextBlock Text="   Mã nhân viên"
                                Foreground="#00416a"
                                FontSize="16"
                                FontWeight="Medium"
                                FontFamily="Inter"
-                               Margin="0, 35, 0, 0" />
+                               Margin="0, 25, 0, 0" />
 
                     <TextBox x:Name="txtID"
                              Text="{Binding UserID, UpdateSourceTrigger=PropertyChanged}"

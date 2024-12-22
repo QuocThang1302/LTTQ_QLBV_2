@@ -285,17 +285,23 @@ namespace QuanLyBenhVien.ViewModel
         public ICommand LogoutCommand { get; }
         private void LoadCurrentUserData()
         {
-            var user = _userRepository.GetByID(Thread.CurrentPrincipal.Identity.Name);
-            if (user != null)
+            if (Thread.CurrentPrincipal?.Identity?.Name != null)
             {
-                CurrentUserAccount.UserID = user.Id;
-                CurrentUserAccount.DisplayName = $"{user.LastName} {user.FirstName}";
-                CurrentUserAccount.ProfilePicture = null;
+                var user = _userRepository?.GetByID(Thread.CurrentPrincipal.Identity.Name);
+                if (user != null)
+                {
+                    CurrentUserAccount.UserID = user.Id;
+                    CurrentUserAccount.DisplayName = $"{user.LastName} {user.FirstName}";
+                    CurrentUserAccount.ProfilePicture = null;
+                }
+                else
+                {
+                    CurrentUserAccount.DisplayName = "Đăng nhập không hợp lệ!!!";
+                }
             }
             else
             {
                 CurrentUserAccount.DisplayName = "Đăng nhập không hợp lệ!!!";
-                //Application.Current.Shutdown();
             }
         }
     }
