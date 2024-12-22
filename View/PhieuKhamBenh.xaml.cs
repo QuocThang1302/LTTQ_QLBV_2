@@ -154,7 +154,9 @@ namespace QuanLyBenhVien.View
             {
                 sqlCon = _userRepository.GetConnection();
             }
-            string query = @"
+
+            // Câu lệnh SELECT cho bảng PhieuKhamBenh
+            string selectQuery = @"
     SELECT 
         BN.Ten AS TEN_BENHNHAN, 
         NV.Ten AS TEN_BACSI, 
@@ -173,26 +175,73 @@ namespace QuanLyBenhVien.View
         PhieuKhamBenh PK ON PK.MaBenhNhan = BN.MaBenhNhan
     JOIN 
         NhanVien NV ON NV.MaNhanVien = PK.MaBacSi";
-            adapter = new SqlDataAdapter(query, sqlCon);
-            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+
+            // Khởi tạo SqlDataAdapter
+            adapter = new SqlDataAdapter(selectQuery, sqlCon);
+
+            // Thêm lệnh INSERT
+            adapter.InsertCommand = new SqlCommand(
+                "INSERT INTO PhieuKhamBenh (MaPhieuKham, MaBenhNhan, NgayKham, LyDoKhamBenh, KhamLamSang, ChanDoan, KetQuaKham, DieuTri, MaBacSi) " +
+                "VALUES (@MaPhieuKham, @MaBenhNhan, @NgayKham, @LyDoKhamBenh, @KhamLamSang, @ChanDoan, @KetQuaKham, @DieuTri, @MaBacSi)", sqlCon);
+            adapter.InsertCommand.Parameters.Add("@MaPhieuKham", SqlDbType.NVarChar, 50, "MaPhieuKham");
+            adapter.InsertCommand.Parameters.Add("@MaBenhNhan", SqlDbType.NVarChar, 50, "MaBenhNhan");
+            adapter.InsertCommand.Parameters.Add("@NgayKham", SqlDbType.Date, 0, "NgayKham");
+            adapter.InsertCommand.Parameters.Add("@LyDoKhamBenh", SqlDbType.NVarChar, 255, "LyDoKhamBenh");
+            adapter.InsertCommand.Parameters.Add("@KhamLamSang", SqlDbType.NVarChar, 255, "KhamLamSang");
+            adapter.InsertCommand.Parameters.Add("@ChanDoan", SqlDbType.NVarChar, 255, "ChanDoan");
+            adapter.InsertCommand.Parameters.Add("@KetQuaKham", SqlDbType.NVarChar, 255, "KetQuaKham");
+            adapter.InsertCommand.Parameters.Add("@DieuTri", SqlDbType.NVarChar, 255, "DieuTri");
+            adapter.InsertCommand.Parameters.Add("@MaBacSi", SqlDbType.NVarChar, 50, "MaBacSi");
+
+            // Thêm lệnh UPDATE
+            adapter.UpdateCommand = new SqlCommand(
+                "UPDATE PhieuKhamBenh " +
+                "SET MaBenhNhan=@MaBenhNhan, NgayKham=@NgayKham, LyDoKhamBenh=@LyDoKhamBenh, KhamLamSang=@KhamLamSang, ChanDoan=@ChanDoan, " +
+                "KetQuaKham=@KetQuaKham, DieuTri=@DieuTri, MaBacSi=@MaBacSi " +
+                "WHERE MaPhieuKham=@MaPhieuKham", sqlCon);
+            adapter.UpdateCommand.Parameters.Add("@MaPhieuKham", SqlDbType.NVarChar, 50, "MaPhieuKham");
+            adapter.UpdateCommand.Parameters.Add("@MaBenhNhan", SqlDbType.NVarChar, 50, "MaBenhNhan");
+            adapter.UpdateCommand.Parameters.Add("@NgayKham", SqlDbType.Date, 0, "NgayKham");
+            adapter.UpdateCommand.Parameters.Add("@LyDoKhamBenh", SqlDbType.NVarChar, 255, "LyDoKhamBenh");
+            adapter.UpdateCommand.Parameters.Add("@KhamLamSang", SqlDbType.NVarChar, 255, "KhamLamSang");
+            adapter.UpdateCommand.Parameters.Add("@ChanDoan", SqlDbType.NVarChar, 255, "ChanDoan");
+            adapter.UpdateCommand.Parameters.Add("@KetQuaKham", SqlDbType.NVarChar, 255, "KetQuaKham");
+            adapter.UpdateCommand.Parameters.Add("@DieuTri", SqlDbType.NVarChar, 255, "DieuTri");
+            adapter.UpdateCommand.Parameters.Add("@MaBacSi", SqlDbType.NVarChar, 50, "MaBacSi");
+
+            // Thêm lệnh DELETE
+            adapter.DeleteCommand = new SqlCommand(
+                "DELETE FROM PhieuKhamBenh WHERE MaPhieuKham=@MaPhieuKham", sqlCon);
+            adapter.DeleteCommand.Parameters.Add("@MaPhieuKham", SqlDbType.NVarChar, 50, "MaPhieuKham");
 
             ds = new DataSet();
+
+            // Mở kết nối nếu chưa mở
             if (sqlCon.State == ConnectionState.Closed)
             {
                 sqlCon.Open();
             }
+
+            // Đổ dữ liệu vào DataSet
             adapter.Fill(ds, "tblPhieuKhamBenh");
+
+            // Đóng kết nối
             sqlCon.Close();
 
+            // Gán nguồn dữ liệu cho DataGrid
             dgDanhSach.ItemsSource = ds.Tables["tblPhieuKhamBenh"].DefaultView;
         }
 
+
         private void dgDanhSach_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            vitri = dgDanhSach.SelectedIndex;
-            if (vitri == -1) return;
+            // Lấy hàng được chọn từ DataGrid
+            var selectedRow = dgDanhSach.SelectedItem as DataRowView;
 
-            DataRow dataRow = ds.Tables["tblPhieuKhamBenh"].Rows[vitri];
+            if (selectedRow == null) return;
+
+            // Lấy dữ liệu từ DataRowView
+            DataRow dataRow = selectedRow.Row;
 
             txtMaPhieu.Text = dataRow["MaPhieuKham"].ToString();
             txtMaBenhNhan.Text = dataRow["MaBenhNhan"].ToString();
@@ -290,7 +339,7 @@ namespace QuanLyBenhVien.View
 
         }
 
-        private int vitri = -1;
+       // private int vitri = -1;
         private void btnCapNhat_Click(object sender, RoutedEventArgs e)
         {
             // Kiểm tra xem người dùng đã chọn dòng nào trong DataGrid chưa
@@ -311,7 +360,7 @@ namespace QuanLyBenhVien.View
                 dataRow["MaPhieuKham"] = txtMaPhieu.Text.Trim();
                 dataRow["TEN_BENHNHAN"] = txtBenhNhan.Text.Trim();
                 dataRow["TEN_BACSI"] = txtBacSi.Text.Trim();
-                dataRow["MaBenhNhan"] = txtBenhNhan.Text.Trim();
+                dataRow["MaBenhNhan"] = txtMaBenhNhan.Text.Trim();
 
                 // Kiểm tra và cập nhật định dạng ngày
                 if (DateTime.TryParse(txtNgayKham.Text.Trim(), out DateTime ngayKham))
