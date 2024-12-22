@@ -68,7 +68,10 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Ngày tạo lập:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Name="txtNgayTaoLap" Width="250" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Name="txtNgayTaoLap" Width="250" Style="{StaticResource TextBoxStyles}" PreviewMouseDown="txtNgayTaoLap_PreviewMouseDown" IsReadOnly="True"/>
+                            <Popup Name="popupCalendar" IsOpen="False" PlacementTarget="{Binding ElementName=txtNgayTaoLap}" Placement="Bottom">
+                                <Calendar Name="calendar" SelectedDatesChanged="calendar_SelectedDatesChanged" Focusable="False"/>
+                            </Popup>
                         </StackPanel>
                         
                        

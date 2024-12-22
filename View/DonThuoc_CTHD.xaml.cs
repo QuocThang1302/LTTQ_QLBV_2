@@ -75,8 +75,6 @@ namespace QuanLyBenhVien.View
                                 return;
                             }
 
-                            
-
                             // Thêm DonThuoc mới
                             string insertDonThuocQuery = @"INSERT INTO DonThuoc (MaDonThuoc, MaBenhNhan, MaBacSi, NgayLapDon, MaHoaDon) 
                                                VALUES (@MaDonThuoc, @MaBenhNhan, @MaBacSi, @NgayLapDon, @MaHoaDon)";
@@ -123,6 +121,14 @@ namespace QuanLyBenhVien.View
                         {
                             MessageBox.Show($"Số lượng thuốc trong kho không đủ! Hiện tại còn {soLuongTonKho}.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                             return;
+                        }
+                        else
+                        {
+                            string updateSoLuongQuery = @"UPDATE Thuoc SET SoLuong = SoLuong - @SoLuong WHERE MaThuoc = @MaThuoc";
+                            SqlCommand updateSoLuongCmd = new SqlCommand(updateSoLuongQuery, conn);
+                            updateSoLuongCmd.Parameters.AddWithValue("@SoLuong", soLuong);
+                            updateSoLuongCmd.Parameters.AddWithValue("@MaThuoc", maThuoc);
+                            updateSoLuongCmd.ExecuteNonQuery();
                         }
                         // Tính giá tiền
                         decimal giaTien = giaTienThuoc * soLuong;

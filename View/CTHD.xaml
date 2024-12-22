@@ -140,7 +140,7 @@
                                         <Setter Property="FontFamily" Value="Inter"/>
                                         <Setter Property="FontSize" Value="14" />
                                         <Setter Property="FontWeight" Value="Medium"/>
-                                        
+
                                     </Style>
                                 </DataGrid.RowStyle>
 
@@ -151,7 +151,7 @@
                                         <Setter Property="FontFamily" Value="Inter"/>
                                         <Setter Property="FontSize" Value="14" />
                                         <Setter Property="Padding" Value="5"/>
-                                        
+
                                     </Style>
                                 </DataGrid.CellStyle>
                             </DataGrid>
@@ -178,15 +178,15 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <!-- Tên vật dụng -->
-                            <TextBlock Style="{StaticResource TextBlockStyle}" Grid.Row="0" Grid.Column="0" Text="Tên vật dụng:" VerticalAlignment="Center" Margin="5"/>
-                            <TextBox Grid.Row="0" Grid.Column="1" Name="txtTenVatDung" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
+                            <TextBlock Style="{StaticResource TextBlockStyle}" Grid.Row="0" Grid.Column="0" Text="Mã vật dụng:" VerticalAlignment="Center" Margin="5"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" Name="txtMaVatDung" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
                             <!-- Số lượng -->
                             <TextBlock Style="{StaticResource TextBlockStyle}" Grid.Row="1" Grid.Column="0" Text="Số lượng:" VerticalAlignment="Center" Margin="5"/>
                             <TextBox Grid.Row="1" Grid.Column="1" Name="txtSoLuong2" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
 
                             <!-- Nút Thêm và Xóa -->
                             <Button Grid.Row="3" Grid.Column="0" Content="Thêm" Margin="5" Click="btnThem2_Click" Style= "{StaticResource childviewButton}"/>
-                            <Button Grid.Row="3" Grid.Column="1" Content="Xóa" Margin="5" Click="btnXoa2_Click" Style= "{StaticResource childviewButton}"/>
+                            <Button Grid.Row="3" Grid.Column="1" Content="Xóa" Margin="0,0,0,5" Click="btnXoa2_Click" Style= "{StaticResource childviewButton}" VerticalAlignment="Bottom"/>
                             <!-- DataGrid để hiển thị danh sách vật dụng -->
                             <DataGrid Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Name="dgVatDung" Margin="5" AutoGenerateColumns="False" CanUserAddRows="False"
                                       HeadersVisibility="Column" 

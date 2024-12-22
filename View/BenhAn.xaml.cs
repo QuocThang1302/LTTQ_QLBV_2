@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using Microsoft.Data.SqlClient;
 using System.Data;
 using QuanLyBenhVien.Repositories;
+using System.Windows.Input;
 
 namespace QuanLyBenhVien.View
 {
@@ -31,6 +32,19 @@ namespace QuanLyBenhVien.View
             HienThiDanhSach();
 
         }
+        private void txtNgayTaoLap_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            popupCalendar.IsOpen = true;
+        }
+
+        private void calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (calendar.SelectedDate.HasValue)
+            {
+                txtNgayTaoLap.Text = calendar.SelectedDate.Value.ToString("dd/MM/yyyy"); // Định dạng ngày tháng
+                popupCalendar.IsOpen = false;
+            }
+        }
         private void SearchControl_SearchButtonClicked(object sender, string searchText)
         {
 
@@ -48,47 +62,57 @@ namespace QuanLyBenhVien.View
 
             try
             {
-                using (SqlConnection connection = _userRepository.GetConnection())
+                // Mở kết nối SQL
+                sqlCon = _userRepository.GetConnection();
+                sqlCon.Open();
+
+                // Tạo adapter và thiết lập truy vấn
+                adapter = new SqlDataAdapter(query, sqlCon);
+                adapter.SelectCommand.Parameters.AddWithValue("@MaBenhAn", maBenhAn);
+
+                // Gán kết quả vào DataSet
+                ds = new DataSet();
+                adapter.Fill(ds);
+
+                DataTable dataTable = ds.Tables[0];
+
+                if (dataTable.Rows.Count == 0)
                 {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@MaBenhAn", maBenhAn);
+                    MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else if (dataTable.Rows.Count == 1)
+                {
+                    // Hiển thị thông tin lên TextBox
+                    DataRow row = dataTable.Rows[0];
+                    txtMaBenhAn.Text = row["MaBenhAn"].ToString();
+                    txtMaBenhNhan.Text = row["MaBenhNhan"].ToString();
+                    txtBenhNhan.Text = row["Ten"].ToString();
+                    txtTinhTrang.Text = row["TinhTrang"].ToString();
+                    txtNgayTaoLap.Text = Convert.ToDateTime(row["NgayTaoLap"]).ToString("dd/MM/yyyy");
+                    txtBenh.Text = row["Benh"].ToString();
+                    txtHuongDieuTri.Text = row["DieuTri"].ToString();
 
-                    SqlDataAdapter adapter = new SqlDataAdapter(command);
-                    DataTable dataTable = new DataTable();
-                    adapter.Fill(dataTable);
-
-                    if (dataTable.Rows.Count == 0)
-                    {
-                        MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                      
-                    }
-                    else if (dataTable.Rows.Count == 1)
-                    {
-                        // Hiển thị thông tin lên TextBox
-                        DataRow row = dataTable.Rows[0];
-                        txtMaBenhAn.Text = row["MaBenhAn"].ToString();
-                        txtMaBenhNhan.Text = row["MaBenhNhan"].ToString();
-                        txtBenh.Text = row["Ten"].ToString();
-                        txtTinhTrang.Text = row["TinhTrang"].ToString();
-                        txtNgayTaoLap.Text = Convert.ToDateTime(row["NgayTaoLap"]).ToString("yyyy-MM-dd");
-                        txtBenh.Text = row["Benh"].ToString();
-                        txtHuongDieuTri.Text = row["DieuTri"].ToString();
-
-                        // Hiển thị kết quả vào DataGrid
-                        dgDanhSachBenhAn.ItemsSource = dataTable.DefaultView;
-                    }
-                    else
-                    {
-                        // Nếu có nhiều kết quả, chỉ hiển thị vào DataGrid
-                        ClearFields();
-                        dgDanhSachBenhAn.ItemsSource = dataTable.DefaultView;
-                    }
+                    // Hiển thị kết quả vào DataGrid
+                    dgDanhSachBenhAn.ItemsSource = dataTable.DefaultView;
+                }
+                else
+                {
+                    // Nếu có nhiều kết quả, chỉ hiển thị vào DataGrid
+                    ClearFields();
+                    dgDanhSachBenhAn.ItemsSource = dataTable.DefaultView;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                // Đảm bảo đóng kết nối SQL
+                if (sqlCon != null && sqlCon.State == ConnectionState.Open)
+                {
+                    sqlCon.Close();
+                }
             }
         }
 

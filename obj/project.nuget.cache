@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "W9/Idm0+IFiDlTGAbKGTWDxTx28CeKycMwiqH3aZnOM3xBjUsjpOlnAiAFSIH8mwJKpbjGbFP7mvC5H69UrSDA==",
+  "dgSpecHash": "RQ70f7H04MDHwTD2+bEXmcLhvoSr8fNMhXX/vydj6ERGJOzOCwEnOtc/IopwE3fRD2N01sAsa4cv5qcmzSuFlg==",
   "success": true,
-  "projectFilePath": "D:\\Dowload\\LTTQ3\\LTTQ_QLBV_2\\QuanLyBenhVien.csproj",
+  "projectFilePath": "D:\\Dowload\\QLBV\\LTTQ_QLBV_2\\QuanLyBenhVien.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Ngoc Sang\\.nuget\\packages\\azure.core\\1.38.0\\azure.core.1.38.0.nupkg.sha512",
     "C:\\Users\\Ngoc Sang\\.nuget\\packages\\azure.identity\\1.11.4\\azure.identity.1.11.4.nupkg.sha512",

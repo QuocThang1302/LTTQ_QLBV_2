@@ -11,5 +11,6 @@ namespace QuanLyBenhVien.Model
         public string MaNhanVien {  get; set; }
         public string HoTen { get; set; }
         public string ChuyenNganh {  get; set; }
+
     }
 }
