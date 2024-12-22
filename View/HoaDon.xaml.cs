@@ -81,35 +81,41 @@ namespace QuanLyBenhVien.View
             string queryHoaDon = "SELECT * FROM HoaDon WHERE MaHoaDon = @MaHoaDon OR TenHoaDon = @MaHoaDon";
 
 
-            using (SqlConnection connection = _userRepository.GetConnection())
+            try
             {
-                try
+                // Mở kết nối SQL
+                sqlCon = _userRepository.GetConnection();
+                sqlCon.Open();
+
+                // Sử dụng SqlDataAdapter để truy xuất dữ liệu
+                adapter = new SqlDataAdapter(queryHoaDon, sqlCon);
+                adapter.SelectCommand.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+
+                // Đổ dữ liệu vào DataSet
+                ds = new DataSet();
+                adapter.Fill(ds, "HoaDon");
+                DataTable dataTableHoaDon = ds.Tables["HoaDon"];
+
+                // Gắn dữ liệu vào dgvHoaDon
+                dgvHoaDon.ItemsSource = dataTableHoaDon.DefaultView;
+
+                // Kiểm tra nếu không tìm thấy dữ liệu phù hợp
+                if (dataTableHoaDon.Rows.Count == 0)
                 {
-                    connection.Open();
-
-                    // Hiển thị thông tin của HoaDon
-                    SqlDataAdapter adapterHoaDon = new SqlDataAdapter(queryHoaDon, connection);
-                    adapterHoaDon.SelectCommand.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
-                    DataTable dataTableHoaDon = new DataTable();
-                    adapterHoaDon.Fill(dataTableHoaDon);
-
-                    // Gắn dữ liệu vào dgvHoaDon
-                    dgvHoaDon.ItemsSource = dataTableHoaDon.DefaultView;
-
-                    // Kiểm tra nếu không tìm thấy đơn thuốc
-                    if (dataTableHoaDon.Rows.Count == 0)
-                    {
-                        MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                        dgvHoaDon.ItemsSource = null;
-                        return;
-                    }
-
-
+                    MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    dgvHoaDon.ItemsSource = null;
                 }
-                catch (Exception ex)
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                // Đảm bảo đóng kết nối SQL
+                if (sqlCon != null && sqlCon.State == ConnectionState.Open)
                 {
-                    MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    sqlCon.Close();
                 }
             }
         }

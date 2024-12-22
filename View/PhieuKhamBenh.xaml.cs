@@ -65,51 +65,55 @@ namespace QuanLyBenhVien.View
 
             try
             {
-                using (SqlConnection connection = _userRepository.GetConnection())
+                sqlCon = _userRepository.GetConnection();
+                adapter = new SqlDataAdapter(query, sqlCon);
+                adapter.SelectCommand.Parameters.AddWithValue("@MaPhieuKham", maPhieuKham);
+
+                ds = new DataSet();
+                adapter.Fill(ds);
+
+                DataTable dataTable = ds.Tables[0];
+
+                if (dataTable.Rows.Count == 0)
                 {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@MaPhieuKham", maPhieuKham);
+                    MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else if (dataTable.Rows.Count == 1)
+                {
+                    // Hiển thị thông tin lên TextBox
+                    DataRow row = dataTable.Rows[0];
+                    txtMaPhieu.Text = row["MaPhieuKham"].ToString();
+                    txtMaBenhNhan.Text = row["MaBenhNhan"].ToString();
+                    txtBenhNhan.Text = row["TEN_BENHNHAN"].ToString();
+                    txtBacSi.Text = row["TEN_BACSI"].ToString();
+                    txtNgayKham.Text = Convert.ToDateTime(row["NgayKham"]).ToString("yyyy-MM-dd");
+                    txtLyDoKham.Text = row["LyDoKhamBenh"].ToString();
+                    txtKhamLamSan.Text = row["KhamLamSang"].ToString();
+                    txtChuanDoan.Text = row["ChanDoan"].ToString();
+                    txtKetQua.Text = row["KetQuaKham"].ToString(); // Dữ liệu ban đầu
+                    txtDieuTri.Text = row["DieuTri"].ToString();
+                    txtMaBacSi.Text = row["MaBacSi"].ToString();
 
-                    SqlDataAdapter adapter = new SqlDataAdapter(command);
-                    DataTable dataTable = new DataTable();
-                    adapter.Fill(dataTable);
-
-                    if (dataTable.Rows.Count == 0)
-                    {
-                        MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                        
-                    }
-                    else if (dataTable.Rows.Count == 1)
-                    {
-                        // Hiển thị thông tin lên TextBox
-                        DataRow row = dataTable.Rows[0];
-                        txtMaPhieu.Text = row["MaPhieuKham"].ToString();
-                        txtMaBenhNhan.Text = row["MaBenhNhan"].ToString();
-                        txtBenhNhan.Text = row["TEN_BENHNHAN"].ToString();
-                        txtBacSi.Text = row["TEN_BACSI"].ToString();
-                        txtNgayKham.Text = Convert.ToDateTime(row["NgayKham"]).ToString("yyyy-MM-dd");
-                        txtLyDoKham.Text = row["LyDoKhamBenh"].ToString();
-                        txtKhamLamSan.Text = row["KhamLamSang"].ToString();
-                        txtChuanDoan.Text = row["ChanDoan"].ToString();
-                        txtKetQua.Text = row["KetQuaKham"].ToString();
-                        txtDieuTri.Text = row["DieuTri"].ToString();
-                        txtMaBacSi.Text = row["MaBacSi"].ToString();
-
-                        // Hiển thị dữ liệu vào DataGrid
-                        dgDanhSach.ItemsSource = dataTable.DefaultView;
-                    }
-                    else
-                    {
-                        // Nếu có nhiều kết quả, chỉ hiển thị vào DataGrid
-                        ClearFields(); // Xóa TextBox
-                        dgDanhSach.ItemsSource = dataTable.DefaultView;
-                    }
+                    // Hiển thị dữ liệu vào DataGrid
+                    dgDanhSach.ItemsSource = dataTable.DefaultView;
+                }
+                else
+                {
+                    // Nếu có nhiều kết quả, chỉ hiển thị vào DataGrid
+                    ClearFields(); // Xóa TextBox
+                    dgDanhSach.ItemsSource = dataTable.DefaultView;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                if (sqlCon != null && sqlCon.State == ConnectionState.Open)
+                {
+                    sqlCon.Close();
+                }
             }
         }
         

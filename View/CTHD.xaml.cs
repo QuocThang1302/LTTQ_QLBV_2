@@ -709,7 +709,76 @@ namespace QuanLyBenhVien.View
 
         private void btnThanhToan_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Button Clicked!");
+            string maHoaDon = txtMaHoaDon.Text.Trim();
+
+            if (string.IsNullOrEmpty(maHoaDon))
+            {
+                MessageBox.Show("Vui lòng nhập mã hóa đơn!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            string query = "SELECT GiaTien, TrangThai FROM HoaDon WHERE MaHoaDon = @MaHoaDon";
+
+            using (SqlConnection connection = _userRepository.GetConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                string giaTien = reader["GiaTien"].ToString();
+                                string trangThai = reader["TrangThai"].ToString();
+
+                                txtTongTien.Text = giaTien;
+                                txtTrangThai.Text = trangThai;
+
+                                if (trangThai == "Chưa thanh toán")
+                                {
+                                    reader.Close(); // Đóng DataReader trước khi chạy truy vấn khác
+
+                                    MessageBoxResult result = MessageBox.Show(
+                                        $"Hóa đơn {maHoaDon} chưa thanh toán. Bạn có chắc muốn thanh toán không?",
+                                        "Xác nhận thanh toán",
+                                        MessageBoxButton.YesNo,
+                                        MessageBoxImage.Question
+                                    );
+
+                                    if (result == MessageBoxResult.Yes)
+                                    {
+                                        string updateQuery = "UPDATE HoaDon SET TrangThai = 'Đã thanh toán' WHERE MaHoaDon = @MaHoaDon";
+                                        using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection))
+                                        {
+                                            updateCommand.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+                                            updateCommand.ExecuteNonQuery();
+                                        }
+
+                                        MessageBox.Show("Thanh toán thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                        txtTrangThai.Text = "Đã thanh toán";
+                                    }
+                                }
+                                else if (trangThai == "Đã thanh toán")
+                                {
+                                    MessageBox.Show($"Hóa đơn {maHoaDon} đã được thanh toán trước đó.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("Hóa đơn không tồn tại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Lỗi: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
 
         private void btnDong_Click(object sender, RoutedEventArgs e)

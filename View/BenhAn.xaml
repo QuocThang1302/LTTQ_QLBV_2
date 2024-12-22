@@ -175,9 +175,9 @@
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Mã bệnh án" Width="*" Binding="{Binding MaBenhAn}"/>
-                        <DataGridTextColumn Header="Tên bệnh nhân" Width="*" Binding="{Binding MaBenhNhan}"/>
+                        <DataGridTextColumn Header="Tên bệnh nhân" Width="*" Binding="{Binding Ten}"/>
 
-                        <DataGridTextColumn Header="Mã bệnh nhân" Width="*" Binding="{Binding Ten}"/>
+                        <DataGridTextColumn Header="Mã bệnh nhân" Width="*" Binding="{Binding MaBenhNhan}"/>
                         
                         <DataGridTextColumn Header="Ngày tạo lập" Width="*" Binding="{Binding NgayTaoLap}"/>
                         <DataGridTextColumn Header="Tình trạng" Width="*" Binding="{Binding TinhTrang}"/>

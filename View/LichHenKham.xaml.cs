@@ -24,7 +24,7 @@ namespace QuanLyBenhVien.View
         private void SearchControl_ClearButtonClicked(object sender, EventArgs e)
         {
             // Logic khi nút X được nhấn
-            //HienThiDanhSach();
+            HienThiDanhSach();
             ClearFields();
         }
         private void SearchControl_SearchButtonClicked(object sender, string searchText)
@@ -42,44 +42,54 @@ namespace QuanLyBenhVien.View
 
             try
             {
-                using (SqlConnection connection = _userRepository.GetConnection())
+                // Mở kết nối SQL
+                sqlCon = _userRepository.GetConnection();
+                sqlCon.Open();
+
+                // Sử dụng SqlDataAdapter để truy xuất dữ liệu
+                adapter = new SqlDataAdapter(query, sqlCon);
+                adapter.SelectCommand.Parameters.AddWithValue("@MaLichHen", maLichHen);
+
+                // Đổ dữ liệu vào DataSet
+                ds = new DataSet();
+                adapter.Fill(ds, "LichHenKham");
+                DataTable dataTable = ds.Tables["LichHenKham"];
+
+                if (dataTable.Rows.Count == 0)
                 {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@MaLichHen", maLichHen);
+                    MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    dgvLichHen.ItemsSource = null;
+                }
+                else if (dataTable.Rows.Count == 1)
+                {
+                    // Hiển thị thông tin lên TextBox
+                    DataRow row = dataTable.Rows[0];
+                    tbMaLichHen.Text = row["MaLichHen"].ToString();
+                    tbMaBenhNhan.Text = row["MaBenhNhan"].ToString();
+                    tbNgayHenKham.Text = Convert.ToDateTime(row["NgayHenKham"]).ToString("yyyy-MM-dd");
+                    tbMaBacSi.Text = row["MaBacSi"].ToString();
 
-                    SqlDataAdapter adapter = new SqlDataAdapter(command);
-                    DataTable dataTable = new DataTable();
-                    adapter.Fill(dataTable);
-
-                    if (dataTable.Rows.Count == 0)
-                    {
-                        MessageBox.Show("Không tìm thấy dữ liệu phù hợp ", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                        
-                    }
-                    else if (dataTable.Rows.Count == 1)
-                    {
-                        // Hiển thị thông tin lên TextBox
-                        DataRow row = dataTable.Rows[0];
-                        tbMaLichHen.Text = row["MaLichHen"].ToString();
-                        tbMaBenhNhan.Text = row["MaBenhNhan"].ToString();
-                        tbNgayHenKham.Text = Convert.ToDateTime(row["NgayHenKham"]).ToString("yyyy-MM-dd");
-                        tbMaBacSi.Text = row["MaBacSi"].ToString();
-
-                        // Hiển thị dữ liệu vào DataGrid
-                        dgvLichHen.ItemsSource = dataTable.DefaultView;
-                    }
-                    else
-                    {
-                        // Nếu có nhiều kết quả, chỉ hiển thị vào DataGrid
-                        ClearFields(); // Xóa TextBox
-                        dgvLichHen.ItemsSource = dataTable.DefaultView;
-                    }
+                    // Gắn dữ liệu vào DataGrid
+                    dgvLichHen.ItemsSource = dataTable.DefaultView;
+                }
+                else
+                {
+                    // Nếu có nhiều kết quả, chỉ hiển thị vào DataGrid
+                    ClearFields(); // Xóa TextBox
+                    dgvLichHen.ItemsSource = dataTable.DefaultView;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                // Đảm bảo đóng kết nối SQL
+                if (sqlCon != null && sqlCon.State == ConnectionState.Open)
+                {
+                    sqlCon.Close();
+                }
             }
         }
 
