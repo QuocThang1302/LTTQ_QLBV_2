@@ -18,9 +18,14 @@ namespace QuanLyBenhVien
             {
                 if (loginView.IsVisible == false && loginView.IsLoaded)
                 {
-                    var mainWindow = new MainWindow();
-                    mainWindow.Show();
-                    loginView.Close();
+                    Application.Current.Dispatcher.InvokeAsync(() =>
+                    {
+                        var mainWindow = new MainWindow();
+                        mainWindow.Show();
+
+                        // Đảm bảo không gọi Close() ngay lập tức
+                        loginView.Close();
+                    });
                 }
             };
         }
