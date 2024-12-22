@@ -55,7 +55,19 @@ namespace QuanLyBenhVien.View
             searchControl.Tmp = "Nhập số hóa đơn hoặc tên hóa đơn";
             // Đăng ký sự kiện SearchButtonClicked
             searchControl.SearchButtonClicked += SearchControl_SearchButtonClicked;
-            
+            BacSi();
+        }
+
+        private void BacSi()
+        {
+            string roleID = GetRoleIDByUserID();
+            if (roleID == "R02")
+            {
+                btn_CapNhat.Visibility = Visibility.Hidden;
+                btn_Them.Visibility = Visibility.Hidden;
+                btn_Xoa.Visibility = Visibility.Hidden;
+            }
+            return;
         }
 
         private void SearchControl_SearchButtonClicked(object sender, string searchText)
@@ -109,13 +121,7 @@ namespace QuanLyBenhVien.View
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            string roleID = GetRoleIDByUserID();
-            if(roleID=="R02")
-            {
-                MessageBox.Show("Bạn không có quyền xuất hóa đơn!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }    
+        {    
             CTHD cTHD = new CTHD();
             cTHD.Show();
         }

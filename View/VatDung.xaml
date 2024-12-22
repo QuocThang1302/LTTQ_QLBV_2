@@ -118,7 +118,7 @@
                             Margin="52,0,0,0"
                             Content="Cập nhật" Click="btnCapNhat_Click"/>
 
-                    <Button  Style="{StaticResource childviewButton}" 
+                    <Button x:Name="btnThem" Style="{StaticResource childviewButton}" 
                             Margin="52,0,0,0"
                             Content="Thêm" Click="Button_Click"/>
                 </StackPanel>
