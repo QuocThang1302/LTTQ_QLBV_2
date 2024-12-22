@@ -53,20 +53,20 @@ namespace QuanLyBenhVien.View
 
             try
             {
-                using (SqlConnection connection = _userRepository.GetConnection())
+                using (sqlCon = _userRepository.GetConnection()) // Sử dụng biến toàn cục sqlCon
                 {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@MaBenhNhan", maBenhNhan);
+                    sqlCon.Open();
+                    adapter = new SqlDataAdapter(query, sqlCon); // Khởi tạo adapter với câu lệnh SQL và kết nối
+                    adapter.SelectCommand.Parameters.AddWithValue("@MaBenhNhan", maBenhNhan);
 
-                    SqlDataAdapter adapter = new SqlDataAdapter(command);
-                    DataTable dataTable = new DataTable();
-                    adapter.Fill(dataTable);
+                    ds = new DataSet(); // Khởi tạo DataSet
+                    adapter.Fill(ds, "BenhNhan"); // Đổ dữ liệu vào DataSet
+
+                    DataTable dataTable = ds.Tables["BenhNhan"]; // Lấy DataTable từ DataSet
 
                     if (dataTable.Rows.Count == 0)
                     {
                         MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                        
                     }
                     else if (dataTable.Rows.Count == 1)
                     {

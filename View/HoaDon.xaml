@@ -89,7 +89,7 @@
 
             <Button Style="{StaticResource childviewButton}" 
                     Margin="52,0,0,0"
-                    Content="Cập nhật"/>
+                    Content="Cập nhật" Click="Button_Click_2"/>
 
             <Button Style="{StaticResource childviewButton}" 
                     Margin="52,0,0,0"

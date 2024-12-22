@@ -187,7 +187,6 @@ namespace QuanLyBenhVien.View
                             }
                         }
                     }
-
                     // Cập nhật DonThuoc
                     string queryUpdateDonThuoc = "UPDATE DonThuoc SET MaHoaDon = @MaHoaDon WHERE MaDonThuoc = @MaDonThuoc AND MaHoaDon IS NULL";
                     SqlCommand cmdUpdate = new SqlCommand(queryUpdateDonThuoc, conn);
@@ -199,6 +198,29 @@ namespace QuanLyBenhVien.View
                     if (rowsAffected > 0)
                     {
                         MessageBox.Show("Cập nhật đơn thuốc thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                        // Tính tổng tiền từ CTDonThuoc cho MaDonThuoc
+                        string queryGetTotalAmount = @"
+                        SELECT SUM(GiaTien) 
+                        FROM CTDonThuoc 
+                        WHERE MaDonThuoc = @MaDonThuoc";
+
+                        SqlCommand cmdGetTotalAmount = new SqlCommand(queryGetTotalAmount, conn);
+                        cmdGetTotalAmount.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
+
+                        object totalAmountResult = cmdGetTotalAmount.ExecuteScalar();
+                        decimal totalAmount = totalAmountResult != DBNull.Value ? Convert.ToDecimal(totalAmountResult) : 0;
+
+                        // Cộng tổng tiền vào HoaDon
+                        string queryUpdateHoaDonAmount = @"
+                        UPDATE HoaDon 
+                        SET GiaTien = ISNULL(GiaTien, 0) + @TotalAmount 
+                        WHERE MaHoaDon = @MaHoaDon";
+
+                        SqlCommand cmdUpdateHoaDonAmount = new SqlCommand(queryUpdateHoaDonAmount, conn);
+                        cmdUpdateHoaDonAmount.Parameters.AddWithValue("@TotalAmount", totalAmount);
+                        cmdUpdateHoaDonAmount.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+
+                        cmdUpdateHoaDonAmount.ExecuteNonQuery();
 
                         // Hiển thị ngày lập đơn thuốc
                         string queryGetNgayLapDon = "SELECT NgayLapDon FROM DonThuoc WHERE MaDonThuoc = @MaDonThuoc";
@@ -345,6 +367,30 @@ namespace QuanLyBenhVien.View
                             if (rowsAffected > 0)
                             {
                                 MessageBox.Show($"Đơn thuốc \"{maDonThuoc}\" đã được xóa khỏi hóa đơn \"{maHoaDon}\" thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                // Tính tổng tiền từ CTDonThuoc cho MaDonThuoc
+                                string queryGetTotalAmount = @"
+                                SELECT SUM(SoLuong * GiaTien) 
+                                FROM CTDonThuoc 
+                                WHERE MaDonThuoc = @MaDonThuoc";
+
+                                SqlCommand cmdGetTotalAmount = new SqlCommand(queryGetTotalAmount, conn);
+                                cmdGetTotalAmount.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
+
+                                object totalAmountResult = cmdGetTotalAmount.ExecuteScalar();
+                                decimal totalAmount = totalAmountResult != DBNull.Value ? Convert.ToDecimal(totalAmountResult) : 0;
+
+                                // Trừ tổng tiền vào HoaDon
+                                string queryUpdateHoaDonAmount = @"
+                                UPDATE HoaDon 
+                                SET GiaTien = ISNULL(GiaTien, 0) - @TotalAmount 
+                                WHERE MaHoaDon = @MaHoaDon";
+
+                                SqlCommand cmdUpdateHoaDonAmount = new SqlCommand(queryUpdateHoaDonAmount, conn);
+                                cmdUpdateHoaDonAmount.Parameters.AddWithValue("@TotalAmount", totalAmount);
+                                cmdUpdateHoaDonAmount.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+
+                                cmdUpdateHoaDonAmount.ExecuteNonQuery();
+
                             }
                             else
                             {
@@ -592,12 +638,35 @@ namespace QuanLyBenhVien.View
                     
 
                     MessageBox.Show("Thêm vật dụng vào hóa đơn thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    // Tính tổng tiền từ VatDung cho MaDonThuoc
+                    string queryGetTotalAmount = @"
+                    SELECT SUM(SoLuong * Gia) 
+                    FROM VatDung
+                    WHERE MaVatDung = @MaVatDung";
+
+                    SqlCommand cmdGetTotalAmount = new SqlCommand(queryGetTotalAmount, conn);
+                    cmdGetTotalAmount.Parameters.AddWithValue("@MaVatDung", maVatDung);
+
+                    object totalAmountResult = cmdGetTotalAmount.ExecuteScalar();
+                    decimal totalAmount = totalAmountResult != DBNull.Value ? Convert.ToDecimal(totalAmountResult) : 0;
+
+                    // Cộng tổng tiền vào HoaDon
+                    string queryUpdateHoaDonAmount = @"
+                    UPDATE HoaDon 
+                    SET GiaTien = ISNULL(GiaTien, 0) + @TotalAmount 
+                    WHERE MaHoaDon = @MaHoaDon";
+
+                    SqlCommand cmdUpdateHoaDonAmount = new SqlCommand(queryUpdateHoaDonAmount, conn);
+                    cmdUpdateHoaDonAmount.Parameters.AddWithValue("@TotalAmount", totalAmount);
+                    cmdUpdateHoaDonAmount.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+
+                    cmdUpdateHoaDonAmount.ExecuteNonQuery();
                     // Load dữ liệu vào DataGrid
                     string queryLoadData = @"
-    SELECT VatDung.TenVatDung, VatDung.SoLuong, VatDung.Gia AS DonGia, 
-           (VatDung.SoLuong * VatDung.Gia) AS ThanhTien
-    FROM VatDung
-    WHERE VatDung.MaVatDung = @MaVatDung";
+                    SELECT VatDung.TenVatDung, VatDung.SoLuong, VatDung.Gia AS DonGia, 
+                    (VatDung.SoLuong * VatDung.Gia) AS ThanhTien
+                    FROM VatDung
+                    WHERE VatDung.MaVatDung = @MaVatDung";
 
                     SqlDataAdapter adapter = new SqlDataAdapter(queryLoadData, conn);
                     adapter.SelectCommand.Parameters.AddWithValue("@MaVatDung", maVatDung);
@@ -693,6 +762,29 @@ namespace QuanLyBenhVien.View
                         if (rowsAffected > 0)
                         {
                             MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                            // Tính tổng tiền từ VatDung cho MaDonThuoc
+                            string queryGetTotalAmount = @"
+                            SELECT SUM(SoLuong * Gia) 
+                            FROM VatDung
+                            WHERE MaVatDung = @MaVatDung";
+
+                            SqlCommand cmdGetTotalAmount = new SqlCommand(queryGetTotalAmount, connection);
+                            cmdGetTotalAmount.Parameters.AddWithValue("@MaVatDung", maVatDung);
+
+                            object totalAmountResult = cmdGetTotalAmount.ExecuteScalar();
+                            decimal totalAmount = totalAmountResult != DBNull.Value ? Convert.ToDecimal(totalAmountResult) : 0;
+
+                            // Cộng tổng tiền vào HoaDon
+                            string queryUpdateHoaDonAmount = @"
+                            UPDATE HoaDon 
+                            SET GiaTien = ISNULL(GiaTien, 0) - @TotalAmount 
+                            WHERE MaHoaDon = @MaHoaDon";
+
+                            SqlCommand cmdUpdateHoaDonAmount = new SqlCommand(queryUpdateHoaDonAmount, connection);
+                            cmdUpdateHoaDonAmount.Parameters.AddWithValue("@TotalAmount", totalAmount);
+                            cmdUpdateHoaDonAmount.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+
+                            cmdUpdateHoaDonAmount.ExecuteNonQuery();
                         }
                         else
                         {

@@ -19,7 +19,20 @@ namespace QuanLyBenhVien.ViewModel
         private string _cccd;
         private string _soDienThoai;
         private string _diaChi;
-
+        public void Reset()
+        {
+            MaNhanVien = string.Empty;
+            Ho = string.Empty;
+            Ten = string.Empty;
+            ChuyenNganh = string.Empty;
+            Email = string.Empty;
+            ChucVu = string.Empty;
+            GioiTinh = string.Empty;
+            CCCD = string.Empty;
+            SoDienThoai = string.Empty;
+            DiaChi = string.Empty;
+            NgaySinh = null;
+        }
         public string MaNhanVien
         {
             get => _maNhanVien;

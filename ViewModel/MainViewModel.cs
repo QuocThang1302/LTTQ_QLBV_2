@@ -146,6 +146,7 @@ namespace QuanLyBenhVien.ViewModel
             });
         }
         
+
         private void ExecuteShowTTCaNhanViewCommand(object obj)
         {
             var nhanVienData = _userRepository.GetNhanVienByID(UserID);
@@ -153,6 +154,7 @@ namespace QuanLyBenhVien.ViewModel
             {
                 CurrentChildView = new NhanVienViewModel
                 {
+                    
                     MaNhanVien = nhanVienData.MaNhanVien,
                     Ho = nhanVienData.Ho,
                     Ten = nhanVienData.Ten,

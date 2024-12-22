@@ -52,52 +52,52 @@
                     <StackPanel Grid.Row="1">
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Mã nhân viên:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Text="{Binding MaNhanVien, Mode=OneWay}" Name="txtMaNhanVien" Width="250" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Text="{Binding MaNhanVien, Mode=TwoWay}" Name="txtMaNhanVien" Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Họ, tên đệm" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Text="{Binding Ho, Mode=OneWay}" Name="txtHo" Width="250" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Text="{Binding Ho, Mode=TwoWay}" Name="txtHo" Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Chuyên ngành:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Text="{Binding ChuyenNganh, Mode=OneWay}" Name="txtChuyenNganh" Width="250" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Text="{Binding ChuyenNganh, Mode=TwoWay}" Name="txtChuyenNganh" Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Ngày sinh:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Text="{Binding NgaySinh, Mode=OneWay, StringFormat=d, TargetNullValue=''}" Name="txtNgaySinh" Width="250" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Text="{Binding NgaySinh, Mode=TwoWay, StringFormat=d, TargetNullValue=''}" Name="txtNgaySinh" Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30,05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Email:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Text="{Binding Email, Mode=OneWay}" Name="txtEmail" Width="250" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Text="{Binding Email, Mode=TwoWay}" Name="txtEmail" Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Grid.Row="1">
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Chức vụ:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Text="{Binding ChucVu, Mode=OneWay}" Name="txtChucVu" Width="250" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Text="{Binding ChucVu, Mode=TwoWay}" Name="txtChucVu" Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Tên:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Text="{Binding Ten, Mode=OneWay}" Name="txtTen" Width="250" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Text="{Binding Ten, Mode=TwoWay}" Name="txtTen" Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Giới tính:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Text="{Binding GioiTinh, Mode=OneWay}" Name="txtGioiTinh" Width="250" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Text="{Binding GioiTinh, Mode=TwoWay}" Name="txtGioiTinh" Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="CCCD:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Text="{Binding CCCD, Mode=OneWay}" Name="txtCCCD" Width="250" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Text="{Binding CCCD, Mode=TwoWay}" Name="txtCCCD" Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Số điện thoại:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Text="{Binding SoDienThoai, Mode=OneWay}" Name="txtSDT" Width="250" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Text="{Binding SoDienThoai, Mode=TwoWay}" Name="txtSDT" Width="250" Style="{StaticResource TextBoxStyles}"/>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Địa chỉ:" Width="160" VerticalAlignment="Center" FontSize="20"/>
 
-                            <TextBox Text="{Binding DiaChi, Mode=OneWay}" Name="txtDiaChi" Height="40" Width="707" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Text="{Binding DiaChi, Mode=TwoWay}" Name="txtDiaChi" Height="40" Width="707" Style="{StaticResource TextBoxStyles}"/>
 
                         </StackPanel>
                     </StackPanel>

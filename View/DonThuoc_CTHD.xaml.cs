@@ -113,7 +113,7 @@ namespace QuanLyBenhVien.View
                         if (thuocReader.Read())
                         {
                             string maThuoc = thuocReader["MaThuoc"].ToString();
-                            decimal giaTienThuoc = (decimal)thuocReader["GiaTien"];
+                            decimal giaTienThuoc = (decimal)thuocReader["GiaTien"] ;
                             int soLuongTonKho = (int)thuocReader["SoLuong"];
                             thuocReader.Close();
                             

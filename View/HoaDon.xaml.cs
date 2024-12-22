@@ -216,5 +216,10 @@ namespace QuanLyBenhVien.View
             vitri = dgvHoaDon.SelectedIndex;
             if (vitri == -1) return;
         }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
