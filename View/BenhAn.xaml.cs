@@ -342,6 +342,7 @@ namespace QuanLyBenhVien.View
 
                     // Giữ lại dòng đã chọn
                     dgDanhSachBenhAn.SelectedItem = selectedRow;
+                    HienThiDanhSach();
                 }
                 else
                 {

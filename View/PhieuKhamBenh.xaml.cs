@@ -392,6 +392,7 @@ namespace QuanLyBenhVien.View
 
                     // Đặt lại vị trí dòng đã chọn
                     dgDanhSach.SelectedItem = selectedRow;  // Giữ lại dòng đã chọn
+                    HienThiDanhSach();
                     ClearFields();  // Xóa các trường sau khi xử lý
                 }
                 else
