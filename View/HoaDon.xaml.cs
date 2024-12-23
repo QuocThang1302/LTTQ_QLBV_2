@@ -65,7 +65,7 @@ namespace QuanLyBenhVien.View
             string roleID = GetRoleIDByUserID();
             if (roleID == "R02")
             {
-                btn_CapNhat.Visibility = Visibility.Hidden;
+                
                 btn_Them.Visibility = Visibility.Hidden;
                 btn_Xoa.Visibility = Visibility.Hidden;
             }

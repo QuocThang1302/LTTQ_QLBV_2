@@ -1,18 +1,23 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using FontAwesome.Sharp;
 using Microsoft.Data.SqlClient;
 using QuanLyBenhVien.Repositories;
+using QuanLyBenhVien.ViewModel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace QuanLyBenhVien.View
 {
     public partial class Khoa : Window
     {
+        
         private readonly RepositoryBase _userRepository;
         public Khoa()
         {
             _userRepository = new UserRepository();
             InitializeComponent();
         }
+
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
