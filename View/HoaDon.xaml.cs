@@ -141,8 +141,11 @@ namespace QuanLyBenhVien.View
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            // Lấy hàng được chọn từ DataGrid
+            var selectedRow = dgvHoaDon.SelectedItem as DataRowView;
+
             // Kiểm tra xem người dùng đã chọn dòng nào chưa
-            if (vitri == -1)
+            if (selectedRow == null)
             {
                 MessageBox.Show("Vui lòng chọn một dòng để xóa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -151,11 +154,13 @@ namespace QuanLyBenhVien.View
             try
             {
                 // Xác nhận từ người dùng trước khi xóa
-                var result = MessageBox.Show("Bạn có chắc chắn muốn xóa dòng này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var result = MessageBox.Show("Bạn có chắc chắn muốn xóa dòng này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    // Xóa dòng được chọn trong DataTable
-                    DataRow dataRow = ds.Tables["tblHoaDon"].Rows[vitri];
+                    // Lấy DataRow từ DataRowView
+                    DataRow dataRow = selectedRow.Row;
+
+                    // Xóa hàng trong DataTable
                     dataRow.Delete();
 
                     // Cập nhật thay đổi vào cơ sở dữ liệu
@@ -171,14 +176,38 @@ namespace QuanLyBenhVien.View
                     }
                     else
                     {
-                        MessageBox.Show("Xóa dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("Xóa dữ liệu thất bại! Không có thay đổi nào được thực hiện.", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+                }
+            }
+            catch (SqlException ex)
+            {
+                // Kiểm tra lỗi SQL (vi phạm khóa ngoại, khóa chính...)
+                if (ex.Number == 547) // Lỗi vi phạm khóa ngoại (foreign key)
+                {
+                    MessageBox.Show("Không thể xóa dòng này vì dữ liệu bị ràng buộc với các bảng khác.", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (ex.Number == 2627) // Lỗi vi phạm khóa chính (primary key)
+                {
+                    MessageBox.Show("Không thể xóa dòng này vì có dữ liệu trùng lặp trong hệ thống.", "Lỗi khóa chính", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (ex.Number == 4060) // Lỗi kết nối tới cơ sở dữ liệu
+                {
+                    MessageBox.Show("Lỗi kết nối tới cơ sở dữ liệu. Vui lòng kiểm tra kết nối và thử lại.", "Lỗi kết nối", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    // Lỗi SQL chung
+                    MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi cơ sở dữ liệu", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
             {
+                // Lỗi tổng quát (ví dụ: lỗi bất ngờ)
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            HienThiDanhSach();
+
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -202,7 +231,7 @@ namespace QuanLyBenhVien.View
             {
                 sqlCon = _userRepository.GetConnection();
             }
-            string query = "SELECT \r\n    HD.MaHoaDon, \r\n    HD.TenHoaDon, \r\n    BN.MaBenhNhan, \r\n    NV.MaNhanVien, \r\n    HD.NgayLapHoaDon, \r\n    HD.GiaTien, \r\n    HD.TrangThai\r\nFROM HoaDon HD\r\nJOIN BenhNhan BN ON HD.MaBenhNhan = BN.MaBenhNhan\r\nJOIN NhanVien NV ON HD.MaNhanVien = NV.MaNhanVien;";
+            string query = " select MaHoaDon, TenHoaDon, MaBenhNhan, MaNhanVien, NgayLapHoaDon, GiaTien, TrangThai from HoaDon";
             adapter = new SqlDataAdapter(query, sqlCon);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
 
@@ -219,8 +248,12 @@ namespace QuanLyBenhVien.View
         private int vitri = -1;
         private void dgvHoaDon_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            vitri = dgvHoaDon.SelectedIndex;
-            if (vitri == -1) return;
+            var selectedRow = dgvHoaDon.SelectedItem as DataRowView;
+
+            if (selectedRow == null) return;
+
+            // Lấy dữ liệu từ DataRowView
+            DataRow dataRow = selectedRow.Row;
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)

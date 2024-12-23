@@ -217,7 +217,7 @@ namespace QuanLyBenhVien.View
             {
                 sqlCon = _userRepository.GetConnection();
             }
-            string query = " select MaNhanVien, Ho, Ten, LoaiNhanVien, MaChuyenNganh, GioiTinh, CCCD, SDT, NgaySinh, Email, DiaChi, MatKhau  from NhanVien";
+            string query = " select MaNhanVien, Ho, Ten, LoaiNhanVien, MaChuyenNganh, GioiTinh, CCCD, SDT, NgaySinh, Email, DiaChi, MatKhau, RoleID  from NhanVien";
             adapter = new SqlDataAdapter(query, sqlCon);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
 
