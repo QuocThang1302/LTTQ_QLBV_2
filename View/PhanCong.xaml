@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:QuanLyBenhVien.View"
         xmlns:viewModel="clr-namespace:QuanLyBenhVien.ViewModel"
         mc:Ignorable="d"
+        PreviewMouseDown="Window_PreviewMouseDown"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         MouseDown="Window_MouseDown"
@@ -115,14 +116,20 @@
                                  Margin="10,0,30,0"
                                  Width="340"/>
 
-                        <TextBox Name="TxB_NgayTruc" Grid.Column="1" Grid.Row="2"
-                                 Text="{Binding NgayTruc, StringFormat=d, TargetNullValue=''}"
-                                 Style="{StaticResource TextBoxStyles}"
-                                 VerticalAlignment="Center"
-                                 HorizontalAlignment="Left"
-                                 Margin="10,0,30,0"
-                                 Width="340"/>
-
+                        <TextBox Name="TxB_NgayTruc"
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        Text="{Binding NgayTruc, StringFormat=yyyy-MM-dd, TargetNullValue=''}"
+                        Style="{StaticResource TextBoxStyles}"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        Margin="10,0,30,0"
+                        Width="340"
+                        IsReadOnly="True"
+                        PreviewMouseDown="TxB_NgayTruc_PreviewMouseDown" />
+                        <Popup Name="popupCalendarNgayTruc" IsOpen="False" PlacementTarget="{Binding ElementName=TxB_NgayTruc}" Placement="Bottom">
+                            <Calendar Name="calendarNgayTruc" SelectedDatesChanged="calendarNgayTruc_SelectedDatesChanged" Focusable="False" />
+                        </Popup>
                         <TextBox Name="TxB_PhanCong" Grid.Column="1" Grid.Row="3"
                                  Text="{Binding PhanCong}"
                                  Style="{StaticResource TextBoxStyles}"

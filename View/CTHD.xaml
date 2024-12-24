@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLyBenhVien.View"
+        PreviewMouseDown="Window_PreviewMouseDown"
         mc:Ignorable="d"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
@@ -75,7 +76,10 @@
                             <TextBox x:Name="txtBenhNhan" Grid.Row="3" Grid.Column="1" Height="30" Style="{StaticResource TextBoxStyles}" Margin="5"/>
                             <TextBox x:Name="txtMaNhanVien" Grid.Row="4" Grid.Column="1" Height="30" Style="{StaticResource TextBoxStyles}" Margin="5"/>
                             <TextBox x:Name="txtNhanVien" Grid.Row="5" Grid.Column="1" Height="30" Style="{StaticResource TextBoxStyles}" Margin="5"/>
-                            <TextBox x:Name="txtNgayLap" Grid.Row="6" Grid.Column="1" Height="30" Style="{StaticResource TextBoxStyles}" Margin="5"/>
+                            <TextBox x:Name="txtNgayLap" Grid.Row="6" Grid.Column="1" Height="30" Style="{StaticResource TextBoxStyles}" Margin="5" PreviewMouseDown="txtNgayLap_PreviewMouseDown" IsReadOnly="True"/>
+                            <Popup x:Name="popupCalendarNgayLap" IsOpen="False" PlacementTarget="{Binding ElementName=txtNgayLap}" Placement="Bottom">
+                                <Calendar x:Name="calendarNgayLap" SelectedDatesChanged="calendarNgayLap_SelectedDatesChanged" Focusable="False"/>
+                            </Popup>
 
                         </Grid>
                     </Border>

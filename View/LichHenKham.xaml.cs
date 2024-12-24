@@ -4,6 +4,7 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using QuanLyBenhVien.Repositories;
 using System.Diagnostics;
+using System.Windows.Input;
 
 namespace QuanLyBenhVien.View
 {
@@ -46,6 +47,28 @@ namespace QuanLyBenhVien.View
             }
 
             return roleID; // Trả về RoleID hoặc null nếu không tìm thấy
+        }
+        private void tbNgayHenKham_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            popupCalendarNgayHenKham.IsOpen = true; // Mở popup khi nhấn vào TextBox
+            e.Handled = true; // Ngăn sự kiện lan sang Window_PreviewMouseDown
+        }
+
+        private void calendarNgayHenKham_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (calendarNgayHenKham.SelectedDate.HasValue)
+            {
+                tbNgayHenKham.Text = calendarNgayHenKham.SelectedDate.Value.ToString("yyyy-MM-dd"); // Định dạng ngày theo yyyy-MM-dd
+                popupCalendarNgayHenKham.IsOpen = false; // Ẩn popup sau khi chọn ngày
+            }
+        }
+
+        private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (popupCalendarNgayHenKham.IsOpen && !popupCalendarNgayHenKham.IsMouseOver)
+            {
+                popupCalendarNgayHenKham.IsOpen = false; // Ẩn popup nếu nhấn ra ngoài
+            }
         }
         public LichHenKham()
         {

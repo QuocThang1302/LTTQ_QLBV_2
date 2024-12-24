@@ -14,6 +14,31 @@ namespace QuanLyBenhVien.View
             PhanCongViewModel viewModel = new PhanCongViewModel();
             DataContext = viewModel;
         }
+        private void TxB_NgayTruc_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            popupCalendarNgayTruc.IsOpen = true; // Mở popup khi nhấn vào TextBox
+            e.Handled = true; // Ngăn sự kiện lan sang Window_PreviewMouseDown
+        }
+
+        private void calendarNgayTruc_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (calendarNgayTruc.SelectedDate.HasValue)
+            {
+                // Gán giá trị vào Binding Property (NgayTruc)
+                var selectedDate = calendarNgayTruc.SelectedDate.Value.ToString("yyyy-MM-dd");
+                TxB_NgayTruc.Text = selectedDate;
+
+                popupCalendarNgayTruc.IsOpen = false; // Ẩn popup sau khi chọn ngày
+            }
+        }
+
+        private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (popupCalendarNgayTruc.IsOpen && !popupCalendarNgayTruc.IsMouseOver)
+            {
+                popupCalendarNgayTruc.IsOpen = false; // Ẩn popup nếu nhấn ra ngoài
+            }
+        }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {

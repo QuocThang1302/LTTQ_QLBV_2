@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using Microsoft.Data.SqlClient;
 using QuanLyBenhVien.Repositories;
 
@@ -47,6 +48,29 @@ namespace QuanLyBenhVien.View
 
             return roleID; // Trả về RoleID hoặc null nếu không tìm thấy
         }
+        private void txtNgaySinh_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            popupCalendarNgaySinh.IsOpen = true; // Mở popup khi nhấn vào TextBox
+            e.Handled = true; // Ngăn sự kiện lan sang Window_PreviewMouseDown
+        }
+
+        private void calendarNgaySinh_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (calendarNgaySinh.SelectedDate.HasValue)
+            {
+                txtNgaySinh.Text = calendarNgaySinh.SelectedDate.Value.ToString("yyyy-MM-dd"); // Gán ngày với định dạng yyyy-MM-dd
+                popupCalendarNgaySinh.IsOpen = false; // Ẩn popup sau khi chọn ngày
+            }
+        }
+
+        private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (popupCalendarNgaySinh.IsOpen && !popupCalendarNgaySinh.IsMouseOver)
+            {
+                popupCalendarNgaySinh.IsOpen = false; // Ẩn popup nếu nhấn ra ngoài
+            }
+        }
+
 
         public ThongTinNhanVien()
         {

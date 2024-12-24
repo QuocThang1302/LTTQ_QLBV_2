@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuanLyBenhVien.View"
              mc:Ignorable="d" 
+             PreviewMouseDown="Window_PreviewMouseDown"
              xmlns:customControls="clr-namespace:QuanLyBenhVien.CustomControls"
              d:DesignHeight="628" d:DesignWidth="978" Loaded="UserControl_Loaded">
     <Grid>
@@ -77,7 +78,14 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock Text="Ngày khám:" FontWeight="Bold" FontFamily="Inter" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox Name="txtNgayKham" Width="250" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Name="txtNgayKham" 
+                                Width="250" 
+                                Style="{StaticResource TextBoxStyles}" 
+                                IsReadOnly="True" 
+                                PreviewMouseDown="txtNgayKham_PreviewMouseDown" />
+                            <Popup Name="popupCalendarNgayKham" IsOpen="False" PlacementTarget="{Binding ElementName=txtNgayKham}" Placement="Bottom">
+                                <Calendar Name="calendarNgayKham" SelectedDatesChanged="calendarNgayKham_SelectedDatesChanged" Focusable="False" />
+                            </Popup>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock Text="Chẩn đoán:" FontWeight="Bold" FontFamily="Inter" Width="160" VerticalAlignment="Center" FontSize="20"/>

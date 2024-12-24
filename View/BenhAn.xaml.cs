@@ -34,12 +34,19 @@ namespace QuanLyBenhVien.View
         {
             popupCalendar.IsOpen = true;
         }
-
+        private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (popupCalendar.IsOpen && !popupCalendar.IsMouseOver && !calendar.IsMouseOver)
+            {
+                popupCalendar.IsOpen = false;
+            }
+        }
+        
         private void calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             if (calendar.SelectedDate.HasValue)
             {
-                txtNgayTaoLap.Text = calendar.SelectedDate.Value.ToString("dd/MM/yyyy"); // Định dạng ngày tháng
+                txtNgayTaoLap.Text = calendar.SelectedDate.Value.ToString("yyyy-MM-dd"); // Định dạng ngày tháng
                 popupCalendar.IsOpen = false;
             }
         }

@@ -4,6 +4,7 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using QuanLyBenhVien.Repositories;
 using QuanLyBenhVien.Model;
+using System.Windows.Controls;
 
 namespace QuanLyBenhVien.View
 {
@@ -872,12 +873,31 @@ namespace QuanLyBenhVien.View
                 }
             }
         }
+        private void txtNgayLap_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            popupCalendarNgayLap.IsOpen = true; // Mở popup khi nhấn vào TextBox
+        }
+
+        private void calendarNgayLap_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (calendarNgayLap.SelectedDate.HasValue)
+            {
+                txtNgayLap.Text = calendarNgayLap.SelectedDate.Value.ToString("yyyy-MM-dd");
+                popupCalendarNgayLap.IsOpen = false; // Ẩn popup sau khi chọn ngày
+            }
+        }
 
         private void btnDong_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
-
+        private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (popupCalendarNgayLap.IsOpen && !popupCalendarNgayLap.IsMouseOver)
+            {
+                popupCalendarNgayLap.IsOpen = false; // Ẩn popup nếu nhấn bên ngoài popup
+            }
+        }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)

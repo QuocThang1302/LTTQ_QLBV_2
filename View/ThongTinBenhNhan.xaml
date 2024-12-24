@@ -6,6 +6,7 @@
              xmlns:customControls="clr-namespace:QuanLyBenhVien.CustomControls"
              xmlns:local="clr-namespace:QuanLyBenhVien.View"
              mc:Ignorable="d" 
+             PreviewMouseDown="Window_PreviewMouseDown"
              Background="Transparent"
              d:DesignHeight="628" d:DesignWidth="978" Loaded="UserControl_Loaded">
 
@@ -78,7 +79,15 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Ngày sinh:" Width="160" VerticalAlignment="Center" FontSize="20"/>
-                            <TextBox x:Name="txtNgaySinh" Width="250" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox x:Name="txtNgaySinh" 
+                            Width="250" 
+                            Style="{StaticResource TextBoxStyles}" 
+                            IsReadOnly="True" 
+                            PreviewMouseDown="txtNgaySinh_PreviewMouseDown" />
+                            <Popup x:Name="popupCalendarNgaySinh" IsOpen="False" PlacementTarget="{Binding ElementName=txtNgaySinh}" Placement="Bottom">
+                                <Calendar x:Name="calendarNgaySinh" SelectedDatesChanged="calendarNgaySinh_SelectedDatesChanged" Focusable="False" />
+                            </Popup>
+
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Margin="30, 05, 0, 5">
                             <TextBlock FontWeight="Bold" FontFamily="Inter" Text="Nghề nghiệp:" Width="160" VerticalAlignment="Center" FontSize="20"/>

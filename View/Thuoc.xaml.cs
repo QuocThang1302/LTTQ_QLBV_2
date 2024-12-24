@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using Microsoft.Data.SqlClient;
 using System.Diagnostics;
 using QuanLyBenhVien.Repositories;
+using System.Windows.Input;
 
 
 
@@ -60,6 +61,28 @@ namespace QuanLyBenhVien.View
             searchControl.ClearButtonClicked += SearchControl_ClearButtonClicked;
             BacSi();
 
+        }
+        private void tbHSD_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            popupCalendarHSD.IsOpen = true; // Mở popup khi nhấn vào TextBox
+            e.Handled = true; // Ngăn sự kiện lan sang Window_PreviewMouseDown
+        }
+
+        private void calendarHSD_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (calendarHSD.SelectedDate.HasValue)
+            {
+                tbHSD.Text = calendarHSD.SelectedDate.Value.ToString("yyyy-MM-dd"); // Định dạng ngày theo yyyy-MM-dd
+                popupCalendarHSD.IsOpen = false; // Ẩn popup sau khi chọn ngày
+            }
+        }
+
+        private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (popupCalendarHSD.IsOpen && !popupCalendarHSD.IsMouseOver)
+            {
+                popupCalendarHSD.IsOpen = false; // Ẩn popup khi nhấn ra ngoài
+            }
         }
 
         private void BacSi()
