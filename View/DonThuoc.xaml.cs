@@ -173,7 +173,9 @@ namespace QuanLyBenhVien.View
             string query = "SELECT \r\n    MaDonThuoc, \r\n    DonThuoc.MaBenhNhan, \r\n    MaBacSi, \r\n    NgayLapDon, \r\n    DonThuoc.MaHoaDon\r\nFROM DonThuoc \r\nJOIN BenhNhan ON DonThuoc.MaBenhNhan = BenhNhan.MaBenhNhan \r\nJOIN NhanVien NV ON DonThuoc.MaBacSi = NV.MaNhanVien \r\nJOIN HoaDon HD ON DonThuoc.MaHoaDon = HD.MaHoaDon;";
             adapter = new SqlDataAdapter(query, sqlCon);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-
+            adapter.DeleteCommand = new SqlCommand(
+                "DELETE FROM CTDonThuoc WHERE MaDonThuoc=@MaDonThuoc", sqlCon);
+            adapter.DeleteCommand.Parameters.Add("@MaDonThuoc", SqlDbType.NVarChar, 20, "MaDonThuoc");
             ds = new DataSet();
             if (sqlCon.State == ConnectionState.Closed)
             {
@@ -201,14 +203,21 @@ namespace QuanLyBenhVien.View
         private int vitri = -1;
         private void dgvCTDonThuoc_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            vitri = dgvCTDonThuoc.SelectedIndex;
-            if (vitri == -1) return;
+            var selectedRow = dgvCTDonThuoc.SelectedItem as DataRowView;
+
+            if (selectedRow == null) return;
+
+            // Lấy dữ liệu từ DataRowView
+            DataRow dataRow = selectedRow.Row;
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
+            // Lấy hàng được chọn từ DataGrid
+            var selectedRow = dgvCTDonThuoc.SelectedItem as DataRowView;
+
             // Kiểm tra xem người dùng đã chọn dòng nào chưa
-            if (vitri == -1)
+            if (selectedRow == null)
             {
                 MessageBox.Show("Vui lòng chọn một dòng để xóa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -217,23 +226,38 @@ namespace QuanLyBenhVien.View
             try
             {
                 // Xác nhận từ người dùng trước khi xóa
-                var result = MessageBox.Show("Bạn có chắc chắn muốn xóa dòng này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var result = MessageBox.Show("Bạn có chắc chắn muốn xóa dòng này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    // Xóa dòng được chọn trong DataTable
-                    DataRow dataRow = ds1.Tables["tblChiTiet"].Rows[vitri];
+                    // Lấy DataRow từ DataRowView
+                    DataRow dataRow = selectedRow.Row;
+
+                    // Xóa hàng trong DataTable
                     dataRow.Delete();
 
-                    // Cập nhật thay đổi vào cơ sở dữ liệu
+                    // Mở kết nối cơ sở dữ liệu
+                    if (sqlCon.State != ConnectionState.Open)
+                    {
+                        sqlCon.Open();
+                    }
+
+                    //// Cấu hình SqlDataAdapter để xóa dữ liệu từ cơ sở dữ liệu
+                    //SqlDataAdapter adapter = new SqlDataAdapter();
+                    //adapter.DeleteCommand = new SqlCommand("DELETE FROM CTDonThuoc WHERE MaDonThuoc = @MaDonThuoc", sqlCon);
+
+                    //// Thêm tham số cho câu lệnh DELETE
+                    //adapter.DeleteCommand.Parameters.Add("@MaDonThuoc", SqlDbType.NVarChar, 20, "MaDonThuoc");
+
+                    // Thực hiện cập nhật để xóa dữ liệu trong cơ sở dữ liệu
                     int kq = adapter.Update(ds1.Tables["tblChiTiet"]);
 
+                    // Kiểm tra kết quả xóa
                     if (kq > 0)
                     {
                         MessageBox.Show("Xóa dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        // Cập nhật giao diện DataGrid
-                        dgvCTDonThuoc.ItemsSource = null;
-                        dgvCTDonThuoc.ItemsSource = ds1.Tables["tblChiTiet"].DefaultView;
+                        // Cập nhật lại giao diện DataGrid
+                        dgvCTDonThuoc.Items.Refresh();
                     }
                     else
                     {
@@ -241,10 +265,32 @@ namespace QuanLyBenhVien.View
                     }
                 }
             }
+            catch (SqlException ex)
+            {
+                // Xử lý các lỗi SQL cụ thể
+                if (ex.Number == 547) // Lỗi vi phạm khóa ngoại
+                {
+                    MessageBox.Show("Không thể xóa dòng này vì dữ liệu bị ràng buộc với các bảng khác.", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (ex.Number == 2627) // Lỗi vi phạm khóa chính
+                {
+                    MessageBox.Show("Không thể xóa dòng này vì dữ liệu trùng lặp trong hệ thống.", "Lỗi khóa chính", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (ex.Number == 4060) // Lỗi kết nối cơ sở dữ liệu
+                {
+                    MessageBox.Show("Lỗi kết nối tới cơ sở dữ liệu. Vui lòng kiểm tra kết nối và thử lại.", "Lỗi kết nối", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    MessageBox.Show($"Lỗi SQL: {ex.Message}", "Thông báo lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
             catch (Exception ex)
             {
+                // Xử lý lỗi tổng quát
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            HienThiDanhSach();
         }
     }
 }
