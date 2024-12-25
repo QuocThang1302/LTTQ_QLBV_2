@@ -179,8 +179,8 @@
                         <DataGridTextColumn Header="Tên bệnh nhân" Width="*" Binding="{Binding Ten}"/>
 
                         <DataGridTextColumn Header="Mã bệnh nhân" Width="*" Binding="{Binding MaBenhNhan}"/>
-                        
-                        <DataGridTextColumn Header="Ngày tạo lập" Width="*" Binding="{Binding NgayTaoLap}"/>
+
+                        <DataGridTextColumn Header="Ngày tạo lập" Width="*" Binding="{Binding NgayTaoLap, StringFormat='yyyy-MM-dd'}"/>
                         <DataGridTextColumn Header="Tình trạng" Width="*" Binding="{Binding TinhTrang}"/>
                         <DataGridTextColumn Header="Bệnh" Width="*" Binding="{Binding Benh}"/>
                         <DataGridTextColumn Header="Hướng điều trị" Width="1.5*" Binding="{Binding DieuTri}"/>

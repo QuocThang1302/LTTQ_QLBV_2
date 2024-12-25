@@ -193,7 +193,7 @@
                         <DataGridTextColumn Header="Mã phiếu" Width="*" Binding="{Binding MaPhieuKham}" />
                         <DataGridTextColumn Header="Mã bệnh nhân" Width="1.4*" Binding="{Binding MaBenhNhan}" />
                         <DataGridTextColumn Header="Bệnh nhân" Width="1.2*" Binding="{Binding TEN_BENHNHAN}" />
-                        <DataGridTextColumn Header="Ngày khám" Width="1.2*" Binding="{Binding NgayKham, StringFormat={}{0:dd/MM/yyyy}}" />
+                        <DataGridTextColumn Header="Ngày khám" Width="1.2*" Binding="{Binding NgayKham, StringFormat='yyyy-MM-dd'}" />
                         <DataGridTextColumn Header="Lý do" Width="0.7*" Binding="{Binding LyDoKhamBenh}" />
                         <DataGridTextColumn Header="Chẩn đoán" Width="1.2*" Binding="{Binding ChanDoan}" />
                         <DataGridTextColumn Header="Khám" Width="0.7*" Binding="{Binding KhamLamSang}" />

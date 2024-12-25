@@ -52,7 +52,6 @@ namespace QuanLyBenhVien.View
         {
             _userRepository = new UserRepository();
             InitializeComponent();
-            
             searchControl.Tmp = "Nhập mã khoa hoặc tên khoa";
             // Đăng ký sự kiện SearchButtonClicked
             searchControl.SearchButtonClicked += SearchControl_SearchButtonClicked;
@@ -61,7 +60,6 @@ namespace QuanLyBenhVien.View
             searchControl.ClearButtonClicked += SearchControl_ClearButtonClicked;
             BacSi();
         }
-        
         private void BacSi()
         {
             string roleID = GetRoleIDByUserID();
@@ -76,7 +74,7 @@ namespace QuanLyBenhVien.View
             }
             return;
         }
-        
+
         private void SearchControl_ClearButtonClicked(object sender, EventArgs e)
         {
             // Logic khi nút X được nhấn
@@ -162,6 +160,7 @@ namespace QuanLyBenhVien.View
                 Debug.WriteLine($"Error: {ex.Message}");
             }
         }
+
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;

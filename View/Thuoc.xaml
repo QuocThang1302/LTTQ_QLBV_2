@@ -199,7 +199,7 @@
                         <DataGridTextColumn Header="Công dụng" Width="*" Binding="{Binding CongDung}"/>
                         <DataGridTextColumn Header="Số lượng" Width="*" Binding ="{Binding SoLuong}"/>
                         <DataGridTextColumn Header="Giá tiền" Width="*"  Binding ="{Binding GiaTien}"/>
-                        <DataGridTextColumn Header="Hạn sử dụng" Width="*" Binding ="{Binding HanSuDung}"/>
+                        <DataGridTextColumn Header="Hạn sử dụng" Width="*" Binding ="{Binding HanSuDung, StringFormat='yyyy-MM-dd'}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

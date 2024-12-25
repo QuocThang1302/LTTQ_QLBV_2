@@ -337,7 +337,7 @@ namespace QuanLyBenhVien.View
             txtMaBenhNhan.Text = dataRow["MaBenhNhan"]?.ToString() ?? string.Empty;
             txtHo.Text = dataRow["Ho"]?.ToString() ?? string.Empty;
             txtTen.Text = dataRow["Ten"]?.ToString() ?? string.Empty;
-            txtNgaySinh.Text = dataRow["NgaySinh"]?.ToString() ?? string.Empty;
+            txtNgaySinh.Text = Convert.ToDateTime(dataRow["NgaySinh"]).ToString("yyyy-MM-dd")?.ToString() ?? string.Empty;
             txtGioiTinh.Text = dataRow["GioiTinh"]?.ToString() ?? string.Empty;
             txtNgheNghiep.Text = dataRow["NgheNghiep"]?.ToString() ?? string.Empty;
             txtCCCD.Text = dataRow["CCCD"]?.ToString() ?? string.Empty;

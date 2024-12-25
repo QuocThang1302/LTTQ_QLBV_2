@@ -315,7 +315,7 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Mã lịch" Width="*" Binding="{Binding MaLichTruc}"/>
                                     <DataGridTextColumn Header="Mã bác sĩ" Width="1.1*" Binding="{Binding MaBacSi}"/>
-                                    <DataGridTextColumn Header="Ngày trực" Width="1.1*" Binding="{Binding NgayTruc}"/>
+                                    <DataGridTextColumn Header="Ngày trực" Width="1.1*" Binding="{Binding NgayTruc, StringFormat='yyyy-MM-dd'}"/>
                                     <DataGridTextColumn Header="Phân công" Width="1.1*" Binding="{Binding PhanCong}"/>
                                 </DataGrid.Columns>
                             </DataGrid>

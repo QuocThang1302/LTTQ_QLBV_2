@@ -93,7 +93,7 @@ namespace QuanLyBenhVien.View
                     txtMaBenhNhan.Text = row["MaBenhNhan"].ToString();
                     txtBenhNhan.Text = row["Ten"].ToString();
                     txtTinhTrang.Text = row["TinhTrang"].ToString();
-                    txtNgayTaoLap.Text = Convert.ToDateTime(row["NgayTaoLap"]).ToString("dd/MM/yyyy");
+                    txtNgayTaoLap.Text = Convert.ToDateTime(row["NgayTaoLap"]).ToString("yyyy-MM-dd");
                     txtBenh.Text = row["Benh"].ToString();
                     txtHuongDieuTri.Text = row["DieuTri"].ToString();
 
@@ -217,7 +217,7 @@ namespace QuanLyBenhVien.View
             txtBenhNhan.Text = dataRow["Ten"].ToString();
             txtMaBenhAn.Text = dataRow["MaBenhAn"].ToString();
             txtMaBenhNhan.Text = dataRow["MaBenhNhan"].ToString();
-            txtNgayTaoLap.Text = dataRow["NgayTaoLap"].ToString();
+            txtNgayTaoLap.Text = Convert.ToDateTime(dataRow["NgayTaoLap"]).ToString("yyyy-MM-dd");
             txtBenh.Text = dataRow["Benh"].ToString();
             txtTinhTrang.Text = dataRow["TinhTrang"].ToString();
             txtHuongDieuTri.Text = dataRow["Dieutri"].ToString();

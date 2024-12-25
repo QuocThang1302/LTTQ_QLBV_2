@@ -86,7 +86,7 @@
                         <DataGridTextColumn Header="Mã đơn thuốc" Binding="{Binding MaDonThuoc}" Width="1.1*"/>
                         <DataGridTextColumn Header="Bệnh nhân" Binding="{Binding MaBenhNhan}" Width="*"/>
                         <DataGridTextColumn Header="Bác sĩ" Binding="{Binding MaBacSi}" Width="*"/>
-                        <DataGridTextColumn Header="Ngày lập đơn" Binding="{Binding NgayLapDon, StringFormat='dd/MM/yyyy'}" Width="1.1*"/>
+                        <DataGridTextColumn Header="Ngày lập đơn" Binding="{Binding NgayLapDon, StringFormat='yyyy-MM-dd'}" Width="1.1*"/>
                         <DataGridTextColumn Header="Hóa đơn" Binding="{Binding MaHoaDon}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>

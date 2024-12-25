@@ -271,7 +271,7 @@ namespace QuanLyBenhVien.View
             txtMaBenhNhan.Text = dataRow["MaBenhNhan"].ToString();
             txtBenhNhan.Text = dataRow["TEN_BENHNHAN"].ToString();
             txtBacSi.Text = dataRow["TEN_BACSI"].ToString();
-            txtNgayKham.Text = dataRow["NgayKham"].ToString();
+            txtNgayKham.Text = Convert.ToDateTime(dataRow["NgayKham"]).ToString("yyyy-MM-dd");
             txtLyDoKham.Text = dataRow["LyDoKhamBenh"].ToString();
             txtKhamLamSan.Text = dataRow["KhamLamSang"].ToString();
             txtChuanDoan.Text = dataRow["ChanDoan"].ToString();

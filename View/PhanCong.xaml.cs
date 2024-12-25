@@ -59,7 +59,7 @@ namespace QuanLyBenhVien.View
             {
                 TxB_MaLichTruc.Text = selectedItem.MaLichTruc;
                 TxB_MaBacSi.Text = selectedItem.MaBacSi;
-                TxB_NgayTruc.Text = selectedItem.NgayTruc.ToString("MM/dd/yyyy HH:mm:ss");
+                TxB_NgayTruc.Text = selectedItem.NgayTruc.ToString("yyyy-MM-dd");
                 TxB_PhanCong.Text = selectedItem.PhanCong;
                 TxB_TrangThai.Text = selectedItem.TrangThai; 
             }

@@ -191,7 +191,7 @@
                        <DataGridTextColumn Header="Mã BN" Width="0.8*" Binding="{Binding MaBenhNhan}"/>
                         <DataGridTextColumn Header="Họ" Width="0.8*" Binding="{Binding Ho}"/>
                         <DataGridTextColumn Header="Tên" Width="0.8*" Binding="{Binding Ten}"/>
-                        <DataGridTextColumn Header="Ngày sinh" Width="*" Binding="{Binding NgaySinh}"/>
+                        <DataGridTextColumn Header="Ngày sinh" Width="*" Binding="{Binding NgaySinh, StringFormat='yyyy-MM-dd'}"/>
                         <DataGridTextColumn Header="GT" Width="0.5*" Binding="{Binding GioiTinh}"/>
                         <DataGridTextColumn Header="Nghề" Width="*" Binding="{Binding NgheNghiep}"/>
                         <DataGridTextColumn Header="CCCD" Width="*" Binding="{Binding CCCD}"/>

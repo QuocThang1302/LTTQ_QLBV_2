@@ -276,7 +276,7 @@ namespace QuanLyBenhVien.View
             txtGioiTinh.Text = dataRow["GioiTinh"]?.ToString() ?? string.Empty;
             txtCCCD.Text = dataRow["CCCD"]?.ToString() ?? string.Empty;
             txtSDT.Text = dataRow["SDT"]?.ToString() ?? string.Empty;
-            txtNgaySinh.Text = dataRow["NgaySinh"]?.ToString() ?? string.Empty;
+            txtNgaySinh.Text = Convert.ToDateTime(dataRow["NgaySinh"]).ToString("yyyy-MM-dd")?.ToString() ?? string.Empty;
             txtEmail.Text = dataRow["Email"]?.ToString() ?? string.Empty;
             txtDiaChi.Text = dataRow["DiaChi"]?.ToString() ?? string.Empty;
             if (ID == txtMaNhanVien.Text)

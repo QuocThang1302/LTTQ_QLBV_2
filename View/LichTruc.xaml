@@ -156,7 +156,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Mã lịch trực" Binding="{Binding MaLichTruc}" Width="1.2*"/>
                         <DataGridTextColumn Header="Bác sĩ" Binding="{Binding MaBacSi}" Width="0.8*"/>
-                        <DataGridTextColumn Header="Ngày trực" Binding="{Binding NgayTruc}" Width="*"/>
+                        <DataGridTextColumn Header="Ngày trực" Binding="{Binding NgayTruc, StringFormat='yyyy-MM-dd'}" Width="*"/>
                         <DataGridTextColumn Header="Phân công" Binding="{Binding PhanCong}" Width="*"/>
                         <DataGridTextColumn Header="Trạng thái" Binding="{Binding TrangThai}" Width="*"/>
                     </DataGrid.Columns>

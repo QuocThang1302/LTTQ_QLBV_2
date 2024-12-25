@@ -170,7 +170,7 @@
                         <DataGridTextColumn Header="Mã lịch hẹn" Binding="{Binding MaLichHen}" Width="*"/>
                         <DataGridTextColumn Header="Mã bệnh nhân" Binding="{Binding MaBenhNhan}" Width="*"/>
                         <DataGridTextColumn Header="Mã bác sĩ" Binding="{Binding MaBacSi}" Width="*"/>
-                        <DataGridTextColumn Header="Ngày hẹn khám" Binding="{Binding NgayHenKham}" Width="*"/>
+                        <DataGridTextColumn Header="Ngày hẹn khám" Binding="{Binding NgayHenKham, StringFormat='yyyy-MM-dd'}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

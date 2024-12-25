@@ -224,7 +224,7 @@ namespace QuanLyBenhVien.View
 
             tbMaLichHen.Text = dataRow["MaLichHen"].ToString();
             tbMaBenhNhan.Text = dataRow["MaBenhNhan"].ToString();
-            tbNgayHenKham.Text = dataRow["NgayHenKham"].ToString();
+            tbNgayHenKham.Text = Convert.ToDateTime(dataRow["NgayHenKham"]).ToString("yyyy-MM-dd");
             tbMaBacSi.Text = dataRow["MaBacSi"].ToString();
             
         }

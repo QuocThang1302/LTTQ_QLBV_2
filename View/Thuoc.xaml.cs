@@ -231,7 +231,7 @@ namespace QuanLyBenhVien.View
             tbCongDung.Text = dataRow["CongDung"].ToString();
             tbSoLuong.Text = dataRow["SoLuong"].ToString();
             tbGiaTien.Text = dataRow["GiaTien"].ToString();
-            tbHSD.Text = dataRow["HanSuDung"].ToString();
+            tbHSD.Text = Convert.ToDateTime(dataRow["HanSuDung"]).ToString("yyyy-MM-dd");
         }
         private void ClearTextBoxes()
         {

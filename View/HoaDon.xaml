@@ -76,7 +76,7 @@
                 <DataGridTextColumn Header="Tên hóa đơn" Binding="{Binding TenHoaDon}" Width="*"/>
                 <DataGridTextColumn Header="Mã bệnh nhân" Binding="{Binding MaBenhNhan}" Width="1.1*"/>
                 <DataGridTextColumn Header="Mã nhân viên" Binding="{Binding MaNhanVien}" Width="*"/>
-                <DataGridTextColumn Header="Ngày lập" Binding="{Binding NgayLapHoaDon}" Width="*"/>
+                <DataGridTextColumn Header="Ngày lập" Binding="{Binding NgayLapHoaDon, StringFormat='yyyy-MM-dd'}" Width="*"/>
                 <DataGridTextColumn Header="Thành tiền" Binding="{Binding GiaTien}" Width="*"/>
                 <DataGridTextColumn Header="Trạng thái" Binding="{Binding TrangThai}" Width="*"/>
             </DataGrid.Columns>
