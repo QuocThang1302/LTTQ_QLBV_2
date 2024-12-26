@@ -194,12 +194,12 @@
                         </Style>
                     </DataGrid.CellStyle>
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Mã thuốc" Width="*" Binding ="{Binding MaThuoc}"/>
-                        <DataGridTextColumn Header="Tên thuốc" Width="*" Binding ="{Binding TenThuoc}"/>
-                        <DataGridTextColumn Header="Công dụng" Width="*" Binding="{Binding CongDung}"/>
-                        <DataGridTextColumn Header="Số lượng" Width="*" Binding ="{Binding SoLuong}"/>
-                        <DataGridTextColumn Header="Giá tiền" Width="*"  Binding ="{Binding GiaTien}"/>
-                        <DataGridTextColumn Header="Hạn sử dụng" Width="*" Binding ="{Binding HanSuDung, StringFormat='yyyy-MM-dd'}"/>
+                        <DataGridTextColumn Header="Mã thuốc" Width="0.5*" Binding ="{Binding MaThuoc}"/>
+                        <DataGridTextColumn Header="Tên thuốc" Width="0.6*" Binding ="{Binding TenThuoc}"/>
+                        <DataGridTextColumn Header="Công dụng" Width="1.5*" Binding="{Binding CongDung}"/>
+                        <DataGridTextColumn Header="Số lượng" Width="0.6*" Binding ="{Binding SoLuong}"/>
+                        <DataGridTextColumn Header="Giá tiền" Width="0.8*"  Binding ="{Binding GiaTien}"/>
+                        <DataGridTextColumn Header="Hạn sử dụng" Width="0.8*" Binding ="{Binding HanSuDung, StringFormat='yyyy-MM-dd'}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>

@@ -187,12 +187,12 @@
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Mã vật dụng" Width="*" Binding="{Binding MaVatDung}"/>
+                        <DataGridTextColumn Header="Mã vật dụng" Width="0.7*" Binding="{Binding MaVatDung}"/>
                         <DataGridTextColumn Header="Tên vật dụng" Width="*" Binding="{Binding TenVatDung}"/>
-                        <DataGridTextColumn Header="Mô tả" Width="*" Binding="{Binding MoTa}"/>
-                        <DataGridTextColumn Header="Số lượng" Width="*" Binding="{Binding SoLuong}"/>
-                        <DataGridTextColumn Header="Giá tiền" Width="*" Binding="{Binding Gia}"/>
-                        <DataGridTextColumn Header="Mã quản lý" Width="*" Binding="{Binding MaQuanLy}"/>
+                        <DataGridTextColumn Header="Mô tả" Width="1.5*" Binding="{Binding MoTa}"/>
+                        <DataGridTextColumn Header="Số lượng" Width="0.6*" Binding="{Binding SoLuong}"/>
+                        <DataGridTextColumn Header="Giá tiền" Width="0.6*" Binding="{Binding Gia}"/>
+                        <DataGridTextColumn Header="Mã quản lý" Width="0.6*" Binding="{Binding MaQuanLy}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
