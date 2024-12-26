@@ -14,7 +14,7 @@
             <RowDefinition Height="0.18*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <customControls:Search x:Name="searchControl" Margin="70,15,70,15"/>
+        <customControls:Search x:Name="searchControl" Margin="70,10,70,30"/>
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
@@ -167,9 +167,9 @@
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Mã chuyên ngành" Binding="{Binding MaChuyenNganh}" Width="*"/>
+                        <DataGridTextColumn Header="Mã chuyên ngành" Binding="{Binding MaChuyenNganh}" Width="0.7*"/>
                         <DataGridTextColumn Header="Tên chuyên ngành" Binding="{Binding TenChuyenNganh}" Width="*"/>
-                        <DataGridTextColumn Header="Khoa" Binding="{Binding Khoa}" Width="1.1*"/>
+                        <DataGridTextColumn Header="Khoa" Binding="{Binding Khoa}" Width="0.5*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
