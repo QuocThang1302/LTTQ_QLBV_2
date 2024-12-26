@@ -319,7 +319,7 @@ namespace QuanLyBenhVien.View
                 // Lỗi tổng quát (ví dụ: lỗi bất ngờ)
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
+            HienThiDanhSach();
         }
 
         private int vitri = -1;
@@ -444,7 +444,7 @@ namespace QuanLyBenhVien.View
                 // Đảm bảo giao diện không bị thay đổi nếu có lỗi
                 dgDanhSachBenhNhan.ItemsSource = ds.Tables["tblBenhNhan"].DefaultView;
             }
-
+            HienThiDanhSach();
 
         }
     }

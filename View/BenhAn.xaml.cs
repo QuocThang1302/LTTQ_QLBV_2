@@ -384,7 +384,7 @@ namespace QuanLyBenhVien.View
             {
                 ClearFields(); // Xóa các trường sau khi xử lý
             }
-
+            HienThiDanhSach();
         }
         private void ClearTextBoxes()
         {
@@ -463,7 +463,7 @@ namespace QuanLyBenhVien.View
                 // Lỗi tổng quát (ví dụ: lỗi bất ngờ)
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
+            HienThiDanhSach();
         }
     }
 }
