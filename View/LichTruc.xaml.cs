@@ -176,7 +176,7 @@ namespace QuanLyBenhVien.View
 
             dgvCongViec.ItemsSource = ds.Tables["tblCongViec"].DefaultView;
 
-            string query1 = "select MaLichTruc, MaBacSi, NgayTruc, PhanCong, TrangThai from LichTruc join NhanVien on LichTruc.MaBacSi = NhanVien.MaNhanVien";
+            string query1 = "select MaLichTruc, MaBacSi, NgayTruc, PhanCong, TrangThai from LichTruc";
             adapter1 = new SqlDataAdapter(query1, sqlCon);
             SqlCommandBuilder builder1 = new SqlCommandBuilder(adapter1);
 
