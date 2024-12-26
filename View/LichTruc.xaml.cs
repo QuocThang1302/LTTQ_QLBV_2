@@ -176,9 +176,59 @@ namespace QuanLyBenhVien.View
 
             dgvCongViec.ItemsSource = ds.Tables["tblCongViec"].DefaultView;
 
+            // Kiểm tra nếu có giá trị MaDonThuoc từ dòng được chọn
+            string maCongViec = null;
+            if (dgvCongViec.SelectedItem is DataRowView selectedRow)
+            {
+                maCongViec = selectedRow.Row["MaCongViec"].ToString();
+            }
             string query1 = "select MaLichTruc, MaBacSi, NgayTruc, PhanCong, TrangThai from LichTruc";
+            if (!string.IsNullOrEmpty(maCongViec))
+            {
+                query1 += " WHERE LichTruc.PhanCong = @MaCongViec";
+            }
             adapter1 = new SqlDataAdapter(query1, sqlCon);
             SqlCommandBuilder builder1 = new SqlCommandBuilder(adapter1);
+
+            ds1 = new DataSet();
+            if (!string.IsNullOrEmpty(maCongViec))
+            {
+                adapter1.SelectCommand.Parameters.AddWithValue("@PhanCong", maCongViec);
+            }
+            if (sqlCon.State == ConnectionState.Closed)
+            {
+                sqlCon.Open();
+            }
+            adapter1.Fill(ds1, "tblLichTruc");
+            sqlCon.Close();
+
+            dgvPhanCong.ItemsSource = ds1.Tables["tblLichTruc"].DefaultView;
+        }
+        private void dgvCongViec_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedRow = dgvCongViec.SelectedItem as DataRowView;
+
+            if (selectedRow == null) return;
+
+            // Lấy giá trị của MaDonThuoc
+            string maCongViec = selectedRow.Row["MaCongViec"].ToString();
+
+            // Cập nhật chỉ DataGrid CTDonThuoc
+            HienThiPhanCong(maCongViec);
+        }
+
+        private void HienThiPhanCong(string maCongViec)
+        {
+            if (sqlCon == null)
+            {
+                sqlCon = _userRepository.GetConnection();
+            }
+
+            string query1 = "select MaLichTruc, MaBacSi, NgayTruc, PhanCong, TrangThai from LichTruc WHERE LichTruc.PhanCong = @MaCongViec";
+
+
+            adapter1 = new SqlDataAdapter(query1, sqlCon);
+            adapter1.SelectCommand.Parameters.AddWithValue("@PhanCong", maCongViec);
 
             ds1 = new DataSet();
             if (sqlCon.State == ConnectionState.Closed)
@@ -190,7 +240,6 @@ namespace QuanLyBenhVien.View
 
             dgvPhanCong.ItemsSource = ds1.Tables["tblLichTruc"].DefaultView;
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // Lấy hàng được chọn từ DataGrid
@@ -253,7 +302,7 @@ namespace QuanLyBenhVien.View
             }
             HienThiDanhSach();
         }
-        //private int vitri = -1;
+      
         private void dgvPhanCong_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedRow = dgvPhanCong.SelectedItem as DataRowView;
@@ -269,5 +318,7 @@ namespace QuanLyBenhVien.View
             PhanCong phanCong = new PhanCong();
             phanCong.Show();
         }
+
+        
     }
 }
