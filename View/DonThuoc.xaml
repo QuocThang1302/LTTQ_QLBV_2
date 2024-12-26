@@ -162,6 +162,8 @@
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
+                        <!--<DataGridTextColumn Header="Mã đơn thuốc" Binding="{Binding MaDonThuoc}" Width="*"/>
+                        <DataGridTextColumn Header="Tên thuốc" Binding="{Binding MaThuoc}" Width="*"/>-->
                         <DataGridTextColumn Header="Tên thuốc" Binding="{Binding TenThuoc}" Width="*"/>
                         <DataGridTextColumn Header="Số lượng" Binding="{Binding SoLuong}" Width="*"/>
                         <DataGridTextColumn Header="Giá tiền" Binding="{Binding GiaTien}" Width="*"/>
