@@ -349,7 +349,7 @@ namespace QuanLyBenhVien.View
         SqlDataAdapter adapter1 = null;
         DataSet ds1 = null;
       
-        //private int vitri = -1;
+
         private void dgvCTDonThuoc_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedRow = dgvCTDonThuoc.SelectedItem as DataRowView;
