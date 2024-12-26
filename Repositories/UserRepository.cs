@@ -19,7 +19,7 @@ namespace QuanLyBenhVien.Repositories
             
             using (var connection = GetConnection())
             {
-                string query = "SELECT N.MaNhanVien, N.Ho, N.Ten, N.MaChuyenNganh, N.Email, \r\n                   R.TenRole AS ChucVu, N.GioiTinh, N.CCCD, N.SDT, N.DiaChi, N.NgaySinh\r\n            FROM NhanVien N\r\n            INNER JOIN Role R ON N.RoleID = R.RoleID\r\n            WHERE N.MaNhanVien = @UserID";
+                string query = "SELECT N.MaNhanVien, N.Ho, N.Ten, N.MaChuyenNganh, N.Email, N.MatKhau,\r\n                   R.TenRole AS ChucVu, N.GioiTinh, N.CCCD, N.SDT, N.DiaChi, N.NgaySinh\r\n            FROM NhanVien N\r\n            INNER JOIN Role R ON N.RoleID = R.RoleID\r\n            WHERE N.MaNhanVien = @UserID";
                 var command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@UserID", userID);
 
@@ -40,7 +40,8 @@ namespace QuanLyBenhVien.Repositories
                             CCCD = reader["CCCD"].ToString(),
                             SoDienThoai = reader["SDT"].ToString(),
                             DiaChi = reader["DiaChi"].ToString(),
-                            NgaySinh = DateTime.Parse(reader["NgaySinh"].ToString())
+                            NgaySinh = DateTime.Parse(reader["NgaySinh"].ToString()),
+                            MatKhau = reader["MatKhau"].ToString()
                         };
                     }
                 }

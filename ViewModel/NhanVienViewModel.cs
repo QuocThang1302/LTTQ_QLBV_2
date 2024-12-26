@@ -19,6 +19,7 @@ namespace QuanLyBenhVien.ViewModel
         private string _cccd;
         private string _soDienThoai;
         private string _diaChi;
+        private string _matKhau;
         public void Reset()
         {
             MaNhanVien = string.Empty;
@@ -162,7 +163,18 @@ namespace QuanLyBenhVien.ViewModel
                 }
             }
         }
-
+        public string MatKhau
+        {
+            get => _matKhau;
+            set
+            {
+                if (_matKhau != value)
+                {
+                    _matKhau = value;
+                    OnPropertyChanged(nameof(MatKhau));
+                }
+            }
+        }
         public string DiaChi
         {
             get => _diaChi;

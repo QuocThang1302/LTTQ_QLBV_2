@@ -26,7 +26,7 @@ namespace QuanLyBenhVien.View
         {
             Close();
         }
-
+        public Action OnDataAdded;
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             string maChuyenNganh = TxB_MaChuyenNganh.Text.Trim();
@@ -58,6 +58,7 @@ namespace QuanLyBenhVien.View
                             if (rowsAffected > 0)
                             {
                                 MessageBox.Show("Thêm thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                OnDataAdded?.Invoke();
                             }
                             else
                             {

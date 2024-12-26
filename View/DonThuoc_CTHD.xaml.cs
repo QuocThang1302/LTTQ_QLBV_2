@@ -11,6 +11,7 @@ namespace QuanLyBenhVien.View
     public partial class DonThuoc_CTDT : Window
     {
         private readonly RepositoryBase _userRepository;
+        public Action OnDataAdded;
         public DonThuoc_CTDT()
         {
             _userRepository = new UserRepository();
@@ -48,6 +49,7 @@ namespace QuanLyBenhVien.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            OnDataAdded?.Invoke();
             Close();
         }
 

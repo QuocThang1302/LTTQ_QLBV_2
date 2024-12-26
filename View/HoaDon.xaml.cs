@@ -136,6 +136,7 @@ namespace QuanLyBenhVien.View
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             CTHD cTHD = new CTHD();
+            cTHD.OnDataAdded = HienThiDanhSach;
             cTHD.Show();
         }
 

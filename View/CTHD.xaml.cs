@@ -11,6 +11,7 @@ namespace QuanLyBenhVien.View
     public partial class CTHD : Window
     {
         private readonly RepositoryBase _userRepository;
+        public Action OnDataAdded;
         public CTHD()
         {
             _userRepository = new UserRepository();
@@ -889,7 +890,9 @@ namespace QuanLyBenhVien.View
 
         private void btnDong_Click(object sender, RoutedEventArgs e)
         {
+            OnDataAdded?.Invoke();
             Close();
+
         }
         private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {

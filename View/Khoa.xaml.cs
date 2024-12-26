@@ -31,7 +31,7 @@ namespace QuanLyBenhVien.View
         {
             Close();
         }
-
+        public Action OnDataAdded;
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             // Lấy giá trị từ các TextBox
@@ -81,6 +81,7 @@ namespace QuanLyBenhVien.View
                             if (rowsAffected > 0)
                             {
                                 MessageBox.Show("Thêm thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                OnDataAdded?.Invoke();
                             }
                             else
                             {

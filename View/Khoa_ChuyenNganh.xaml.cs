@@ -140,12 +140,14 @@ namespace QuanLyBenhVien.View
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             ChuyenNganh chuyenNganh = new ChuyenNganh();
+            chuyenNganh.OnDataAdded = HienThiDanhSach;
             chuyenNganh.Show();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             Khoa khoa = new Khoa();
+            khoa.OnDataAdded = HienThiDanhSach;
             khoa.Show();
         }
 

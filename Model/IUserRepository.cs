@@ -21,6 +21,7 @@ namespace QuanLyBenhVien.Model
         public string SoDienThoai { get; set; }
         public string DiaChi { get; set; }
         public DateTime? NgaySinh { get; set; }
+        public string MatKhau {  get; set; }
     }
 
     public interface IUserRepository

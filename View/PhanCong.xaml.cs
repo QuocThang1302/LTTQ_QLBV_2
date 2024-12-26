@@ -8,6 +8,7 @@ namespace QuanLyBenhVien.View
 {
     public partial class PhanCong : Window
     {
+        public Action OnDataAdded;
         public PhanCong()
         {   
             InitializeComponent();

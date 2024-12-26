@@ -138,12 +138,14 @@ namespace QuanLyBenhVien.View
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             DonThuoc_CTDT ctdt = new DonThuoc_CTDT();
+            ctdt.OnDataAdded = HienThiDanhSach;
             ctdt.Show();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             CTHD hd = new CTHD();
+            hd.OnDataAdded = HienThiDanhSach;
             hd.Show();
         }
 
