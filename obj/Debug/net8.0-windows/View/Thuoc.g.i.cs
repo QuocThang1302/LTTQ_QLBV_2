@@ -160,7 +160,7 @@ namespace QuanLyBenhVien.View {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/QuanLyBenhVien;V1.0.0.0;component/view/thuoc.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/QuanLyBenhVien;component/view/thuoc.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\View\Thuoc.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

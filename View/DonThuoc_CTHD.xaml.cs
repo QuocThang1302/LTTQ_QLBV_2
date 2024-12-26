@@ -122,9 +122,10 @@ namespace QuanLyBenhVien.View
                             {
                                 TxB_MaBenhNhan.Text = reader["MaBenhNhan"].ToString();
                                 TxB_MaBacSi.Text = reader["MaBacSi"].ToString();
-                                TxB_NgayLapDon.Text = reader["NgayLapDon"].ToString();
+                                TxB_NgayLapDon.Text = Convert.ToDateTime(reader["NgayLapDon"]).ToString("yyyy-MM-dd");
+
                             }
-                            reader.Close();
+                        reader.Close();
                         }
 
                         // Xử lý chi tiết đơn thuốc (CTDonThuoc)

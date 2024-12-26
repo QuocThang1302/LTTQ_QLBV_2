@@ -233,7 +233,7 @@ namespace QuanLyBenhVien.View
                         // Kiểm tra nếu có giá trị trả về
                         if (result != null)
                         {
-                            txtNgayLapDon.Text = result.ToString(); // Gán giá trị vào TextBox
+                            txtNgayLapDon.Text = Convert.ToDateTime(result).ToString("yyyy-MM-dd"); // Gán giá trị vào TextBox
                         }
                         else
                         {
@@ -517,12 +517,23 @@ namespace QuanLyBenhVien.View
                         string queryCheckTrangThai = @"SELECT TrangThai FROM HoaDon WHERE MaHoaDon = @MaHoaDon";
                         using (SqlCommand cmdCheckTrangThai = new SqlCommand(queryCheckTrangThai, conn))
                         {
-                            cmdCheckTrangThai.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
-                            object trangThaiResult = cmdCheckTrangThai.ExecuteScalar(); // Lấy giá trị của cột TrangThai
-
-                            if (trangThaiResult != null && trangThaiResult.ToString() == "Đã thanh toán")
+                            // Kiểm tra kết nối
+                            if (conn.State == ConnectionState.Closed)
                             {
-                                MessageBox.Show("Hóa đơn đã được thanh toán, không thể thay đổi thông tin!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                conn.Open();
+                            }
+
+                            // Thêm tham số an toàn
+                            cmdCheckTrangThai.Parameters.Add("@MaHoaDon", SqlDbType.NVarChar).Value = maHoaDon;
+
+                            // Thực thi truy vấn và lấy giá trị cột TrangThai
+                            var trangThaiResult = cmdCheckTrangThai.ExecuteScalar();
+                            string trangThai = trangThaiResult.ToString().Trim();
+
+                            if (trangThai.Equals("Đã thanh toán", StringComparison.OrdinalIgnoreCase))
+                            {
+                                MessageBox.Show("Hóa đơn đã được thanh toán, không thể thay đổi thông tin!",
+                                                "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                                 return; // Dừng xử lý nếu hóa đơn đã thanh toán
                             }
                         }
@@ -845,7 +856,7 @@ namespace QuanLyBenhVien.View
 
                                     if (result == MessageBoxResult.Yes)
                                     {
-                                        string updateQuery = "UPDATE HoaDon SET TrangThai = 'Đã thanh toán' WHERE MaHoaDon = @MaHoaDon";
+                                        string updateQuery = "UPDATE HoaDon SET TrangThai = N'Đã thanh toán' WHERE MaHoaDon = @MaHoaDon";
                                         using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection))
                                         {
                                             updateCommand.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
