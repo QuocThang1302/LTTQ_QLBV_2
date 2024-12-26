@@ -164,9 +164,9 @@
                     </DataGrid.CellStyle>
 
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Mã bệnh" Width="*" Binding="{Binding MaBenh}"/>
-                        <DataGridTextColumn Header="Tên bệnh" Width="*" Binding="{Binding TenBenh}"/>
-                        <DataGridTextColumn Header="Mô tả" Width="*" Binding="{Binding MoTa}"/>
+                        <DataGridTextColumn Header="Mã bệnh" Width="0.5*" Binding="{Binding MaBenh}"/>
+                        <DataGridTextColumn Header="Tên bệnh" Width="0.5*" Binding="{Binding TenBenh}"/>
+                        <DataGridTextColumn Header="Mô tả" Width="1.3*" Binding="{Binding MoTa}"/>
                         <DataGridTextColumn Header="Triệu chứng" Width="*" Binding="{Binding TrieuChung}"/>
                     </DataGrid.Columns>
                 </DataGrid>

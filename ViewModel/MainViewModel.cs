@@ -167,10 +167,6 @@ namespace QuanLyBenhVien.ViewModel
                     SoDienThoai = nhanVienData.SoDienThoai,
                     DiaChi = nhanVienData.DiaChi,
                     NgaySinh = nhanVienData.NgaySinh
-                    //MatKhau = nhanVienData.MatKhau
-                    
-                   
-                    
                 };
             }
             else
