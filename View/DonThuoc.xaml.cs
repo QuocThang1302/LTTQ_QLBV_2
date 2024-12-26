@@ -136,6 +136,105 @@ namespace QuanLyBenhVien.View
             }
         }
 
+        private void dgvDonThuoc_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedRow = dgvDonThuoc.SelectedItem as DataRowView;
+
+            if (selectedRow == null) return;
+
+            // Lấy giá trị của MaDonThuoc
+            string maDonThuoc = selectedRow.Row["MaDonThuoc"].ToString();
+
+            // Cập nhật chỉ DataGrid CTDonThuoc
+            HienThiChiTietDonThuoc(maDonThuoc);
+        }
+
+        private void HienThiChiTietDonThuoc(string maDonThuoc)
+        {
+            if (sqlCon == null)
+            {
+                sqlCon = _userRepository.GetConnection();
+            }
+
+            string query1 = "SELECT CTDonThuoc.MaDonThuoc, CTDonThuoc.MaThuoc, TenThuoc, CTDonThuoc.SoLuong, CTDonThuoc.GiaTien, HuongDanSuDung " +
+                            "FROM CTDonThuoc JOIN Thuoc ON CTDonThuoc.MaThuoc = Thuoc.MaThuoc " +
+                            "WHERE CTDonThuoc.MaDonThuoc = @MaDonThuoc";
+
+            adapter1 = new SqlDataAdapter(query1, sqlCon);
+            adapter1.SelectCommand.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
+            adapter1.DeleteCommand = new SqlCommand(
+                      "DELETE FROM CTDonThuoc WHERE MaDonThuoc = @MaDonThuoc AND MaThuoc = @MaThuoc", sqlCon);
+            adapter1.DeleteCommand.Parameters.Add("@MaDonThuoc", SqlDbType.NVarChar, 20, "MaDonThuoc");
+            adapter1.DeleteCommand.Parameters.Add("@MaThuoc", SqlDbType.NVarChar, 20, "MaThuoc");
+            ds1 = new DataSet();
+            if (sqlCon.State == ConnectionState.Closed)
+            {
+                sqlCon.Open();
+            }
+            adapter1.Fill(ds1, "tblChiTiet");
+            sqlCon.Close();
+
+            dgvCTDonThuoc.ItemsSource = ds1.Tables["tblChiTiet"].DefaultView;
+        }
+
+        private void HienThiDanhSach()
+        {
+            if (sqlCon == null)
+            {
+                sqlCon = _userRepository.GetConnection();
+            }
+            string query = "SELECT \r\n    MaDonThuoc, \r\n    DonThuoc.MaBenhNhan, \r\n    MaBacSi, \r\n    NgayLapDon, \r\n    DonThuoc.MaHoaDon\r\nFROM DonThuoc \r\nJOIN BenhNhan ON DonThuoc.MaBenhNhan = BenhNhan.MaBenhNhan \r\nJOIN NhanVien NV ON DonThuoc.MaBacSi = NV.MaNhanVien \r\nJOIN HoaDon HD ON DonThuoc.MaHoaDon = HD.MaHoaDon;";
+            adapter = new SqlDataAdapter(query, sqlCon);
+
+            ds = new DataSet();
+            if (sqlCon.State == ConnectionState.Closed)
+            {
+                sqlCon.Open();
+            }
+            adapter.Fill(ds, "tblDonThuoc");
+            sqlCon.Close();
+
+            dgvDonThuoc.ItemsSource = ds.Tables["tblDonThuoc"].DefaultView;
+
+            // Kiểm tra nếu có giá trị MaDonThuoc từ dòng được chọn
+            string maDonThuoc = null;
+            if (dgvDonThuoc.SelectedItem is DataRowView selectedRow)
+            {
+                maDonThuoc = selectedRow.Row["MaDonThuoc"].ToString();
+            }
+
+            // Thêm điều kiện WHERE MaDonThuoc = @MaDonThuoc nếu maDonThuoc != null
+            string query1 = "SELECT CTDonThuoc.MaDonThuoc, CTDonThuoc.MaThuoc, TenThuoc, CTDonThuoc.SoLuong, CTDonThuoc.GiaTien, HuongDanSuDung " +
+                            "FROM CTDonThuoc JOIN Thuoc ON CTDonThuoc.MaThuoc = Thuoc.MaThuoc";
+            if (!string.IsNullOrEmpty(maDonThuoc))
+            {
+                query1 += " WHERE CTDonThuoc.MaDonThuoc = @MaDonThuoc";
+            }
+
+            adapter1 = new SqlDataAdapter(query1, sqlCon);
+
+            // Thêm tham số @MaDonThuoc nếu cần
+            if (!string.IsNullOrEmpty(maDonThuoc))
+            {
+                adapter1.SelectCommand.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
+            }
+
+            adapter1.DeleteCommand = new SqlCommand(
+                       "DELETE FROM CTDonThuoc WHERE MaDonThuoc = @MaDonThuoc AND MaThuoc = @MaThuoc", sqlCon);
+            adapter1.DeleteCommand.Parameters.Add("@MaDonThuoc", SqlDbType.NVarChar, 20, "MaDonThuoc");
+            adapter1.DeleteCommand.Parameters.Add("@MaThuoc", SqlDbType.NVarChar, 20, "MaThuoc");
+
+            ds1 = new DataSet();
+
+            if (sqlCon.State == ConnectionState.Closed)
+            {
+                sqlCon.Open();
+            }
+            adapter1.Fill(ds1, "tblChiTiet");
+            sqlCon.Close();
+
+            dgvCTDonThuoc.ItemsSource = ds1.Tables["tblChiTiet"].DefaultView;
+        }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             DonThuoc_CTDT ctdt = new DonThuoc_CTDT();
@@ -249,47 +348,8 @@ namespace QuanLyBenhVien.View
         DataSet ds = null;
         SqlDataAdapter adapter1 = null;
         DataSet ds1 = null;
-        private void HienThiDanhSach()
-        {
-            if (sqlCon == null)
-            {
-                sqlCon = _userRepository.GetConnection();
-            }
-            string query = "SELECT \r\n    MaDonThuoc, \r\n    DonThuoc.MaBenhNhan, \r\n    MaBacSi, \r\n    NgayLapDon, \r\n    DonThuoc.MaHoaDon\r\nFROM DonThuoc \r\nJOIN BenhNhan ON DonThuoc.MaBenhNhan = BenhNhan.MaBenhNhan \r\nJOIN NhanVien NV ON DonThuoc.MaBacSi = NV.MaNhanVien \r\nJOIN HoaDon HD ON DonThuoc.MaHoaDon = HD.MaHoaDon;";
-            adapter = new SqlDataAdapter(query, sqlCon);
-           
-            ds = new DataSet();
-            if (sqlCon.State == ConnectionState.Closed)
-            {
-                sqlCon.Open();
-            }
-            adapter.Fill(ds, "tblDonThuoc");
-            sqlCon.Close();
-
-            dgvDonThuoc.ItemsSource = ds.Tables["tblDonThuoc"].DefaultView;
-
-            string query1 = " Select CTDonThuoc.MaDonThuoc, CTDonThuoc.MaThuoc , TenThuoc, CTDonThuoc.SoLuong, CTDonThuoc.GiaTien, HuongDanSuDung from CTDonThuoc join Thuoc on CTDonThuoc.MaThuoc = Thuoc.MaThuoc";
-            adapter1 = new SqlDataAdapter(query1, sqlCon);
-            adapter1.DeleteCommand = new SqlCommand(
-                       "DELETE FROM CTDonThuoc WHERE MaDonThuoc = @MaDonThuoc AND MaThuoc = @MaThuoc", sqlCon);
-
-            adapter1.DeleteCommand.Parameters.Add("@MaDonThuoc", SqlDbType.NVarChar, 20, "MaDonThuoc");
-            adapter1.DeleteCommand.Parameters.Add("@MaThuoc", SqlDbType.NVarChar, 20, "MaThuoc");
-
       
-            
-            ds1 = new DataSet();
-           
-            if (sqlCon.State == ConnectionState.Closed)
-            {
-                sqlCon.Open();
-            }
-            adapter1.Fill(ds1, "tblChiTiet");
-            sqlCon.Close();
-
-            dgvCTDonThuoc.ItemsSource = ds1.Tables["tblChiTiet"].DefaultView;
-        }
-        private int vitri = -1;
+        //private int vitri = -1;
         private void dgvCTDonThuoc_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedRow = dgvCTDonThuoc.SelectedItem as DataRowView;
@@ -362,5 +422,7 @@ namespace QuanLyBenhVien.View
             }
             HienThiDanhSach();
         }
+
+        
     }
 }
