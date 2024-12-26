@@ -174,10 +174,7 @@ namespace QuanLyBenhVien.View
             }
             string query = "SELECT \r\n    MaDonThuoc, \r\n    DonThuoc.MaBenhNhan, \r\n    MaBacSi, \r\n    NgayLapDon, \r\n    DonThuoc.MaHoaDon\r\nFROM DonThuoc \r\nJOIN BenhNhan ON DonThuoc.MaBenhNhan = BenhNhan.MaBenhNhan \r\nJOIN NhanVien NV ON DonThuoc.MaBacSi = NV.MaNhanVien \r\nJOIN HoaDon HD ON DonThuoc.MaHoaDon = HD.MaHoaDon;";
             adapter = new SqlDataAdapter(query, sqlCon);
-            SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
-            adapter.DeleteCommand = new SqlCommand(
-                "DELETE FROM CTDonThuoc WHERE MaDonThuoc=@MaDonThuoc", sqlCon);
-            adapter.DeleteCommand.Parameters.Add("@MaDonThuoc", SqlDbType.NVarChar, 20, "MaDonThuoc");
+           
             ds = new DataSet();
             if (sqlCon.State == ConnectionState.Closed)
             {
@@ -188,11 +185,18 @@ namespace QuanLyBenhVien.View
 
             dgvDonThuoc.ItemsSource = ds.Tables["tblDonThuoc"].DefaultView;
 
-            string query1 = " Select TenThuoc, CTDonThuoc.SoLuong, CTDonThuoc.GiaTien, HuongDanSuDung from CTDonThuoc join Thuoc on CTDonThuoc.MaThuoc = Thuoc.MaThuoc";
+            string query1 = " Select CTDonThuoc.MaDonThuoc, CTDonThuoc.MaThuoc , TenThuoc, CTDonThuoc.SoLuong, CTDonThuoc.GiaTien, HuongDanSuDung from CTDonThuoc join Thuoc on CTDonThuoc.MaThuoc = Thuoc.MaThuoc";
             adapter1 = new SqlDataAdapter(query1, sqlCon);
-            SqlCommandBuilder builder1 = new SqlCommandBuilder(adapter1);
+            adapter1.DeleteCommand = new SqlCommand(
+                       "DELETE FROM CTDonThuoc WHERE MaDonThuoc = @MaDonThuoc AND MaThuoc = @MaThuoc", sqlCon);
 
+            adapter1.DeleteCommand.Parameters.Add("@MaDonThuoc", SqlDbType.NVarChar, 20, "MaDonThuoc");
+            adapter1.DeleteCommand.Parameters.Add("@MaThuoc", SqlDbType.NVarChar, 20, "MaThuoc");
+
+      
+            
             ds1 = new DataSet();
+           
             if (sqlCon.State == ConnectionState.Closed)
             {
                 sqlCon.Open();
