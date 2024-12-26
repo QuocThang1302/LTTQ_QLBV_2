@@ -84,7 +84,9 @@ namespace QuanLyBenhVien.View
             Role();
 
         }
-
+        
+            
+        
         private void Role()
         {
             string roleID = GetRoleIDByUserID();

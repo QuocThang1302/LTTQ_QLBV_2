@@ -88,15 +88,12 @@
                     Margin="52,0,0,0"
                     Content="Xóa" Click="Button_Click_1"/>
 
-            <Button x:Name="btn_CapNhat"
-                    Style="{StaticResource childviewButton}" 
-                    Margin="52,0,0,0"
-                    Content="Cập nhật" Click="Button_Click_2"/>
+            
 
             <Button x:Name="btn_Xoa"
                     Style="{StaticResource childviewButton}" 
                     Margin="52,0,0,0"
-                    Content="Thêm" Click="Button_Click"/>
+                    Content="Cập nhật" Click="Button_Click"/>
         </StackPanel>
     </Grid>
 </UserControl>

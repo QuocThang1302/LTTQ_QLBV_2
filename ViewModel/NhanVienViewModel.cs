@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace QuanLyBenhVien.ViewModel
 {
@@ -20,6 +23,24 @@ namespace QuanLyBenhVien.ViewModel
         private string _soDienThoai;
         private string _diaChi;
         private string _matKhau;
+        // Thuộc tính mới để điều chỉnh UI
+        private Visibility _btnMatKhauVisibility = Visibility.Hidden; // Mặc định ẩn
+        public Visibility BtnMatKhauVisibility
+        {
+            get => _btnMatKhauVisibility;
+            set
+            {
+                _btnMatKhauVisibility = value;
+                OnPropertyChanged();
+            }
+        }
+        
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        //Thêm mới xong
         public void Reset()
         {
             MaNhanVien = string.Empty;

@@ -154,7 +154,8 @@ namespace QuanLyBenhVien.ViewModel
             {
                 CurrentChildView = new NhanVienViewModel
                 {
-                    
+                    BtnMatKhauVisibility = Visibility.Visible,
+                    // Cập nhật thuộc tính UI thử thôi 
                     MaNhanVien = nhanVienData.MaNhanVien,
                     Ho = nhanVienData.Ho,
                     Ten = nhanVienData.Ten,
@@ -165,8 +166,11 @@ namespace QuanLyBenhVien.ViewModel
                     CCCD = nhanVienData.CCCD,
                     SoDienThoai = nhanVienData.SoDienThoai,
                     DiaChi = nhanVienData.DiaChi,
-                    NgaySinh = nhanVienData.NgaySinh,
-                    MatKhau = nhanVienData.MatKhau
+                    NgaySinh = nhanVienData.NgaySinh
+                    //MatKhau = nhanVienData.MatKhau
+                    
+                   
+                    
                 };
             }
             else

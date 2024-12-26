@@ -257,9 +257,6 @@ namespace QuanLyBenhVien.View
             DataRow dataRow = selectedRow.Row;
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
     }
 }

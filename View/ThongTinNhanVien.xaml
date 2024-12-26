@@ -108,8 +108,9 @@
 
                             <TextBlock x:Name="tbMatKhau" FontWeight="Bold" FontFamily="Inter" Text="Mật khẩu:" Margin="52,0,0,0"
                                        Width="160" VerticalAlignment="Center" FontSize="20" Visibility="Hidden"/>
-                            <TextBox Text="{Binding MatKhau, Mode=TwoWay}" Name="txtMatKhau" Visibility="Hidden"
-                                     Height="30" Width="250" Style="{StaticResource TextBoxStyles}"/>
+                            <TextBox Text="{Binding MatKhau, Mode=TwoWay}" Name="txtMatKhau" Visibility="{Binding MatKhauVisibility}"
+                                     Height="30" Width="250" Style="{StaticResource TextBoxStyles}"
+                                     />
                         </StackPanel>
                     </StackPanel>
                 </Grid>
@@ -129,7 +130,7 @@
                             Content="Thêm" Click="Button_Click"/>
 
                     <Button x:Name="btnMatKhau"  Style="{StaticResource childviewButton}" 
-                            Margin="52,0,0,0" Width="200" Visibility="Hidden"
+                            Margin="52,0,0,0" Width="200" Visibility="{Binding BtnMatKhauVisibility, Mode=TwoWay}" 
                             Content="Cập nhật mật khẩu" Click="btnMatKhau_Click"/> 
                 </StackPanel>
             </Grid>

@@ -108,7 +108,7 @@
                             <TextBox Grid.Row="0" Grid.Column="1" Name="txtMaDonThuoc" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
                             <!-- Số lượng -->
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="Ngày lập đơn:" VerticalAlignment="Top" Margin="5,8,5,0" Style="{StaticResource TextBlockStyle}"/>
-                            <TextBox Grid.Row="1" Grid.Column="1" Name="txtNgayLapDon" Style= "{StaticResource TextBoxStyles}" Margin="5"/>
+                            <TextBox Grid.Row="1" Grid.Column="1" Name="txtNgayLapDon" Style= "{StaticResource TextBoxStyles}" Margin="5" IsReadOnly="True"/>
 
                             <!-- Nút Thêm và Xóa -->
                             <Button Grid.Row="3" Grid.Column="0" Margin="24,0,25,5" Click="btnThem_Click" Style= "{StaticResource childviewButton}" Content="Thêm"  VerticalAlignment="Bottom"/>

@@ -4,6 +4,7 @@ using Microsoft.Data.SqlClient;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using QuanLyBenhVien.ViewModel;
 
 namespace QuanLyBenhVien.View
 {
@@ -144,7 +145,89 @@ namespace QuanLyBenhVien.View
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+
+            // Kiểm tra dòng được chọn
+            var selectedRow = dgvDonThuoc.SelectedItem as DataRowView;
+            if (selectedRow == null)
+            {
+                MessageBox.Show("Vui lòng chọn một dòng trong danh sách!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            // Lấy dữ liệu từ dòng được chọn
+            string maDonThuoc = selectedRow["MaDonThuoc"].ToString();
+            string maHoaDon = selectedRow["MaHoaDon"].ToString();
+            string maNhanVien = selectedRow["MaBacSi"].ToString(); // MaBacSi tương đương MaNhanVien
+            string maBenhNhan = selectedRow["MaBenhNhan"].ToString();
+            string ngayLapDon = selectedRow["NgayLapDon"].ToString();
+
+            // Truy vấn cơ sở dữ liệu để lấy thông tin chi tiết
+            string tenNhanVien = "", tenBenhNhan = "", tenHoaDon = "", ngayLapHoaDon = "", triGia="", trangThai="";
+            using (var connection = _userRepository.GetConnection())
+            {
+                connection.Open();
+
+                // Lấy thông tin từ bảng HoaDon
+                var queryHoaDon = "SELECT TenHoaDon, NgayLapHoaDon, GiaTien, TrangThai FROM HoaDon WHERE MaHoaDon = @MaHoaDon";
+                using (var command = new SqlCommand(queryHoaDon, connection))
+                {
+                    command.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            tenHoaDon = reader["TenHoaDon"].ToString();
+                            ngayLapHoaDon = Convert.ToDateTime(reader["NgayLapHoaDon"]).ToString("yyyy-MM-dd");
+                            triGia = reader["GiaTien"].ToString();
+                            trangThai = reader["TrangThai"].ToString();
+
+                        }
+                    }
+                }
+
+                // Lấy thông tin tên nhân viên từ bảng NhanVien
+                var queryNhanVien = "SELECT CONCAT(Ho, ' ', Ten) AS TenNhanVien FROM NhanVien WHERE MaNhanVien = @MaNhanVien";
+                using (var command = new SqlCommand(queryNhanVien, connection))
+                {
+                    command.Parameters.AddWithValue("@MaNhanVien", maNhanVien);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            tenNhanVien = reader["TenNhanVien"].ToString();
+                        }
+                    }
+                }
+
+                // Lấy thông tin tên bệnh nhân từ bảng BenhNhan
+                var queryBenhNhan = "SELECT CONCAT(Ho, ' ', Ten) AS TenBenhNhan FROM BenhNhan WHERE MaBenhNhan = @MaBenhNhan";
+                using (var command = new SqlCommand(queryBenhNhan, connection))
+                {
+                    command.Parameters.AddWithValue("@MaBenhNhan", maBenhNhan);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            tenBenhNhan = reader["TenBenhNhan"].ToString();
+                        }
+                    }
+                }
+            }
+
+            // Hiển thị thông tin trong TextBox
             CTHD hd = new CTHD();
+            hd.txtMaDonThuoc.Text = maDonThuoc;
+            hd.txtNgayLapDon.Text = Convert.ToDateTime(ngayLapDon).ToString("yyyy-MM-dd");
+            hd.txtMaHoaDon.Text = maHoaDon;
+            hd.txtTenHoaDon.Text = tenHoaDon;
+            hd.txtMaBenhNhan.Text = maBenhNhan;
+            hd.txtBenhNhan.Text = tenBenhNhan;
+            hd.txtMaNhanVien.Text = maNhanVien;
+            hd.txtNhanVien.Text = tenNhanVien;
+            hd.txtNgayLap.Text = Convert.ToDateTime(ngayLapHoaDon).ToString("yyyy-MM-dd");
+            hd.txtTongTien.Text = triGia;
+            hd.txtTrangThai.Text = trangThai;
+            hd.LoadThuocData(maDonThuoc);
             hd.OnDataAdded = HienThiDanhSach;
             hd.Show();
         }

@@ -5,6 +5,7 @@ using System.Data;
 using QuanLyBenhVien.Repositories;
 using QuanLyBenhVien.Model;
 using System.Windows.Controls;
+using QuanLyBenhVien.ViewModel;
 
 namespace QuanLyBenhVien.View
 {
@@ -12,10 +13,30 @@ namespace QuanLyBenhVien.View
     {
         private readonly RepositoryBase _userRepository;
         public Action OnDataAdded;
+        private HoaDonViewModel _hoaDon;
         public CTHD()
         {
             _userRepository = new UserRepository();
             InitializeComponent();
+        }
+        public void LoadThuocData(string maDonThuoc)
+        {
+            string queryLoadData = @"SELECT Thuoc.TenThuoc, Thuoc.SoLuong, Thuoc.GiaTien AS DonGia, 
+                             (CTDonThuoc.SoLuong * Thuoc.GiaTien) AS ThanhTien
+                             FROM CTDonThuoc
+                             INNER JOIN Thuoc ON CTDonThuoc.MaThuoc = Thuoc.MaThuoc
+                             WHERE CTDonThuoc.MaDonThuoc = @MaDonThuoc";
+
+            using (var connection = _userRepository.GetConnection())
+            {
+                connection.Open();
+                SqlDataAdapter adapter = new SqlDataAdapter(queryLoadData, connection);
+                adapter.SelectCommand.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
+
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                dgThuoc.ItemsSource = dt.DefaultView;
+            }
         }
         private void btnThem_Click(object sender, RoutedEventArgs e)
         {
