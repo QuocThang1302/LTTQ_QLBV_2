@@ -324,6 +324,23 @@ namespace QuanLyBenhVien.View
                     MessageBox.Show("Cập nhật dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+            catch (SqlException sqlEx)
+            {
+                // Kiểm tra lỗi khóa chính
+                if (sqlEx.Number == 2627 || sqlEx.Number == 2601) // Vi phạm khóa chính
+                {
+                    MessageBox.Show("Mã vật dụng đã tồn tại. Vui lòng nhập mã khác!", "Lỗi khóa chính", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                // Kiểm tra lỗi khóa ngoại
+                else if (sqlEx.Number == 547) // Vi phạm khóa ngoại
+                {
+                    MessageBox.Show("Thông tin quản lý không hợp lệ. Vui lòng kiểm tra lại!", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else
+                {
+                    MessageBox.Show($"Lỗi SQL: {sqlEx.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -332,6 +349,7 @@ namespace QuanLyBenhVien.View
             {
                 ClearTextBoxes(); // Xóa các trường sau khi xử lý
             }
+            HienThiDanhSach();
 
         }
 
@@ -400,7 +418,7 @@ namespace QuanLyBenhVien.View
                 // Lỗi tổng quát (ví dụ: lỗi bất ngờ)
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
+            HienThiDanhSach();
         }
     }
 }

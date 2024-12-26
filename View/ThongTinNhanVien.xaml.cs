@@ -258,7 +258,7 @@ namespace QuanLyBenhVien.View
             dgDanhSachNhanVien.ItemsSource = ds.Tables["tblNhanVien"].DefaultView;
         }
 
-        private int vitri = -1;
+      
         private void dgDanhSachNhanVien_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Lấy hàng được chọn từ DataGrid
@@ -364,7 +364,7 @@ namespace QuanLyBenhVien.View
                 // Lỗi tổng quát (ví dụ: lỗi bất ngờ)
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
+            HienThiDanhSach();
         }
 
         private void btnCapNhat_Click(object sender, RoutedEventArgs e)

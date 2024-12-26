@@ -174,7 +174,7 @@ namespace QuanLyBenhVien.View
             {
                 sqlCon = _userRepository.GetConnection();
             }
-            string query = "select MaKhoa, TenKhoa, TruongKhoa  From Khoa   join NhanVien   on Khoa.TruongKhoa = NhanVien.MaNhanVien";
+            string query = "select MaKhoa, TenKhoa, TruongKhoa  From Khoa";
             adapter = new SqlDataAdapter(query, sqlCon);
             SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
 
@@ -188,7 +188,7 @@ namespace QuanLyBenhVien.View
 
             dgvKhoa.ItemsSource = ds.Tables["tblKhoa"].DefaultView;
 
-            string query1 = "select MaChuyenNganh, TenChuyenNganh, Khoa from ChuyenNganh join Khoa on ChuyenNganh.Khoa = Khoa.MaKhoa";
+            string query1 = "select MaChuyenNganh, TenChuyenNganh, Khoa from ChuyenNganh ";
             adapter1 = new SqlDataAdapter(query1, sqlCon);
             SqlCommandBuilder builder1 = new SqlCommandBuilder(adapter1);
 
