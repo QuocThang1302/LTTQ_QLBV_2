@@ -242,10 +242,27 @@ namespace QuanLyBenhVien.View
                     }
                 }
             }
+            catch (SqlException sqlEx)
+            {
+                // Kiểm tra lỗi liên quan đến ràng buộc
+                if (sqlEx.Number == 547) // Mã lỗi 547: Vi phạm ràng buộc khóa ngoại
+                {
+                    MessageBox.Show("Không thể xóa vì tồn tại dữ liệu liên quan trong bảng khác. Vui lòng kiểm tra và xóa dữ liệu liên quan trước!", "Lỗi ràng buộc khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else if (sqlEx.Number == 2627 || sqlEx.Number == 2601) // Lỗi 2627 hoặc 2601: Vi phạm ràng buộc khóa chính hoặc duy nhất
+                {
+                    MessageBox.Show("Không thể thực hiện thao tác vì vi phạm ràng buộc khóa chính hoặc giá trị trùng lặp!", "Lỗi ràng buộc khóa chính", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    MessageBox.Show($"Lỗi SQL: {sqlEx.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
 
         private void Grid_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -286,7 +303,7 @@ namespace QuanLyBenhVien.View
             try
             {
                 // Xác nhận từ người dùng trước khi xóa
-                var result = MessageBox.Show("Bạn có chắc chắn muốn xóa dòng này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                var result = MessageBox.Show("Bạn có chắc chắn muốn xóa dòng này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
                     // Lấy DataRow từ DataRowView
@@ -303,8 +320,8 @@ namespace QuanLyBenhVien.View
                         MessageBox.Show("Xóa dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
                         // Cập nhật giao diện DataGrid
-                        dgvKhoa.ItemsSource = null;
-                        dgvKhoa.ItemsSource = ds1.Tables["tblChuyenNganh"].DefaultView;
+                        dgvChuyenNganh.ItemsSource = null;
+                        dgvChuyenNganh.ItemsSource = ds1.Tables["tblChuyenNganh"].DefaultView;
                     }
                     else
                     {
@@ -312,10 +329,23 @@ namespace QuanLyBenhVien.View
                     }
                 }
             }
+            catch (SqlException sqlEx)
+            {
+                // Kiểm tra lỗi liên quan đến ràng buộc
+                if (sqlEx.Number == 547) // Mã lỗi SQL Server cho vi phạm khóa ngoại
+                {
+                    MessageBox.Show("Không thể xóa do ràng buộc với bảng khác. Vui lòng kiểm tra dữ liệu liên quan!", "Lỗi ràng buộc khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    MessageBox.Show($"Lỗi SQL: {sqlEx.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
     }
 }
