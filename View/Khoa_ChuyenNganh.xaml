@@ -180,25 +180,26 @@
                     Margin="52,0,0,0"
                     Content="Xóa" Click="btnXoa2_Click"/>
 
+            <!--
             <Button x:Name="btnCapNhat2" Style="{StaticResource childviewButton}" 
-                    Margin="52,0,0,0"
-                    Content="Cập nhật"/>
+        Margin="52,0,0,0"
+        Content="Cập nhật lỏ"/>-->
 
             <Button x:Name="btnThem2" Style="{StaticResource childviewButton}" 
                     Margin="52,0,0,0"
-                    Content="Thêm" Click="Button_Click"/>
+                    Content="Cập nhật" Click="Button_Click"/>
 
             <Button x:Name="btnXoa1" Style="{StaticResource childviewButton}" 
-                    Margin="64,0,0,0"
+                    Margin="210,0,0,0"
                     Content="Xóa" Click="btnXoa1_Click"/>
 
-            <Button x:Name="btnCapNhat1" Style="{StaticResource childviewButton}" 
-                    Margin="52,0,0,0"
-                    Content="Cập nhật"/>
-
+            <!--<Button x:Name="btnCapNhat1" Style="{StaticResource childviewButton}" 
+        Margin="52,0,0,0"
+        Content="Cập nhật lỏ" Click="btnCapNhat1_Click"/>-->
+    
             <Button x:Name="btnThem1" Style="{StaticResource childviewButton}" 
                     Margin="52,0,0,0"
-                    Content="Thêm" Click="Button_Click_1"/>
+                    Content="Cập nhật" Click="Button_Click_1"/>
         </StackPanel>
     </Grid>
 </UserControl>

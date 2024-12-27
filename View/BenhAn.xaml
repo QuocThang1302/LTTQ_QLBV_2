@@ -7,6 +7,7 @@
              xmlns:customControls="clr-namespace:QuanLyBenhVien.CustomControls"
              xmlns:local="clr-namespace:QuanLyBenhVien.View"
              mc:Ignorable="d" 
+             PreviewKeyDown="Window_PreviewKeyDown"
              d:DesignHeight="628" d:DesignWidth="978" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>

@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="QuanLyBenhVien.View.ThongTinNhanVien"
+             PreviewMouseDown="Window_PreviewMouseDown"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +7,7 @@
              xmlns:customControls="clr-namespace:QuanLyBenhVien.CustomControls"
              xmlns:local="clr-namespace:QuanLyBenhVien.View"
              mc:Ignorable="d" 
-             PreviewMouseDown="Window_PreviewMouseDown"
+             PreviewKeyDown="Window_PreviewKeyDown"
              d:DesignHeight="628" d:DesignWidth="978" Loaded="UserControl_Loaded">
     
     <Grid>

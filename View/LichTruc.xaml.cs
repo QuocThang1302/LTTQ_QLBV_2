@@ -9,6 +9,7 @@ namespace QuanLyBenhVien.View
 {
     public partial class LichTruc : UserControl
     {
+        
         private readonly RepositoryBase _userRepository;
         string ID = Application.Current.Properties.Contains("UserID") ? Application.Current.Properties["UserID"] as string : null;
         public string GetRoleIDByUserID()

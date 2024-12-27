@@ -50,6 +50,15 @@ namespace QuanLyBenhVien.View
                 popupCalendar.IsOpen = false;
             }
         }
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // Kiểm tra nếu lịch đang mở và người dùng nhấn phím bất kỳ
+            if (popupCalendar.IsOpen)
+            {
+                // Đóng lịch nếu phím bất kỳ được nhấn
+                popupCalendar.IsOpen = false;
+            }
+        }
         private void SearchControl_SearchButtonClicked(object sender, string searchText)
         {
 
@@ -304,7 +313,6 @@ namespace QuanLyBenhVien.View
 
         private void btnCapNhat_Click(object sender, RoutedEventArgs e)
         {
-            // Lấy dòng được chọn từ DataGrid
             var selectedRow = dgDanhSachBenhAn.SelectedItem as DataRowView;
 
             if (selectedRow == null)
@@ -315,12 +323,10 @@ namespace QuanLyBenhVien.View
 
             try
             {
-                // Lấy DataRow từ DataRowView
                 DataRow dataRow = selectedRow.Row;
 
-                // Cập nhật dữ liệu từ các TextBox vào DataRow
+                // Cập nhật dữ liệu từ TextBox
                 dataRow["MaBenhAn"] = txtMaBenhAn.Text.Trim();
-                dataRow["Ten"] = txtBenhNhan.Text.Trim();
                 dataRow["MaBenhNhan"] = txtMaBenhNhan.Text.Trim();
 
                 if (DateTime.TryParse(txtNgayTaoLap.Text.Trim(), out DateTime ngayTaoLap))
@@ -336,45 +342,46 @@ namespace QuanLyBenhVien.View
                 dataRow["TinhTrang"] = txtTinhTrang.Text.Trim();
                 dataRow["DieuTri"] = txtHuongDieuTri.Text.Trim();
 
-                // Cập nhật thay đổi vào cơ sở dữ liệu
-                int kq = adapter.Update(ds.Tables["tblBenhAn"]);
+                // Cấu hình UpdateCommand
+                adapter.UpdateCommand = new SqlCommand(
+                    @"UPDATE BenhAn 
+              SET MaBenhNhan = @MaBenhNhan, 
+                  NgayTaoLap = @NgayTaoLap, 
+                  Benh = @Benh, 
+                  TinhTrang = @TinhTrang, 
+                  DieuTri = @DieuTri 
+              WHERE MaBenhAn = @MaBenhAn", sqlCon);
+
+                adapter.UpdateCommand.Parameters.Add("@MaBenhNhan", SqlDbType.NVarChar, 50, "MaBenhNhan");
+                adapter.UpdateCommand.Parameters.Add("@NgayTaoLap", SqlDbType.Date, 50, "NgayTaoLap");
+                adapter.UpdateCommand.Parameters.Add("@Benh", SqlDbType.NVarChar, 100, "Benh");
+                adapter.UpdateCommand.Parameters.Add("@TinhTrang", SqlDbType.NVarChar, 50, "TinhTrang");
+                adapter.UpdateCommand.Parameters.Add("@DieuTri", SqlDbType.NVarChar, 100, "DieuTri");
+                adapter.UpdateCommand.Parameters.Add("@MaBenhAn", SqlDbType.NVarChar, 50, "MaBenhAn");
+
+                // Thực thi Update
+                int kq = adapter.Update(ds.Tables[0]);
 
                 if (kq > 0)
                 {
                     MessageBox.Show("Cập nhật dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    // Cập nhật giao diện DataGrid
+                    // Làm mới DataGrid
                     dgDanhSachBenhAn.ItemsSource = null;
-                    dgDanhSachBenhAn.ItemsSource = ds.Tables["tblBenhAn"].DefaultView;
-
-                    // Giữ lại dòng đã chọn
-                    dgDanhSachBenhAn.SelectedItem = selectedRow;
-                    HienThiDanhSach();
+                    dgDanhSachBenhAn.ItemsSource = ds.Tables[0].DefaultView;
                 }
                 else
                 {
                     MessageBox.Show("Cập nhật dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            catch (SqlException ex)
-            {
-                // Xử lý lỗi SQL
-                if (ex.Number == 2627) // Lỗi vi phạm PRIMARY KEY
-                {
-                    MessageBox.Show("Khóa chính đã tồn tại! Không thể cập nhật dữ liệu trùng lặp.", "Lỗi khóa chính", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                else if (ex.Number == 547) // Lỗi vi phạm FOREIGN KEY
-                {
-                    MessageBox.Show("Dữ liệu không hợp lệ! Mã bệnh nhân không tồn tại trong hệ thống.", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                else
-                {
-                    MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
             catch (FormatException ex)
             {
                 MessageBox.Show($"Lỗi định dạng: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (SqlException ex)
+            {
+                MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception ex)
             {
@@ -382,7 +389,7 @@ namespace QuanLyBenhVien.View
             }
             finally
             {
-                ClearFields(); // Xóa các trường sau khi xử lý
+                ClearFields(); // Xóa các TextBox sau khi xử lý
             }
             HienThiDanhSach();
         }

@@ -65,7 +65,7 @@ namespace QuanLyBenhVien.View
         private void tbHSD_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             popupCalendarHSD.IsOpen = true; // Mở popup khi nhấn vào TextBox
-            e.Handled = true; // Ngăn sự kiện lan sang Window_PreviewMouseDown
+            
         }
 
         private void calendarHSD_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
@@ -84,7 +84,14 @@ namespace QuanLyBenhVien.View
                 popupCalendarHSD.IsOpen = false; // Ẩn popup khi nhấn ra ngoài
             }
         }
-
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // Kiểm tra nếu lịch đang mở và người dùng nhấn phím bất kỳ
+            if (popupCalendarHSD.IsOpen )
+            {
+                popupCalendarHSD.IsOpen = false; // Ẩn popup khi nhấn ra ngoài
+            }
+        }
         private void BacSi()
         {
             string roleID = GetRoleIDByUserID();

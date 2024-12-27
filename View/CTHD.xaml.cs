@@ -933,6 +933,13 @@ namespace QuanLyBenhVien.View
                 popupCalendarNgayLap.IsOpen = false; // Ẩn popup nếu nhấn bên ngoài popup
             }
         }
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (popupCalendarNgayLap.IsOpen )
+            {
+                popupCalendarNgayLap.IsOpen = false; // Ẩn popup nếu nhấn bên ngoài popup
+            }
+        }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)

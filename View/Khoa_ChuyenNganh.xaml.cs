@@ -65,10 +65,10 @@ namespace QuanLyBenhVien.View
             string roleID = GetRoleIDByUserID();
             if (roleID == "R02")
             {
-                btnCapNhat1.Visibility = Visibility.Hidden;
+                //btnCapNhat1.Visibility = Visibility.Hidden;
                 btnThem1.Visibility = Visibility.Hidden;
                 btnXoa1.Visibility = Visibility.Hidden;
-                btnCapNhat2.Visibility = Visibility.Hidden;
+                //    1btnCapNhat2.Visibility = Visibility.Hidden;
                 btnThem2.Visibility = Visibility.Hidden;
                 btnXoa2.Visibility = Visibility.Hidden;
             }
@@ -188,11 +188,24 @@ namespace QuanLyBenhVien.View
 
             dgvKhoa.ItemsSource = ds.Tables["tblKhoa"].DefaultView;
 
+            string maKhoa = null;
+            if (dgvKhoa.SelectedItem is DataRowView selectedRow)
+            {
+                maKhoa = selectedRow.Row["MaKhoa"].ToString();
+            }
             string query1 = "select MaChuyenNganh, TenChuyenNganh, Khoa from ChuyenNganh ";
+            if (!string.IsNullOrEmpty(maKhoa))
+            {
+                query1 += " WHERE Khoa = @MaKhoa";
+            }
             adapter1 = new SqlDataAdapter(query1, sqlCon);
             SqlCommandBuilder builder1 = new SqlCommandBuilder(adapter1);
 
             ds1 = new DataSet();
+            if (!string.IsNullOrEmpty(maKhoa))
+            {
+                adapter1.SelectCommand.Parameters.AddWithValue("@MaKhoa", maKhoa);
+            }
             if (sqlCon.State == ConnectionState.Closed)
             {
                 sqlCon.Open();
@@ -244,6 +257,7 @@ namespace QuanLyBenhVien.View
             }
             catch (SqlException sqlEx)
             {
+
                 // Kiểm tra lỗi liên quan đến ràng buộc
                 if (sqlEx.Number == 547) // Mã lỗi 547: Vi phạm ràng buộc khóa ngoại
                 {
@@ -252,6 +266,12 @@ namespace QuanLyBenhVien.View
                 else if (sqlEx.Number == 2627 || sqlEx.Number == 2601) // Lỗi 2627 hoặc 2601: Vi phạm ràng buộc khóa chính hoặc duy nhất
                 {
                     MessageBox.Show("Không thể thực hiện thao tác vì vi phạm ràng buộc khóa chính hoặc giá trị trùng lặp!", "Lỗi ràng buộc khóa chính", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                // Kiểm tra lỗi ràng buộc khóa ngoại hoặc khóa chínhkjahdfjkashjkdhsa
+                if (sqlEx.Number == 547) // SQL Server error code 547 (ràng buộc khóa ngoại)
+                {
+                    MessageBox.Show("Không thể xóa vì ràng buộc dữ liệu với bảng khác. Vui lòng kiểm tra lại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+
                 }
                 else
                 {
@@ -278,6 +298,35 @@ namespace QuanLyBenhVien.View
 
             // Lấy dữ liệu từ DataRowView
             DataRow dataRow1 = selectedRow1.Row;
+            // Lấy giá trị của MaDonThuoc
+            string maKhoa = selectedRow1.Row["MaKhoa"].ToString();
+
+            // Cập nhật chỉ DataGrid CTDonThuoc
+            HienThiChuyenNganh(maKhoa);
+        }
+
+        private void HienThiChuyenNganh(string maKhoa)
+        {
+            if (sqlCon == null)
+            {
+                sqlCon = _userRepository.GetConnection();
+            }
+
+            string query1 = "select MaChuyenNganh, TenChuyenNganh, Khoa from ChuyenNganh where Khoa = @MaKhoa";
+
+
+            adapter1 = new SqlDataAdapter(query1, sqlCon);
+            adapter1.SelectCommand.Parameters.AddWithValue("@MaKhoa", maKhoa);
+
+            ds1 = new DataSet();
+            if (sqlCon.State == ConnectionState.Closed)
+            {
+                sqlCon.Open();
+            }
+            adapter1.Fill(ds1, "tblChuyenNganh");
+            sqlCon.Close();
+
+            dgvChuyenNganh.ItemsSource = ds1.Tables["tblChuyenNganh"].DefaultView;
         }
 
         private void dgvChuyenNganh_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -331,10 +380,17 @@ namespace QuanLyBenhVien.View
             }
             catch (SqlException sqlEx)
             {
+
                 // Kiểm tra lỗi liên quan đến ràng buộc
                 if (sqlEx.Number == 547) // Mã lỗi SQL Server cho vi phạm khóa ngoại
                 {
                     MessageBox.Show("Không thể xóa do ràng buộc với bảng khác. Vui lòng kiểm tra dữ liệu liên quan!", "Lỗi ràng buộc khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                // Kiểm tra lỗi ràng buộc khóa ngoại
+                if (sqlEx.Number == 547) // SQL Server error code 547: Foreign key violation
+                {
+                    MessageBox.Show("Không thể xóa do ràng buộc với bảng khác. Vui lòng kiểm tra dữ liệu liên quan!", "Lỗi ràng buộc", MessageBoxButton.OK, MessageBoxImage.Error);
+
                 }
                 else
                 {
@@ -347,5 +403,7 @@ namespace QuanLyBenhVien.View
             }
 
         }
+
+        
     }
 }
