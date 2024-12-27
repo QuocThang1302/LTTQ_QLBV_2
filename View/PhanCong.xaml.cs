@@ -25,9 +25,11 @@ namespace QuanLyBenhVien.View
         {
             if (calendarNgayTruc.SelectedDate.HasValue)
             {
-                // Gán giá trị vào Binding Property (NgayTruc)
-                var selectedDate = calendarNgayTruc.SelectedDate.Value.ToString("yyyy-MM-dd");
-                TxB_NgayTruc.Text = selectedDate;
+                var viewModel = DataContext as PhanCongViewModel;
+                if (viewModel != null)
+                {
+                    viewModel.NgayTruc = calendarNgayTruc.SelectedDate.Value; // Cập nhật thuộc tính NgayTruc
+                }
 
                 popupCalendarNgayTruc.IsOpen = false; // Ẩn popup sau khi chọn ngày
             }
@@ -52,18 +54,6 @@ namespace QuanLyBenhVien.View
         private void btnThoat_Click(object sender, RoutedEventArgs e)
         {
             Close();
-        }
-
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if(DSPhanCong.SelectedItem is PhanCongModel selectedItem)
-            {
-                TxB_MaLichTruc.Text = selectedItem.MaLichTruc;
-                TxB_MaBacSi.Text = selectedItem.MaBacSi;
-                TxB_NgayTruc.Text = selectedItem.NgayTruc.ToString("yyyy-MM-dd");
-                TxB_PhanCong.Text = selectedItem.PhanCong;
-                TxB_TrangThai.Text = selectedItem.TrangThai; 
-            }
         }
     }
 }
