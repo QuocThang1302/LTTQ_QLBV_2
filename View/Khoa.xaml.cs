@@ -82,10 +82,12 @@ namespace QuanLyBenhVien.View
                                 {
                                     MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                                     OnDataAdded?.Invoke();
+                                    return;
                                 }
                                 else
                                 {
                                     MessageBox.Show("Cập nhật thông tin thất bại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    return;
                                 }
                             }
                         }

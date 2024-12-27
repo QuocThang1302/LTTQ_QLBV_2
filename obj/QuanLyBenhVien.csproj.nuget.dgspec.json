@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Dowload\\QLBV\\LTTQ_QLBV_2\\QuanLyBenhVien.csproj": {}
+    "D:\\Dowload\\QLBV2\\LTTQ_QLBV_2\\QuanLyBenhVien.csproj": {}
   },
   "projects": {
-    "D:\\Dowload\\QLBV\\LTTQ_QLBV_2\\QuanLyBenhVien.csproj": {
+    "D:\\Dowload\\QLBV2\\LTTQ_QLBV_2\\QuanLyBenhVien.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dowload\\QLBV\\LTTQ_QLBV_2\\QuanLyBenhVien.csproj",
+        "projectUniqueName": "D:\\Dowload\\QLBV2\\LTTQ_QLBV_2\\QuanLyBenhVien.csproj",
         "projectName": "QuanLyBenhVien",
-        "projectPath": "D:\\Dowload\\QLBV\\LTTQ_QLBV_2\\QuanLyBenhVien.csproj",
+        "projectPath": "D:\\Dowload\\QLBV2\\LTTQ_QLBV_2\\QuanLyBenhVien.csproj",
         "packagesPath": "C:\\Users\\Ngoc Sang\\.nuget\\packages\\",
-        "outputPath": "D:\\Dowload\\QLBV\\LTTQ_QLBV_2\\obj\\",
+        "outputPath": "D:\\Dowload\\QLBV2\\LTTQ_QLBV_2\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
