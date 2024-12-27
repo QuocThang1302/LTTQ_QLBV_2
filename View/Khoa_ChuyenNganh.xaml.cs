@@ -215,7 +215,7 @@ namespace QuanLyBenhVien.View
 
             dgvChuyenNganh.ItemsSource = ds1.Tables["tblChuyenNganh"].DefaultView;
         }
-        
+
         private void btnXoa1_Click(object sender, RoutedEventArgs e)
         {
             var selectedRow2 = dgvKhoa.SelectedItem as DataRowView;
@@ -267,20 +267,17 @@ namespace QuanLyBenhVien.View
                 {
                     MessageBox.Show("Không thể thực hiện thao tác vì vi phạm ràng buộc khóa chính hoặc giá trị trùng lặp!", "Lỗi ràng buộc khóa chính", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                // Kiểm tra lỗi ràng buộc khóa ngoại hoặc khóa chínhkjahdfjkashjkdhsa
-                if (sqlEx.Number == 547) // SQL Server error code 547 (ràng buộc khóa ngoại)
-                {
-                    MessageBox.Show("Không thể xóa vì ràng buộc dữ liệu với bảng khác. Vui lòng kiểm tra lại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    // Kiểm tra lỗi ràng buộc khóa ngoại hoặc khóa chínhkjahdfjkashjkdhsa
+                    if (sqlEx.Number == 547) // SQL Server error code 547 (ràng buộc khóa ngoại)
+                    {
+                        MessageBox.Show("Không thể xóa vì ràng buộc dữ liệu với bảng khác. Vui lòng kiểm tra lại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
 
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Lỗi SQL: {sqlEx.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
-                else
-                {
-                    MessageBox.Show($"Lỗi SQL: {sqlEx.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }
@@ -386,24 +383,22 @@ namespace QuanLyBenhVien.View
                 {
                     MessageBox.Show("Không thể xóa do ràng buộc với bảng khác. Vui lòng kiểm tra dữ liệu liên quan!", "Lỗi ràng buộc khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                // Kiểm tra lỗi ràng buộc khóa ngoại
-                if (sqlEx.Number == 547) // SQL Server error code 547: Foreign key violation
-                {
-                    MessageBox.Show("Không thể xóa do ràng buộc với bảng khác. Vui lòng kiểm tra dữ liệu liên quan!", "Lỗi ràng buộc", MessageBoxButton.OK, MessageBoxImage.Error);
+                    // Kiểm tra lỗi ràng buộc khóa ngoại
+                    if (sqlEx.Number == 547) // SQL Server error code 547: Foreign key violation
+                    {
+                        MessageBox.Show("Không thể xóa do ràng buộc với bảng khác. Vui lòng kiểm tra dữ liệu liên quan!", "Lỗi ràng buộc", MessageBoxButton.OK, MessageBoxImage.Error);
 
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Lỗi SQL: {sqlEx.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
-                else
-                {
-                    MessageBox.Show($"Lỗi SQL: {sqlEx.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+
+
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+
 
         }
-
-        
     }
 }
