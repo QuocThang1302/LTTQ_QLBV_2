@@ -150,19 +150,23 @@ namespace QuanLyBenhVien.ViewModel
                     Title = "Thuốc",
                     StackMode = StackMode.Values,
                     Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#DBBDE2")),
-                    DataLabels = true
+                    //DataLabels = true
                 },
                  new StackedColumnSeries
                  {
                      Title = "Vật dụng",
                      StackMode = StackMode.Values,
                      Fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#78C7D9")),
-                     DataLabels = true
+                     //DataLabels = true
                  }       
             };
 
-            Labels = new string[5];
-            int index = 0;
+            var currentDate = DateTime.Now;
+            var months = Enumerable.Range(0, 5).Select(i => currentDate.AddMonths(-i).ToString("MM/yyyy")).Reverse().ToList();
+
+            Labels = months.ToArray();
+            //Labels = new string[5];
+            //int index = 4;
             var dataVD = new ChartValues<double> { };
             var dataT = new ChartValues<double> { };
 
@@ -176,9 +180,9 @@ namespace QuanLyBenhVien.ViewModel
                 {
                     dataVD.Add(Convert.ToDouble(reader["DoanhThuVatDung"]));
                     dataT.Add(Convert.ToDouble(reader["DoanhThuThuoc"]));
-                    Labels[index] = reader["Thang"].ToString();
+                    //Labels[index] = reader["Thang"].ToString();
                 }
-                index++;
+                //index--;
             }
 
             SeriesCollectionColumn[0].Values = dataT;

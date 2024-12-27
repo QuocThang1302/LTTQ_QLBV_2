@@ -183,7 +183,7 @@
                     <livechart:CartesianChart Series="{Binding SeriesCollectionColumn}"
                                               LegendLocation="Top" Margin="5,0,5,0" Loaded="CartesianChart_Loaded">
                         <livechart:CartesianChart.AxisX>
-                            <livechart:Axis Title="Tháng" Labels="{Binding Labels}">
+                            <livechart:Axis Labels="{Binding Labels}">
                                 <livechart:Axis.Separator>
                                     <livechart:Separator Step="1"/>
                                 </livechart:Axis.Separator>
