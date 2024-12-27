@@ -228,7 +228,7 @@ namespace QuanLyBenhVien.View
 
 
             adapter1 = new SqlDataAdapter(query1, sqlCon);
-            adapter1.SelectCommand.Parameters.AddWithValue("@PhanCong", maCongViec);
+            adapter1.SelectCommand.Parameters.AddWithValue("@MaCongViec", maCongViec);
 
             ds1 = new DataSet();
             if (sqlCon.State == ConnectionState.Closed)
