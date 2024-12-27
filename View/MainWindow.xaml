@@ -326,12 +326,12 @@
                             <fa:IconImage Icon="Xmark" Style="{StaticResource controlbarIcon}"/>
                         </Button>
 
-                        <Button x:Name="btnMaximize"
+                        <!--<Button x:Name="btnMaximize"
                                 Style ="{StaticResource controlbarButton}"
                                 Tag="#3a0ca3"
                                 Click="btnMaximize_Click">
                             <fa:IconImage Icon="Square" Style="{StaticResource controlbarIcon}"/>
-                        </Button>
+                        </Button>-->
 
                         <Button x:Name="btnMinimize"
                                 Width="30"

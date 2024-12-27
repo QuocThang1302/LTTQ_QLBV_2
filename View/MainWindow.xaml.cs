@@ -40,12 +40,12 @@ namespace QuanLyBenhVien
             Application.Current.Shutdown();
         }
 
-        private void btnMaximize_Click(object sender, RoutedEventArgs e)
-        {
-            if (this.WindowState == WindowState.Maximized)
-                this.WindowState = WindowState.Normal;
-            else this.WindowState = WindowState.Maximized;
-        }
+        //private void btnMaximize_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (this.WindowState == WindowState.Maximized)
+        //        this.WindowState = WindowState.Normal;
+        //    else this.WindowState = WindowState.Maximized;
+        //}
 
         private void btnMinimize_Click(object sender, RoutedEventArgs e)
         {
