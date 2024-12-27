@@ -224,8 +224,8 @@ GO
 
 -- Role table
 INSERT INTO Role (RoleID, TenRole) VALUES  
-('R01', N'Admin'), 
-('R02', N'Doctor');
+('R01', N'Quản lý'), 
+('R02', N'Bác sĩ');
 
 -- Vô hiệu hóa tất cả ràng buộc khóa ngoại
 ALTER TABLE NhanVien NOCHECK CONSTRAINT ALL;
