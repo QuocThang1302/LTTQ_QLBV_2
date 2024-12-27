@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:QuanLyBenhVien.View"
              mc:Ignorable="d" 
+             PreviewKeyDown="Window_PreviewKeyDown"
              PreviewMouseDown="Window_PreviewMouseDown"
              xmlns:customControls="clr-namespace:QuanLyBenhVien.CustomControls"
              d:DesignHeight="628" d:DesignWidth="978" Loaded="UserControl_Loaded">

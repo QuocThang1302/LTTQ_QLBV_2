@@ -29,13 +29,15 @@ namespace QuanLyBenhVien.View
         public Action OnDataAdded;
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
+            // Lấy giá trị từ các TextBox
             string maChuyenNganh = TxB_MaChuyenNganh.Text.Trim();
-            string chuyenNganh = TxB_ChuyenNganh.Text.Trim();
+            string tenChuyenNganh = TxB_ChuyenNganh.Text.Trim();
             string khoa = TxB_Khoa.Text.Trim();
 
-            if (string.IsNullOrEmpty(maChuyenNganh) || string.IsNullOrEmpty(chuyenNganh) || string.IsNullOrEmpty(khoa))
+            // Kiểm tra lỗi: Mã Chuyên Ngành không được để trống
+            if (string.IsNullOrEmpty(maChuyenNganh))
             {
-                MessageBox.Show("Vui lòng điền đầy đủ thông tin!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Vui lòng nhập Mã Chuyên Ngành!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -45,39 +47,68 @@ namespace QuanLyBenhVien.View
                 {
                     conn.Open();
 
-                    string insertQuery = "INSERT INTO ChuyenNganh (MaChuyenNganh, TenChuyenNganh, Khoa) VALUES (@MaChuyenNganh, @ChuyenNganh, @Khoa)";
-                    using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn))
+                    // Kiểm tra xem MaChuyenNganh đã tồn tại chưa
+                    string checkQuery = "SELECT COUNT(*) FROM ChuyenNganh WHERE MaChuyenNganh = @MaChuyenNganh";
+                    using (SqlCommand checkCmd = new SqlCommand(checkQuery, conn))
                     {
-                        insertCmd.Parameters.AddWithValue("@MaChuyenNganh", maChuyenNganh);
-                        insertCmd.Parameters.AddWithValue("@ChuyenNganh", chuyenNganh);
-                        insertCmd.Parameters.AddWithValue("@Khoa", khoa);
+                        checkCmd.Parameters.AddWithValue("@MaChuyenNganh", maChuyenNganh);
+                        int count = (int)checkCmd.ExecuteScalar();
 
-                        try
+                        if (count > 0) // Nếu đã tồn tại
                         {
-                            int rowsAffected = insertCmd.ExecuteNonQuery();
-                            if (rowsAffected > 0)
+                            // Kiểm tra dữ liệu đầy đủ trước khi cập nhật
+                            if (string.IsNullOrEmpty(tenChuyenNganh) || string.IsNullOrEmpty(khoa))
                             {
-                                MessageBox.Show("Thêm thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                                OnDataAdded?.Invoke();
+                                MessageBox.Show("Mã Chuyên Ngành đã tồn tại! Vui lòng nhập đầy đủ thông tin để cập nhật.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                return;
                             }
-                            else
+
+                            // Cập nhật thông tin Chuyên Ngành
+                            string updateQuery = "UPDATE ChuyenNganh SET TenChuyenNganh = @TenChuyenNganh, Khoa = @Khoa WHERE MaChuyenNganh = @MaChuyenNganh";
+                            using (SqlCommand updateCmd = new SqlCommand(updateQuery, conn))
                             {
-                                MessageBox.Show("Thêm thông tin thất bại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                                updateCmd.Parameters.AddWithValue("@MaChuyenNganh", maChuyenNganh);
+                                updateCmd.Parameters.AddWithValue("@TenChuyenNganh", tenChuyenNganh);
+                                updateCmd.Parameters.AddWithValue("@Khoa", khoa);
+
+                                int rowsAffected = updateCmd.ExecuteNonQuery();
+                                if (rowsAffected > 0)
+                                {
+                                    MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                    OnDataAdded?.Invoke();
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Cập nhật thông tin thất bại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
                             }
                         }
-                        catch (SqlException sqlEx)
+                        else // Nếu không tồn tại → Thêm mới
                         {
-                            if (sqlEx.Number == 2627) // Vi phạm khóa chính
+                            // Kiểm tra dữ liệu đầy đủ trước khi thêm mới
+                            if (string.IsNullOrEmpty(tenChuyenNganh) || string.IsNullOrEmpty(khoa))
                             {
-                                MessageBox.Show("Mã chuyên ngành đã tồn tại (vi phạm khóa chính)!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                MessageBox.Show("Vui lòng điền đầy đủ thông tin để thêm mới!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
                             }
-                            else if (sqlEx.Number == 547) // Vi phạm khóa ngoại
+
+                            string insertQuery = "INSERT INTO ChuyenNganh (MaChuyenNganh, TenChuyenNganh, Khoa) VALUES (@MaChuyenNganh, @TenChuyenNganh, @Khoa)";
+                            using (SqlCommand insertCmd = new SqlCommand(insertQuery, conn))
                             {
-                                MessageBox.Show("Dữ liệu nhập vào vi phạm ràng buộc khóa ngoại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            }
-                            else
-                            {
-                                MessageBox.Show($"Lỗi SQL: {sqlEx.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                                insertCmd.Parameters.AddWithValue("@MaChuyenNganh", maChuyenNganh);
+                                insertCmd.Parameters.AddWithValue("@TenChuyenNganh", tenChuyenNganh);
+                                insertCmd.Parameters.AddWithValue("@Khoa", khoa);
+
+                                int rowsAffected = insertCmd.ExecuteNonQuery();
+                                if (rowsAffected > 0)
+                                {
+                                    MessageBox.Show("Thêm thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                    OnDataAdded?.Invoke();
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Thêm thông tin thất bại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
                             }
                         }
                     }
@@ -85,12 +116,21 @@ namespace QuanLyBenhVien.View
             }
             catch (SqlException sqlEx)
             {
-                MessageBox.Show($"Lỗi kết nối cơ sở dữ liệu: {sqlEx.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                
+                if (sqlEx.Number == 547) // Vi phạm khóa ngoại
+                {
+                    MessageBox.Show("Dữ liệu nhập vào vi phạm ràng buộc khóa ngoại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else
+                {
+                    MessageBox.Show($"Lỗi SQL: {sqlEx.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Đã xảy ra lỗi không xác định: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
     }
 }

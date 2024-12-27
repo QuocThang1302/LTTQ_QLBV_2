@@ -6,6 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLyBenhVien.View"
         mc:Ignorable="d"
+        PreviewKeyDown="Window_PreviewKeyDown"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
@@ -167,7 +168,7 @@
                     <Button Content="Đồng ý"
                             Style= "{StaticResource childviewButton}"
                             Grid.Column="5" 
-                            Margin="0,0,0,40"/>
+                            Margin="0,1,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
                     <Button Content="Thoát"
                             Style= "{StaticResource childviewButton}"
                             Grid.Column="7"

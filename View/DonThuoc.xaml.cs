@@ -160,7 +160,11 @@ namespace QuanLyBenhVien.View
             string maNhanVien = selectedRow["MaBacSi"].ToString(); // MaBacSi tương đương MaNhanVien
             string maBenhNhan = selectedRow["MaBenhNhan"].ToString();
             string ngayLapDon = selectedRow["NgayLapDon"].ToString();
-
+            if (string.IsNullOrEmpty(maHoaDon))
+            {
+                MessageBox.Show("Đơn thuốc chưa có hóa đơn!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
             // Truy vấn cơ sở dữ liệu để lấy thông tin chi tiết
             string tenNhanVien = "", tenBenhNhan = "", tenHoaDon = "", ngayLapHoaDon = "", triGia="", trangThai="";
             using (var connection = _userRepository.GetConnection())

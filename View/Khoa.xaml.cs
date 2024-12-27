@@ -62,8 +62,32 @@ namespace QuanLyBenhVien.View
 
                         if (count > 0)
                         {
-                            MessageBox.Show("Mã khoa đã tồn tại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            return;
+                            // Nếu mã khoa tồn tại, kiểm tra dữ liệu cập nhật
+                            if (string.IsNullOrEmpty(tenKhoa) || string.IsNullOrEmpty(truongKhoa))
+                            {
+                                MessageBox.Show("Mã khoa đã tồn tại! Vui lòng nhập đầy đủ thông tin để cập nhật.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                return;
+                            }
+
+                            // Cập nhật thông tin
+                            string updateQuery = "UPDATE Khoa SET TenKhoa = @TenKhoa, TruongKhoa = @TruongKhoa WHERE MaKhoa = @MaKhoa";
+                            using (SqlCommand updateCmd = new SqlCommand(updateQuery, conn))
+                            {
+                                updateCmd.Parameters.AddWithValue("@MaKhoa", maKhoa);
+                                updateCmd.Parameters.AddWithValue("@TenKhoa", tenKhoa);
+                                updateCmd.Parameters.AddWithValue("@TruongKhoa", truongKhoa);
+
+                                int rowsAffected = updateCmd.ExecuteNonQuery();
+                                if (rowsAffected > 0)
+                                {
+                                    MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                                    OnDataAdded?.Invoke();
+                                }
+                                else
+                                {
+                                    MessageBox.Show("Cập nhật thông tin thất bại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                                }
+                            }
                         }
                     }
 
@@ -90,11 +114,7 @@ namespace QuanLyBenhVien.View
                         }
                         catch (SqlException sqlEx)
                         {
-                            if (sqlEx.Number == 2627) // Vi phạm khóa chính
-                            {
-                                MessageBox.Show("Mã khoa đã tồn tại (vi phạm khóa chính)!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
-                            }
-                            else if (sqlEx.Number == 547) // Vi phạm khóa ngoại
+                            if (sqlEx.Number == 547) // Vi phạm khóa ngoại
                             {
                                 MessageBox.Show("Dữ liệu nhập vào vi phạm ràng buộc khóa ngoại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
                             }

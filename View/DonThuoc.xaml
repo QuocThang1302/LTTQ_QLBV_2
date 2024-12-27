@@ -176,13 +176,15 @@
                             Margin="30,15,0,0"
                             Content="Xóa" Click="Button_Click_2"/>
 
-                    <Button Style="{StaticResource childviewButton}" 
-                            Margin="30,15,0,0"
-                            Content="Cập nhật"/>
+                    <!--
+                        <Button Style="{StaticResource childviewButton}" 
+                        Margin="30,15,0,0"
+                        Content="Cập nhật"/>
+                    -->
 
                     <Button Style="{StaticResource childviewButton}" 
                             Margin="30,15,0,0"
-                            Content="Thêm" Click="Button_Click"/>
+                            Content="Cập nhật" Click="Button_Click"/>
                 </StackPanel>
             </StackPanel>
         </Grid>

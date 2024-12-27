@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:QuanLyBenhVien.View"
         xmlns:viewModel="clr-namespace:QuanLyBenhVien.ViewModel"
         mc:Ignorable="d"
+        PreviewKeyDown="Window_PreviewKeyDown"
         PreviewMouseDown="Window_PreviewMouseDown"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
@@ -157,7 +158,7 @@
 
                             <Button Style="{StaticResource childviewButton}" 
                                     Margin="52,0,0,0"
-                                    Content="Đồng ý" Command="{Binding DongYCommand}" />
+                                    Content="Đồng ý" Command="{Binding DongYCommand}"  />
                         </StackPanel>
                     </Grid>
 

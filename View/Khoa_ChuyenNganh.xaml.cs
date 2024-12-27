@@ -65,10 +65,10 @@ namespace QuanLyBenhVien.View
             string roleID = GetRoleIDByUserID();
             if (roleID == "R02")
             {
-                btnCapNhat1.Visibility = Visibility.Hidden;
+                //btnCapNhat1.Visibility = Visibility.Hidden;
                 btnThem1.Visibility = Visibility.Hidden;
                 btnXoa1.Visibility = Visibility.Hidden;
-                btnCapNhat2.Visibility = Visibility.Hidden;
+                //    1btnCapNhat2.Visibility = Visibility.Hidden;
                 btnThem2.Visibility = Visibility.Hidden;
                 btnXoa2.Visibility = Visibility.Hidden;
             }
@@ -305,5 +305,7 @@ namespace QuanLyBenhVien.View
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        
     }
 }

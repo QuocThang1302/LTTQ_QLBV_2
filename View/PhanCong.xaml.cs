@@ -25,9 +25,11 @@ namespace QuanLyBenhVien.View
         {
             if (calendarNgayTruc.SelectedDate.HasValue)
             {
-                // Gán giá trị vào Binding Property (NgayTruc)
-                var selectedDate = calendarNgayTruc.SelectedDate.Value.ToString("yyyy-MM-dd");
-                TxB_NgayTruc.Text = selectedDate;
+                var viewModel = DataContext as PhanCongViewModel;
+                if (viewModel != null)
+                {
+                    viewModel.NgayTruc = calendarNgayTruc.SelectedDate.Value; // Cập nhật thuộc tính NgayTruc
+                }
 
                 popupCalendarNgayTruc.IsOpen = false; // Ẩn popup sau khi chọn ngày
             }
@@ -36,6 +38,14 @@ namespace QuanLyBenhVien.View
         private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (popupCalendarNgayTruc.IsOpen && !popupCalendarNgayTruc.IsMouseOver)
+            {
+                popupCalendarNgayTruc.IsOpen = false; // Ẩn popup nếu nhấn ra ngoài
+            }
+        }
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // Kiểm tra nếu lịch đang mở và người dùng nhấn phím bất kỳ
+            if (popupCalendarNgayTruc.IsOpen )
             {
                 popupCalendarNgayTruc.IsOpen = false; // Ẩn popup nếu nhấn ra ngoài
             }

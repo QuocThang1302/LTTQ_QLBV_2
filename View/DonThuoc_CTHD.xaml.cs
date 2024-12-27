@@ -39,6 +39,13 @@ namespace QuanLyBenhVien.View
                 popupCalendarNgayLapDon.IsOpen = false; // Ẩn popup nếu nhấn ra ngoài
             }
         }
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (popupCalendarNgayLapDon.IsOpen )
+            {
+                popupCalendarNgayLapDon.IsOpen = false; // Ẩn popup nếu nhấn ra ngoài
+            }
+        }
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -282,5 +289,144 @@ namespace QuanLyBenhVien.View
                 MessageBox.Show("Xóa thất bại!");
             }
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            // Lấy dữ liệu từ TextBox
+            string maDonThuoc = TxB_MaDonThuoc.Text.Trim();
+            string maBenhNhan = TxB_MaBenhNhan.Text.Trim();
+            string maBacSi = TxB_MaBacSi.Text.Trim();
+            string ngayLapDon = TxB_NgayLapDon.Text.Trim();
+
+            string tenThuoc = TxB_TenThuoc.Text.Trim();
+            string soLuong = TxB_SoLuong.Text.Trim();
+            string huongDan = TxB_HuongDan.Text.Trim();
+
+            if (string.IsNullOrEmpty(maDonThuoc))
+            {
+                MessageBox.Show("Vui lòng nhập Mã Đơn Thuốc!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(tenThuoc))
+            {
+                MessageBox.Show("Vui lòng nhập Tên Thuốc!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                using (SqlConnection conn = _userRepository.GetConnection())
+                {
+                    conn.Open();
+
+                    // Kiểm tra sự tồn tại của MaDonThuoc trong DonThuoc
+                    string checkDonThuocQuery = "SELECT COUNT(*) FROM DonThuoc WHERE MaDonThuoc = @MaDonThuoc";
+                    using (SqlCommand checkDonThuocCmd = new SqlCommand(checkDonThuocQuery, conn))
+                    {
+                        checkDonThuocCmd.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
+                        int donThuocExists = (int)checkDonThuocCmd.ExecuteScalar();
+
+                        if (donThuocExists == 0)
+                        {
+                            MessageBox.Show("Mã Đơn Thuốc không tồn tại. Không thể cập nhật!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                    }
+
+                    // Lấy MaThuoc từ TenThuoc
+                    string getMaThuocQuery = "SELECT MaThuoc FROM Thuoc WHERE TenThuoc = @TenThuoc";
+                    string maThuoc = null;
+                    using (SqlCommand getMaThuocCmd = new SqlCommand(getMaThuocQuery, conn))
+                    {
+                        getMaThuocCmd.Parameters.AddWithValue("@TenThuoc", tenThuoc);
+                        var result = getMaThuocCmd.ExecuteScalar();
+                        if (result != null)
+                        {
+                            maThuoc = result.ToString();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Tên thuốc không tồn tại trong danh sách thuốc!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                    }
+
+                    // Kiểm tra sự tồn tại của (MaDonThuoc, MaThuoc) trong CTDonThuoc
+                    string checkCTDonThuocQuery = "SELECT COUNT(*) FROM CTDonThuoc WHERE MaDonThuoc = @MaDonThuoc AND MaThuoc = @MaThuoc";
+                    using (SqlCommand checkCTDonThuocCmd = new SqlCommand(checkCTDonThuocQuery, conn))
+                    {
+                        checkCTDonThuocCmd.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
+                        checkCTDonThuocCmd.Parameters.AddWithValue("@MaThuoc", maThuoc);
+                        int ctDonThuocExists = (int)checkCTDonThuocCmd.ExecuteScalar();
+
+                        if (ctDonThuocExists == 0)
+                        {
+                            MessageBox.Show("Chi tiết Đơn Thuốc không tồn tại. Không thể cập nhật!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                    }
+
+                    // Kiểm tra nhập đầy đủ thông tin
+                    if (string.IsNullOrEmpty(maBenhNhan) || string.IsNullOrEmpty(maBacSi) || string.IsNullOrEmpty(ngayLapDon) ||
+                        string.IsNullOrEmpty(soLuong) || string.IsNullOrEmpty(huongDan))
+                    {
+                        MessageBox.Show("Vui lòng nhập đầy đủ thông tin để cập nhật!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        return;
+                    }
+
+                    // Cập nhật DonThuoc
+                    string updateDonThuocQuery = @"
+                UPDATE DonThuoc 
+                SET MaBenhNhan = @MaBenhNhan, MaBacSi = @MaBacSi, NgayLapDon = @NgayLapDon 
+                WHERE MaDonThuoc = @MaDonThuoc";
+
+                    using (SqlCommand updateDonThuocCmd = new SqlCommand(updateDonThuocQuery, conn))
+                    {
+                        updateDonThuocCmd.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
+                        updateDonThuocCmd.Parameters.AddWithValue("@MaBenhNhan", maBenhNhan);
+                        updateDonThuocCmd.Parameters.AddWithValue("@MaBacSi", maBacSi);
+                        updateDonThuocCmd.Parameters.AddWithValue("@NgayLapDon", ngayLapDon);
+
+                        updateDonThuocCmd.ExecuteNonQuery();
+                    }
+
+                    // Cập nhật CTDonThuoc
+                    string updateCTDonThuocQuery = @"
+                UPDATE CTDonThuoc 
+                SET SoLuong = @SoLuong, HuongDanSuDung = @HuongDan 
+                WHERE MaDonThuoc = @MaDonThuoc AND MaThuoc = @MaThuoc";
+
+                    using (SqlCommand updateCTDonThuocCmd = new SqlCommand(updateCTDonThuocQuery, conn))
+                    {
+                        updateCTDonThuocCmd.Parameters.AddWithValue("@MaDonThuoc", maDonThuoc);
+                        updateCTDonThuocCmd.Parameters.AddWithValue("@MaThuoc", maThuoc);
+                        updateCTDonThuocCmd.Parameters.AddWithValue("@SoLuong", soLuong);
+                        updateCTDonThuocCmd.Parameters.AddWithValue("@HuongDan", huongDan);
+
+                        updateCTDonThuocCmd.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show("Cập nhật thông tin thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    OnDataAdded?.Invoke();
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                if (sqlEx.Number == 547) // Vi phạm khóa ngoại
+                {
+                    MessageBox.Show("Dữ liệu vi phạm ràng buộc khóa ngoại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else
+                {
+                    MessageBox.Show($"Lỗi SQL: {sqlEx.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
     }
 }

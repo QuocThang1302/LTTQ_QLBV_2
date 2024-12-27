@@ -51,7 +51,6 @@ namespace QuanLyBenhVien.View
         private void tbNgayHenKham_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             popupCalendarNgayHenKham.IsOpen = true; // Mở popup khi nhấn vào TextBox
-            e.Handled = true; // Ngăn sự kiện lan sang Window_PreviewMouseDown
         }
 
         private void calendarNgayHenKham_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
@@ -65,7 +64,15 @@ namespace QuanLyBenhVien.View
 
         private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (popupCalendarNgayHenKham.IsOpen && !popupCalendarNgayHenKham.IsMouseOver)
+            if (popupCalendarNgayHenKham.IsOpen )
+            {
+                popupCalendarNgayHenKham.IsOpen = false; // Ẩn popup nếu nhấn ra ngoài
+            }
+        }
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // Kiểm tra nếu lịch đang mở và người dùng nhấn phím bất kỳ
+            if (popupCalendarNgayHenKham.IsOpen )
             {
                 popupCalendarNgayHenKham.IsOpen = false; // Ẩn popup nếu nhấn ra ngoài
             }
@@ -259,25 +266,41 @@ namespace QuanLyBenhVien.View
                     throw new FormatException("Định dạng ngày không hợp lệ!");
                 }
 
-                // Cập nhật thay đổi vào cơ sở dữ liệu
-                int kq = adapter.Update(ds.Tables["tblLichHenKham"]);
+                // Cấu hình UpdateCommand
+                adapter.UpdateCommand = new SqlCommand(
+                    @"UPDATE LichHenKham 
+              SET MaBenhNhan = @MaBenhNhan, 
+                  NgayHenKham = @NgayHenKham, 
+                  MaBacSi = @MaBacSi 
+              WHERE MaLichHen = @MaLichHen", sqlCon);
+
+                adapter.UpdateCommand.Parameters.Add("@MaBenhNhan", SqlDbType.NVarChar, 50, "MaBenhNhan");
+                adapter.UpdateCommand.Parameters.Add("@NgayHenKham", SqlDbType.Date, 50, "NgayHenKham");
+                adapter.UpdateCommand.Parameters.Add("@MaBacSi", SqlDbType.NVarChar, 50, "MaBacSi");
+                adapter.UpdateCommand.Parameters.Add("@MaLichHen", SqlDbType.NVarChar, 50, "MaLichHen");
+
+                // Thực thi Update
+                int kq = adapter.Update(ds.Tables[0]);
 
                 if (kq > 0)
                 {
                     MessageBox.Show("Cập nhật dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    // Cập nhật giao diện DataGrid
+                    // Làm mới DataGrid
                     dgvLichHen.ItemsSource = null;
-                    dgvLichHen.ItemsSource = ds.Tables["tblLichHenKham"].DefaultView;
+                    dgvLichHen.ItemsSource = ds.Tables[0].DefaultView;
 
                     // Giữ lại dòng đã chọn
                     dgvLichHen.SelectedItem = selectedRow;
-                    ClearFields(); // Xóa các trường sau khi xử lý
                 }
                 else
                 {
                     MessageBox.Show("Cập nhật dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show($"Định dạng ngày không hợp lệ: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (SqlException ex)
             {
@@ -295,16 +318,14 @@ namespace QuanLyBenhVien.View
                     MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            catch (FormatException ex)
-            {
-                MessageBox.Show($"Định dạng ngày không hợp lệ: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-            ClearFields(); // Đảm bảo xóa các trường sau khi hoàn thành
+            finally
+            {
+                ClearFields(); // Xóa các TextBox sau khi xử lý
+            }
 
 
         }

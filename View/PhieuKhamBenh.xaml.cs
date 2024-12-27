@@ -25,7 +25,7 @@ namespace QuanLyBenhVien.View
         private void txtNgayKham_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             popupCalendarNgayKham.IsOpen = true; // Mở popup khi nhấn vào TextBox
-            e.Handled = true; // Ngăn sự kiện lan sang Window_PreviewMouseDown
+            
         }
 
         private void calendarNgayKham_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
@@ -40,6 +40,14 @@ namespace QuanLyBenhVien.View
         private void Window_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (popupCalendarNgayKham.IsOpen && !popupCalendarNgayKham.IsMouseOver)
+            {
+                popupCalendarNgayKham.IsOpen = false; // Ẩn popup khi nhấn bên ngoài
+            }
+        }
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // Kiểm tra nếu lịch đang mở và người dùng nhấn phím bất kỳ
+            if (popupCalendarNgayKham.IsOpen )
             {
                 popupCalendarNgayKham.IsOpen = false; // Ẩn popup khi nhấn bên ngoài
             }
@@ -377,63 +385,67 @@ namespace QuanLyBenhVien.View
 
             try
             {
-                // Lấy DataRow từ DataRowView đã chọn
-                DataRow dataRow = selectedRow.Row;
-
-                // Cập nhật dữ liệu từ các TextBox vào DataRow
-                dataRow["MaPhieuKham"] = txtMaPhieu.Text.Trim();
-                dataRow["TEN_BENHNHAN"] = txtBenhNhan.Text.Trim();
-                dataRow["TEN_BACSI"] = txtBacSi.Text.Trim();
-                dataRow["MaBenhNhan"] = txtMaBenhNhan.Text.Trim();
-
-                // Kiểm tra và cập nhật định dạng ngày
-                if (DateTime.TryParse(txtNgayKham.Text.Trim(), out DateTime ngayKham))
+                // Cập nhật thông tin vào cơ sở dữ liệu
+                using (SqlConnection sqlCon = _userRepository.GetConnection())
                 {
-                    dataRow["NgayKham"] = ngayKham.ToString("yyyy-MM-dd");
-                }
-                else
-                {
-                    throw new FormatException("Định dạng ngày không hợp lệ!");
-                }
+                    sqlCon.Open();
 
-                dataRow["LyDoKhamBenh"] = txtLyDoKham.Text.Trim();
-                dataRow["KhamLamSang"] = txtKhamLamSan.Text.Trim();
-                dataRow["DieuTri"] = txtDieuTri.Text.Trim();
-                dataRow["ChanDoan"] = txtChuanDoan.Text.Trim();
-                dataRow["KetQuaKham"] = txtKetQua.Text.Trim();
-                dataRow["MaBacSi"] = txtMaBacSi.Text.Trim();
+                    // Câu lệnh SQL cập nhật
+                    string query = @"
+                UPDATE PhieuKhamBenh 
+                SET 
+                    MaBenhNhan = @MaBenhNhan, 
+                    NgayKham = @NgayKham, 
+                    LyDoKhamBenh = @LyDoKhamBenh, 
+                    KhamLamSang = @KhamLamSang, 
+                    ChanDoan = @ChanDoan, 
+                    KetQuaKham = @KetQuaKham, 
+                    DieuTri = @DieuTri, 
+                    MaBacSi = @MaBacSi
+                WHERE MaPhieuKham = @MaPhieuKham";
 
-                // Cập nhật thay đổi vào cơ sở dữ liệu
-                int kq = adapter.Update(ds.Tables["tblPhieuKhamBenh"]);
+                    SqlCommand cmd = new SqlCommand(query, sqlCon);
+                    cmd.Parameters.AddWithValue("@MaPhieuKham", txtMaPhieu.Text.Trim());
+                    cmd.Parameters.AddWithValue("@MaBenhNhan", txtMaBenhNhan.Text.Trim());
 
-                if (kq > 0)
-                {
-                    MessageBox.Show("Cập nhật dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    if (DateTime.TryParse(txtNgayKham.Text.Trim(), out DateTime ngayKham))
+                        cmd.Parameters.AddWithValue("@NgayKham", ngayKham);
+                    else
+                        throw new FormatException("Ngày khám không đúng định dạng!");
 
-                    // Cập nhật giao diện DataGrid
-                    dgDanhSach.ItemsSource = null;
-                    dgDanhSach.ItemsSource = ds.Tables["tblPhieuKhamBenh"].DefaultView;
+                    cmd.Parameters.AddWithValue("@LyDoKhamBenh", txtLyDoKham.Text.Trim());
+                    cmd.Parameters.AddWithValue("@KhamLamSang", txtKhamLamSan.Text.Trim());
+                    cmd.Parameters.AddWithValue("@ChanDoan", txtChuanDoan.Text.Trim());
+                    cmd.Parameters.AddWithValue("@KetQuaKham", txtKetQua.Text.Trim());
+                    cmd.Parameters.AddWithValue("@DieuTri", txtDieuTri.Text.Trim());
+                    cmd.Parameters.AddWithValue("@MaBacSi", txtMaBacSi.Text.Trim());
 
-                    // Đặt lại vị trí dòng đã chọn
-                    dgDanhSach.SelectedItem = selectedRow;  // Giữ lại dòng đã chọn
-                    HienThiDanhSach();
-                    ClearFields();  // Xóa các trường sau khi xử lý
-                }
-                else
-                {
-                    MessageBox.Show("Cập nhật dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    // Thực thi lệnh
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Cập nhật dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        // Đồng bộ lại dữ liệu trong DataGrid
+                        RefreshDataGrid();
+                        ClearFields();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Không có dòng nào được cập nhật!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    }
                 }
             }
             catch (SqlException ex)
             {
-                // Xử lý lỗi SQL (khóa chính và khóa ngoại)
                 if (ex.Number == 2627) // Lỗi vi phạm PRIMARY KEY
                 {
                     MessageBox.Show("Khóa chính đã tồn tại! Không thể cập nhật dữ liệu trùng lặp.", "Lỗi khóa chính", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else if (ex.Number == 547) // Lỗi vi phạm FOREIGN KEY
                 {
-                    MessageBox.Show("Dữ liệu không hợp lệ! Mã bệnh nhân hoặc mã bác sĩ không tồn tại trong hệ thống.", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Dữ liệu không hợp lệ! Mã bệnh nhân hoặc mã bác sĩ không tồn tại.", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
@@ -449,8 +461,43 @@ namespace QuanLyBenhVien.View
                 MessageBox.Show($"Lỗi không xác định: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            ClearFields(); // Xóa các trường sau khi xử lý
+        }
+        private void RefreshDataGrid()
+        {
+            try
+            {
+                string query = @"
+            SELECT 
+                BN.Ten AS TEN_BENHNHAN, 
+                NV.Ten AS TEN_BACSI, 
+                MaPhieuKham, 
+                PK.MaBenhNhan, 
+                NgayKham, 
+                LyDoKhamBenh, 
+                KhamLamSang, 
+                ChanDoan, 
+                KetQuaKham, 
+                DieuTri, 
+                MaBacSi
+            FROM 
+                BenhNhan BN 
+            JOIN 
+                PhieuKhamBenh PK ON PK.MaBenhNhan = BN.MaBenhNhan
+            JOIN 
+                NhanVien NV ON NV.MaNhanVien = PK.MaBacSi";
 
+                sqlCon = _userRepository.GetConnection();
+                adapter = new SqlDataAdapter(query, sqlCon);
+                ds = new DataSet();
+                adapter.Fill(ds, "tblPhieuKhamBenh");
+
+                // Cập nhật DataGrid
+                dgDanhSach.ItemsSource = ds.Tables["tblPhieuKhamBenh"].DefaultView;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải dữ liệu: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void btnXoa_Click(object sender, RoutedEventArgs e)

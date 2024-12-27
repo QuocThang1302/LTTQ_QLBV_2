@@ -25,7 +25,6 @@ namespace QuanLyBenhVien.View
         private void txtNgaySinh_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             popupCalendarNgaySinh.IsOpen = true; // Mở popup khi nhấn vào TextBox
-            e.Handled = true; // Ngăn sự kiện lan sang Window_PreviewMouseDown
         }
 
         private void calendarNgaySinh_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
@@ -44,7 +43,10 @@ namespace QuanLyBenhVien.View
                 popupCalendarNgaySinh.IsOpen = false; // Ẩn popup khi nhấn bên ngoài
             }
         }
-
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            popupCalendarNgaySinh.IsOpen = false;
+        }
         private void SearchControl_ClearButtonClicked(object sender, EventArgs e)
         {
             // Logic khi nút X được nhấn
