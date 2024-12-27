@@ -202,13 +202,12 @@ namespace QuanLyBenhVien.View
 
             dgvChuyenNganh.ItemsSource = ds1.Tables["tblChuyenNganh"].DefaultView;
         }
-        private int vitri1 = -1;
-        private int vitri2 = -1;
-
+        
         private void btnXoa1_Click(object sender, RoutedEventArgs e)
         {
+            var selectedRow2 = dgvKhoa.SelectedItem as DataRowView;
             // Kiểm tra xem người dùng đã chọn dòng nào chưa
-            if (vitri1 == -1)
+            if (selectedRow2 == null)
             {
                 MessageBox.Show("Vui lòng chọn một dòng để xóa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -220,8 +219,10 @@ namespace QuanLyBenhVien.View
                 var result = MessageBox.Show("Bạn có chắc chắn muốn xóa khoa này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    // Xóa dòng được chọn trong DataTable
-                    DataRow dataRow = ds.Tables["tblKhoa"].Rows[vitri1];
+                    // Lấy DataRow từ DataRowView
+                    DataRow dataRow = selectedRow2.Row;
+
+                    // Đánh dấu hàng là Deleted
                     dataRow.Delete();
 
                     // Cập nhật thay đổi vào cơ sở dữ liệu
@@ -254,20 +255,29 @@ namespace QuanLyBenhVien.View
 
         private void dgvKhoa_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            vitri1 = dgvKhoa.SelectedIndex;
-            if (vitri1 == -1) return;
+            var selectedRow1 = dgvKhoa.SelectedItem as DataRowView;
+
+            if (selectedRow1 == null) return;
+
+            // Lấy dữ liệu từ DataRowView
+            DataRow dataRow1 = selectedRow1.Row;
         }
 
         private void dgvChuyenNganh_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            vitri2 = dgvChuyenNganh.SelectedIndex;
-            if (vitri2 == -1) return;
+            var selectedRow2 = dgvChuyenNganh.SelectedItem as DataRowView;
+
+            if (selectedRow2 == null) return;
+
+            // Lấy dữ liệu từ DataRowView
+            DataRow dataRow2 = selectedRow2.Row;
         }
 
         private void btnXoa2_Click(object sender, RoutedEventArgs e)
         {
+            var selectedRow2 = dgvChuyenNganh.SelectedItem as DataRowView;
             // Kiểm tra xem người dùng đã chọn dòng nào chưa
-            if (vitri2 == -1)
+            if (selectedRow2 == null)
             {
                 MessageBox.Show("Vui lòng chọn một dòng để xóa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -279,8 +289,10 @@ namespace QuanLyBenhVien.View
                 var result = MessageBox.Show("Bạn có chắc chắn muốn xóa dòng này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
                 {
-                    // Xóa dòng được chọn trong DataTable
-                    DataRow dataRow = ds1.Tables["tblChuyenNganh"].Rows[vitri2];
+                    // Lấy DataRow từ DataRowView
+                    DataRow dataRow = selectedRow2.Row;
+
+                    // Đánh dấu hàng là Deleted
                     dataRow.Delete();
 
                     // Cập nhật thay đổi vào cơ sở dữ liệu

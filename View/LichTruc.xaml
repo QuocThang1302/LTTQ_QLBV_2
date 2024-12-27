@@ -37,7 +37,7 @@
                           RowBackground="White" 
                           AlternatingRowBackground="#e8f1ff"
                           Margin="30,5,30,0"
-                          Height="400">
+                          Height="400" SelectionChanged="dgvCongViec_SelectionChanged">
                     <!-- Style cho header -->
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
