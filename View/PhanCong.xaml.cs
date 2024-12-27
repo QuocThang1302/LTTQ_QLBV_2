@@ -63,17 +63,5 @@ namespace QuanLyBenhVien.View
         {
             Close();
         }
-
-        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if(DSPhanCong.SelectedItem is PhanCongModel selectedItem)
-            {
-                TxB_MaLichTruc.Text = selectedItem.MaLichTruc;
-                TxB_MaBacSi.Text = selectedItem.MaBacSi;
-                TxB_NgayTruc.Text = selectedItem.NgayTruc.ToString("yyyy-MM-dd");
-                TxB_PhanCong.Text = selectedItem.PhanCong;
-                TxB_TrangThai.Text = selectedItem.TrangThai; 
-            }
-        }
     }
 }

@@ -276,14 +276,14 @@ INSERT INTO VatDung (MaVatDung, TenVatDung, MoTa, SoLuong, Gia, MaQuanLy) VALUES
 
 
 INSERT INTO BenhNhan (MaBenhNhan, Ho, Ten, NgaySinh, GioiTinh, CCCD, NgheNghiep, DiaChi, SDT, Email, MaKhoa) VALUES
-('BN001', N'Nguyễn', N'An', '1990-01-01', N'Nam', '123456789', N'Kỹ sư', N'Hà Nội', '0912345678', 'an.nguyen@gmail.com', 'K01'),
-('BN002', N'Phạm', N'Bình', '1985-02-15', N'Nữ', '234567890', N'Giáo viên', N'Thái Nguyên', '0912345679', 'binh.pham@gmail.com', 'K02'),
-('BN003', N'Lê', N'Cường', '1990-03-10', N'Nam', '345678901', N'Nhân viên văn phòng', N'Bắc Ninh', '0912345680', 'cuong.le@gmail.com', 'K03'),
-('BN004', N'Trần', N'Diệu', '1988-04-25', N'Nữ', '456789012', N'Nhà báo', N'Hải Phòng', '0912345681', 'dieutran@gmail.com', 'K04'),
-('BN005', N'Nguyễn', N'Ela', '1992-05-05', N'Nữ', '567890123', N'Tiếp viên hàng không', N'Quảng Ninh', '0912345682', 'ela.nguyen@gmail.com', 'K01'),
-('BN006', N'Đoàn', N'Giang', '1987-06-18', N'Nam', '678901234', N'Bác sĩ', N'Nam Định', '0912345683', 'giang.doan@gmail.com', 'K01'),
-('BN007', N'Hồ', N'Hoài', '1995-07-30', N'Nữ', '789012345', N'Sinh viên', N'Thừa Thiên Huế', '0912345684', 'hoai.ho@gmail.com', 'K01'),
-('BN008', N'Huỳnh', N'Thương', '1984-08-12', N'Nam', '890123456', N'Nông dân', N'Vũng Tàu', '0912345685', 'thuong.huynh@gmail.com', 'K01'),
+('BN001', N'Phạm Khánh', N'Giang', '1990-01-01', N'Nam', '123456789', N'Kỹ sư', N'Hà Nội', '0912345678', 'an.nguyen@gmail.com', 'K01'),
+('BN002', N'Bình', N'Hoàng', '1985-02-15', N'Nữ', '234567890', N'Giáo viên', N'Thái Nguyên', '0912345679', 'binh.pham@gmail.com', 'K02'),
+('BN003', N'Lê Ngọc', N'Phước', '1990-03-10', N'Nam', '345678901', N'Nhân viên văn phòng', N'Bắc Ninh', '0912345680', 'cuong.le@gmail.com', 'K03'),
+('BN004', N'Trần Minh', N'Tiên', '1988-04-25', N'Nữ', '456789012', N'Nhà báo', N'Hải Phòng', '0912345681', 'dieutran@gmail.com', 'K04'),
+('BN005', N'Nguyễn', N'Elandor', '1992-05-05', N'Nữ', '567890123', N'Tiếp viên hàng không', N'Quảng Ninh', '0912345682', 'ela.nguyen@gmail.com', 'K01'),
+('BN006', N'Nguyễn', N'Bình', '1987-06-18', N'Nam', '678901234', N'Bác sĩ', N'Nam Định', '0912345683', 'giang.doan@gmail.com', 'K01'),
+('BN007', N'Hồ Ngọc', N'Hoài', '1995-07-30', N'Nữ', '789012345', N'Sinh viên', N'Thừa Thiên Huế', '0912345684', 'hoai.ho@gmail.com', 'K01'),
+('BN008', N'Huỳnh Thị', N'Thương', '1984-08-12', N'Nam', '890123456', N'Nông dân', N'Vũng Tàu', '0912345685', 'thuong.huynh@gmail.com', 'K01'),
 ('BN009', N'Nguyễn', N'Tuấn', '1993-09-20', N'Nam', '123456790', N'Kỹ sư', N'TP Hồ Chí Minh', '0912345686', 'tuan.nguyen@gmail.com', 'K01'),
 ('BN010', N'Phan', N'Lan', '1990-10-10', N'Nữ', '234567891', N'Giáo viên', N'Vĩnh Phúc', '0912345687', 'lan.phan@gmail.com', 'K02'),
 ('BN011', N'Lê', N'Trâm', '1994-11-11', N'Nữ', '345678902', N'Nhân viên ngân hàng', N'Tp Hồ Chí Minh', '0912345688', 'tram.le@gmail.com', 'K03'),

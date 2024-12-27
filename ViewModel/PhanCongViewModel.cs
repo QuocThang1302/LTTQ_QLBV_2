@@ -18,8 +18,20 @@ namespace QuanLyBenhVien.ViewModel
         private DateTime? _NgayTruc;
         private string _PhanCong;
         private string _TrangThai;
+        private NhanVienModel _SelectedNV;
+        private PhanCongModel _SelectedPC;
         public ObservableCollection<PhanCongModel> DSPhanCong {  get; set; }
         public ObservableCollection<NhanVienModel> DSNhanVien { get; set; }
+        private ObservableCollection<PhanCongModel> _filteredDS;
+        public ObservableCollection<PhanCongModel> FilteredDS
+        {
+            get => _filteredDS;
+            set
+            {
+                _filteredDS = value;
+                OnPropertyChanged(nameof(FilteredDS));
+            }
+        }
         public string MaLichTruc
         {
             get => _MaLichTruc;
@@ -70,6 +82,31 @@ namespace QuanLyBenhVien.ViewModel
             }
         }
 
+        public NhanVienModel SelectedNV
+        {
+            get => _SelectedNV;
+            set
+            {
+                _SelectedNV = value;
+                OnPropertyChanged(nameof(SelectedNV));
+                UpdateFilteredDS();
+            }
+        }
+
+        public PhanCongModel SelectedPC
+        {
+            get => _SelectedPC;
+            set
+            {
+                _SelectedPC = value;
+                OnPropertyChanged(nameof(SelectedPC));
+                MaLichTruc = _SelectedPC.MaLichTruc;
+                MaBacSi = _SelectedPC.MaBacSi;
+                NgayTruc = _SelectedPC?.NgayTruc;
+                PhanCong = _SelectedPC.PhanCong;
+                TrangThai = _SelectedPC.TrangThai;
+            }
+        }
         public ICommand DongYCommand { get; }
 
         public PhanCongViewModel()
@@ -81,7 +118,20 @@ namespace QuanLyBenhVien.ViewModel
             LoadDSNhanVien();
             LoadDSPhanCong();
 
+            FilteredDS = new ObservableCollection<PhanCongModel>(DSPhanCong);
+            UpdateFilteredDS();
+
             DongYCommand = new ViewModelCommand(ExcecuteDongYCommand);
+        }
+
+        private void UpdateFilteredDS()
+        {
+            if (SelectedNV != null)
+            {
+                FilteredDS = new ObservableCollection<PhanCongModel>(DSPhanCong.Where(a => a.MaBacSi == SelectedNV.MaNhanVien));
+            }
+            else
+                FilteredDS = new ObservableCollection<PhanCongModel>(DSPhanCong);
         }
 
         private void ExecuteQuery(Action action)
@@ -115,7 +165,7 @@ namespace QuanLyBenhVien.ViewModel
         {
             using (SqlConnection conn = _userRepository.GetConnection())
             {
-                string query = "SELECT Ho + ' ' + Ten As HoTen, MaLichTruc, NgayTruc, PhanCong, TrangThai FROM LichTruc, NhanVien WHERE MaBacSi = MaNhanVien";
+                string query = "SELECT MaBacSi, MaLichTruc, NgayTruc, PhanCong, TrangThai FROM LichTruc";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -124,7 +174,7 @@ namespace QuanLyBenhVien.ViewModel
                     DSPhanCong.Add(new PhanCongModel
                     {
                         MaLichTruc = reader["MaLichTruc"].ToString(),
-                        MaBacSi = reader["HoTen"].ToString(),
+                        MaBacSi = reader["MaBacSi"].ToString(),
                         NgayTruc = reader.GetDateTime(reader.GetOrdinal("NgayTruc")),
                         PhanCong = reader["PhanCong"].ToString(),
                         TrangThai = reader["TrangThai"].ToString()
@@ -191,6 +241,7 @@ namespace QuanLyBenhVien.ViewModel
                         conn.Open();
                         updatedCommand.ExecuteNonQuery();
                         MessageBox.Show("Cập nhật dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+
                     }
                     else
                     {
@@ -205,6 +256,9 @@ namespace QuanLyBenhVien.ViewModel
                         conn.Open();
                         insertedcmd.ExecuteNonQuery();
                         MessageBox.Show("Thêm dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        DSPhanCong.Add(newPhanCong);
+                        UpdateFilteredDS();
                     }
                 }
             });

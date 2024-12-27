@@ -37,11 +37,11 @@
                             RowBackground="White" 
                             AlternatingRowBackground="#e8f1ff"
                             Margin="30,5,30,0"
-                            Height="430">
+                            Height="430" SelectionChanged="dgvDonThuoc_SelectionChanged">
                     <!-- Style cho header -->
                     <DataGrid.ColumnHeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="Background" Value="LightBlue"/>
+                            <Setter Property="Background"  Value="LightBlue"/>
                             <Setter Property="HorizontalContentAlignment" Value="Center" />
                             <Setter Property="FontFamily" Value="Inter"/>
                             <Setter Property="FontSize" Value="14" />

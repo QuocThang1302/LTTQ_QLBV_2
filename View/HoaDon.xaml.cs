@@ -246,7 +246,7 @@ namespace QuanLyBenhVien.View
 
             dgvHoaDon.ItemsSource = ds.Tables["tblHoaDon"].DefaultView;
         }
-        private int vitri = -1;
+     
         private void dgvHoaDon_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedRow = dgvHoaDon.SelectedItem as DataRowView;
