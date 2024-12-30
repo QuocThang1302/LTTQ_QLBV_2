@@ -100,11 +100,11 @@ namespace QuanLyBenhVien.ViewModel
             {
                 _SelectedPC = value;
                 OnPropertyChanged(nameof(SelectedPC));
-                MaLichTruc = _SelectedPC.MaLichTruc;
-                MaBacSi = _SelectedPC.MaBacSi;
-                NgayTruc = _SelectedPC?.NgayTruc;
-                PhanCong = _SelectedPC.PhanCong;
-                TrangThai = _SelectedPC.TrangThai;
+                MaLichTruc = SelectedPC?.MaLichTruc;
+                MaBacSi = SelectedPC?.MaBacSi;
+                NgayTruc = SelectedPC?.NgayTruc;
+                PhanCong = SelectedPC?.PhanCong;
+                TrangThai = SelectedPC?.TrangThai;
             }
         }
         public ICommand DongYCommand { get; }
@@ -256,11 +256,11 @@ namespace QuanLyBenhVien.ViewModel
                         conn.Open();
                         insertedcmd.ExecuteNonQuery();
                         MessageBox.Show("Thêm dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                        DSPhanCong.Add(newPhanCong);
-                        UpdateFilteredDS();
                     }
                 }
+                DSPhanCong.Clear();
+                LoadDSPhanCong();
+                FilteredDS = new ObservableCollection<PhanCongModel>(DSPhanCong);
             });
         }
     }
