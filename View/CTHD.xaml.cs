@@ -274,7 +274,7 @@ namespace QuanLyBenhVien.View
                         // Kiểm tra nếu có giá trị trả về
                         if (result != null)
                         {
-                            txtNgayLapDon.Text = result.ToString(); // Gán giá trị vào TextBox
+                            txtNgayLapDon.Text = Convert.ToDateTime(result).ToString("yyyy-MM-dd"); // Gán giá trị vào TextBox
                         }
                         else
                         {
@@ -697,13 +697,15 @@ namespace QuanLyBenhVien.View
                     cmdUpdateHoaDonAmount.ExecuteNonQuery();
                     // Load dữ liệu vào DataGrid
                     string queryLoadData = @"
-                    SELECT VatDung.TenVatDung, VatDung.SoLuong, VatDung.Gia AS DonGia, 
-                    (VatDung.SoLuong * VatDung.Gia) AS ThanhTien
-                    FROM VatDung
-                    WHERE VatDung.MaVatDung = @MaVatDung";
+SELECT VatDung.TenVatDung, CTHDVatDung.SoLuong, VatDung.Gia AS DonGia, 
+CTHDVatDung.ThanhTien
+FROM VatDung
+INNER JOIN CTHDVatDung ON VatDung.MaVatDung = CTHDVatDung.MaVatDung
+WHERE CTHDVatDung.MaVatDung = @MaVatDung AND CTHDVatDung.MaHoaDon = @MaHoaDon";
 
                     SqlDataAdapter adapter = new SqlDataAdapter(queryLoadData, conn);
                     adapter.SelectCommand.Parameters.AddWithValue("@MaVatDung", maVatDung);
+                    adapter.SelectCommand.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
 
                     DataTable dt = new DataTable();
                     adapter.Fill(dt);

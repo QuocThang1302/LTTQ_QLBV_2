@@ -70,54 +70,41 @@ namespace QuanLyBenhVien.View
             if (string.IsNullOrEmpty(maBenhNhan))
             {
                 MessageBox.Show("Vui lòng nhập dữ liệu!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-               
                 return;
             }
 
-            // Câu lệnh SQL để tìm kiếm thông tin bệnh nhân
-            string query = "SELECT * FROM BenhNhan WHERE MaBenhNhan=@MaBenhNhan OR Ten=@MaBenhNhan";
+            string query = "SELECT * FROM BenhNhan WHERE MaBenhNhan = @MaBenhNhan OR Ten = @MaBenhNhan";
 
             try
             {
-                using (sqlCon = _userRepository.GetConnection()) // Sử dụng biến toàn cục sqlCon
+                if (sqlCon == null)
+                    sqlCon = _userRepository.GetConnection();
+
+                sqlCon.Open();
+
+                SqlCommand command = new SqlCommand(query, sqlCon);
+                command.Parameters.AddWithValue("@MaBenhNhan", maBenhNhan);
+
+                adapter = new SqlDataAdapter(command);
+                ds = new DataSet();
+                adapter.Fill(ds, "tblBenhNhan");
+
+                if (ds.Tables["tblBenhNhan"].Rows.Count == 0)
                 {
-                    sqlCon.Open();
-                    adapter = new SqlDataAdapter(query, sqlCon); // Khởi tạo adapter với câu lệnh SQL và kết nối
-                    adapter.SelectCommand.Parameters.AddWithValue("@MaBenhNhan", maBenhNhan);
-
-                    ds = new DataSet(); // Khởi tạo DataSet
-                    adapter.Fill(ds, "BenhNhan"); // Đổ dữ liệu vào DataSet
-
-                    DataTable dataTable = ds.Tables["BenhNhan"]; // Lấy DataTable từ DataSet
-
-                    if (dataTable.Rows.Count == 0)
+                    MessageBox.Show("Không tìm thấy dữ liệu phù hợp!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    dgDanhSachBenhNhan.ItemsSource = null;
+                    CLearTextBoxes();
+                }
+                else
+                {
+                    dgDanhSachBenhNhan.ItemsSource = ds.Tables["tblBenhNhan"].DefaultView;
+                    if (ds.Tables["tblBenhNhan"].Rows.Count == 1)
                     {
-                        MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                    else if (dataTable.Rows.Count == 1)
-                    {
-                        // Hiển thị thông tin lên TextBox
-                        DataRow row = dataTable.Rows[0];
-                        txtMaBenhNhan.Text = row["MaBenhNhan"].ToString();
-                        txtHo.Text = row["Ho"].ToString();
-                        txtTen.Text = row["Ten"].ToString();
-                        txtNgaySinh.Text = Convert.ToDateTime(row["NgaySinh"]).ToString("yyyy-MM-dd");
-                        txtGioiTinh.Text = row["GioiTinh"].ToString();
-                        txtCCCD.Text = row["CCCD"].ToString();
-                        txtNgheNghiep.Text = row["NgheNghiep"].ToString();
-                        txtDiaChi.Text = row["DiaChi"].ToString();
-                        txtSDT.Text = row["SDT"].ToString();
-                        txtEmail.Text = row["Email"].ToString();
-                        txtKhoa.Text = row["MaKhoa"].ToString();
-
-                        // Hiển thị dữ liệu vào DataGrid
-                        dgDanhSachBenhNhan.ItemsSource = dataTable.DefaultView;
+                        DisplayData(ds.Tables["tblBenhNhan"].Rows[0]);
                     }
                     else
                     {
-                        // Nếu có nhiều kết quả, chỉ hiển thị vào DataGrid
-                        CLearTextBoxes(); // Xóa các TextBox
-                        dgDanhSachBenhNhan.ItemsSource = dataTable.DefaultView;
+                        CLearTextBoxes();
                     }
                 }
             }
@@ -125,6 +112,24 @@ namespace QuanLyBenhVien.View
             {
                 MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+            finally
+            {
+                sqlCon.Close();
+            }
+        }
+        private void DisplayData(DataRow row)
+        {
+            txtMaBenhNhan.Text = row["MaBenhNhan"]?.ToString() ?? string.Empty;
+            txtHo.Text = row["Ho"]?.ToString() ?? string.Empty;
+            txtTen.Text = row["Ten"]?.ToString() ?? string.Empty;
+            txtNgaySinh.Text = row["NgaySinh"] != DBNull.Value ? Convert.ToDateTime(row["NgaySinh"]).ToString("yyyy-MM-dd") : string.Empty;
+            txtGioiTinh.Text = row["GioiTinh"]?.ToString() ?? string.Empty;
+            txtNgheNghiep.Text = row["NgheNghiep"]?.ToString() ?? string.Empty;
+            txtCCCD.Text = row["CCCD"]?.ToString() ?? string.Empty;
+            txtSDT.Text = row["SDT"]?.ToString() ?? string.Empty;
+            txtEmail.Text = row["Email"]?.ToString() ?? string.Empty;
+            txtKhoa.Text = row["MaKhoa"]?.ToString() ?? string.Empty;
+            txtDiaChi.Text = row["DiaChi"]?.ToString() ?? string.Empty;
         }
         private void CLearTextBoxes()
         {
@@ -140,7 +145,7 @@ namespace QuanLyBenhVien.View
             txtTen.Clear();
             txtNgaySinh.Clear();
         }
-        
+
         SqlConnection sqlCon = null;
         SqlDataAdapter adapter = null;
         DataSet ds = null;
@@ -358,96 +363,73 @@ namespace QuanLyBenhVien.View
                 return;
             }
 
+            if (!ValidateInput())
+                return;
+
+            string updateQuery = @"UPDATE BenhNhan 
+                           SET Ho = @Ho, Ten = @Ten, NgaySinh = @NgaySinh, GioiTinh = @GioiTinh, 
+                               NgheNghiep = @NgheNghiep, CCCD = @CCCD, DiaChi = @DiaChi, 
+                               SDT = @SDT, Email = @Email, MaKhoa = @MaKhoa
+                           WHERE MaBenhNhan = @MaBenhNhan";
+
             try
             {
-                // Kiểm tra dữ liệu đầu vào
-                if (string.IsNullOrWhiteSpace(txtMaBenhNhan.Text) ||
-                    string.IsNullOrWhiteSpace(txtHo.Text) ||
-                    string.IsNullOrWhiteSpace(txtTen.Text))
-                {
-                    MessageBox.Show("Vui lòng nhập đầy đủ thông tin bắt buộc!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
+                if (sqlCon == null)
+                    sqlCon = _userRepository.GetConnection();
 
-                if (!DateTime.TryParse(txtNgaySinh.Text.Trim(), out DateTime ngaySinh))
-                    throw new FormatException("Ngày sinh không hợp lệ. Vui lòng nhập đúng định dạng (dd/MM/yyyy).");
+                sqlCon.Open();
 
-                // Lấy DataRow từ DataRowView
-                DataRow dataRow = selectedRow.Row;
+                SqlCommand command = new SqlCommand(updateQuery, sqlCon);
+                command.Parameters.AddWithValue("@MaBenhNhan", txtMaBenhNhan.Text.Trim());
+                command.Parameters.AddWithValue("@Ho", txtHo.Text.Trim());
+                command.Parameters.AddWithValue("@Ten", txtTen.Text.Trim());
+                command.Parameters.AddWithValue("@NgaySinh", DateTime.Parse(txtNgaySinh.Text.Trim()));
+                command.Parameters.AddWithValue("@GioiTinh", txtGioiTinh.Text.Trim());
+                command.Parameters.AddWithValue("@NgheNghiep", txtNgheNghiep.Text.Trim());
+                command.Parameters.AddWithValue("@CCCD", txtCCCD.Text.Trim());
+                command.Parameters.AddWithValue("@DiaChi", txtDiaChi.Text.Trim());
+                command.Parameters.AddWithValue("@SDT", txtSDT.Text.Trim());
+                command.Parameters.AddWithValue("@Email", txtEmail.Text.Trim());
+                command.Parameters.AddWithValue("@MaKhoa", txtKhoa.Text.Trim());
 
-                // Bắt đầu chỉnh sửa dữ liệu
-                dataRow.BeginEdit();
-
-                // Cập nhật dữ liệu từ các TextBox vào DataRow
-                dataRow["MaBenhNhan"] = txtMaBenhNhan.Text.Trim();
-                dataRow["Ho"] = txtHo.Text.Trim();
-                dataRow["Ten"] = txtTen.Text.Trim();
-                dataRow["NgaySinh"] = ngaySinh.ToString("yyyy-MM-dd");
-                dataRow["GioiTinh"] = txtGioiTinh.Text.Trim();
-                dataRow["NgheNghiep"] = txtNgheNghiep.Text.Trim();
-                dataRow["CCCD"] = txtCCCD.Text.Trim();
-                dataRow["SDT"] = txtSDT.Text.Trim();
-                dataRow["MaKhoa"] = txtKhoa.Text.Trim();
-                dataRow["Email"] = txtEmail.Text.Trim();
-                dataRow["DiaChi"] = txtDiaChi.Text.Trim();
-
-                dataRow.EndEdit(); // Kết thúc chỉnh sửa
-
-                // Cập nhật thay đổi vào cơ sở dữ liệu
-                int kq = adapter.Update(ds.Tables["tblBenhNhan"]);
-
-                if (kq > 0)
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected > 0)
                 {
                     MessageBox.Show("Cập nhật dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                    // Cập nhật giao diện DataGrid
-                    dgDanhSachBenhNhan.ItemsSource = null;
-                    dgDanhSachBenhNhan.ItemsSource = ds.Tables["tblBenhNhan"].DefaultView;
-
-                    // Đặt lại vị trí dòng đã chọn
-                    dgDanhSachBenhNhan.SelectedItem = selectedRow;
-
-                    CLearTextBoxes();// Xóa các trường nhập liệu
+                    HienThiDanhSach(); // Tải lại dữ liệu
                 }
                 else
                 {
-                    MessageBox.Show("Cập nhật dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Không có bản ghi nào được cập nhật!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-            }
-            catch (FormatException ex)
-            {
-                MessageBox.Show($"Lỗi định dạng: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                ds.Tables["tblBenhNhan"].RejectChanges(); // Hủy thay đổi trên DataRow
-            }
-            catch (SqlException ex)
-            {
-                // Xử lý các lỗi SQL cụ thể
-                switch (ex.Number)
-                {
-                    case 2627: // Lỗi vi phạm PRIMARY KEY
-                        MessageBox.Show("Khóa chính đã tồn tại! Không thể cập nhật dữ liệu trùng lặp.", "Lỗi khóa chính", MessageBoxButton.OK, MessageBoxImage.Error);
-                        break;
-                    case 547: // Lỗi vi phạm FOREIGN KEY
-                        MessageBox.Show("Dữ liệu không hợp lệ! Mã khoa hoặc mã bệnh nhân không tồn tại trong hệ thống.", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
-                        break;
-                    default:
-                        MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                        break;
-                }
-                ds.Tables["tblBenhNhan"].RejectChanges(); // Hủy thay đổi trên DataRow
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi không xác định: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                ds.Tables["tblBenhNhan"].RejectChanges(); // Hủy thay đổi trên DataRow
+                MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             finally
             {
-                // Đảm bảo giao diện không bị thay đổi nếu có lỗi
-                dgDanhSachBenhNhan.ItemsSource = ds.Tables["tblBenhNhan"].DefaultView;
+                sqlCon.Close();
             }
-            HienThiDanhSach();
 
+        }
+        private bool ValidateInput()
+        {
+            if (string.IsNullOrWhiteSpace(txtMaBenhNhan.Text) ||
+                string.IsNullOrWhiteSpace(txtHo.Text) ||
+                string.IsNullOrWhiteSpace(txtTen.Text))
+            {
+                MessageBox.Show("Vui lòng nhập đầy đủ thông tin bắt buộc!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            if (!DateTime.TryParse(txtNgaySinh.Text.Trim(), out _))
+            {
+                MessageBox.Show("Ngày sinh không hợp lệ. Vui lòng nhập đúng định dạng (yyyy-MM-dd).", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -85,53 +85,63 @@ namespace QuanLyBenhVien.View
             if (string.IsNullOrEmpty(maBenh))
             {
                 MessageBox.Show("Vui lòng nhập dữ liệu!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                 // Xóa dữ liệu trong DataGrid
                 return;
             }
 
-            // Câu lệnh SQL để tìm kiếm thông tin bệnh
             string query = "SELECT * FROM Benh WHERE MaBenh=@MaBenh OR TenBenh=@MaBenh";
 
             try
             {
-                using (SqlConnection connection = _userRepository.GetConnection())
+                if (sqlCon == null)
+                    sqlCon = _userRepository.GetConnection();
+
+                if (sqlCon.State != ConnectionState.Open)
+                    sqlCon.Open();
+
+                adapter = new SqlDataAdapter(query, sqlCon);
+                adapter.SelectCommand.Parameters.AddWithValue("@MaBenh", maBenh);
+
+                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+
+                if (ds == null)
+                    ds = new DataSet();
+                else
+                    ds.Clear(); // Xóa dữ liệu cũ
+
+                adapter.Fill(ds, "tblBenh");
+
+                if (ds.Tables["tblBenh"].Rows.Count == 0)
                 {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@MaBenh", maBenh);
+                    MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else if(ds.Tables["tblBenh"].Rows.Count == 1)
+                {
+                    dgDanhSachBenh.ItemsSource = ds.Tables["tblBenh"].DefaultView;
 
-                    SqlDataAdapter adapter = new SqlDataAdapter(command);
-                    DataTable dataTable = new DataTable();
-                    adapter.Fill(dataTable);
-
-                    if (dataTable.Rows.Count == 0)
+                    if (ds.Tables["tblBenh"].Rows.Count == 1)
                     {
-                        MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                         // Xóa dữ liệu trong DataGrid
-                    }
-                    else if (dataTable.Rows.Count == 1)
-                    {
-                        // Hiển thị thông tin lên TextBox
-                        DataRow row = dataTable.Rows[0];
+                        DataRow row = ds.Tables["tblBenh"].Rows[0];
                         tbMaBenh.Text = row["MaBenh"].ToString();
                         tbBenh.Text = row["TenBenh"].ToString();
                         tbMoTa.Text = row["MoTa"].ToString();
                         tbTrieuChung.Text = row["TrieuChung"].ToString();
+                    }
+                }    
+                else
+                {
+                    dgDanhSachBenh.ItemsSource = ds.Tables["tblBenh"].DefaultView;
 
-                        // Hiển thị dữ liệu vào DataGrid
-                        dgDanhSachBenh.ItemsSource = dataTable.DefaultView;
-                    }
-                    else
-                    {
-                        // Nếu có nhiều kết quả, chỉ hiển thị vào DataGrid
-                        ClearTextBoxes(); // Xóa TextBox
-                        dgDanhSachBenh.ItemsSource = dataTable.DefaultView;
-                    }
+                    
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                if (sqlCon != null && sqlCon.State == ConnectionState.Open)
+                    sqlCon.Close();
             }
         }
         
@@ -276,28 +286,29 @@ namespace QuanLyBenhVien.View
 
             try
             {
-                // Lấy DataRow từ DataRowView
-                DataRow dataRow = selectedRow.Row;
+                if (sqlCon == null)
+                    sqlCon = _userRepository.GetConnection();
+
+                if (sqlCon.State != ConnectionState.Open)
+                    sqlCon.Open();
 
                 // Cập nhật dữ liệu từ các TextBox vào DataRow
+                DataRow dataRow = selectedRow.Row;
                 dataRow["MaBenh"] = tbMaBenh.Text.Trim();
                 dataRow["TenBenh"] = tbBenh.Text.Trim();
                 dataRow["MoTa"] = tbMoTa.Text.Trim();
                 dataRow["TrieuChung"] = tbTrieuChung.Text.Trim();
 
-                // Cập nhật thay đổi vào cơ sở dữ liệu
-                int kq = adapter.Update(ds.Tables["tblBenh"]);
+                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                int kq = adapter.Update(ds, "tblBenh");
 
                 if (kq > 0)
                 {
                     MessageBox.Show("Cập nhật dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    // Cập nhật giao diện DataGrid
+                    // Làm mới DataGrid
                     dgDanhSachBenh.ItemsSource = null;
                     dgDanhSachBenh.ItemsSource = ds.Tables["tblBenh"].DefaultView;
-
-                    // Giữ lại dòng đã chọn
-                    dgDanhSachBenh.SelectedItem = selectedRow;
                 }
                 else
                 {
@@ -306,7 +317,6 @@ namespace QuanLyBenhVien.View
             }
             catch (SqlException ex)
             {
-                // Xử lý lỗi SQL (khóa chính và khóa ngoại)
                 if (ex.Number == 2627) // Lỗi vi phạm PRIMARY KEY
                 {
                     MessageBox.Show("Khóa chính đã tồn tại! Không thể cập nhật dữ liệu trùng lặp.", "Lỗi khóa chính", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -320,13 +330,14 @@ namespace QuanLyBenhVien.View
                     MessageBox.Show($"Lỗi SQL: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            catch (FormatException ex)
-            {
-                MessageBox.Show($"Định dạng ngày không hợp lệ: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                if (sqlCon != null && sqlCon.State == ConnectionState.Open)
+                    sqlCon.Close();
             }
 
             ClearTextBoxes(); // Xóa các trường sau khi xử lý

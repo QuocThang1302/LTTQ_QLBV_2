@@ -93,7 +93,7 @@ namespace QuanLyBenhVien.View
     JOIN 
         NhanVien NV ON NV.MaNhanVien = PK.MaBacSi
     WHERE 
-        MaPhieuKham = @MaPhieuKham";
+        MaPhieuKham = @MaPhieuKham OR MaNhanVien = @MaPhieuKham" ;
 
             try
             {

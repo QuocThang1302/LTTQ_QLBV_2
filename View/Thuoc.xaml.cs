@@ -345,52 +345,55 @@ namespace QuanLyBenhVien.View
 
             try
             {
-                // Lấy DataRow từ DataRowView
-                DataRow dataRow = selectedRow.Row;
+                // Cập nhật dữ liệu trực tiếp từ TextBox
+                string query = @"
+            UPDATE Thuoc 
+            SET TenThuoc = @TenThuoc, 
+                CongDung = @CongDung, 
+                SoLuong = @SoLuong, 
+                GiaTien = @GiaTien, 
+                HanSuDung = @HanSuDung 
+            WHERE MaThuoc = @MaThuoc";
 
-                // Cập nhật dữ liệu từ các TextBox vào DataRow
-                dataRow["MaThuoc"] = tbMaThuoc.Text.Trim();
-                dataRow["TenThuoc"] = tbThuoc.Text.Trim();
-                dataRow["CongDung"] = tbCongDung.Text.Trim();
-                dataRow["SoLuong"] = tbSoLuong.Text.Trim();
-                dataRow["GiaTien"] = tbGiaTien.Text.Trim();
-
-                if (DateTime.TryParse(tbHSD.Text.Trim(), out DateTime hanSuDung))
+                using (SqlConnection connection = _userRepository.GetConnection())
                 {
-                    dataRow["HanSuDung"] = hanSuDung.ToString("yyyy-MM-dd");
-                }
-                else
-                {
-                    throw new FormatException("Định dạng ngày không hợp lệ! Vui lòng nhập đúng định dạng.");
-                }
+                    connection.Open();
+                    SqlCommand command = new SqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@MaThuoc", tbMaThuoc.Text.Trim());
+                    command.Parameters.AddWithValue("@TenThuoc", tbThuoc.Text.Trim());
+                    command.Parameters.AddWithValue("@CongDung", tbCongDung.Text.Trim());
+                    command.Parameters.AddWithValue("@SoLuong", tbSoLuong.Text.Trim());
+                    command.Parameters.AddWithValue("@GiaTien", tbGiaTien.Text.Trim());
 
-                // Cập nhật thay đổi vào cơ sở dữ liệu
-                int kq = adapter.Update(ds.Tables["tblThuoc"]);
+                    if (DateTime.TryParse(tbHSD.Text.Trim(), out DateTime hanSuDung))
+                    {
+                        command.Parameters.AddWithValue("@HanSuDung", hanSuDung);
+                    }
+                    else
+                    {
+                        throw new FormatException("Định dạng ngày không hợp lệ! Vui lòng nhập đúng định dạng.");
+                    }
 
-                if (kq > 0)
-                {
-                    MessageBox.Show("Cập nhật dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                    int rowsAffected = command.ExecuteNonQuery();
 
-                    // Cập nhật giao diện DataGrid
-                    dgDanhSachThuoc.ItemsSource = null;
-                    dgDanhSachThuoc.ItemsSource = ds.Tables["tblThuoc"].DefaultView;
-
-                    // Giữ lại dòng đã chọn
-                    dgDanhSachThuoc.SelectedItem = selectedRow;
-                }
-                else
-                {
-                    MessageBox.Show("Cập nhật dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Cập nhật dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                        HienThiDanhSach(); // Tải lại DataGrid
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cập nhật dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
             catch (SqlException ex)
             {
-                // Xử lý lỗi SQL
-                if (ex.Number == 2627) // Lỗi vi phạm PRIMARY KEY
+                if (ex.Number == 2627) // Lỗi PRIMARY KEY
                 {
                     MessageBox.Show("Khóa chính đã tồn tại! Không thể cập nhật dữ liệu trùng lặp.", "Lỗi khóa chính", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-                else if (ex.Number == 547) // Lỗi vi phạm FOREIGN KEY
+                else if (ex.Number == 547) // Lỗi FOREIGN KEY
                 {
                     MessageBox.Show("Dữ liệu không hợp lệ! Mã thuốc không tồn tại trong hệ thống.", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
@@ -409,11 +412,10 @@ namespace QuanLyBenhVien.View
             }
             finally
             {
-                ClearTextBoxes(); // Xóa các trường sau khi xử lý
+                ClearTextBoxes();
             }
-            HienThiDanhSach();
-
         }
+
 
         private void btnXoa_Click_1(object sender, RoutedEventArgs e)
         {

@@ -85,53 +85,40 @@ namespace QuanLyBenhVien.View
             if (string.IsNullOrEmpty(maVatDung))
             {
                 MessageBox.Show("Vui lòng nhập dữ liệu!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-               
                 return;
             }
 
-            // Chuỗi kết nối tới cơ sở dữ liệu
-            
-
-            // Câu lệnh SQL để tìm kiếm thông tin vật dụng
             string query = "SELECT * FROM VatDung WHERE MaVatDung = @MaVatDung OR TenVatDung = @MaVatDung";
 
             try
             {
-                using (SqlConnection connection = _userRepository.GetConnection())
+                ds.Tables["tblVatDung"].Clear(); // Xóa dữ liệu cũ trước khi tìm kiếm
+
+                using (SqlCommand command = new SqlCommand(query, sqlCon))
                 {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@MaVatDung", maVatDung);
 
-                    SqlDataAdapter adapter = new SqlDataAdapter(command);
-                    DataTable dataTable = new DataTable();
-                    adapter.Fill(dataTable);
+                    adapter = new SqlDataAdapter(command);
+                    SqlCommandBuilder builder = new SqlCommandBuilder(adapter); // Tạo lệnh Update/Insert/Delete tự động
 
-                    if (dataTable.Rows.Count == 0)
+                    adapter.Fill(ds, "tblVatDung");
+
+                    if (ds.Tables["tblVatDung"].Rows.Count == 0)
                     {
                         MessageBox.Show("Không tìm thấy dữ liệu phù hợp", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                        
                     }
-                    else if (dataTable.Rows.Count == 1)
+                    else if (ds.Tables["tblVatDung"].Rows.Count == 1)
                     {
-                        // Hiển thị thông tin lên các TextBox
-                        DataRow row = dataTable.Rows[0];
+                        DataRow row = ds.Tables["tblVatDung"].Rows[0];
                         tbMaVatDung.Text = row["MaVatDung"].ToString();
                         tbVatDung.Text = row["TenVatDung"].ToString();
                         tbMoTa.Text = row["MoTa"].ToString();
                         tbSoLuong.Text = row["SoLuong"].ToString();
                         tbGiaTien.Text = row["Gia"].ToString();
                         tbQuanLy.Text = row["MaQuanLy"].ToString();
+                    }
 
-                        // Xóa dữ liệu trong DataGrid nếu chỉ có một kết quả
-                        dgDanhSachVatDung.ItemsSource = dataTable.DefaultView;
-                    }
-                    else
-                    {
-                        // Nếu có nhiều kết quả, chỉ hiển thị vào DataGrid
-                        ClearFields(); // Xóa các TextBox
-                        dgDanhSachVatDung.ItemsSource = dataTable.DefaultView;
-                    }
+                    dgDanhSachVatDung.ItemsSource = ds.Tables["tblVatDung"].DefaultView;
                 }
             }
             catch (Exception ex)
@@ -139,6 +126,7 @@ namespace QuanLyBenhVien.View
                 MessageBox.Show("Có lỗi xảy ra: " + ex.Message, "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
 
         private void ClearFields()
         {
@@ -305,34 +293,22 @@ namespace QuanLyBenhVien.View
                 dataRow["Gia"] = tbGiaTien.Text.Trim();
                 dataRow["MaQuanLy"] = tbQuanLy.Text.Trim();
 
-                // Cập nhật thay đổi vào cơ sở dữ liệu
-                int kq = adapter.Update(ds.Tables["tblVatDung"]);
+                // Áp dụng thay đổi vào CSDL
+                SqlCommandBuilder builder = new SqlCommandBuilder(adapter);
+                adapter.Update(ds, "tblVatDung");
 
-                if (kq > 0)
-                {
-                    MessageBox.Show("Cập nhật dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Cập nhật dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                    // Cập nhật giao diện DataGrid
-                    dgDanhSachVatDung.ItemsSource = null;
-                    dgDanhSachVatDung.ItemsSource = ds.Tables["tblVatDung"].DefaultView;
-
-                    // Giữ lại dòng đã chọn
-                    dgDanhSachVatDung.SelectedItem = selectedRow;
-                }
-                else
-                {
-                    MessageBox.Show("Cập nhật dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                // Cập nhật lại DataGrid
+                dgDanhSachVatDung.ItemsSource = ds.Tables["tblVatDung"].DefaultView;
             }
             catch (SqlException sqlEx)
             {
-                // Kiểm tra lỗi khóa chính
-                if (sqlEx.Number == 2627 || sqlEx.Number == 2601) // Vi phạm khóa chính
+                if (sqlEx.Number == 2627 || sqlEx.Number == 2601)
                 {
                     MessageBox.Show("Mã vật dụng đã tồn tại. Vui lòng nhập mã khác!", "Lỗi khóa chính", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
-                // Kiểm tra lỗi khóa ngoại
-                else if (sqlEx.Number == 547) // Vi phạm khóa ngoại
+                else if (sqlEx.Number == 547)
                 {
                     MessageBox.Show("Thông tin quản lý không hợp lệ. Vui lòng kiểm tra lại!", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Warning);
                 }
@@ -350,8 +326,8 @@ namespace QuanLyBenhVien.View
                 ClearTextBoxes(); // Xóa các trường sau khi xử lý
             }
             HienThiDanhSach();
-
         }
+
 
         private void btnXoa_Click(object sender, RoutedEventArgs e)
         {
