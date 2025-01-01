@@ -2,6 +2,7 @@ CREATE DATABASE BV
 USE BV
 
 
+
 CREATE TABLE CTHDVatDung (
     MaHoaDon NVARCHAR(20),
     MaVatDung NVARCHAR(20),
@@ -259,6 +260,7 @@ INSERT INTO NhanVien (MaNhanVien, Ho, Ten, MaChuyenNganh, RoleID, LoaiNhanVien, 
 ('NV006', N'Đoàn', N'Giang', 'C06', 'R02', N'Bác sĩ', '1987-06-18', N'Nam', '678901234', N'Nam Định', '0912345683', 'giang.doan@gmail.com', N'123'),
 ('NV007', N'Hồ', N'Hoài', 'C07', 'R02', N'Bác sĩ', '1995-07-30', N'Nữ', '789012345', N'Thừa Thiên Huế', '0912345684', 'hoai.ho@gmail.com', N'123'),
 ('NV008', N'Huỳnh', N'Thương', 'C08', 'R02', N'Bác sĩ', '1984-08-12', N'Nam', '890123456', N'Vũng Tàu', '0912345685', 'thuong.huynh@gmail.com', N'123');
+
 -- Kích hoạt lại các ràng buộc khóa ngoại
 ALTER TABLE NhanVien CHECK CONSTRAINT ALL;
 ALTER TABLE Khoa CHECK CONSTRAINT ALL;
@@ -273,7 +275,6 @@ INSERT INTO VatDung (MaVatDung, TenVatDung, MoTa, SoLuong, Gia, MaQuanLy) VALUES
 ('VD006', N'Máy x-ray', N'Máy chụp x-quang', 180, 85000, 'NV006'),
 ('VD007', N'Dụng cụ phẫu thuật', N'Dụng cụ dùng trong mổ', 200, 80000, 'NV007'),
 ('VD008', N'Máy trợ thở', N'Máy giúp thở cho bệnh nhân', 130, 100000, 'NV008');
-
 
 INSERT INTO BenhNhan (MaBenhNhan, Ho, Ten, NgaySinh, GioiTinh, CCCD, NgheNghiep, DiaChi, SDT, Email, MaKhoa) VALUES
 ('BN001', N'Phạm Khánh', N'Giang', '1990-01-01', N'Nam', '123456789', N'Kỹ sư', N'Hà Nội', '0912345678', 'an.nguyen@gmail.com', 'K01'),
@@ -302,32 +303,15 @@ INSERT INTO BenhNhan (MaBenhNhan, Ho, Ten, NgaySinh, GioiTinh, CCCD, NgheNghiep,
 ('BN024', N'Huỳnh', N'Quyên', '1985-02-14', N'Nữ', '890123458', N'Nông dân', N'Bến Tre', '0912345701', 'quyen.huynh@gmail.com', 'K01');
 
 INSERT INTO HoaDon (MaHoaDon, TenHoaDon, MaBenhNhan, MaNhanVien, NgayLapHoaDon, GiaTien, TrangThai) VALUES
-('HD001', N'Hóa Đơn 01', 'BN001', 'NV001', '2024-12-01', 500.00, N'Chưa thanh toán'),
-('HD002', N'Hóa Đơn 02', 'BN002', 'NV002', '2024-12-02', 200.00, N'Đã thanh toán'),
-('HD003', N'Hóa Đơn 03', 'BN003', 'NV003', '2024-12-03', 800.00, N'Chưa thanh toán'),
-('HD004', N'Hóa Đơn 04', 'BN004', 'NV004', '2024-12-04', 400.00, N'Đã thanh toán'),
-('HD005', N'Hóa Đơn 05', 'BN005', 'NV005', '2024-12-05', 1000.00, N'Chưa thanh toán'),
-('HD006', N'Hóa Đơn 06', 'BN006', 'NV006', '2024-12-06', 300.00, N'Đã thanh toán'),
-('HD007', N'Hóa Đơn 07', 'BN007', 'NV007', '2024-12-07', 700.00, N'Chưa thanh toán'),
-('HD008', N'Hóa Đơn 08', 'BN008', 'NV008', '2024-12-08', 600.00, N'Đã thanh toán'),
-('HD009', N'Hóa Đơn 09', 'BN009', 'NV001', '2024-07-01', 600.00, N'Đã thanh toán'),
-('HD010', N'Hóa Đơn 10', 'BN010', 'NV002', '2024-08-02', 500.00, N'Chưa thanh toán'),
-('HD011', N'Hóa Đơn 11', 'BN011', 'NV003', '2024-09-03', 400.00, N'Đã thanh toán'),
-('HD012', N'Hóa Đơn 12', 'BN012', 'NV004', '2024-10-04', 900.00, N'Chưa thanh toán'),
-('HD013', N'Hóa Đơn 13', 'BN013', 'NV005', '2024-11-05', 1000.00, N'Đã thanh toán'),
-('HD014', N'Hóa Đơn 14', 'BN014', 'NV006', '2024-11-06', 700.00, N'Chưa thanh toán'),
-('HD015', N'Hóa Đơn 15', 'BN015', 'NV007', '2024-07-10', 700.00, N'Chưa thanh toán'),
-('HD016', N'Hóa Đơn 16', 'BN016', 'NV008', '2024-08-12', 850.00, N'Đã thanh toán'),
-('HD017', N'Hóa Đơn 17', 'BN017', 'NV001', '2024-09-15', 550.00, N'Chưa thanh toán'),
-('HD018', N'Hóa Đơn 18', 'BN018', 'NV002', '2024-10-17', 1200.00, N'Chưa thanh toán'),
-('HD019', N'Hóa Đơn 19', 'BN019', 'NV003', '2024-11-18', 900.00, N'Đã thanh toán'),
-('HD020', N'Hóa Đơn 20', 'BN020', 'NV004', '2024-11-19', 950.00, N'Chưa thanh toán'),
-('HD021', N'Hóa Đơn 21', 'BN020', 'NV005', '2024-07-15', 450.00, N'Chưa thanh toán'),
-('HD022', N'Hóa Đơn 22', 'BN019', 'NV006', '2024-08-18', 700.00, N'Đã thanh toán'),
-('HD023', N'Hóa Đơn 23', 'BN024', 'NV007', '2024-09-20', 650.00, N'Chưa thanh toán'),
-('HD024', N'Hóa Đơn 24', 'BN023', 'NV008', '2024-10-21', 1300.00, N'Chưa thanh toán'),
-('HD025', N'Hóa Đơn 25', 'BN022', 'NV001', '2024-11-22', 950.00, N'Đã thanh toán'),
-('HD026', N'Hóa Đơn 26', 'BN021', 'NV002', '2024-11-23', 800.00, N'Chưa thanh toán');
+('HD001', N'Hóa Đơn 01', 'BN001', 'NV001', '2024-08-01', 5865000, N'Chưa thanh toán'),
+('HD002', N'Hóa Đơn 02', 'BN002', 'NV002', '2024-09-02', 5780000, N'Đã thanh toán'),
+('HD003', N'Hóa Đơn 03', 'BN003', 'NV003', '2024-10-03', 4985000, N'Chưa thanh toán'),
+('HD004', N'Hóa Đơn 04', 'BN004', 'NV004', '2024-11-04', 5060000, N'Đã thanh toán'),
+('HD005', N'Hóa Đơn 05', 'BN005', 'NV005', '2024-12-05', 5025000, N'Chưa thanh toán'),
+('HD006', N'Hóa Đơn 06', 'BN006', 'NV006', '2024-11-06', 4200000, N'Đã thanh toán'),
+('HD007', N'Hóa Đơn 07', 'BN007', 'NV007', '2024-10-07', 4140000, N'Chưa thanh toán'),
+('HD008', N'Hóa Đơn 08', 'BN008', 'NV008', '2024-12-08', 5780000, N'Đã thanh toán')
+
 
 INSERT INTO Thuoc (MaThuoc, TenThuoc, CongDung, SoLuong, GiaTien, HanSuDung) VALUES
 ('T001', N'Paracetamol', N'Giảm đau, hạ sốt', 150, 60000, '2025-12-01'),
@@ -388,44 +372,35 @@ INSERT INTO CTHDVatDung (MaHoaDon, MaVatDung, SoLuong, ThanhTien) VALUES
 ('HD005', 'VD005', 15, 1425000),
 ('HD006', 'VD006', 19, 1615000),
 ('HD007', 'VD007', 18, 1440000),
-('HD008', 'VD008', 20, 2000000),
-('HD009', 'VD001', 10, 650000),
-('HD010', 'VD002', 12, 1020000),
-('HD011', 'VD003', 15, 1350000),
-('HD012', 'VD004', 14, 980000),
-('HD013', 'VD005', 16, 1520000),
-('HD014', 'VD006', 17, 1445000),
-('HD021', 'VD007', 13, 1040000),
-('HD022', 'VD008', 16, 1600000);
-
+('HD008', 'VD008', 20, 2000000);
 
 INSERT INTO DonThuoc (MaDonThuoc, MaBenhNhan, MaBacSi, NgayLapDon, MaHoaDon) VALUES
 ('DT001', 'BN001', 'NV001', '2024-11-01', 'HD001'),
 ('DT002', 'BN002', 'NV002', '2024-08-02', 'HD002'),
 ('DT003', 'BN003', 'NV003', '2024-10-03', 'HD003'),
 ('DT004', 'BN004', 'NV004', '2024-09-04', 'HD004'),
-('DT005', 'BN005', 'NV005', '2024-12-05', 'HD005'),
+('DT005', 'BN005', 'NV005', '2024-10-05', 'HD005'),
 ('DT006', 'BN006', 'NV006', '2024-12-06', 'HD006'),
-('DT007', 'BN007', 'NV007', '2024-12-07', 'HD007'),
+('DT007', 'BN007', 'NV007', '2024-10-07', 'HD007'),
 ('DT008', 'BN008', 'NV008', '2024-12-08', 'HD008'),
-('DT009', 'BN009', 'NV001', '2024-07-01', 'HD009'),
-('DT010', 'BN010', 'NV002', '2024-10-02', 'HD010'), 
-('DT011', 'BN011', 'NV003', '2024-09-03', 'HD011'),
-('DT012', 'BN012', 'NV004', '2024-10-04', 'HD012'),
-('DT013', 'BN013', 'NV005', '2024-11-05', 'HD013'),
-('DT014', 'BN014', 'NV006', '2024-11-06', 'HD014'),
-('DT015', 'BN015', 'NV007', '2024-07-10', 'HD015'),
-('DT016', 'BN016', 'NV008', '2024-08-12', 'HD016'),
-('DT017', 'BN017', 'NV001', '2024-09-15', 'HD017'),
-('DT018', 'BN018', 'NV002', '2024-10-17', 'HD018'),
-('DT019', 'BN019', 'NV003', '2024-11-18', 'HD019'),
-('DT020', 'BN020', 'NV004', '2024-11-19', 'HD020'),
-('DT021', 'BN021', 'NV005', '2024-07-15', 'HD021'),
-('DT022', 'BN022', 'NV006', '2024-10-18', 'HD022'),
-('DT023', 'BN023', 'NV007', '2024-09-20', 'HD023'),
-('DT024', 'BN024', 'NV008', '2024-10-21', 'HD024'),
-('DT025', 'BN022', 'NV001', '2024-11-22', 'HD025'),
-('DT026', 'BN023', 'NV002', '2024-11-23', 'HD026');
+('DT009', 'BN009', 'NV001', '2024-07-01', 'HD001'),
+('DT010', 'BN010', 'NV002', '2024-10-02', 'HD002'), 
+('DT011', 'BN011', 'NV003', '2024-09-03', 'HD003'),
+('DT012', 'BN012', 'NV004', '2024-10-04', 'HD004'),
+('DT013', 'BN013', 'NV005', '2024-11-05', 'HD005'),
+('DT014', 'BN014', 'NV006', '2024-11-06', 'HD006'),
+('DT015', 'BN015', 'NV007', '2024-07-10', 'HD007'),
+('DT016', 'BN016', 'NV008', '2024-08-12', 'HD008'),
+('DT017', 'BN017', 'NV001', '2024-09-15', 'HD001'),
+('DT018', 'BN018', 'NV002', '2024-10-17', 'HD002'),
+('DT019', 'BN019', 'NV003', '2024-11-18', 'HD003'),
+('DT020', 'BN020', 'NV004', '2024-11-19', 'HD004'),
+('DT021', 'BN021', 'NV005', '2024-07-15', 'HD005'),
+('DT022', 'BN022', 'NV006', '2024-10-18', 'HD006'),
+('DT023', 'BN023', 'NV007', '2024-09-20', 'HD007'),
+('DT024', 'BN024', 'NV008', '2024-10-21', 'HD008'),
+('DT025', 'BN022', 'NV001', '2024-11-22', 'HD001'),
+('DT026', 'BN023', 'NV002', '2024-11-23', 'HD002');
 
 INSERT INTO CTDonThuoc (MaDonThuoc, MaThuoc, SoLuong, GiaTien, HuongDanSuDung) VALUES
 ('DT001', 'T001', 15, 15 * (SELECT GiaTien FROM Thuoc WHERE MaThuoc = 'T001'), N'Uống 1 viên mỗi 4 giờ'),
