@@ -67,10 +67,10 @@ namespace QuanLyBenhVien.View
             {
                 //btnCapNhat1.Visibility = Visibility.Hidden;
                 btnThem1.Visibility = Visibility.Hidden;
-                btnXoa1.Visibility = Visibility.Hidden;
+                //btnXoa1.Visibility = Visibility.Hidden;
                 //    1btnCapNhat2.Visibility = Visibility.Hidden;
                 btnThem2.Visibility = Visibility.Hidden;
-                btnXoa2.Visibility = Visibility.Hidden;
+                //btnXoa2.Visibility = Visibility.Hidden;
             }
             return;
         }

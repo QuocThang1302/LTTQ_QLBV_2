@@ -176,9 +176,11 @@
         </Grid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" FlowDirection="RightToLeft">
+            <!--
             <Button x:Name="btnXoa2" Style="{StaticResource childviewButton}" 
-                    Margin="130,0,0,0"
-                    Content="Xóa" Click="btnXoa2_Click"/>
+        Margin="200,0,10,0"
+        Content="Xóa" Click="btnXoa2_Click"/>
+            -->
 
             <!--
             <Button x:Name="btnCapNhat2" Style="{StaticResource childviewButton}" 
@@ -189,16 +191,16 @@
                     Margin="52,0,0,0"
                     Content="Cập nhật" Click="Button_Click"/>
 
-            <Button x:Name="btnXoa1" Style="{StaticResource childviewButton}" 
-                    Margin="210,0,0,0"
-                    Content="Xóa" Click="btnXoa1_Click"/>
+            <!--<Button x:Name="btnXoa1" Style="{StaticResource childviewButton}" 
+        Margin="360,0,10,0"
+        Content="Xóa" Click="btnXoa1_Click"/>-->
 
             <!--<Button x:Name="btnCapNhat1" Style="{StaticResource childviewButton}" 
         Margin="52,0,0,0"
         Content="Cập nhật lỏ" Click="btnCapNhat1_Click"/>-->
     
             <Button x:Name="btnThem1" Style="{StaticResource childviewButton}" 
-                    Margin="52,0,0,0"
+                    Margin="360,0,0,0"
                     Content="Cập nhật" Click="Button_Click_1"/>
         </StackPanel>
     </Grid>

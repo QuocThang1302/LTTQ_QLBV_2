@@ -67,7 +67,7 @@ namespace QuanLyBenhVien.View
             if (roleID == "R02")
             {
                 btnCapNhat.Visibility = Visibility.Hidden;
-                btnXoa.Visibility = Visibility.Hidden;
+                //btnXoa.Visibility = Visibility.Hidden;
             }
             return;
         }
@@ -241,68 +241,7 @@ namespace QuanLyBenhVien.View
 
             dgvPhanCong.ItemsSource = ds1.Tables["tblLichTruc"].DefaultView;
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            // Lấy hàng được chọn từ DataGrid
-            var selectedRow = dgvPhanCong.SelectedItem as DataRowView;
-            if (selectedRow == null)
-            {
-                MessageBox.Show("Vui lòng chọn một dòng để xóa!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            try
-            {
-                // Xác nhận từ người dùng trước khi xóa
-                var result = MessageBox.Show("Bạn có chắc chắn muốn xóa dòng này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    // Lấy DataRow từ DataRowView
-                    DataRow dataRow = selectedRow.Row;
-
-                    // Đánh dấu hàng là Deleted
-                    dataRow.Delete();
-
-                    // Cập nhật thay đổi vào cơ sở dữ liệu
-                    int kq = adapter.Update(ds1.Tables["tblLichTruc"]);
-
-                    if (kq > 0)
-                    {
-                        MessageBox.Show("Xóa dữ liệu thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                        // Cập nhật giao diện DataGrid
-                        dgvPhanCong.ItemsSource = null;
-                        dgvPhanCong.ItemsSource = ds1.Tables["tblLichTruc"].DefaultView;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Xóa dữ liệu thất bại!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                // Xử lý lỗi liên quan đến khóa chính hoặc khóa ngoại
-                if (ex.Number == 547) // Lỗi ràng buộc khóa ngoại
-                {
-                    MessageBox.Show("Không thể xóa dữ liệu vì đang được tham chiếu bởi bảng khác!", "Lỗi khóa ngoại", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                else if (ex.Number == 2627 || ex.Number == 2601) // Lỗi trùng lặp khóa chính hoặc khóa duy nhất
-                {
-                    MessageBox.Show("Dữ liệu đã tồn tại và vi phạm ràng buộc khóa chính hoặc khóa duy nhất!", "Lỗi khóa chính", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                else
-                {
-                    MessageBox.Show($"Lỗi cơ sở dữ liệu: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            catch (Exception ex)
-            {
-                // Xử lý lỗi chung
-                MessageBox.Show($"Lỗi: {ex.Message}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            HienThiDanhSach();
-        }
+        
       
         private void dgvPhanCong_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
